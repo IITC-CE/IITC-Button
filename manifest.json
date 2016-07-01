@@ -1,0 +1,26 @@
+{
+  "name": "Ingress Intel Enable",
+  "description": "Make run IITC on click",
+  "version": "0.0.2",
+  "permissions": [
+    "tabs", "https://www.ingress.com/intel"
+  ],
+  "default_locale": "en",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_title": "Toggle IITC",
+    "default_icon": {
+      "19": "assets/images/19/logo.png",
+      "48": "assets/images/48/logo.png"
+    }
+  },
+  "icons": {
+    "16" : "assets/images/16/logo.png",
+    "48" : "assets/images/48/logo.png",
+    "128" : "assets/images/128/logo.png"
+  },
+  "manifest_version": 2
+}
