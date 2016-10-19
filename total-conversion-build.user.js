@@ -15,8 +15,10 @@
 // @match          https://www.ingress.com/mission/*
 // @match          http://www.ingress.com/mission/*
 // @grant          none
-// ==/UserScript==
+// ==/UserScript==[]
 
+// Enable Dark Matter by default
+if ( window.localStorage) window.localStorage['iitc-base-map'] = 'CartoDB Dark Matter';
 // REPLACE ORIG SITE ///////////////////////////////////////////////////
 if(document.getElementsByTagName('html')[0].getAttribute('itemscope') != null)
   throw('Ingress Intel Website is down, not a userscript issue.');
