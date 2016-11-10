@@ -19,6 +19,7 @@
 
 // Enable Dark Matter by default
 if ( window.localStorage) window.localStorage['iitc-base-map'] = 'CartoDB Dark Matter';
+if ( window.localStorage) window.localStorage['portal_highlighter'] = 'No Highlights';
 // REPLACE ORIG SITE ///////////////////////////////////////////////////
 if(document.getElementsByTagName('html')[0].getAttribute('itemscope') != null)
   throw('Ingress Intel Website is down, not a userscript issue.');

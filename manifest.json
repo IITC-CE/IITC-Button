@@ -1,7 +1,7 @@
 {
   "name": "Ingress Intel Enable (IITC for Chrome)",
   "description": "Launch IITC for Ingress Intel with ease.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "permissions": [
     "tabs", "https://*.ingress.com/intel","http://*.ingress.com/intel"
   ],
@@ -11,7 +11,7 @@
     "persistent": false
   },
   "page_action": {
-    "default_title": "Toggle IITC",
+    "default_title": "Toggle IITC on ingress.com/intel",
     "default_icon": {
       "19": "assets/images/19/logo.png",
       "48": "assets/images/48/logo.png"

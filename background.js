@@ -8,7 +8,7 @@ function toggle (state, id) {
   state = state ? 'show' : 'hide';
 
   chrome.pageAction.setIcon({ tabId: id, path: state ? "assets/images/48/logo.png" : "assets/images/19/logo-ok.png" });
-  chrome.pageAction.setTitle({ tabId: id, title: state ? "Toggle IITC" : "Intel Ingress Enable is Activated" });
+  chrome.pageAction.setTitle({ tabId: id, title: state ? "Toggle IITC on ingress.com/intel" : "Intel Ingress Enable is Activated" });
   chrome.pageAction[state](id);
 }
 function show (id) {

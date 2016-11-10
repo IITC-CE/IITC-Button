@@ -115,7 +115,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
       window.plugin.bookmarks.saveStorage();
     }
     if(!localStorage[window.plugin.bookmarks.KEY_STATUS_BOX]) {
-      window.plugin.bookmarks.statusBox.show = 1;
+      window.plugin.bookmarks.statusBox.show = 0;
       window.plugin.bookmarks.statusBox.page = 0;
       window.plugin.bookmarks.statusBox.pos = {x:100,y:100};
       window.plugin.bookmarks.saveStorageBox();
