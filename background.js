@@ -1,79 +1,195 @@
-window.iitcLoaded = false;
+const pluginlist = require('pluginlist');
+const {
+  onInstalled,
+  onStartup,
+  onSuspend,
+  onSuspendCanceled
+} = chrome.runtime;
+const {
+  onActivated,
+  onUpdated,
+  onRemoved
+} = chrome.tabs;
+let activeIITCTab = null;
+onStartup.addListener(onStartupListener);
+onInstalled.addListener(onInstalledListener);
+onSuspend.addListener(onSuspendListener);
+onSuspendCanceled.addListener(onSuspendCanceledListener);
+// tab
+onActivated.addListener(onActivatedListener);
+onUpdated.addListener(onUpdatedListener);
+onRemoved.addListener(onRemovedListener);
+// page_action
+chrome.pageAction.onClicked.addListener(onPageActionClickListener)
+  // runtime listeners
 
-// page action
-function isOurSite (tab) {
-  return !!tab.url.match(/ingress.com\/intel/)
+function onStartupListener() {
+  chrome.tabs.query({ active: true }, tabs => { tabs.forEach((tab) => chrome.pageAction.show(tab.id)); })
+  console.info(`Fired when a profile that has this extension installed first starts up.
+    This event is not fired when an incognito profile is started,
+    even if this extension is operating in 'split' incognito mode.`);
 }
-function toggle (state, id) {
+
+function onInstalledListener() {
+  chrome.tabs.query({ active: true }, tabs => { tabs.forEach((tab) => chrome.pageAction.show(tab.id)); })
+  console.info(`Fired when the extension is first installed,
+    when the extension is updated to a new version,
+    and when Chrome is updated to a new version.`);
+}
+
+function onSuspendListener() {
+  console.info(`Sent to the event page just before it is unloaded.
+    This gives the extension opportunity to do some clean up.
+    Note that since the page is unloading, any asynchronous operations started while handling this event are not guaranteed to complete.
+    If more activity for the event page occurs before it gets unloaded the onSuspendCanceled event will be sent and the page won't be unloaded.`);
+}
+
+function onSuspendCanceledListener() {
+  console.info(`Sent after onSuspend to indicate that the app won't be unloaded after all.`);
+}
+
+// tab listeners
+async function onUpdatedListener(tabId, status) {
+  if (status.status) {
+    console.log(JSON.stringify(status));
+    console.log(status.status, ':tab updated #', tabId);
+
+    const {
+      active,
+      url
+    } = await getTabInfo(tabId);
+    if (tabId === activeIITCTab) {
+      activeIITCTab = null;
+      console.log('remove activeIITCTab');
+      if(status.status === 'loading' && status.url) {
+        console.info('navigate to %s', status.url);
+      }
+    }
+    console.log('tab is active: ', active);
+    if (active) {
+      chrome.pageAction.show(tabId);
+    } else return false
+
+    if (status.status === 'complete') {
+      if (/ingress.com\/intel/.test(url)) {
+        console.log('detected ingress.com/intel page on active tab %d', tabId);
+        if (/\?iitc/.test(url)) {
+          console.log('requested iitc launch');
+          console.log('initializing iitc');
+          initialize(tabId);
+        }
+      }
+    }
+
+    return false;
+  }
+}
+
+function onRemovedListener(tabId) {
+  console.log(tabId + ': closing');
+  if (activeIITCTab === tabId) {
+    activeIITCTab = null;
+    console.log('removed iitc flags')
+  }
+}
+
+async function onActivatedListener({
+  tabId,
+  url
+}) {
+  if (!tabId) {
+    throw new Error('not tabId found')
+  }
+  console.log('tab activated #', tabId);
+
+  const {
+    active
+  } = await getTabInfo(tabId);
+  if (active) chrome.pageAction.show(tabId);
+}
+
+async function onPageActionClickListener({
+  id
+}) {
+  if (!id) return;
+  const {
+    active,
+    url
+  } = await getTabInfo(id);
+  if (activeIITCTab) {
+    console.log('found activeIITCTab %s', activeIITCTab);
+    return setTabActive(activeIITCTab);
+  }
+  if (active) {
+    if (/ingress.com\/intel/.test(url)) {
+      console.log('detected ingress.com/intel page on active tab %d', id);
+      return chrome.tabs.executeScript({
+        code: 'location.assign("?iitc")'
+      });
+    }
+
+    return chrome.tabs.create({
+      url: 'https://ingress.com/intel?iitc',
+      pinned: true
+    }, function(tab) {
+      activeIITCTab = tab.id;
+    });
+  }
+}
+
+function initialize(tabId) {
+  if (activeIITCTab) {
+    setTabActive(activeIITCTab);
+  } else {
+    loadPlugins(tabId, pluginlist);
+
+    chrome.tabs.executeScript(tabId, {
+      runAt: "document_start",
+      file: './scripts/total-conversion-build.user.js'
+    }, () => activeIITCTab = tabId );
+
+  }
+}
+
+function loadPlugins(tabId, list) {
+  if(!tabId) { console.log('no tabId!'); return}
+  if(!list) { console.log('no plugins!'); return}
+
+  list.forEach(function(file) {
+    chrome.tabs.executeScript(tabId, {
+      runAt: "document_idle",
+      file
+    }, () => {
+      console.info('plugin %s loaded', file);
+    });
+  });
+}
+
+function setTabActive(tabId) {
+  chrome.tabs.update(tabId, {
+    active: true
+  }, (tab) => { setWindowFocused(tab.windowId) });
+}
+function setWindowFocused(windowId) {
+  chrome.windows.update(windowId, { focused: true });
+}
+function getTabInfo(tabId) {
+  return new Promise(resolve => chrome.tabs.get(tabId, resolve));
+}
+
+/* function togglePageAction(state, id) {
   state = state ? 'show' : 'hide';
 
   chrome.pageAction.setIcon({ tabId: id, path: state ? "assets/images/48/logo.png" : "assets/images/19/logo-ok.png" });
-  chrome.pageAction.setTitle({ tabId: id, title: state ? "Toggle IITC on ingress.com/intel" : "Intel Ingress Enable is Activated" });
+  chrome.pageAction.setTitle({ tabId: id, title: state ? "open IITC" : "Intel Ingress Enable is Activated" });
   chrome.pageAction[state](id);
+} */
+
+function createTestNotifications(tabId, message) {
+  chrome.notifications.create(undefined, {
+    type: 'basic',
+    title: 'Test notif',
+    iconUrl: './logo.png',
+    message: message || 'empty'
+  })
 }
-function show (id) {
-  toggle(true, id);
-}
-function hide (id) {
-  toggle(false, id);
-}
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.tabs.query({active: true, currentWindow: true }, (tab) => {
-    const cTab = tab[0];
-    const id = cTab.id;
-    
-    if (window.iitcLoaded) { return; }
-    isOurSite(cTab) ? show(id) : hide(id);
-  });
-});
-
-chrome.tabs.onActivated.addListener((tabInfo) => {
-  let id = tabInfo.tabId;
-  chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-    id = tab[0].id;
-    if (window.iitcLoaded) { return; }
-    if (isOurSite(tab[0])) {
-      show(id);
-    } else {
-      hide(id);
-    }
-  });
-});
-
-chrome.tabs.onUpdated.addListener((id, status, tab) => {
-  if (window.iitcLoaded) { return; }
-  isOurSite(tab) ? show(id) : hide(id);
-});
-
-chrome.pageAction.onClicked.addListener((tab) => {
-  if (window.iitcLoaded) { return }
-  setTimeout(() => {
-    hide(tab.id);
-  }, 5000);
-  const plugins = [
-    './plugins/iitc-plugins/less-clutter.user.js',
-    './plugins/iitc-plugins/scoreboard.user.js',
-    './plugins/iitc-plugins/uniques.user.js',
-    './plugins/iitc-plugins/bookmarks-by-zaso.user.js',
-    './plugins/iitc-plugins/portal-highlighter-high-level.user.js',
-    './plugins/draw-tools.user.js',
-    './plugins/portal-highlighter-uniques-opacity.user.js',
-    // './plugins/extend-poly-lines.user.js',
-    // './plugins/debug-publish-info.user.js',
-    // './plugins/minimap-enhanced.user.js',
-    // './plugins/chat-tools.user.js',
-    // './plugins/uniques-heatmap.user.js',
-  ];
-  chrome.tabs.executeScript({
-    runAt: 'document_start',
-    file: './total-conversion-build.user.js',
-  });
-
-  plugins.forEach((file) => {
-    chrome.tabs.executeScript({
-      runAt: 'document_idle',
-      file,
-    });  
-  });
-  window.iitcLoaded = true;
-});
