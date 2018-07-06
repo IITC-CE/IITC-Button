@@ -1,52 +1,25 @@
-const pluginlist = require('pluginlist');
-const {
-  onInstalled,
-  onStartup,
-  onSuspend,
-  onSuspendCanceled
-} = chrome.runtime;
+import { plugins } from "./pluginlist.js";
+
+import {
+  onInstalledListener,
+  onStartupListener,
+  onSuspendListener,
+  onSuspendCanceledListener,
+} from './backgroundEvents.js';
+
+let activeIITCTab = null;
+const pluginlist = plugins;
 const {
   onActivated,
   onUpdated,
   onRemoved
 } = chrome.tabs;
-let activeIITCTab = null;
-onStartup.addListener(onStartupListener);
-onInstalled.addListener(onInstalledListener);
-onSuspend.addListener(onSuspendListener);
-onSuspendCanceled.addListener(onSuspendCanceledListener);
 // tab
 onActivated.addListener(onActivatedListener);
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 // page_action
 chrome.pageAction.onClicked.addListener(onPageActionClickListener)
-  // runtime listeners
-
-function onStartupListener() {
-  chrome.tabs.query({ active: true }, tabs => { tabs.forEach((tab) => chrome.pageAction.show(tab.id)); })
-  console.info(`Fired when a profile that has this extension installed first starts up.
-    This event is not fired when an incognito profile is started,
-    even if this extension is operating in 'split' incognito mode.`);
-}
-
-function onInstalledListener() {
-  chrome.tabs.query({ active: true }, tabs => { tabs.forEach((tab) => chrome.pageAction.show(tab.id)); })
-  console.info(`Fired when the extension is first installed,
-    when the extension is updated to a new version,
-    and when Chrome is updated to a new version.`);
-}
-
-function onSuspendListener() {
-  console.info(`Sent to the event page just before it is unloaded.
-    This gives the extension opportunity to do some clean up.
-    Note that since the page is unloading, any asynchronous operations started while handling this event are not guaranteed to complete.
-    If more activity for the event page occurs before it gets unloaded the onSuspendCanceled event will be sent and the page won't be unloaded.`);
-}
-
-function onSuspendCanceledListener() {
-  console.info(`Sent after onSuspend to indicate that the app won't be unloaded after all.`);
-}
 
 // tab listeners
 async function onUpdatedListener(tabId, status) {
@@ -100,7 +73,7 @@ async function onActivatedListener({
   if (!tabId) {
     throw new Error('not tabId found')
   }
-  console.log('tab activated #', tabId);
+  console.log('tab activated #', tabId, url);
 
   const {
     active
@@ -141,6 +114,12 @@ function initialize(tabId) {
   if (activeIITCTab) {
     setTabActive(activeIITCTab);
   } else {
+    /* Example */
+    const activePluginList = [
+      './plugins/player-tracker.user.js'
+    ];
+    console.log(activePluginList, pluginlist)
+    /* Example end */
     loadPlugins(tabId, pluginlist);
 
     chrome.tabs.executeScript(tabId, {
@@ -170,9 +149,11 @@ function setTabActive(tabId) {
     active: true
   }, (tab) => { setWindowFocused(tab.windowId) });
 }
+
 function setWindowFocused(windowId) {
   chrome.windows.update(windowId, { focused: true });
 }
+
 function getTabInfo(tabId) {
   return new Promise(resolve => chrome.tabs.get(tabId, resolve));
 }

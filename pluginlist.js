@@ -1,4 +1,4 @@
-const plugins = [
+export const plugins = [
     './plugins/iitc-plugins/less-clutter.user.js',
     './plugins/iitc-plugins/scoreboard.user.js',
     './plugins/iitc-plugins/uniques.user.js',
@@ -14,5 +14,3 @@ const plugins = [
     // './plugins/uniques-heatmap.user.js',
 ];
 
-
-exports.pluginlist = plugins;
