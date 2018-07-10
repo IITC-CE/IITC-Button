@@ -44,7 +44,7 @@ async function onUpdatedListener(tabId, status) {
     } else return false
 
     if (status.status === 'complete') {
-      if (/ingress.com\/intel/.test(url)) {
+      if (isIngressUrl(url)) {
         console.log('detected ingress.com/intel page on active tab %d', tabId);
         if (/\?iitc/.test(url)) {
           console.log('requested iitc launch');
@@ -73,7 +73,15 @@ async function onActivatedListener({
   if (!tabId) {
     throw new Error('not tabId found')
   }
-  console.log('tab activated #', tabId, url);
+  console.log('tab activated #', tabId);
+  const tabInfo = await getTabInfo(tabId);
+  if (tabInfo) {
+    const isIngressTab = isIngressUrl(tabInfo.url)
+
+    if (isIngressTab) {
+      console.log('tab has Intel url #', tabId);
+    }
+  }
 
   const {
     active
@@ -90,11 +98,23 @@ async function onPageActionClickListener({
     url
   } = await getTabInfo(id);
   if (activeIITCTab) {
-    console.log('found activeIITCTab %s', activeIITCTab);
-    return setTabActive(activeIITCTab);
+    let isActive = false;
+
+    try {
+      isActive = await getTabInfo(activeIITCTab);
+    } catch (e) {
+      console.warn('tab not found:', activeIITCTab);
+    }
+
+    if (!!isActive) {
+      console.log('found activeIITCTab %s', activeIITCTab);
+      return setTabActive(activeIITCTab);
+    } else {
+      activeIITCTab = null;
+    }
   }
   if (active) {
-    if (/ingress.com\/intel/.test(url)) {
+    if (isIngressUrl(url)) {
       console.log('detected ingress.com/intel page on active tab %d', id);
       return chrome.tabs.executeScript({
         code: 'location.assign("?iitc")'
@@ -147,7 +167,17 @@ function loadPlugins(tabId, list) {
 function setTabActive(tabId) {
   chrome.tabs.update(tabId, {
     active: true
-  }, (tab) => { setWindowFocused(tab.windowId) });
+  }, async (tab) => {
+    try {
+      setWindowFocused(tab.windowId)
+    } catch (e) {
+      console.log(e);
+      activeIITCTab = null;
+      console.log('repeated click with updated params');
+      let id = await getActiveTab();
+      onPageActionClickListener({ id });
+    }
+  });
 }
 
 function setWindowFocused(windowId) {
@@ -158,6 +188,17 @@ function getTabInfo(tabId) {
   return new Promise(resolve => chrome.tabs.get(tabId, resolve));
 }
 
+async function getActiveTab() {
+  return new Promise(resolve => chrome.tabs.query({ active: true }, resolve))
+    .then(function(current) { 
+      if (current && current[0]) {
+      return current[0].id
+      } else {
+        throw new Error('current tab not found')
+      }
+  });
+}
+
 /* function togglePageAction(state, id) {
   state = state ? 'show' : 'hide';
 
@@ -165,7 +206,12 @@ function getTabInfo(tabId) {
   chrome.pageAction.setTitle({ tabId: id, title: state ? "open IITC" : "Intel Ingress Enable is Activated" });
   chrome.pageAction[state](id);
 } */
-
+function isIngressUrl(url) {
+  if (url) {
+    return (/ingress.com\/intel/.test(url))
+  }
+  return false
+}
 function createTestNotifications(tabId, message) {
   chrome.notifications.create(undefined, {
     type: 'basic',
