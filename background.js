@@ -19,7 +19,7 @@ onActivated.addListener(onActivatedListener);
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 // page_action
-chrome.pageAction.onClicked.addListener(onPageActionClickListener)
+chrome.browserAction.onClicked.addListener(onBrowserActionClickListener)
 
 // tab listeners
 async function onUpdatedListener(tabId, status) {
@@ -32,7 +32,6 @@ async function onUpdatedListener(tabId, status) {
       url
     } = await getTabInfo(tabId);
     if (tabId === activeIITCTab) {
-      activeIITCTab = null;
       console.log('remove activeIITCTab');
       if(status.status === 'loading' && status.url) {
         console.info('navigate to %s', status.url);
@@ -40,12 +39,12 @@ async function onUpdatedListener(tabId, status) {
     }
     console.log('tab is active: ', active);
     if (active) {
-      chrome.pageAction.show(tabId);
+      //chrome.pageAction.show(tabId);
     } else return false
 
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
-        console.log('detected ingress.com/intel page on active tab %d', tabId);
+        console.log('detected intel.ingress.com/intel page on active tab %d', tabId);
         if (/\?iitc/.test(url)) {
           console.log('requested iitc launch');
           console.log('initializing iitc');
@@ -86,10 +85,10 @@ async function onActivatedListener({
   const {
     active
   } = await getTabInfo(tabId);
-  if (active) chrome.pageAction.show(tabId);
+  //if (active) chrome.pageAction.show(tabId);
 }
 
-async function onPageActionClickListener({
+async function onBrowserActionClickListener({
   id
 }) {
   if (!id) return;
@@ -122,7 +121,7 @@ async function onPageActionClickListener({
     }
 
     return chrome.tabs.create({
-      url: 'https://ingress.com/intel?iitc',
+      url: 'https://intel.ingress.com/intel?iitc',
       pinned: true
     }, function(tab) {
       activeIITCTab = tab.id;
@@ -131,9 +130,7 @@ async function onPageActionClickListener({
 }
 
 function initialize(tabId) {
-  if (activeIITCTab) {
-    setTabActive(activeIITCTab);
-  } else {
+
     /* Example */
     const activePluginList = [
       './plugins/player-tracker.user.js'
@@ -147,8 +144,8 @@ function initialize(tabId) {
       file: './scripts/total-conversion-build.user.js'
     }, () => activeIITCTab = tabId );
 
-  }
 }
+
 
 function loadPlugins(tabId, list) {
   if(!tabId) { console.log('no tabId!'); return}
@@ -175,7 +172,7 @@ function setTabActive(tabId) {
       activeIITCTab = null;
       console.log('repeated click with updated params');
       let id = await getActiveTab();
-      onPageActionClickListener({ id });
+      onBrowserActionClickListener({ id });
     }
   });
 }
@@ -208,7 +205,7 @@ async function getActiveTab() {
 } */
 function isIngressUrl(url) {
   if (url) {
-    return (/ingress.com\/intel/.test(url))
+    return (/intel.ingress.com\/intel/.test(url))
   }
   return false
 }

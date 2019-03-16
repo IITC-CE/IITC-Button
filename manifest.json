@@ -3,23 +3,33 @@
   "description": "__MSG_extDescription__",
   "version": "0.3.0",
   "minimum_chrome_version": "61",
+  "applications": {
+    "gecko": {
+      "id": "iitc@modos189.ru",
+      "strict_min_version": "57.0"
+    }
+  },
   "permissions": [
-    "tabs", "activeTab", "cookies", "https://*.ingress.com/intel"
+    "tabs",
+    "activeTab",
+    "cookies",
+    "https://*.ingress.com/intel"
   ],
   "default_locale": "en",
   "background": {
     "page": "background.html",
     "persistent": false
   },
-  "page_action": {
+  "browser_action": {
+    "browser_style": true,
     "default_title": "__MSG_titleDefault__",
     "default_icon": {
       "48": "assets/images/48/logo.png"
     }
   },
   "icons": {
-    "48" : "assets/images/48/logo.png",
-    "128" : "assets/images/128/logo.png"
+    "48": "assets/images/48/logo.png",
+    "128": "assets/images/128/logo.png"
   },
   "manifest_version": 2
 }
