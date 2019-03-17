@@ -1,12 +1,5 @@
 import { plugins } from "./pluginlist.js";
 
-import {
-  onInstalledListener,
-  onStartupListener,
-  onSuspendListener,
-  onSuspendCanceledListener,
-} from './backgroundEvents.js';
-
 let activeIITCTab = null;
 const pluginlist = plugins;
 const {
