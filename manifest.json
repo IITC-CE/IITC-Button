@@ -22,6 +22,7 @@
   },
   "browser_action": {
     "browser_style": true,
+    "default_popup": "app/popup/popup.html",
     "default_title": "__MSG_titleDefault__",
     "default_icon": {
       "48": "assets/images/48/logo.png"

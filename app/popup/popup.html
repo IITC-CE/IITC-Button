@@ -1,68 +1,44 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" href="bootstrap-switch.min.css">
-        <script src="jquery-3.1.0.slim.min.js"></script>
-        <script src="bootstrap-switch.min.js"></script>
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    </head>
-    <body style="margin-top:25px; width:300px">
-        <!-- Add your site or application content here -->
-        <div class="container-fluid">
-            <div class="row title-part">
-                <div class="col-xs-9">
-                    <span>
-                        <h4>
-                            <b>Intel Ingress Enable</b>
-                        </h4>
-                    </span>
-                </div>
-                <div class="col-xs-3">
-                    <img src="48.png" alt="">
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12">
-                    <i class="glyphicon glyphicon-link"></i>
-                    <a target="_blank" href="https://ingress.com/intel?iitc" title="open IITC in new tab">open IITC</a>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-8">
-                    <i class="glyphicon glyphicon-bookmark"></i>
-                    <span class="text-primary">
-                        launch IITC by default
-                    </span>
-                </div>
-                <div class="col-xs-4">
-                    <span class="pull-right">
-                        <input type="checkbox" name="my-checkbox" id="always-start-iitc" checked>
-                    </span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                        Plugins list
-                        </div>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                        <ul class="list-group">
-                          <div class="text-center"><i>No Items</i></div>
-                        </ul>
-                    </div>
+    <link href="/assets/iconfont/material-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body class="body">
+
+    <div id="target-ractive"></div>
+
+    <script id="template-ractive" type="text/ractive">
+
+        <div class="list">
+            <div class="title">
+                <div class="title__logo-wrapper" on-click="openIITC">
+                    <object class="title__logo title__button" type="image/svg+xml" data="/assets/images/IITC-black-horizontally.svg"></object>
+                </div>
+                <div class="title__button"><i class="title__settings material-icons">settings</i></div>
+                <div class="title__button">
+                    <!--<input type="checkbox" name="my-checkbox" id="always-start-iitc" checked>-->
                 </div>
             </div>
+            {{#each categories}}
+                <div class="element item-wrapper list__item list__item_category" title="{{.description}}"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
+            {{else}}
+                <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>
+            {{/each}}
+            <div class="item-wrapper hr"></div>
+            <div class="element item-wrapper list__item list__item_add"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
+            <div class="item-wrapper hr"></div>
+            <div class="element item-wrapper list__item list__item_homepage"><i class="element__icon material-icons">link</i><span class="element__text">IITC-CE home page</span></div>
+            <div class="element item-wrapper list__item list__item_telegram"><i class="element__icon material-icons">announcement</i><span class="element__text">IITC-CE telegram channel</span></div>
+            <div class="element item-wrapper list__item list__item_github"><i class="element__icon material-icons">developer_board</i><span class="element__text">IITC-CE GitHub repository</span></div>
         </div>
-        <script src="helpers.js"></script>
-        <script src="popup.js"></script>
-    </body>
+    </script>
+
+    <script src="ractive.js"></script>
+    <script src="popup.js"></script>
+</body>
 </html>
