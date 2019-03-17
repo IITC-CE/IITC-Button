@@ -38,11 +38,9 @@ async function onUpdatedListener(tabId, status) {
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
         console.log('detected intel.ingress.com/intel page on active tab %d', tabId);
-        if (/\?iitc/.test(url)) {
-          console.log('requested iitc launch');
-          console.log('initializing iitc');
-          initialize(tabId);
-        }
+        console.log('requested iitc launch');
+        console.log('initializing iitc');
+        initialize(tabId);
       }
     }
 
@@ -108,13 +106,11 @@ async function onBrowserActionClickListener({
   if (active) {
     if (isIngressUrl(url)) {
       console.log('detected ingress.com/intel page on active tab %d', id);
-      return chrome.tabs.executeScript({
-        code: 'location.assign("?iitc")'
-      });
+      return;
     }
 
     return chrome.tabs.create({
-      url: 'https://intel.ingress.com/intel?iitc',
+      url: 'https://intel.ingress.com/intel',
       pinned: true
     }, function(tab) {
       activeIITCTab = tab.id;
