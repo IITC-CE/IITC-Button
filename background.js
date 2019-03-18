@@ -12,7 +12,52 @@ onActivated.addListener(onActivatedListener);
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 // page_action
-chrome.browserAction.onClicked.addListener(onBrowserActionClickListener)
+chrome.browserAction.onClicked.addListener(onBrowserActionClickListener);
+
+chrome.runtime.onMessage.addListener(function(request) {
+  console.log(request);
+  if (request.type === "requestOpenIntel") {
+    onRequestOpenIntel(request.tab);
+  }
+});
+
+async function onRequestOpenIntel(id) {
+  if (!id) return;
+  const {
+    active,
+    url
+  } = await getTabInfo(id);
+  if (activeIITCTab) {
+    let isActive = false;
+
+    try {
+      isActive = await getTabInfo(activeIITCTab);
+    } catch (e) {
+      console.warn('tab not found:', activeIITCTab);
+    }
+
+    if (!!isActive) {
+      console.log('found activeIITCTab %s', activeIITCTab);
+      return setTabActive(activeIITCTab);
+    } else {
+      activeIITCTab = null;
+    }
+  }
+  if (active) {
+    if (isIngressUrl(url)) {
+      console.log('detected ingress.com/intel page on active tab %d', id);
+      return;
+    }
+
+    return chrome.tabs.create({
+      url: 'https://intel.ingress.com/intel',
+      pinned: true
+    }, function(tab) {
+      activeIITCTab = tab.id;
+    });
+  }
+}
+
 
 // tab listeners
 async function onUpdatedListener(tabId, status) {
@@ -79,45 +124,6 @@ async function onActivatedListener({
   //if (active) chrome.pageAction.show(tabId);
 }
 
-async function onBrowserActionClickListener({
-  id
-}) {
-  if (!id) return;
-  const {
-    active,
-    url
-  } = await getTabInfo(id);
-  if (activeIITCTab) {
-    let isActive = false;
-
-    try {
-      isActive = await getTabInfo(activeIITCTab);
-    } catch (e) {
-      console.warn('tab not found:', activeIITCTab);
-    }
-
-    if (!!isActive) {
-      console.log('found activeIITCTab %s', activeIITCTab);
-      return setTabActive(activeIITCTab);
-    } else {
-      activeIITCTab = null;
-    }
-  }
-  if (active) {
-    if (isIngressUrl(url)) {
-      console.log('detected ingress.com/intel page on active tab %d', id);
-      return;
-    }
-
-    return chrome.tabs.create({
-      url: 'https://intel.ingress.com/intel',
-      pinned: true
-    }, function(tab) {
-      activeIITCTab = tab.id;
-    });
-  }
-}
-
 function initialize(tabId) {
 
     /* Example */
@@ -176,7 +182,7 @@ function getTabInfo(tabId) {
 
 async function getActiveTab() {
   return new Promise(resolve => chrome.tabs.query({ active: true }, resolve))
-    .then(function(current) { 
+    .then(function(current) {
       if (current && current[0]) {
       return current[0].id
       } else {
