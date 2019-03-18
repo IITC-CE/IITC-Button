@@ -13,6 +13,7 @@
     "tabs",
     "activeTab",
     "cookies",
+    "storage",
     "https://*.ingress.com/intel"
   ],
   "default_locale": "en",

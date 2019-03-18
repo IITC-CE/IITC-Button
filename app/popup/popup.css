@@ -77,14 +77,40 @@ object{
     color: #fff;
     border-left: 1px solid #333;
 }
-
 .title__button:hover {
     background: #333;
 }
-
 .title__settings {
     font-size: 24px;
     padding: 12px;
+}
+.title__toggle {
+    font-size: 36px;
+    padding: 6px;
+    line-height: 38px;
+}
+
+/*
+ * toggle
+ */
+input[type=checkbox].toggle { display:none; }
+label.toggle {
+    cursor: inherit;
+}
+input[type=checkbox].toggle + div label.toggle:before {
+    font-family: 'Material Icons';
+    display: inline-block;
+    content: "\e9f5";
+} /* unchecked icon */
+input[type=checkbox].toggle + .title__button {
+    background: #e53935;
+}
+
+input[type=checkbox].toggle:checked + div label.toggle:before {
+    content: "\e9f6";
+} /* checked icon */
+input[type=checkbox].toggle:checked + .title__button {
+    background: #43a047;
 }
 
 /*

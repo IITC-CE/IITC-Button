@@ -19,7 +19,6 @@ var ractive = new Ractive({
 
 ractive.on('openIITC', function (event) {
   event.original.preventDefault();
-
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.runtime.sendMessage({'type': "requestOpenIntel", 'tab': tabs[0].id});
   });
@@ -27,7 +26,34 @@ ractive.on('openIITC', function (event) {
 
 
 
+// toggleIITC
+chrome.storage.local.get("IITC-is-enabled", function(data) {
+  let status = data['IITC-is-enabled'];
+  if (status === undefined || status === true) {
+    document.querySelector('#toggleIITC').checked = true
+  }
+});
 
+ractive.on('toggleIITC', function (event) {
+  var checkedValue = document.querySelector('#toggleIITC').checked;
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
+  });
+});
+
+
+
+// chrome.storage.onChanged.addListener(function(changes, namespace) {
+//   for (var key in changes) {
+//     var storageChange = changes[key];
+//     console.log('Storage key "%s" in namespace "%s" changed. ' +
+//                 'Old value was "%s", new value is "%s".',
+//                 key,
+//                 namespace,
+//                 storageChange.oldValue,
+//                 storageChange.newValue);
+//   }
+// });
 
 
 

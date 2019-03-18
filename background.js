@@ -11,13 +11,18 @@ const {
 onActivated.addListener(onActivatedListener);
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
-// page_action
-chrome.browserAction.onClicked.addListener(onBrowserActionClickListener);
 
 chrome.runtime.onMessage.addListener(function(request) {
   console.log(request);
-  if (request.type === "requestOpenIntel") {
-    onRequestOpenIntel(request.tab);
+  switch (request.type) {
+    case "requestOpenIntel":
+      onRequestOpenIntel(request.tab);
+      break;
+    case "toggleIITC":
+      onToggleIITC(request.value);
+      break;
+    default:
+      console.log("undefined message");
   }
 });
 
@@ -56,6 +61,29 @@ async function onRequestOpenIntel(id) {
       activeIITCTab = tab.id;
     });
   }
+}
+
+async function onToggleIITC(value) {
+  chrome.storage.local.set({'IITC-is-enabled': value}, async function() {
+    console.log('Value is set to ' + value);
+    if (activeIITCTab) {
+      let isActive = false;
+
+      try {
+        isActive = await getTabInfo(activeIITCTab);
+      } catch (e) {
+        console.warn('tab not found:', activeIITCTab);
+      }
+
+      if (!!isActive) {
+        console.log('found activeIITCTab %s', activeIITCTab);
+        return chrome.tabs.reload(activeIITCTab);
+      } else {
+        activeIITCTab = null;
+      }
+    }
+  });
+
 }
 
 
@@ -126,18 +154,23 @@ async function onActivatedListener({
 
 function initialize(tabId) {
 
-    /* Example */
-    const activePluginList = [
-      './plugins/player-tracker.user.js'
-    ];
-    console.log(activePluginList, pluginlist)
-    /* Example end */
-    loadPlugins(tabId, pluginlist);
+  chrome.storage.local.get("IITC-is-enabled", function(data){
+    let status = data['IITC-is-enabled'];
+    if (status === undefined || status === true) {
+      /* Example */
+      const activePluginList = [
+        './plugins/player-tracker.user.js'
+      ];
+      console.log(activePluginList, pluginlist)
+      /* Example end */
+      loadPlugins(tabId, pluginlist);
 
-    chrome.tabs.executeScript(tabId, {
-      runAt: "document_start",
-      file: './scripts/total-conversion-build.user.js'
-    }, () => activeIITCTab = tabId );
+      chrome.tabs.executeScript(tabId, {
+        runAt: "document_start",
+        file: './scripts/total-conversion-build.user.js'
+      }, () => activeIITCTab = tabId );
+    }
+  });
 
 }
 
@@ -167,7 +200,7 @@ function setTabActive(tabId) {
       activeIITCTab = null;
       console.log('repeated click with updated params');
       let id = await getActiveTab();
-      onBrowserActionClickListener({ id });
+      onRequestOpenIntel(id);
     }
   });
 }
