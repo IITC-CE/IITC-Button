@@ -1,4 +1,4 @@
-var categories = [
+const categories = [
   {name: 'Portal Info', description: 'Enhanced information on the selected portal'},
   {name: 'Info', description: 'Display additional information'},
   {name: 'Keys', description: 'Manual key management'},
@@ -11,34 +11,42 @@ var categories = [
   {name: 'Obsolete', description: 'Plugins that are no longer recommended, due to being superceded by others or similar'}
 ];
 
-var ractive = new Ractive({
+let ractive = new Ractive({
   target: '#target-ractive',
   template: '#template-ractive',
   data: {categories: categories}
 });
 
-ractive.on('openIITC', function (event) {
-  event.original.preventDefault();
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.runtime.sendMessage({'type': "requestOpenIntel", 'tab': tabs[0].id});
-  });
+ractive.on({
+  'openIITC': function (event) {
+    event.original.preventDefault();
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.runtime.sendMessage({'type': "requestOpenIntel", 'tab': tabs[0].id});
+      window.close();
+    })
+  },
+  'toggleIITC': function (event) {
+    var checkedValue = document.querySelector('#toggleIITC').checked;
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
+    })
+  },
+  'open-link': function (event) {
+    chrome.tabs.create({
+      url: event.node.getAttribute( 'data-href' )
+    });
+    window.close();
+  }
 });
 
 
 
-// toggleIITC
+// initialize toggleIITC
 chrome.storage.local.get("IITC-is-enabled", function(data) {
   let status = data['IITC-is-enabled'];
   if (status === undefined || status === true) {
     document.querySelector('#toggleIITC').checked = true
   }
-});
-
-ractive.on('toggleIITC', function (event) {
-  var checkedValue = document.querySelector('#toggleIITC').checked;
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
-  });
 });
 
 
