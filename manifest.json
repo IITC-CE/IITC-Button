@@ -14,7 +14,8 @@
     "activeTab",
     "cookies",
     "storage",
-    "https://*.ingress.com/intel"
+    "https://*.ingress.com/intel",
+    "https://iitc.modos189.ru/*"
   ],
   "default_locale": "en",
   "background": {

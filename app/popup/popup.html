@@ -28,11 +28,13 @@
                     <!--<input type="checkbox" name="my-checkbox" id="always-start-iitc" checked>-->
                 </div>
             </div>
-            {{#each categories}}
-                <div class="element item-wrapper list__item list__item_category" title="{{.description}}"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
-            {{else}}
-                <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>
-            {{/each}}
+            <div class="categories">
+                {{#each categories}}
+                    <div class="element item-wrapper list__item list__item_category" title="{{.desc}}"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
+                {{else}}
+                    <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>
+                {{/each}}
+            </div>
             <div class="item-wrapper hr"></div>
             <div class="element item-wrapper list__item list__item_add"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
             <div class="item-wrapper hr"></div>

@@ -133,7 +133,13 @@ input[type=checkbox].toggle:checked + .title__button {
     border-bottom: 0;
 }
 
-
+/*
+ * categories
+ */
+.categories {
+    max-height: 350px;
+    overflow-y: auto;
+}
 
 
 

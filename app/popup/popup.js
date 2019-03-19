@@ -1,20 +1,7 @@
-const categories = [
-  {name: 'Portal Info', description: 'Enhanced information on the selected portal'},
-  {name: 'Info', description: 'Display additional information'},
-  {name: 'Keys', description: 'Manual key management'},
-  {name: 'Controls', description: 'Map controls/widgets'},
-  {name: 'Highlighter', description: 'Portal highlighters'},
-  {name: 'Layer', description: 'Additional map layers'},
-  {name: 'Map Tiles', description: 'Alternative map layers'},
-  {name: 'Tweaks', description: 'Adjust IITC settings'},
-  {name: 'Misc', description: 'Unclassified plugins'},
-  {name: 'Obsolete', description: 'Plugins that are no longer recommended, due to being superceded by others or similar'}
-];
-
 let ractive = new Ractive({
   target: '#target-ractive',
   template: '#template-ractive',
-  data: {categories: categories}
+  data: {'categories': {}}
 });
 
 ractive.on({
@@ -41,8 +28,22 @@ ractive.on({
 
 
 
-// initialize toggleIITC
-chrome.storage.local.get("IITC-is-enabled", function(data) {
+chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) {
+  // initialize categories
+  let categories = data.release_plugins;
+  const ordered_categories = {};
+  Object.keys(categories).sort().forEach(function(key) {
+    if (!["Obsolete", "Deleted"].includes(key)) {
+      ordered_categories[key] = categories[key];
+    }
+  });
+  // if ('Misc' in categories) {
+  //   ordered_categories['Misc'] = categories['Misc'];
+  // }
+
+  ractive.set('categories', ordered_categories);
+
+  // initialize toggleIITC
   let status = data['IITC-is-enabled'];
   if (status === undefined || status === true) {
     document.querySelector('#toggleIITC').checked = true
@@ -51,18 +52,17 @@ chrome.storage.local.get("IITC-is-enabled", function(data) {
 
 
 
-// chrome.storage.onChanged.addListener(function(changes, namespace) {
-//   for (var key in changes) {
-//     var storageChange = changes[key];
-//     console.log('Storage key "%s" in namespace "%s" changed. ' +
-//                 'Old value was "%s", new value is "%s".',
-//                 key,
-//                 namespace,
-//                 storageChange.oldValue,
-//                 storageChange.newValue);
-//   }
-// });
-
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    var storageChange = changes[key];
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+                'Old value was "%s", new value is "%s".',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+  }
+});
 
 
 
