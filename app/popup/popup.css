@@ -1,7 +1,8 @@
 body {
     cursor: default;
     min-width: 300px;
-    min-height: 400px;
+    min-height: 546px;
+    overflow: hidden;
     margin: 0;
     color: #222;
     font-size: 12px;
@@ -48,6 +49,8 @@ object{
 .element__text {
     flex: auto;
     line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .element__action {
@@ -139,6 +142,51 @@ input[type=checkbox].toggle:checked + .title__button {
 .categories {
     max-height: 350px;
     overflow-y: auto;
+}
+
+/*
+ * plugins
+ */
+.plugins {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+/* section */
+.section {
+    display: block;
+    position: absolute;
+    top: 0;
+    margin-left: 100vw;
+    transition: margin-left 0.15s ease-in-out;
+    width: 100vw;
+}
+.section.main-menu {
+    margin-left: -100vw;
+}
+body#main-menu .section.main-menu {
+    margin-left: 0;
+}
+body#options .section.options, body#plugins .section.plugins {
+    margin-left: 0;
+}
+
+/* header */
+.header {
+    padding: 4px;
+    border-bottom: 1px solid #eee;
+    cursor: default;
+}
+.header__icon {
+    padding: 6px;
+    transition: background-color 0.1s ease-in-out;
+    cursor: pointer;
+}
+.header__icon:hover {
+    background-color: var(--color-silver);
+}
+.header__text {
+    line-height: 32px;
 }
 
 

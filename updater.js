@@ -24,7 +24,7 @@ function checkUpdates() {
 
     if (local.release_iitc_version === undefined) {
       console.log('needUpdate - first start');
-      downloadMeta();
+      downloadMeta(local);
     } else {
       ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
         if (response && response.release !== local.release_iitc_version+'TODO') {

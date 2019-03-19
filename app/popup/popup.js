@@ -1,7 +1,11 @@
 let ractive = new Ractive({
   target: '#target-ractive',
   template: '#template-ractive',
-  data: {'categories': {}}
+  data: {
+    'categories': {},
+    'plugins': {},
+    'category_name': ''
+  }
 });
 
 ractive.on({
@@ -23,6 +27,20 @@ ractive.on({
       url: event.node.getAttribute( 'data-href' )
     });
     window.close();
+  },
+  'back': function (event) {
+    document.body.id = "main-menu";
+  },
+  'open-options': function (event) {
+    document.body.id = "options";
+  },
+  'open-category': function (event) {
+    document.body.id = "plugins";
+    let category_name = event.node.getElementsByTagName("span")[0].innerHTML;
+    ractive.set('category_name', category_name);
+
+    let plugins = ractive.get('categories')[category_name]['plugins'];
+    ractive.set('plugins', plugins);
   }
 });
 
@@ -45,8 +63,8 @@ chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) 
 
   // initialize toggleIITC
   let status = data['IITC-is-enabled'];
-  if (status === undefined || status === true) {
-    document.querySelector('#toggleIITC').checked = true
+  if (status === false) {
+    document.querySelector('#toggleIITC').checked = false
   }
 });
 
