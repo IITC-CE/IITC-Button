@@ -76,6 +76,8 @@ object{
 .title__logo {
     height: 50px;
     width: 100%;
+    z-index: 3;
+    position: relative;
 }
 .title__button {
     color: #fff;
@@ -135,6 +137,9 @@ input[type=checkbox].toggle:checked + .title__button {
 .item-wrapper:last-child {
     border-bottom: 0;
 }
+.categories .item-wrapper:last-child {
+    border-bottom: 1px solid #fff;
+}
 
 /*
  * categories
@@ -145,11 +150,14 @@ input[type=checkbox].toggle:checked + .title__button {
 }
 
 /*
- * plugins
+ * plugins-list
  */
-.plugins {
-    max-height: 350px;
+.plugins-list {
+    max-height: 505px;
     overflow-y: auto;
+}
+.plugins-list .item-wrapper:last-child {
+    margin-bottom: 5px;
 }
 
 /* section */
@@ -171,7 +179,9 @@ body#options .section.options, body#plugins .section.plugins {
     margin-left: 0;
 }
 
-/* header */
+/*
+ * header
+ */
 .header {
     padding: 4px;
     border-bottom: 1px solid #eee;
@@ -189,6 +199,72 @@ body#options .section.options, body#plugins .section.plugins {
     line-height: 32px;
 }
 
+/*
+ * progressbar
+ */
+.progressbar {
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    animation-play-state: paused;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 50px;
+    width: calc(100% - 98px);
+    background-color: #222;
+    animation: preloader-background ease-in-out 2s infinite;
+}
+.progressbar.active {
+    opacity: 1;
+    animation-play-state: running;
+}
+.progressbar::before, .progressbar::after {
+    animation-play-state: running;
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 0;
+    height: 50px;
+    animation: preloader-front ease-in-out 2s infinite;
+    content: '';
+}
+.progressbar.active::before, .progressbar.active::after {
+    animation-play-state: running;
+}
+.progressbar::before {
+    right: 100%;
+}
+.progressbar::after {
+    left: 0;
+}
+
+@keyframes preloader-background {
+    0%, 44.9999% {
+        background-color: #222;
+    }
+    50%, 100% {
+        background-color: #333;
+    }
+}
+@keyframes preloader-front {
+    0% {
+        width: 0;
+        background-color: #333;
+    }
+    49.9999% {
+        width: 100%;
+        background-color: #333;
+    }
+    50% {
+        width: 0;
+        background-color: #222;
+    }
+    100% {
+        width: 100%;
+        background-color: #222;
+    }
+}
 
 
 

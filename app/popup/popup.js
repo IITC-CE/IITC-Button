@@ -41,9 +41,32 @@ ractive.on({
 
     let plugins = ractive.get('categories')[category_name]['plugins'];
     ractive.set('plugins', plugins);
+  },
+  'test-progress': function (event) {
+      let element = document.getElementById("progressbar");
+      if (!(element.classList.contains("active"))) {
+        element.classList.add("active");
+      } else {
+        element.classList.remove("active");
+      }
   }
 });
 
+chrome.runtime.onMessage.addListener(function(request) {
+  console.log(request);
+  switch (request.type) {
+    case "showProgressbar":
+      let element = document.getElementById("progressbar");
+      if (request.value) {
+        element.classList.add("active");
+      } else {
+        element.classList.remove("active");
+      }
+      break;
+    default:
+      console.log("undefined message");
+  }
+});
 
 
 chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) {

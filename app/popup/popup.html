@@ -19,6 +19,7 @@
                 <div class="title">
                     <div class="title__logo-wrapper title__button" on-click="openIITC">
                         <object class="title__logo" type="image/svg+xml" data="/assets/images/IITC-black-horizontally.svg"></object>
+                        <div id="progressbar" class="progressbar"></div>
                     </div>
                     <div class="title__button" on-click="open-options"><i class="title__settings material-icons">settings</i></div>
                     <input id="toggleIITC" on-change="toggleIITC" type="checkbox" class="toggle" value="on" checked="true" />
@@ -36,7 +37,7 @@
                     {{/each}}
                 </div>
                 <div class="item-wrapper hr"></div>
-                <div class="element item-wrapper list__item list__item_add"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
+                <div class="element item-wrapper list__item list__item_add" on-click="test-progress"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
                 <div class="item-wrapper hr"></div>
                 <div class="element item-wrapper list__item list__item_homepage" on-click="open-link" data-href="https://iitc.modos189.ru"><i class="element__icon material-icons">link</i><span class="element__text">IITC-CE Home page</span></div>
                 <div class="element item-wrapper list__item list__item_telegram" on-click="open-link" data-href="https://t.me/iitc_news"><i class="element__icon material-icons">announcement</i><span class="element__text">IITC-CE Telegram channel</span></div>
@@ -55,7 +56,7 @@
                 <i class="element__icon header__icon material-icons" on-click="back">keyboard_arrow_left</i><span class="element__text header__text">{{ category_name }}</span>
             </header>
             <div class="list">
-                <div class="plugins">
+                <div class="plugins-list">
                     {{#each plugins}}
                         <div class="element item-wrapper list__item" title="{{.desc}}"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
                     {{else}}
