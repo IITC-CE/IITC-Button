@@ -13,7 +13,6 @@ onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 
 chrome.runtime.onMessage.addListener(function(request) {
-  console.log(request);
   switch (request.type) {
     case "requestOpenIntel":
       onRequestOpenIntel(request.tab);
@@ -21,8 +20,6 @@ chrome.runtime.onMessage.addListener(function(request) {
     case "toggleIITC":
       onToggleIITC(request.value);
       break;
-    default:
-      console.log("undefined message");
   }
 });
 
@@ -245,3 +242,4 @@ function createTestNotifications(tabId, message) {
     message: message || 'empty'
   })
 }
+

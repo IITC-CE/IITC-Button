@@ -31,7 +31,11 @@
                 </div>
                 <div class="categories">
                     {{#each categories}}
-                        <div class="element item-wrapper list__item" title="{{.desc}}" on-click="open-category"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
+                        <div class="element item-wrapper list__item" title="{{.desc}}" on-click="open-category">
+                            <span class="element__text">{{.name}}</span>
+                            <span class="element__counter">{{.count_plugins_active}}&nbsp;/&nbsp;{{.count_plugins}}</span>
+                            <i class="element__action material-icons">keyboard_arrow_right</i>
+                        </div>
                     {{else}}
                         <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>
                     {{/each}}
@@ -58,7 +62,10 @@
             <div class="list">
                 <div class="plugins-list">
                     {{#each plugins}}
-                        <div class="element item-wrapper list__item" title="{{.desc}}"><span class="element__text">{{.name}}</span><i class="element__action material-icons">keyboard_arrow_right</i></div>
+                        <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
+                            <span class="element__text">{{.name}}</span>
+                            <i class="element__action material-icons">toggle_{{.status}}</i>
+                        </div>
                     {{else}}
                         <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>
                     {{/each}}

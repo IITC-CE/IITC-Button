@@ -42,6 +42,29 @@ ractive.on({
     let plugins = ractive.get('categories')[category_name]['plugins'];
     ractive.set('plugins', plugins);
   },
+  'manage-plugin': function (event) {
+    let plugin_id = event.node.getAttribute( 'data-id' );
+    let plugin_category = event.node.getAttribute( 'data-category' );
+    let status = event.node.getElementsByClassName("element__action")[0].textContent;
+
+    let action = null;
+    console.log('status');
+    console.log(status);
+    console.log(status === 'toggle_on');
+    if (status === 'toggle_on') {
+      action = "off";
+      event.node.classList.remove("on");
+      event.node.classList.add('off');
+      event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_off';
+    } else {
+      action = "on";
+      event.node.classList.remove("off");
+      event.node.classList.add('on');
+      event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_on';
+    }
+
+    chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
+  },
   'test-progress': function (event) {
       let element = document.getElementById("progressbar");
       if (!(element.classList.contains("active"))) {
@@ -53,7 +76,6 @@ ractive.on({
 });
 
 chrome.runtime.onMessage.addListener(function(request) {
-  console.log(request);
   switch (request.type) {
     case "showProgressbar":
       let element = document.getElementById("progressbar");
@@ -63,26 +85,13 @@ chrome.runtime.onMessage.addListener(function(request) {
         element.classList.remove("active");
       }
       break;
-    default:
-      console.log("undefined message");
   }
 });
 
 
 chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) {
   // initialize categories
-  let categories = data.release_plugins;
-  const ordered_categories = {};
-  Object.keys(categories).sort().forEach(function(key) {
-    if (!["Obsolete", "Deleted"].includes(key)) {
-      ordered_categories[key] = categories[key];
-    }
-  });
-  // if ('Misc' in categories) {
-  //   ordered_categories['Misc'] = categories['Misc'];
-  // }
-
-  ractive.set('categories', ordered_categories);
+  ractive.set('categories', data.release_plugins);
 
   // initialize toggleIITC
   let status = data['IITC-is-enabled'];
@@ -94,45 +103,18 @@ chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) 
 
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (var key in changes) {
-    var storageChange = changes[key];
+  for (let key in changes) {
+    let storageChange = changes[key];
     console.log('Storage key "%s" in namespace "%s" changed. ' +
                 'Old value was "%s", new value is "%s".',
                 key,
                 namespace,
                 storageChange.oldValue,
                 storageChange.newValue);
+
+    if (key === "release_plugins") {
+      ractive.set('categories', storageChange.newValue);
+    }
+
   }
 });
-
-
-
-// 'use strict';
-//
-// var buildListView = (list) => {
-//   let result ='';
-//
-//   list.reduce((prev, current, index, arr) => {
-//   let [key, value] = current;
-//   let localStoragePluginValue = localStorage[`plugin/${key}`];
-//   // console.log(key, value, localStorage['plugin/'+key])
-//   if (localStoragePluginValue !== undefined) value = localStoragePluginValue === 'true';
-//   let res = `<li class="list-group-item">${key}
-//       <div class="pull-right">
-//         <input type="checkbox" data-plugin-name="${key}" name="plugin-checkbox" ${value ? 'checked="checked"': ''} >
-//       </div>
-//       </li>`;
-//   result += res;
-//   }, result);
-//
-//   $('.list-group').html('').append(result);
-// };
-//
-// pluginHelpers.getPluginList(null, buildListView);
-// pluginHelpers.setupButtons();
-// pluginHelpers.listenFormChanges();
-/*
-Example 
- */
-// $('[data-plugin-name="map.yandex"]').attr('checked', JSON.parse(localStorage['plugin/map.yandex']));
-/* END */

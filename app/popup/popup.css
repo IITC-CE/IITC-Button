@@ -40,22 +40,29 @@ object{
     display: flex;
     cursor: pointer;
 }
-
 .element__icon {
     padding: 2px;
     margin-right: 8px;
 }
-
 .element__text {
     flex: auto;
     line-height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.element__counter {
+    line-height: 24px;
+    font-weight: 300;
+}
 .element__action {
     padding: 2px;
     margin-left: 8px;
+}
+.element.on .element__action {
+    color: var(--state-on);
+}
+.element.off .element__action {
+    color: var(--state-off2);
 }
 
 /*
@@ -109,7 +116,7 @@ input[type=checkbox].toggle + div label.toggle:before {
     content: "\e9f5";
 } /* unchecked icon */
 input[type=checkbox].toggle + .title__button {
-    background: #e53935;
+    background: var(--state-off);
     transition: background .1s ease-in-out;
 }
 
@@ -117,7 +124,7 @@ input[type=checkbox].toggle:checked + div label.toggle:before {
     content: "\e9f6";
 } /* checked icon */
 input[type=checkbox].toggle:checked + .title__button {
-    background: #43a047;
+    background: var(--state-on);
 }
 
 /*
@@ -271,8 +278,6 @@ body#options .section.options, body#plugins .section.plugins {
 
 
 :root {
- --font-sans-serif:sans-serif;
- --font-serif:serif;
  --font-system:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
  --font-monospace:Menlo,Consolas,"DejaVu Sans Mono",monospace;
  --color-white:#fff;
@@ -292,18 +297,7 @@ body#options .section.options, body#plugins .section.plugins {
  --color-black:#111;
  --color-gray:#aaa;
  --color-silver:#eee;
- --state-primary:tomato;
- --state-secondary:#a5a5a5;
- --state-success:var(--color-green);
- --state-info:var(--color-teal);
- --state-warning:var(--color-orange);
- --state-danger:var(--color-red);
- --state-light:#eee;
- --state-dark:var(--color-black);
- --component-bg-color:#f2f2f2;
- --component-border-color:#ddd;
- --component-border-radius:.25rem;
- --component-border-width:1px;
- --component-padding-x:1rem;
- --component-padding-y:1rem
+ --state-on:#43a047;
+ --state-off:#e53935;
+ --state-off2:#6c3939;
 }
