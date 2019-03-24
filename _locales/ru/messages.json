@@ -1,9 +1,9 @@
 {
     "extName": {
-        "message": "Ingress Intel Enable (IITC для Chrome)"
+        "message": "IITC-Кнопка"
     },
     "extDescription": {
-        "message": "Запускайте Ingress Intel (с IITC) в один клик."
+        "message": "Запускайте Ingress Intel с IITC в один клик."
     },
     "lang": {
         "message": "ru"
