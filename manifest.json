@@ -19,7 +19,10 @@
   ],
   "default_locale": "en",
   "background": {
-    "page": "background.html",
+    "scripts": [
+      "/scripts/background.js",
+      "/scripts/updater.js"
+    ],
     "persistent": false
   },
   "browser_action": {
