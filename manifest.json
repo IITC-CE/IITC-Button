@@ -30,12 +30,13 @@
     "default_popup": "app/popup/popup.html",
     "default_title": "__MSG_titleDefault__",
     "default_icon": {
-      "48": "assets/images/48/logo.png"
+      "48": "assets/images/48/icon.png",
+      "96": "assets/images/96/icon.png"
     }
   },
   "icons": {
-    "48": "assets/images/48/logo.png",
-    "128": "assets/images/128/logo.png"
+    "48": "assets/images/48/icon.png",
+    "128": "assets/images/128/icon.png"
   },
   "manifest_version": 2
 }
