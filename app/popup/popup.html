@@ -64,7 +64,7 @@
                     {{#each plugins}}
                         <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
                             <span class="element__text">{{.name}}</span>
-                            <i class="element__action material-icons">toggle_{{.status}}</i>
+                            <i class="element__action material-icons">{{.icon}}</i>
                         </div>
                     {{else}}
                         <div class="element item-wrapper list__item"><span class="element__text">There's nobody here</span></div>

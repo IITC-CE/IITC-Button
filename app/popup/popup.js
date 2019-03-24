@@ -40,6 +40,9 @@ ractive.on({
     ractive.set('category_name', category_name);
 
     let plugins = ractive.get('categories')[category_name]['plugins'];
+    Object.keys(plugins).forEach(function(id) {
+      plugins[id]['icon'] = 'toggle_'+plugins[id]['status'];
+    });
     ractive.set('plugins', plugins);
   },
   'manage-plugin': function (event) {
