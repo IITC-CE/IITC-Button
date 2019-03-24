@@ -1,7 +1,4 @@
-import { plugins } from "./pluginlist.js";
-
 let activeIITCTab = null;
-const pluginlist = plugins;
 const {
   onActivated,
   onUpdated,
@@ -151,39 +148,53 @@ async function onActivatedListener({
 
 function initialize(tabId) {
 
-  chrome.storage.local.get("IITC-is-enabled", function(data){
+  chrome.storage.local.get(["IITC-is-enabled", "release_iitc_code", "release_plugins_local"], function(data){
     let status = data['IITC-is-enabled'];
-    if (status === undefined || status === true) {
-      /* Example */
-      const activePluginList = [
-        './plugins/player-tracker.user.js'
-      ];
-      console.log(activePluginList, pluginlist)
-      /* Example end */
-      loadPlugins(tabId, pluginlist);
+    let iitc_code = data['release_iitc_code'];
+    if ((status === undefined || status === true) && iitc_code !== undefined) {
+
+      let plugins_local = data['release_plugins_local'];
+      if (plugins_local !== undefined) {
+        Object.keys(plugins_local).forEach(function(id) {
+          let plugin = plugins_local[id];
+          if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_idle", plugin['code'], function () {
+              console.info('plugin %s loaded', id);
+            });
+          }
+        });
+      }
 
       chrome.tabs.executeScript(tabId, {
-        runAt: "document_start",
-        file: './scripts/total-conversion-build.user.js'
-      }, () => activeIITCTab = tabId );
+        runAt: "document_idle",
+        file: './scripts/pre.js'
+      }, () => {
+        loadJS(tabId, "document_idle", iitc_code, function () {
+          activeIITCTab = tabId;
+        });
+      });
+
     }
   });
 
 }
 
 
-function loadPlugins(tabId, list) {
+function loadJS(tabId, runAt, code, callback) {
   if(!tabId) { console.log('no tabId!'); return}
-  if(!list) { console.log('no plugins!'); return}
+  callback = (typeof callback == 'function' ? callback : false);
 
-  list.forEach(function(file) {
-    chrome.tabs.executeScript(tabId, {
-      runAt: "document_idle",
-      file
-    }, () => {
-      console.info('plugin %s loaded', file);
-    });
+  chrome.tabs.executeScript(tabId, {
+    runAt: runAt,
+    code: code
+  }, () => {
+    if(chrome.runtime.lastError) {
+      console.log('err');
+      console.log(chrome.runtime.lastError.message);
+    }
+    if (callback) callback();
   });
+
 }
 
 function setTabActive(tabId) {
@@ -234,12 +245,3 @@ function isIngressUrl(url) {
   }
   return false
 }
-function createTestNotifications(tabId, message) {
-  chrome.notifications.create(undefined, {
-    type: 'basic',
-    title: 'Test notif',
-    iconUrl: './logo.png',
-    message: message || 'empty'
-  })
-}
-

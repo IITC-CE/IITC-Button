@@ -51,9 +51,6 @@ ractive.on({
     let status = event.node.getElementsByClassName("element__action")[0].textContent;
 
     let action = null;
-    console.log('status');
-    console.log(status);
-    console.log(status === 'toggle_on');
     if (status === 'toggle_on') {
       action = "off";
       event.node.classList.remove("on");

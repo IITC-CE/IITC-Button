@@ -9,7 +9,8 @@ chrome.runtime.onMessage.addListener(function(request) {
 });
 
 let ajaxGet = function (url, parseJSON, callback) {
-  var callback = (typeof callback == 'function' ? callback : false), xhr = null;
+  callback = (typeof callback == 'function' ? callback : false);
+  let xhr = null;
   xhr = new XMLHttpRequest();
   if (!xhr) return null;
   xhr.open("GET", url,true);
@@ -80,7 +81,6 @@ function preparationCategories(unordered_categories) {
       }
     }
   });
-  console.log(unordered_categories);
   return categories;
 }
 
@@ -96,7 +96,7 @@ function downloadMeta(local) {
     ajaxGet("https://iitc.modos189.ru/build/release/total-conversion-build.user.js", false, function (response) {
       if (response) {
         chrome.storage.local.set({
-          'release_iitc': response
+          'release_iitc_code': response
         });
       }
     });
@@ -110,11 +110,8 @@ function updatePluginsLocal(categories, local, response) {
   // No plugins installed
   if (plugins_local === undefined) return;
 
-  console.log(plugins_local);
   // Iteration local plugins
   Object.keys(plugins_local).forEach(function(id) {
-    console.log(id);
-
     let filename = null;
 
     // Iteration meta categories
@@ -141,7 +138,6 @@ function updatePluginsLocal(categories, local, response) {
 function managePlugin(id, category, action) {
   chrome.storage.local.get(["release_plugins", "release_plugins_local"], function(local) {
     let plugins = local.release_plugins;
-    console.log(plugins[category]);
     let plugins_local = local.release_plugins_local;
     if (action === 'on') {
 
