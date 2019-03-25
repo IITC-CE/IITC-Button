@@ -8,6 +8,17 @@ let ractive = new Ractive({
   }
 });
 
+let message_timeout_id = null;
+function showMessage(msg) {
+  let block = document.getElementById("message");
+  block.innerText = msg;
+  block.classList.add("open");
+  clearTimeout(message_timeout_id);
+  message_timeout_id = setTimeout(function(){
+    block.classList.remove("open");
+  }, 3000);
+}
+
 ractive.on({
   'openIITC': function (event) {
     event.original.preventDefault();
@@ -62,6 +73,7 @@ ractive.on({
       event.node.classList.add('on');
       event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_on';
     }
+    showMessage("Changes will be applied after rebooting Intel");
 
     chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
   },
