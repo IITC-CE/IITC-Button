@@ -77,6 +77,17 @@ ractive.on({
 
     chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
   },
+  'change_update_check_interval': function (event) {
+    let val = event.node.value;
+    console.log(val);
+    chrome.storage.local.set({
+      'update_check_interval': val
+    });
+  },
+  'force_update': function (event) {
+    chrome.runtime.sendMessage({'type': "forceUpdate"});
+    showMessage("Update in progress…");
+  },
   'test-progress': function (event) {
       let element = document.getElementById("progressbar");
       if (!(element.classList.contains("active"))) {
@@ -101,7 +112,7 @@ chrome.runtime.onMessage.addListener(function(request) {
 });
 
 
-chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) {
+chrome.storage.local.get(["IITC-is-enabled", "release_plugins", "update_check_interval"], function(data) {
   // initialize categories
   ractive.set('categories', data.release_plugins);
 
@@ -110,6 +121,12 @@ chrome.storage.local.get(["IITC-is-enabled", "release_plugins"], function(data) 
   if (status === false) {
     document.querySelector('#toggleIITC').checked = false
   }
+
+  let update_check_interval = data['update_check_interval'];
+  if (!update_check_interval) {
+    update_check_interval = 24;
+  }
+  document.getElementById("update_check_interval").value = update_check_interval;
 });
 
 

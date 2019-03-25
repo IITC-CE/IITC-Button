@@ -207,6 +207,65 @@ body#options .section.options, body#plugins .section.plugins {
 }
 
 /*
+ * h2
+ */
+h2 {
+    font-size: 1rem;
+    margin: 0;
+    padding: 2px 12px 3px 10px;
+}
+
+.settings-section {
+    padding: 15px 0;
+}
+
+/*
+ * input-field
+ */
+.input-field {
+    margin: 0;
+    padding: 4px 12px 4px 10px;
+}
+.input-field label {
+    vertical-align: super;
+    margin-left: 8px;
+    line-height: 26px;
+}
+
+/*
+ * update-check
+ */
+.update-check {
+    display: flex;
+}
+.update-check__setting {
+    flex: auto;
+}
+.update-check__input {
+    width: 10ch;
+    height: 30px;
+}
+.update-check__text {
+    margin-left: 8px;
+}
+
+/*
+ * button
+ */
+.button {
+    cursor: pointer;
+    line-height: 28px;
+    padding: 0 10px;
+    background: #eee;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    transition: background 0.1s linear;
+}
+.button:hover, .button:active, .button:focus {
+    background: #f2f2f2;
+}
+
+/*
  * message
  */
 .message {

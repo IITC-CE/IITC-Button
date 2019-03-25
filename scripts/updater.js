@@ -5,6 +5,9 @@ chrome.runtime.onMessage.addListener(function(request) {
     case "managePlugin":
       managePlugin(request.id, request.category, request.action);
       break;
+    case "forceUpdate":
+      checkUpdates(true);
+      break;
   }
 });
 
@@ -40,20 +43,36 @@ function showProgress(value) {
   });
 }
 
-function checkUpdates() {
-  chrome.storage.local.get(["release_iitc_version", "release_plugins", "release_plugins_local"], function(local){
+function checkUpdates(force) {
+  chrome.storage.local.get([
+    "last_check_update",
+    "update_check_interval",
+    "release_iitc_version",
+    "release_plugins",
+    "release_plugins_local"
+  ], function(local){
 
-    if (local.release_iitc_version === undefined) {
-      console.log('needUpdate - first start');
+    let update_check_interval = local.update_check_interval;
+    if (!update_check_interval) {
+      update_check_interval = 24;
+    }
+
+    if (local.release_iitc_version === undefined || local.last_check_update === undefined) {
       downloadMeta(local);
     } else {
-      ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
-        if (response && response.release !== local.release_iitc_version) {
-          console.log('needUpdate - new version');
-          downloadMeta(local);
-        }
-      });
+      let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
+      if (time_delta > 0 || force) {
+        ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
+          if (response && response.release !== local.release_iitc_version || force) {
+            downloadMeta(local);
+          }
+        });
+      }
     }
+
+    chrome.storage.local.set({
+      'last_check_update': Math.floor(Date.now() / 1000)
+    });
 
   });
 }
