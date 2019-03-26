@@ -54,19 +54,18 @@
             </header>
             <div class="settings-section">
                 <h2>Choosing a IITC-CE update channel</h2>
+            {{# updateChannels:i}}
                 <p class="input-field">
-                    <input type="radio" id="release" name="update-channel" value="release" checked><label for="release">Release</label>
+                    <input type="radio" id="{{.value}}" name="update-channel" value="{{i}}" checked={{.checked}} on-click="change-update-channel"><label for="{{.value}}">{{name}}</label>
                 </p>
-                <p class="input-field">
-                    <input type="radio" id="test" name="update-channel" value="test"><label for="test">Test builds</label>
-                </p>
+            {{/}}
             </div>
             <div class="hr"></div>
             <div class="settings-section">
                 <h2>Update check frequency</h2>
                 <div class="input-field update-check">
                     <div class="update-check__setting">
-                        <input id="update_check_interval" class="update-check__input" type="number" size="5" on-change="change_update_check_interval"><span class="update-check__text">hours</span>
+                        <input id="update_check_interval" class="update-check__input" type="number" size="5" on-change="change-update-check-interval"><span class="update-check__text">hours</span>
                     </div>
                     <div class="button" on-click="force_update">update now</div>
                 </div>

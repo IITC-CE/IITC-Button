@@ -1,3 +1,4 @@
+let update_timeout_id = null;
 checkUpdates();
 
 chrome.runtime.onMessage.addListener(function(request) {
@@ -48,22 +49,30 @@ function checkUpdates(force) {
     "last_check_update",
     "update_check_interval",
     "release_iitc_version",
+    "test_iitc_version",
     "release_plugins",
-    "release_plugins_local"
+    "test_plugins",
+    "release_plugins_local",
+    "test_plugins_local"
   ], function(local){
+
+    if (local.update_channel) {
+      updateChannel = local.update_channel;
+    }
+    console.log('update channel (updater): '+updateChannel);
 
     let update_check_interval = local.update_check_interval;
     if (!update_check_interval) {
       update_check_interval = 24;
     }
 
-    if (local.release_iitc_version === undefined || local.last_check_update === undefined) {
+    if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined) {
       downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
       if (time_delta > 0 || force) {
         ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
-          if (response && response.release !== local.release_iitc_version || force) {
+          if (response && response[updateChannel] !== local[updateChannel+'_iitc_version'] || force) {
             downloadMeta(local);
           }
         });
@@ -74,6 +83,10 @@ function checkUpdates(force) {
       'last_check_update': Math.floor(Date.now() / 1000)
     });
 
+    clearTimeout(update_timeout_id);
+    update_timeout_id = setTimeout(function(){
+      checkUpdates();
+    }, update_check_interval*60*60*1000);
   });
 }
 
@@ -104,19 +117,33 @@ function preparationCategories(unordered_categories) {
 }
 
 function downloadMeta(local) {
-  ajaxGet("https://iitc.modos189.ru/release.json", true, function (response) {
+  ajaxGet("https://iitc.modos189.ru/"+updateChannel+".json", true, function (response) {
 
-    let categories = preparationCategories(response.release_plugins);
-    chrome.storage.local.set({
-      'release_iitc_version': response.release_iitc_version,
-      'release_plugins': categories
-    });
+    let categories = preparationCategories(response[updateChannel+'_plugins']);
+    if (updateChannel === 'release') {
+      chrome.storage.local.set({
+        'release_iitc_version': response.release_iitc_version,
+        'release_plugins': categories
+      });
+    } else {
+      chrome.storage.local.set({
+        'test_iitc_version': response.test_iitc_version,
+        'test_plugins': categories
+      });
+    }
+
     console.log('download total-conversion-build.user.js');
-    ajaxGet("https://iitc.modos189.ru/build/release/total-conversion-build.user.js", false, function (response) {
+    ajaxGet("https://iitc.modos189.ru/build/"+updateChannel+"/total-conversion-build.user.js", false, function (response) {
       if (response) {
-        chrome.storage.local.set({
-          'release_iitc_code': response
-        });
+        if (updateChannel === 'release') {
+          chrome.storage.local.set({
+            'release_iitc_code': response
+          });
+        } else {
+          chrome.storage.local.set({
+            'test_iitc_code': response
+          });
+        }
       }
     });
     updatePluginsLocal(categories, local, response);
@@ -124,7 +151,7 @@ function downloadMeta(local) {
 }
 
 function updatePluginsLocal(categories, local, response) {
-  let plugins_local = local.release_plugins_local;
+  let plugins_local = local[updateChannel+'_plugins_local'];
 
   // No plugins installed
   if (plugins_local === undefined) return;
@@ -141,7 +168,7 @@ function updatePluginsLocal(categories, local, response) {
 
         if (filename) {
           categories[cat]['plugins'][id]['status'] = 'on';
-          ajaxGet("https://iitc.modos189.ru/build/release/plugins/"+filename, false, function (response) {});
+          ajaxGet("https://iitc.modos189.ru/build/"+updateChannel+"/plugins/"+filename, false, function (response) {});
         } else {
           delete plugins_local[id];
         }
@@ -149,15 +176,21 @@ function updatePluginsLocal(categories, local, response) {
     });
   });
 
-  chrome.storage.local.set({
-    'release_plugins': categories
-  });
+  if (updateChannel === 'release') {
+    chrome.storage.local.set({
+      'release_plugins': categories
+    });
+  } else {
+    chrome.storage.local.set({
+      'test_plugins': categories
+    });
+  }
 }
 
 function managePlugin(id, category, action) {
-  chrome.storage.local.get(["release_plugins", "release_plugins_local"], function(local) {
-    let plugins = local.release_plugins;
-    let plugins_local = local.release_plugins_local;
+  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local"], function(local) {
+    let plugins = local[updateChannel+'_plugins'];
+    let plugins_local = local[updateChannel+'_plugins_local'];
     if (action === 'on') {
 
       if (plugins_local !== undefined && plugins_local[id] !== undefined) {
@@ -168,16 +201,23 @@ function managePlugin(id, category, action) {
         plugins[category]['plugins'][id]['status'] = 'on';
         plugins_local[id]['status'] = 'on';
 
-        chrome.storage.local.set({
-          'release_plugins': plugins,
-          'release_plugins_local': plugins_local,
-        });
+        if (updateChannel === 'release') {
+          chrome.storage.local.set({
+            'release_plugins': plugins,
+            'release_plugins_local': plugins_local,
+          });
+        } else {
+          chrome.storage.local.set({
+            'test_plugins': plugins,
+            'test_plugins_local': plugins_local,
+          });
+        }
       } else {
         if (plugins_local === undefined) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        ajaxGet("https://iitc.modos189.ru/build/release/plugins/"+filename, false, function (response) {
+        ajaxGet("https://iitc.modos189.ru/build/"+updateChannel+"/plugins/"+filename, false, function (response) {
           if (response) {
             plugins[category]['plugins'][id]['status'] = 'on';
             plugins[category]['count_plugins_active'] += 1;
@@ -186,10 +226,17 @@ function managePlugin(id, category, action) {
               'status': 'on',
               'code': response
             };
-            chrome.storage.local.set({
-              'release_plugins': plugins,
-              'release_plugins_local': plugins_local,
-            });
+            if (updateChannel === 'release') {
+              chrome.storage.local.set({
+                'release_plugins': plugins,
+                'release_plugins_local': plugins_local,
+              });
+            } else {
+              chrome.storage.local.set({
+                'test_plugins': plugins,
+                'test_plugins_local': plugins_local,
+              });
+            }
           }
         });
       }
@@ -204,10 +251,17 @@ function managePlugin(id, category, action) {
       plugins[category]['plugins'][id]['status'] = 'off';
       plugins_local[id]['status'] = 'off';
 
-      chrome.storage.local.set({
-        'release_plugins': plugins,
-        'release_plugins_local': plugins_local,
-      });
+      if (updateChannel === 'release') {
+        chrome.storage.local.set({
+          'release_plugins': plugins,
+          'release_plugins_local': plugins_local,
+        });
+      } else {
+        chrome.storage.local.set({
+          'test_plugins': plugins,
+          'test_plugins_local': plugins_local,
+        });
+      }
 
     }
   });

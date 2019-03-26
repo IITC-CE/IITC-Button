@@ -1,4 +1,5 @@
 let activeIITCTab = null;
+let updateChannel = 'release';
 const {
   onActivated,
   onUpdated,
@@ -58,7 +59,7 @@ async function onRequestOpenIntel(id) {
 }
 
 async function onToggleIITC(value) {
-  chrome.storage.local.set({'IITC-is-enabled': value}, async function() {
+  chrome.storage.local.set({'IITC_is_enabled': value}, async function() {
     console.log('Value is set to ' + value);
     if (activeIITCTab) {
       let isActive = false;
@@ -148,12 +149,25 @@ async function onActivatedListener({
 
 function initialize(tabId) {
 
-  chrome.storage.local.get(["IITC-is-enabled", "release_iitc_code", "release_plugins_local"], function(data){
-    let status = data['IITC-is-enabled'];
-    let iitc_code = data['release_iitc_code'];
+  chrome.storage.local.get([
+    "IITC_is_enabled",
+    "update_channel",
+    "release_iitc_code",
+    "test_iitc_code",
+    "release_plugins_local",
+    "test_plugins_local"
+  ], function(data){
+
+    if (data.update_channel) {
+      updateChannel = data.update_channel;
+    }
+    console.log('update channel (background): '+updateChannel);
+
+    let status = data['IITC_is_enabled'];
+    let iitc_code = data[updateChannel+'_iitc_code'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
-      let plugins_local = data['release_plugins_local'];
+      let plugins_local = data[updateChannel+'_plugins_local'];
       if (plugins_local !== undefined) {
         Object.keys(plugins_local).forEach(function(id) {
           let plugin = plugins_local[id];
