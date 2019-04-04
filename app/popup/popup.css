@@ -6,7 +6,7 @@ body {
     margin: 0;
     color: #222;
     font-size: 12px;
-    font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
+    font-family: var(--font-system);
 }
 
 .material-icons {
@@ -50,6 +50,13 @@ object{
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.element__user {
+    background: var(--color-olive);
+    color: var(--color-white);
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,.1);
+}
 .element__counter {
     line-height: 24px;
     font-weight: 300;
@@ -63,6 +70,12 @@ object{
 }
 .element.off .element__action {
     color: var(--state-off2);
+}
+.element.user .element__action {
+    color: var(--color-black);
+}
+.element.user:hover .element__action {
+    color: var(--state-off);
 }
 
 /*
@@ -87,7 +100,7 @@ object{
     position: relative;
 }
 .title__button {
-    color: #fff;
+    color: var(--color-white);
     border-left: 1px solid #333;
 }
 .title__button:hover {
@@ -139,20 +152,20 @@ input[type=checkbox].toggle:checked + .title__button {
  * item-wrapper
  */
 .item-wrapper {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--color-white);
 }
 .item-wrapper:last-child {
     border-bottom: 0;
 }
 .categories .item-wrapper:last-child {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--color-white);
 }
 
 /*
  * categories
  */
 .categories {
-    max-height: 350px;
+    height: 350px;
     overflow-y: auto;
 }
 
@@ -181,6 +194,7 @@ input[type=checkbox].toggle:checked + .title__button {
 }
 body#main-menu .section.main-menu {
     margin-left: 0;
+    z-index: 1;
 }
 body#options .section.options, body#plugins .section.plugins {
     margin-left: 0;
@@ -276,9 +290,10 @@ h2 {
     height: 35px;
     line-height: 35px;
     padding: 0 10px 0 10px;
-    color: #fff;
+    color: var(--color-white);
     font-weight: 400;
     transition: bottom 0.3s ease-in-out;
+    z-index: 10;
 }
 .message.open {
     bottom: 0;
@@ -359,19 +374,13 @@ h2 {
  --font-system:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
  --font-monospace:Menlo,Consolas,"DejaVu Sans Mono",monospace;
  --color-white:#fff;
- --color-navy:#001f3f;
  --color-blue:#0074d9;
- --color-aqua:#7fdbff;
- --color-teal:#39cccc;
- --color-olive:#3d9970;
+ --color-olive:#48a77c;
  --color-green:#2ecc40;
  --color-lime:#01ff70;
  --color-yellow:#ffdc00;
  --color-orange:#ff851b;
  --color-red:#ff4136;
- --color-maroon:#85144b;
- --color-fuchsia:#f012be;
- --color-purple:#b10dc9;
  --color-black:#111;
  --color-gray:#aaa;
  --color-silver:#eee;

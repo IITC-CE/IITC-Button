@@ -101,7 +101,7 @@ async function onUpdatedListener(tabId, status) {
     console.log('tab is active: ', active);
     if (active) {
       //chrome.pageAction.show(tabId);
-    } else return false
+    } else return false;
 
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
@@ -155,7 +155,9 @@ function initialize(tabId) {
     "release_iitc_code",
     "test_iitc_code",
     "release_plugins_local",
-    "test_plugins_local"
+    "test_plugins_local",
+    "release_plugins_user",
+    "test_plugins_user"
   ], function(data){
 
     if (data.update_channel) {
@@ -174,6 +176,18 @@ function initialize(tabId) {
           if (plugin['status'] === 'on') {
             loadJS(tabId, "document_idle", plugin['code'], function () {
               console.info('plugin %s loaded', id);
+            });
+          }
+        });
+      }
+
+      let plugins_user = data[updateChannel+'_plugins_user'];
+      if (plugins_user !== undefined) {
+        Object.keys(plugins_user).forEach(function(id) {
+          let plugin = plugins_user[id];
+          if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_idle", plugin['code'], function () {
+              console.info('userscript %s loaded', id);
             });
           }
         });
@@ -200,7 +214,7 @@ function loadJS(tabId, runAt, code, callback) {
 
   chrome.tabs.executeScript(tabId, {
     runAt: runAt,
-    code: code
+    code: code+";true"
   }, () => {
     if(chrome.runtime.lastError) {
       console.log('err');

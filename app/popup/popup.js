@@ -59,8 +59,15 @@ ractive.on({
 
     let plugins = ractive.get('categories')[category_name]['plugins'];
     Object.keys(plugins).forEach(function(id) {
-      plugins[id]['icon'] = 'toggle_'+plugins[id]['status'];
+      if (plugins[id]['status'] === 'user') {
+        plugins[id]['icon'] = 'close';
+      } else {
+        plugins[id]['icon'] = 'toggle_' + plugins[id]['status'];
+      }
     });
+    // Hack to reset the list of plugins.
+    // Otherwise, duplicate plugins (observed when switching from category UserScripts) are moved to top of the list.
+    ractive.set('plugins', {});
     ractive.set('plugins', plugins);
   },
   'manage-plugin': function (event) {
@@ -74,11 +81,17 @@ ractive.on({
       event.node.classList.remove("on");
       event.node.classList.add('off');
       event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_off';
-    } else {
+    } else if (status === 'toggle_off') {
       action = "on";
       event.node.classList.remove("off");
       event.node.classList.add('on');
       event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_on';
+    } else if (status === 'close') {
+      action = "delete";
+      event.node.classList.remove("user");
+      event.node.classList.add('off');
+      event.node.getElementsByClassName("element__user")[0].remove();
+      event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_off';
     }
     showMessage("Changes will be applied after rebooting Intel");
 
@@ -101,14 +114,6 @@ ractive.on({
   'force_update': function (event) {
     chrome.runtime.sendMessage({'type': "forceUpdate"});
     showMessage("Update in progress…");
-  },
-  'test-progress': function (event) {
-      let element = document.getElementById("progressbar");
-      if (!(element.classList.contains("active"))) {
-        element.classList.add("active");
-      } else {
-        element.classList.remove("active");
-      }
   }
 });
 
@@ -169,3 +174,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
   }
 });
+
+
+
+
+// Listen for a file being selected through the file picker
+const inputElement = document.getElementById("input");
+inputElement.addEventListener("change", handlePicked, false);
+
+// Get the image file if it was chosen from the pick list
+function handlePicked() {
+  console.log(this.files);
+}

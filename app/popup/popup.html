@@ -40,8 +40,8 @@
                         <div class="element item-wrapper list__item"><span class="element__text">No data</span></div>
                     {{/each}}
                 </div>
-                <!--<div class="item-wrapper hr"></div>-->
-                <!--<div class="element item-wrapper list__item list__item_add" on-click="test-progress"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>-->
+                <div class="item-wrapper hr"></div>
+                <div class="element item-wrapper list__item list__item_add" on-click="open-link" data-href="/app/main/main.html"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
                 <div class="item-wrapper hr"></div>
                 <div class="element item-wrapper list__item list__item_homepage" on-click="open-link" data-href="https://iitc.modos189.ru"><i class="element__icon material-icons">link</i><span class="element__text">IITC-CE Home page</span></div>
                 <div class="element item-wrapper list__item list__item_telegram" on-click="open-link" data-href="https://t.me/iitc_news"><i class="element__icon material-icons">announcement</i><span class="element__text">IITC-CE Telegram channel</span></div>
@@ -81,7 +81,9 @@
                     {{#each plugins}}
                         <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
                             <span class="element__text">{{.name}}</span>
+                            {{#if (.status === 'user')}}<span class="element__user">custom</span>{{/if}}
                             <i class="element__action material-icons">{{.icon}}</i>
+                            {{#if (.category === 'UserScripts')}}<i class="element__action material-icons">close</i>{{/if}}
                         </div>
                     {{else}}
                         <div class="element item-wrapper list__item"><span class="element__text">No data</span></div>
