@@ -174,15 +174,3 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
   }
 });
-
-
-
-
-// Listen for a file being selected through the file picker
-const inputElement = document.getElementById("input");
-inputElement.addEventListener("change", handlePicked, false);
-
-// Get the image file if it was chosen from the pick list
-function handlePicked() {
-  console.log(this.files);
-}
