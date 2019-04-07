@@ -65,16 +65,22 @@ object{
     padding: 2px;
     margin-left: 8px;
 }
+.element__action___close {
+    background: #fff;
+    border-radius: 3px;
+    padding: 2px;
+    margin-left: 8px;
+}
 .element.on .element__action {
     color: var(--state-on);
 }
 .element.off .element__action {
     color: var(--state-off2);
 }
-.element.user .element__action {
+.element.user .element__action, .element__action___close:hover {
     color: var(--color-black);
 }
-.element.user:hover .element__action {
+.element.user:hover .element__action, .element__action___close:hover {
     color: var(--state-off);
 }
 

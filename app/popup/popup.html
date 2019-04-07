@@ -82,8 +82,8 @@
                         <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
                             <span class="element__text">{{.name}}</span>
                             {{#if (.status === 'user')}}<span class="element__user">custom</span>{{/if}}
+                            {{#if (category_name === 'UserScripts')}}<i class="element__action___close material-icons" on-click="delete-plugin">close</i>{{/if}}
                             <i class="element__action material-icons">{{.icon}}</i>
-                            {{#if (.category === 'UserScripts')}}<i class="element__action material-icons">close</i>{{/if}}
                         </div>
                     {{else}}
                         <div class="element item-wrapper list__item"><span class="element__text">No data</span></div>

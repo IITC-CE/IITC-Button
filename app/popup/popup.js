@@ -90,12 +90,19 @@ ractive.on({
       action = "delete";
       event.node.classList.remove("user");
       event.node.classList.add('off');
-      event.node.getElementsByClassName("element__user")[0].remove();
+      if (event.node.getElementsByClassName("element__user")[0]) {
+        event.node.getElementsByClassName("element__user")[0].remove();
+      } else {
+        event.node.remove();
+      }
       event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_off';
     }
     showMessage("Changes will be applied after rebooting Intel");
-
+    console.log(action);
     chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
+  },
+  'delete-plugin': function (event) {
+    event.node.parentNode.getElementsByClassName("element__action")[0].textContent = 'close';
   },
   'change-update-channel': function (event) {
     chrome.storage.local.set({
