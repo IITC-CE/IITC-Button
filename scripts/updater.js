@@ -56,6 +56,7 @@ function save(options) {
       data[key] = options[key];
     }
   });
+  console.log(data);
   chrome.storage.local.set(data);
 }
 
@@ -93,16 +94,13 @@ function showProgress(value) {
 
 function checkUpdates(force) {
   chrome.storage.local.get([
+    "update_channel",
     "last_check_update",
     "update_check_interval",
-    "release_iitc_version",
-    "test_iitc_version",
-    "release_plugins",
-    "test_plugins",
-    "release_plugins_local",
-    "test_plugins_local",
-    "release_plugins_user",
-    "test_plugins_user"
+    "release_iitc_version",  "test_iitc_version",
+    "release_plugins",       "test_plugins",
+    "release_plugins_local", "test_plugins_local",
+    "release_plugins_user",  "test_plugins_user"
   ], function(local){
 
     if (local.update_channel) {

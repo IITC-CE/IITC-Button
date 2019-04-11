@@ -20,6 +20,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "/scripts/defaults.js",
       "/scripts/background.js",
       "/scripts/updater.js"
     ],

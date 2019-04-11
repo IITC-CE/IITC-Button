@@ -230,9 +230,13 @@ body#options .section.options, body#plugins .section.plugins {
  * h2
  */
 h2 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0;
     padding: 2px 12px 3px 10px;
+}
+
+h2:first-letter {
+    text-transform: uppercase;
 }
 
 .settings-section {
@@ -253,23 +257,6 @@ h2 {
 }
 
 /*
- * update-check
- */
-.update-check {
-    display: flex;
-}
-.update-check__setting {
-    flex: auto;
-}
-.update-check__input {
-    width: 10ch;
-    height: 30px;
-}
-.update-check__text {
-    margin-left: 8px;
-}
-
-/*
  * button
  */
 .button {
@@ -283,6 +270,48 @@ h2 {
 }
 .button:hover, .button:active, .button:focus {
     background: #f2f2f2;
+}
+
+/*
+ * update-check
+ */
+.update-check {
+    display: flex;
+}
+.update-check__setting {
+    flex: auto;
+    padding: 2px 0 0 0;
+    text-align: right;
+}
+.update-check__input {
+    width: 70%;
+    height: 30px;
+}
+.update-check__text {
+    margin-left: 8px;
+}
+.update-check__col {
+    flex: auto;
+    flex-direction: column;
+    padding-right: 8px;
+}
+.update-check__label {
+    padding-right: 5px;
+}
+
+/*
+ * local-server
+ */
+.local-server {
+    display: flex;
+}
+.local-server__input {
+    box-sizing: border-box;
+    width: 50%;
+    flex: auto;
+}
+.local-server__input:first-child {
+    margin-right: 5px;
 }
 
 /*

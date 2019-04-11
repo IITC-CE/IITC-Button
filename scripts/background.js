@@ -1,5 +1,4 @@
 let activeIITCTab = null;
-let updateChannel = 'release';
 const {
   onActivated,
   onUpdated,

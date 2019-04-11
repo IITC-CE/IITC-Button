@@ -1,7 +1,14 @@
 let updateChannelsData = {
   release: {name: 'Release', value: 'release', checked: true},
-  test: {name: 'Test builds', value: 'test', checked: false}
+  test: {name: 'Test builds', value: 'test', checked: false},
+  local: {name: 'Local server', value: 'local', checked: false}
 };
+let updateIntervalsData = [
+  {name: 'Every 6 Hours', value: '6'},
+  {name: 'Every 12 Hours', value: '12'},
+  {name: 'Every Day', value: '24'},
+  {name: 'Every Week', value: '168'}
+];
 let updateChannel = 'release';
 
 let ractive = new Ractive({
@@ -10,7 +17,9 @@ let ractive = new Ractive({
   data: {
     'categories': {},
     'plugins': {},
+    'updateChannel': updateChannel,
     'updateChannels': updateChannelsData,
+    'updateIntervals': updateIntervalsData,
     'category_name': ''
   }
 });
@@ -105,10 +114,13 @@ ractive.on({
     event.node.parentNode.getElementsByClassName("element__action")[0].textContent = 'close';
   },
   'change-update-channel': function (event) {
+    let updateChannel = event.node.value;
     chrome.storage.local.set({
-      'update_channel': event.node.value
+      'update_channel': updateChannel
+    }, function () {
+      chrome.runtime.sendMessage({'type': "forceUpdate"});
+      ractive.set('updateChannel', updateChannel);
     });
-    chrome.runtime.sendMessage({'type': "forceUpdate"});
     showMessage("Update in progress…");
   },
   'change-update-check-interval': function (event) {
@@ -146,6 +158,7 @@ chrome.storage.local.get(["IITC_is_enabled", "update_channel", "release_plugins"
     updateChannel = data.update_channel;
   }
   console.log('update channel (popup): '+updateChannel);
+  ractive.set('updateChannel', updateChannel);
 
   // initialize categories
   ractive.set('categories', data[updateChannel+'_plugins']);

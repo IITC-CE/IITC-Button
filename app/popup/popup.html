@@ -50,7 +50,7 @@
         </section>
         <section class="section options">
             <header class="header element">
-                <i class="element__icon header__icon material-icons" on-click="back">keyboard_arrow_left</i><span class="element__text header__text">IITC-CE Button options</span>
+                <i class="element__icon header__icon material-icons" on-click="back">keyboard_arrow_left</i><span class="element__text header__text">IITC-CE Button options</span> <div class="button" on-click="force_update">update now</div>
             </header>
             <div class="settings-section">
                 <h2>Choosing a IITC-CE update channel</h2>
@@ -62,15 +62,52 @@
             </div>
             <div class="hr"></div>
             <div class="settings-section">
-                <h2>Update check frequency</h2>
+                <h2>IITC-CE checks for updates</h2>
                 <div class="input-field update-check">
-                    <div class="update-check__setting">
-                        <input id="update_check_interval" class="update-check__input" type="number" size="5" on-change="change-update-check-interval"><span class="update-check__text">hours</span>
+                    <div class="update-check__col">
+                        <div class="update-check__setting">
+                            <span class="update-check__label">Release:</span>
+                            <select id="update_check_interval" class="update-check__input" name="update-interval" on-change="change-update-release-check-interval">
+                            {{# updateIntervals:i}}
+                                <option value="{{.value}}">{{name}}</option>
+                            {{/}}
+                            </select>
+                        </div>
+                        <div class="update-check__setting">
+                            <span class="update-check__label">Test builds:</span>
+                            <select id="update_check_interval" class="update-check__input" name="update-interval" on-change="change-update-test-check-interval">
+                            {{# updateIntervals:i}}
+                                <option value="{{.value}}">{{name}}</option>
+                            {{/}}
+                            </select>
+                        </div>
                     </div>
-                    <div class="button" on-click="force_update">update now</div>
                 </div>
             </div>
             <div class="hr"></div>
+            <div class="settings-section">
+                <h2>External plugins checks for updates</h2>
+                <div class="input-field update-check">
+                    <div class="update-check__col">
+                        <div class="update-check__setting">
+                            <span class="update-check__label">Any:</span>
+                            <select id="update_check_interval" class="update-check__input" name="update-interval" on-change="change-update-check-interval">
+                            {{# updateIntervals:i}}
+                                <option value="{{.value}}">{{name}}</option>
+                            {{/}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <div class="settings-section">
+                <h2>Local server address</h2>
+                <div class="input-field local-server">
+                    <input type="text" class="local-server__input local-server__input__host" value="127.0.0.1:8000" placeholder="host url" />
+                    <input type="text" class="local-server__input local-server__input__channel" value="local" placeholder="channel" />
+                </div>
+            </div>
         </section>
         <section class="section plugins">
             <header class="header element">
