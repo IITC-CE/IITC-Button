@@ -114,7 +114,7 @@ ractive.on({
     event.node.parentNode.getElementsByClassName("element__action")[0].textContent = 'close';
   },
   'change-update-channel': function (event) {
-    let updateChannel = event.node.value;
+    updateChannel = event.node.value;
     chrome.storage.local.set({
       'update_channel': updateChannel
     }, function () {
@@ -123,11 +123,22 @@ ractive.on({
     });
     showMessage("Update in progress…");
   },
-  'change-update-check-interval': function (event) {
+  'change-release-update-check-interval': function (event) {
     let val = event.node.value;
-    console.log(val);
     chrome.storage.local.set({
-      'update_check_interval': val
+      'release_update_check_interval': val
+    }, function() {
+      chrome.runtime.sendMessage({'type': "safeUpdate"});
+      showMessage("Changes were applied");
+    });
+  },
+  'change-test-update-check-interval': function (event) {
+    let val = event.node.value;
+    chrome.storage.local.set({
+      'test_update_check_interval': val
+    }, function() {
+      chrome.runtime.sendMessage({'type': "safeUpdate"});
+      showMessage("Changes were applied");
     });
   },
   'force_update': function (event) {
@@ -150,7 +161,13 @@ chrome.runtime.onMessage.addListener(function(request) {
 });
 
 
-chrome.storage.local.get(["IITC_is_enabled", "update_channel", "release_plugins", "test_plugins", "update_check_interval"], function(data) {
+chrome.storage.local.get([
+  "IITC_is_enabled",
+  "update_channel",
+  "release_plugins",               "test_plugins",
+  "release_update_check_interval", "test_update_check_interval"
+], function(data) {
+
   if (data.update_channel) {
     updateChannelsData.release.checked = (data.update_channel === 'release');
     updateChannelsData.test.checked = (data.update_channel === 'test');
@@ -169,11 +186,12 @@ chrome.storage.local.get(["IITC_is_enabled", "update_channel", "release_plugins"
     document.querySelector('#toggleIITC').checked = false
   }
 
-  let update_check_interval = data.update_check_interval;
-  if (!update_check_interval) {
-    update_check_interval = 24;
-  }
-  document.getElementById("update_check_interval").value = update_check_interval;
+  let release_update_check_interval = data.release_update_check_interval;
+  let test_update_check_interval = data.test_update_check_interval;
+  if (!release_update_check_interval) release_update_check_interval = 24;
+  if (!test_update_check_interval) test_update_check_interval = 24;
+  document.getElementById("release_update_check_interval").value = release_update_check_interval;
+  document.getElementById("test_update_check_interval").value = test_update_check_interval;
 });
 
 
@@ -187,7 +205,6 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                 namespace,
                 storageChange.oldValue,
                 storageChange.newValue);
-
     if (key === updateChannel+"_plugins") {
       ractive.set('categories', storageChange.newValue);
     }

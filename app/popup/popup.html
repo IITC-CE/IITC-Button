@@ -67,7 +67,7 @@
                     <div class="update-check__col">
                         <div class="update-check__setting">
                             <span class="update-check__label">Release:</span>
-                            <select id="update_check_interval" class="update-check__input" name="update-interval" on-change="change-update-release-check-interval">
+                            <select id="release_update_check_interval" class="update-check__input" name="update-interval" on-change="change-release-update-check-interval">
                             {{# updateIntervals:i}}
                                 <option value="{{.value}}">{{name}}</option>
                             {{/}}
@@ -75,7 +75,7 @@
                         </div>
                         <div class="update-check__setting">
                             <span class="update-check__label">Test builds:</span>
-                            <select id="update_check_interval" class="update-check__input" name="update-interval" on-change="change-update-test-check-interval">
+                            <select id="test_update_check_interval" class="update-check__input" name="update-interval" on-change="change-test-update-check-interval">
                             {{# updateIntervals:i}}
                                 <option value="{{.value}}">{{name}}</option>
                             {{/}}

@@ -38,6 +38,9 @@ chrome.runtime.onMessage.addListener(function(request) {
     case "managePlugin":
       managePlugin(request.id, request.category, request.action);
       break;
+    case "safeUpdate":
+      checkUpdates(false);
+      break;
     case "forceUpdate":
       checkUpdates(true);
       break;
@@ -56,7 +59,6 @@ function save(options) {
       data[key] = options[key];
     }
   });
-  console.log(data);
   chrome.storage.local.set(data);
 }
 
@@ -96,18 +98,18 @@ function checkUpdates(force) {
   chrome.storage.local.get([
     "update_channel",
     "last_check_update",
-    "update_check_interval",
-    "release_iitc_version",  "test_iitc_version",
-    "release_plugins",       "test_plugins",
-    "release_plugins_local", "test_plugins_local",
-    "release_plugins_user",  "test_plugins_user"
+    "release_update_check_interval", "test_update_check_interval",
+    "release_iitc_version",          "test_iitc_version",
+    "release_plugins",               "test_plugins",
+    "release_plugins_local",         "test_plugins_local",
+    "release_plugins_user",          "test_plugins_user"
   ], function(local){
 
     if (local.update_channel) {
       updateChannel = local.update_channel;
     }
 
-    let update_check_interval = local.update_check_interval;
+    let update_check_interval = local[updateChannel+'_update_check_interval'];
     if (!update_check_interval) {
       update_check_interval = 24;
     }
