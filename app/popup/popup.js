@@ -60,6 +60,7 @@ ractive.on({
   },
   'open-options': function (event) {
     document.body.id = "options";
+    checkStatusLocalServer();
   },
   'open-category': function (event) {
     document.body.id = "plugins";
@@ -134,7 +135,7 @@ ractive.on({
     chrome.storage.local.set({
       'update_channel': updateChannel
     }, function () {
-      chrome.runtime.sendMessage({'type': "forceUpdate"});
+      chrome.runtime.sendMessage({'type': "forceFullUpdate"});
       ractive.set('updateChannel', updateChannel);
     });
     showMessage("Update in progress…");
@@ -167,8 +168,23 @@ ractive.on({
     });
   },
   'force_update': function (event) {
-    chrome.runtime.sendMessage({'type': "forceUpdate"});
+    chrome.runtime.sendMessage({'type': "forceFullUpdate"});
     showMessage("Update in progress…");
+  },
+  'input-local-server': function () {
+    checkStatusLocalServer();
+  },
+  'change-local-server': function () {
+    let host = document.getElementById("local-server__input__host").value;
+    let channel = document.getElementById("local-server__input__channel").value;
+    chrome.storage.local.set({
+      'local_server_host': "http://"+host,
+      'local_server_channel': channel
+    }, function() {
+      if (updateChannel === 'local') {
+        ractive.fire("force_update");
+      }
+    });
   }
 });
 
@@ -192,13 +208,16 @@ chrome.runtime.onMessage.addListener(function(request) {
 chrome.storage.local.get([
   "IITC_is_enabled",
   "update_channel",
-  "release_plugins",               "test_plugins",
+  "local_server_host",
+  "local_server_channel",
+  "release_plugins",               "test_plugins",               "local_plugins",
   "release_update_check_interval", "test_update_check_interval", "external_update_check_interval"
 ], function(data) {
 
   if (data.update_channel) {
     updateChannelsData.release.checked = (data.update_channel === 'release');
     updateChannelsData.test.checked = (data.update_channel === 'test');
+    updateChannelsData.local.checked = (data.update_channel === 'local');
     ractive.set('updateChannels', updateChannelsData);
     updateChannel = data.update_channel;
   }
@@ -218,6 +237,9 @@ chrome.storage.local.get([
     if (!update_check_interval) update_check_interval = 24;
     document.getElementById(channel+"_update_check_interval").value = update_check_interval;
   });
+
+  if (data.local_server_host) document.getElementById("local-server__input__host").value = data.local_server_host.replace("http://", "");
+  if (data.local_server_channel) document.getElementById("local-server__input__channel").value = data.local_server_channel;
 });
 
 
@@ -252,3 +274,36 @@ const saveJS = (function () {
         window.URL.revokeObjectURL(url);
     };
 }());
+
+function checkStatusLocalServer() {
+  let host = document.getElementById("local-server__input__host").value;
+  let channel = document.getElementById("local-server__input__channel").value;
+
+  document.getElementById("local-server__input__host").classList.remove("local-server__input__ok");
+  document.getElementById("local-server__input__host").classList.add("local-server__input__err");
+  document.getElementById("local-server__input__channel").classList.remove("local-server__input__ok");
+  document.getElementById("local-server__input__channel").classList.add("local-server__input__err");
+
+  let xhr1 = new XMLHttpRequest();
+  xhr1.open("GET", "http://" + host, true);
+  xhr1.timeout = 1000;
+  xhr1.onreadystatechange = function() {
+    if (xhr1.readyState === 4 && xhr1.status === 200) {
+      document.getElementById("local-server__input__host").classList.remove("local-server__input__err");
+      document.getElementById("local-server__input__host").classList.add("local-server__input__ok");
+    }
+  };
+  xhr1.send(null);
+
+
+  let xhr2 = new XMLHttpRequest();
+  xhr2.open("GET", "http://" + host + "/" + channel + ".json", true);
+  xhr2.timeout = 1000;
+  xhr2.onreadystatechange = function() {
+    if (xhr1.readyState === 4 && xhr2.status === 200) {
+      document.getElementById("local-server__input__channel").classList.remove("local-server__input__err");
+      document.getElementById("local-server__input__channel").classList.add("local-server__input__ok");
+    }
+  };
+  xhr2.send(null);
+}

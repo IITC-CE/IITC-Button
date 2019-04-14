@@ -104,8 +104,8 @@
             <div class="settings-section">
                 <h2>Local server address</h2>
                 <div class="input-field local-server">
-                    <input type="text" class="local-server__input local-server__input__host" value="127.0.0.1:8000" placeholder="host url" />
-                    <input type="text" class="local-server__input local-server__input__channel" value="local" placeholder="channel" />
+                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" value="127.0.0.1:8000" placeholder="host url" on-input="input-local-server" on-change="change-local-server" />
+                    <input type="text" id="local-server__input__channel" class="local-server__input local-server__input__channel" value="local" placeholder="channel" on-input="input-local-server" on-change="change-local-server" />
                 </div>
             </div>
         </section>

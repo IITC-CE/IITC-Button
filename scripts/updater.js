@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener(function(request) {
     case "safeUpdate":
       checkUpdates(false);
       break;
-    case "forceUpdate":
+    case "forceFullUpdate":
       checkUpdates(true);
       checkExternalUpdates(true);
       break;
@@ -101,15 +101,25 @@ function checkUpdates(force, retry) {
   chrome.storage.local.get([
     "update_channel",
     "last_check_update",
-    "release_update_check_interval", "test_update_check_interval",
-    "release_iitc_version",          "test_iitc_version",
-    "release_plugins",               "test_plugins",
-    "release_plugins_local",         "test_plugins_local",
-    "release_plugins_user",          "test_plugins_user"
-  ], function(local){
+    "local_server_host",
+    "local_server_channel",
+    "release_update_check_interval", "test_update_check_interval", "local_update_check_interval",
+    "release_iitc_version",          "test_iitc_version",          "local_iitc_version",
+    "release_plugins",               "test_plugins",               "local_plugins",
+    "release_plugins_local",         "test_plugins_local",         "local_plugins_local",
+    "release_plugins_user",          "test_plugins_user",          "local_plugins_user"
+  ], function(local) {
 
-    if (local.update_channel) {
-      updateChannel = local.update_channel;
+    if (local.update_channel) updateChannel = local.update_channel;
+    if (local.local_server_host) local_server_host = local.local_server_host;
+    if (local.local_server_channel) local_server_channel = local.local_server_channel;
+
+    if (updateChannel === 'local') {
+      network_host = local_server_host;
+      network_channel = local_server_channel;
+    } else {
+      network_host = iitc_host;
+      network_channel = updateChannel;
     }
 
     let update_check_interval = local[updateChannel+'_update_check_interval'];
@@ -119,16 +129,16 @@ function checkUpdates(force, retry) {
 
     if (retry === undefined) retry = 0;
 
-    if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined) {
+    if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined || updateChannel === 'local') {
       clearTimeout(update_timeout_id);
       downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id);
-        ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
+        ajaxGet(network_host+"/updates.json", true, function (response) {
           if (response) {
-            if (response[updateChannel] !== local[updateChannel+'_iitc_version'] || force) {
+            if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
               downloadMeta(local);
             }
           } else {
@@ -155,16 +165,54 @@ function checkUpdates(force, retry) {
   });
 }
 
+function downloadMeta(local) {
+  ajaxGet(network_host+"/"+network_channel+".json", true, function (response) {
+    if (response === undefined) return;
+
+    let plugins = response[network_channel+'_plugins'];
+    let plugins_local = local[updateChannel+'_plugins_local'];
+    let plugins_user = local[updateChannel+'_plugins_user'];
+
+    ajaxGet(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false, function (response) {
+      if (response) {
+        save({
+          'iitc_code': response
+        })
+      }
+    });
+
+    plugins_local = updateLocalPlugins(plugins, plugins_local);
+
+    plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
+    save({
+      'iitc_version': response[network_channel+'_iitc_version'],
+      'plugins': plugins,
+      'plugins_local': plugins_local,
+      'plugins_user': plugins_user
+    })
+  });
+}
+
 function checkExternalUpdates(force) {
   chrome.storage.local.get([
     "update_channel",
+    "local_server_host",
+    "local_server_channel",
     "last_check_external_update",
     "external_update_check_interval",
     "release_plugins_user",          "test_plugins_user"
   ], function(local){
 
-    if (local.update_channel) {
-      updateChannel = local.update_channel;
+    if (local.update_channel) updateChannel = local.update_channel;
+    if (local.local_server_host) local_server_host = local.local_server_host;
+    if (local.local_server_channel) local_server_channel = local.local_server_channel;
+
+    if (updateChannel === 'local') {
+      network_host = local_server_host;
+      network_channel = local_server_channel;
+    } else {
+      network_host = iitc_host;
+      network_channel = updateChannel;
     }
 
     let update_check_interval = local['external_update_check_interval'];
@@ -188,34 +236,6 @@ function checkExternalUpdates(force) {
         checkUpdates();
       }, update_check_interval * 60 * 60 * 1000);
     }
-  });
-}
-
-function downloadMeta(local) {
-  ajaxGet("https://iitc.modos189.ru/"+updateChannel+".json", true, function (response) {
-    if (response === undefined) return;
-
-    let plugins = response[updateChannel+'_plugins'];
-    let plugins_local = local[updateChannel+'_plugins_local'];
-    let plugins_user = local[updateChannel+'_plugins_user'];
-
-    ajaxGet("https://iitc.modos189.ru/build/"+updateChannel+"/total-conversion-build.user.js", false, function (response) {
-      if (response) {
-        save({
-          'iitc_code': response
-        })
-      }
-    });
-
-    plugins_local = updateLocalPlugins(plugins, plugins_local);
-
-    plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
-    save({
-      'iitc_version': response[updateChannel+'_iitc_version'],
-      'plugins': plugins,
-      'plugins_local': plugins_local,
-      'plugins_user': plugins_user
-    })
   });
 }
 
@@ -282,7 +302,7 @@ function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      ajaxGet("https://iitc.modos189.ru/build/" + updateChannel + "/plugins/" + filename, false, function (response) {
+      ajaxGet(network_host+"/build/" + network_channel + "/plugins/" + filename, false, function (response) {
         plugins_local[id]['code'] = response;
       });
     } else {
@@ -325,7 +345,7 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        ajaxGet("https://iitc.modos189.ru/build/"+updateChannel+"/plugins/"+filename, false, function (response) {
+        ajaxGet(network_host+"/build/"+network_channel+"/plugins/"+filename, false, function (response) {
           if (response) {
             plugins[category]['plugins'][id]['status'] = 'on';
             plugins[category]['count_plugins_active'] += 1;

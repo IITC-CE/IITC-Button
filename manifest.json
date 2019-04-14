@@ -16,6 +16,7 @@
     "storage",
     "https://*.ingress.com/intel",
     "https://iitc.modos189.ru/*",
+    "http://*/*.json",
     "http://*/*.meta.js",
     "http://*/*.user.js",
     "https://*/*.meta.js",

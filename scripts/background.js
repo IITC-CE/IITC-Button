@@ -149,17 +149,12 @@ function initialize(tabId) {
   chrome.storage.local.get([
     "IITC_is_enabled",
     "update_channel",
-    "release_iitc_code",
-    "test_iitc_code",
-    "release_plugins_local",
-    "test_plugins_local",
-    "release_plugins_user",
-    "test_plugins_user"
-  ], function(data){
+    "release_iitc_code",     "test_iitc_code",     "local_iitc_code",
+    "release_plugins_local", "test_plugins_local", "local_plugins_local",
+    "release_plugins_user",  "test_plugins_user",  "local_plugins_user"
+  ], function(data) {
 
-    if (data.update_channel) {
-      updateChannel = data.update_channel;
-    }
+    if (data.update_channel) updateChannel = data.update_channel;
 
     let status = data['IITC_is_enabled'];
     let iitc_code = data[updateChannel+'_iitc_code'];

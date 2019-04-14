@@ -313,6 +313,14 @@ h2:first-letter {
     box-sizing: border-box;
     width: 50%;
     flex: auto;
+    font-weight: 500;
+    transition: color 0.2s linear;
+}
+.local-server__input__ok{
+    color: var(--state-on);
+}
+.local-server__input__err {
+    color: var(--state-off);
 }
 .local-server__input:first-child {
     margin-right: 5px;
