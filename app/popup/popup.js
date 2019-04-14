@@ -112,7 +112,6 @@ ractive.on({
       event.node.getElementsByClassName("element__action")[0].textContent = 'toggle_off';
     }
     showMessage("Changes will be applied after rebooting Intel");
-    console.log(action);
     chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
   },
   'delete-plugin': function (event) {
@@ -158,6 +157,15 @@ ractive.on({
       showMessage("Changes were applied");
     });
   },
+  'change-external-update-check-interval': function (event) {
+    let val = event.node.value;
+    chrome.storage.local.set({
+      'external_update_check_interval': val
+    }, function() {
+      chrome.runtime.sendMessage({'type': "externalUpdate"});
+      showMessage("Changes were applied");
+    });
+  },
   'force_update': function (event) {
     chrome.runtime.sendMessage({'type': "forceUpdate"});
     showMessage("Update in progress…");
@@ -185,7 +193,7 @@ chrome.storage.local.get([
   "IITC_is_enabled",
   "update_channel",
   "release_plugins",               "test_plugins",
-  "release_update_check_interval", "test_update_check_interval"
+  "release_update_check_interval", "test_update_check_interval", "external_update_check_interval"
 ], function(data) {
 
   if (data.update_channel) {
@@ -194,7 +202,6 @@ chrome.storage.local.get([
     ractive.set('updateChannels', updateChannelsData);
     updateChannel = data.update_channel;
   }
-  console.log('update channel (popup): '+updateChannel);
   ractive.set('updateChannel', updateChannel);
 
   // initialize categories
@@ -206,12 +213,11 @@ chrome.storage.local.get([
     document.querySelector('#toggleIITC').checked = false
   }
 
-  let release_update_check_interval = data.release_update_check_interval;
-  let test_update_check_interval = data.test_update_check_interval;
-  if (!release_update_check_interval) release_update_check_interval = 24;
-  if (!test_update_check_interval) test_update_check_interval = 24;
-  document.getElementById("release_update_check_interval").value = release_update_check_interval;
-  document.getElementById("test_update_check_interval").value = test_update_check_interval;
+  ['release', 'test', 'external'].forEach(function(channel) {
+    let update_check_interval = data[channel+'_update_check_interval'];
+    if (!update_check_interval) update_check_interval = 24;
+    document.getElementById(channel+"_update_check_interval").value = update_check_interval;
+  });
 });
 
 

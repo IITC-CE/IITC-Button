@@ -15,12 +15,17 @@
     "cookies",
     "storage",
     "https://*.ingress.com/intel",
-    "https://iitc.modos189.ru/*"
+    "https://iitc.modos189.ru/*",
+    "http://*/*.meta.js",
+    "http://*/*.user.js",
+    "https://*/*.meta.js",
+    "https://*/*.user.js"
   ],
   "default_locale": "en",
   "background": {
     "scripts": [
       "/scripts/defaults.js",
+      "/scripts/helpers.js",
       "/scripts/background.js",
       "/scripts/updater.js"
     ],

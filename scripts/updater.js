@@ -32,6 +32,7 @@ Object.prototype.sortByKey = function(key){
 
 let update_timeout_id = null;
 checkUpdates();
+checkExternalUpdates();
 
 chrome.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
@@ -43,6 +44,7 @@ chrome.runtime.onMessage.addListener(function(request) {
       break;
     case "forceUpdate":
       checkUpdates(true);
+      checkExternalUpdates(true);
       break;
     case "addUserScripts":
       addUserScripts(request.scripts);
@@ -118,10 +120,12 @@ function checkUpdates(force, retry) {
     if (retry === undefined) retry = 0;
 
     if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined) {
+      clearTimeout(update_timeout_id);
       downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
-      if (time_delta > 0 || force) {
+      if (time_delta >= 0 || force) {
+        clearTimeout(update_timeout_id);
         ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
           if (response) {
             if (response[updateChannel] !== local[updateChannel+'_iitc_version'] || force) {
@@ -130,9 +134,7 @@ function checkUpdates(force, retry) {
           } else {
             retry += 1;
             let seconds = retry*retry;
-            console.log(retry, seconds);
             chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
-            clearTimeout(update_timeout_id);
             update_timeout_id = setTimeout(function(){
               checkUpdates(true, retry);
             }, seconds*1000);
@@ -141,14 +143,51 @@ function checkUpdates(force, retry) {
       }
     }
 
-    save({
-      'last_check_update': Math.floor(Date.now() / 1000)
-    });
+    if (!update_timeout_id) {
+      save({
+        'last_check_update': Math.floor(Date.now() / 1000)
+      });
 
-    clearTimeout(update_timeout_id);
-    update_timeout_id = setTimeout(function(){
-      checkUpdates();
-    }, update_check_interval*60*60*1000);
+      update_timeout_id = setTimeout(function () {
+        checkUpdates();
+      }, update_check_interval * 60 * 60 * 1000);
+    }
+  });
+}
+
+function checkExternalUpdates(force) {
+  chrome.storage.local.get([
+    "update_channel",
+    "last_check_external_update",
+    "external_update_check_interval",
+    "release_plugins_user",          "test_plugins_user"
+  ], function(local){
+
+    if (local.update_channel) {
+      updateChannel = local.update_channel;
+    }
+
+    let update_check_interval = local['external_update_check_interval'];
+    if (!update_check_interval) {
+      update_check_interval = 24;
+    }
+
+    let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_external_update;
+    if (time_delta >= 0 || force) {
+      clearTimeout(update_timeout_id);
+      updateExternalPlugins(local);
+    }
+
+    if (!update_timeout_id) {
+      save({
+        'last_check_external_update': Math.floor(Date.now() / 1000)
+      });
+
+      clearTimeout(update_timeout_id);
+      update_timeout_id = setTimeout(function () {
+        checkUpdates();
+      }, update_check_interval * 60 * 60 * 1000);
+    }
   });
 }
 
@@ -178,6 +217,50 @@ function downloadMeta(local) {
       'plugins_user': plugins_user
     })
   });
+}
+
+function updateExternalPlugins(local) {
+  let plugins_user = local[updateChannel+'_plugins_user'];
+  if (plugins_user) {
+    let updates = false;
+    let hash = "?"+Date.now();
+
+    Object.keys(plugins_user).forEach(function (id) {
+      let plugin = plugins_user[id];
+
+      if (plugin['updateURL'] && plugin['downloadURL']) {
+
+        // download meta info
+        ajaxGet(plugin['updateURL']+hash, false, function (response) {
+          if (response) {
+            let meta = parse_meta(response);
+            // if new version
+            if (meta && meta['version'] && meta['version'] !== plugin['version']) {
+              // download userscript
+              ajaxGet(plugin['updateURL']+hash, false, function (response) {
+                if (response) {
+                  updates = true;
+                  plugins_user[id]['code'] = response;
+                  ['name", "id", "version", "description", "updateURL", "downloadURL", "supportURL'].forEach(function(key) {
+                    if (meta[key]) {
+                      plugins_user[id][key] = meta[key];
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+
+      }
+    });
+
+    if (updates) {
+      save({
+        'plugins_user': plugins_user
+      })
+    }
+  }
 }
 
 function updateLocalPlugins(plugins, plugins_local) {

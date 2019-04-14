@@ -59,7 +59,6 @@ async function onRequestOpenIntel(id) {
 
 async function onToggleIITC(value) {
   chrome.storage.local.set({'IITC_is_enabled': value}, async function() {
-    console.log('Value is set to ' + value);
     if (activeIITCTab) {
       let isActive = false;
 
@@ -130,7 +129,6 @@ async function onActivatedListener({
   if (!tabId) {
     throw new Error('not tabId found')
   }
-  console.log('tab activated #', tabId);
   const tabInfo = await getTabInfo(tabId);
   if (tabInfo) {
     const isIngressTab = isIngressUrl(tabInfo.url)
@@ -162,7 +160,6 @@ function initialize(tabId) {
     if (data.update_channel) {
       updateChannel = data.update_channel;
     }
-    console.log('update channel (background): '+updateChannel);
 
     let status = data['IITC_is_enabled'];
     let iitc_code = data[updateChannel+'_iitc_code'];
@@ -217,7 +214,6 @@ function loadJS(tabId, runAt, code, callback) {
     code: code+";true"
   }, () => {
     if(chrome.runtime.lastError) {
-      console.log('err');
       console.log(chrome.runtime.lastError.message);
     }
     if (callback) callback();
