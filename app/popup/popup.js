@@ -84,6 +84,11 @@ ractive.on({
     let plugin_category = event.node.getAttribute( 'data-category' );
     let status = event.node.getElementsByClassName("element__action")[0].textContent;
 
+    if (event.node.getAttribute( 'data-prevent' ) === 'true') {
+      event.node.setAttribute( 'data-prevent', 'false' );
+      return;
+    }
+
     let action = null;
     if (status === 'toggle_on') {
       action = "off";
@@ -112,6 +117,18 @@ ractive.on({
   },
   'delete-plugin': function (event) {
     event.node.parentNode.getElementsByClassName("element__action")[0].textContent = 'close';
+  },
+  'open-support-url': function (event) {
+    event.node.parentNode.setAttribute( 'data-prevent', 'true' );
+    ractive.fire('open-link', event);
+  },
+  'save-plugin': function (event) {
+    event.node.parentNode.setAttribute( 'data-prevent', 'true' );
+    let id = event.node.parentNode.getAttribute( 'data-id' );
+    chrome.storage.local.get([updateChannel+"_plugins_user"], function(data) {
+      let plugin = data[updateChannel+"_plugins_user"][id];
+      saveJS(plugin['code'], plugin['filename']);
+    });
   },
   'change-update-channel': function (event) {
     updateChannel = event.node.value;
@@ -206,8 +223,23 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                 storageChange.oldValue,
                 storageChange.newValue);
     if (key === updateChannel+"_plugins") {
+      ractive.set('categories', {});
       ractive.set('categories', storageChange.newValue);
     }
 
   }
 });
+
+const saveJS = (function () {
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    return function (data, fileName) {
+        let blob = new Blob([data], {type: "application/x-javascript"}),
+            url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+}());

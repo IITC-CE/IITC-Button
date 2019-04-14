@@ -119,7 +119,13 @@
                         <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
                             <span class="element__text">{{.name}}</span>
                             {{#if (.status === 'user')}}<span class="element__user">custom</span>{{/if}}
-                            {{#if (category_name === 'UserScripts')}}<i class="element__action___close material-icons" on-click="delete-plugin">close</i>{{/if}}
+                            {{#if (category_name === 'UserScripts')}}
+                                {{#if .supportURL}}
+                                <i class="element__action___extra material-icons" on-click="open-support-url" data-href="{{.supportURL}}" title="Open support page: {{.supportURL}}">home</i>
+                                {{/if}}
+                                <i class="element__action___extra material-icons" on-click="save-plugin" title="Save">save</i>
+                                <i class="element__action___extra element__action___extra-delete material-icons" on-click="delete-plugin" title="Delete">close</i>
+                            {{/if}}
                             <i class="element__action material-icons">{{.icon}}</i>
                         </div>
                     {{else}}

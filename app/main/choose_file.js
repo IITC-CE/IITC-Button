@@ -41,6 +41,7 @@ const processingFile = async (fileList) => {
         message += file['name']+" is not a valid UserScript.\n";
       } else {
         message += meta['name']+" has been added to the UserScripts category.\n";
+        meta['filename'] = file['name'];
         scripts.push({'meta': meta, 'code': code})
       }
     } catch (e) {
@@ -72,7 +73,7 @@ function parse_meta(code) {
 
       let key = sp[1].replace("@", "");
       let value = sp.slice(2).join(" ");
-      if (["name", "id", "version", "description"].indexOf(key) !== -1) {
+      if (["name", "id", "version", "description", "updateURL", "supportURL"].indexOf(key) !== -1) {
         if (key === "description") {
           key = "desc";
         }

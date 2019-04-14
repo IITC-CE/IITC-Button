@@ -65,11 +65,12 @@ object{
     padding: 2px;
     margin-left: 8px;
 }
-.element__action___close {
+.element__action___extra {
     background: #fff;
     border-radius: 3px;
-    padding: 2px;
+    padding: 3px;
     margin-left: 8px;
+    font-size: 18px;
 }
 .element.on .element__action {
     color: var(--state-on);
@@ -77,10 +78,13 @@ object{
 .element.off .element__action {
     color: var(--state-off2);
 }
-.element.user .element__action, .element__action___close:hover {
+.element.user .element__action, .element__action___extra {
     color: var(--color-black);
 }
-.element.user:hover .element__action, .element__action___close:hover {
+.element__action___extra:hover {
+    color: #444;
+}
+.element.user:hover .element__action, .element__action___extra-delete:hover {
     color: var(--state-off);
 }
 
