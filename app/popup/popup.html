@@ -116,7 +116,7 @@
             <div class="list">
                 <div class="plugins-list">
                     {{#each plugins}}
-                        <div class="element item-wrapper list__item {{ .status }}" title="{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
+                        <div class="element item-wrapper list__item {{ .status }}" title="{{#if (category_name === 'UserScripts')}}[{{.version}}] {{/if}}{{.desc}}" data-category="{{ category_name }}" data-id="{{ .id }}" on-click="manage-plugin">
                             <span class="element__text">{{.name}}</span>
                             {{#if (.status === 'user')}}<span class="element__user">custom</span>{{/if}}
                             {{#if (category_name === 'UserScripts')}}

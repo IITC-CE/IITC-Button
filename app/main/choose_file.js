@@ -74,9 +74,8 @@ function parse_meta(code) {
       let key = sp[1].replace("@", "");
       let value = sp.slice(2).join(" ");
       if (["name", "id", "version", "description", "updateURL", "supportURL"].indexOf(key) !== -1) {
-        if (key === "description") {
-          key = "desc";
-        }
+        if (data[key]) continue;
+        if (key === "description") key = "desc";
         if (key === "name") {
           value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
         }
