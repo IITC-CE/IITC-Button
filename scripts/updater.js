@@ -67,11 +67,12 @@ let ajaxGet = function (url, parseJSON, callback) {
   let xhr = null;
   xhr = new XMLHttpRequest();
   if (!xhr) return null;
-  xhr.open("GET", url,true);
+  xhr.timeout = 5000;
+  xhr.open("GET", url+"?"+Date.now(),true);
   xhr.onreadystatechange=function() {
     if (xhr.readyState === 4 && callback) {
-      showProgress(false);
       if (xhr.status === 200) {
+        showProgress(false);
         let response = xhr.responseText;
         if (parseJSON) {
           response = JSON.parse(response);
@@ -94,7 +95,7 @@ function showProgress(value) {
   });
 }
 
-function checkUpdates(force) {
+function checkUpdates(force, retry) {
   chrome.storage.local.get([
     "update_channel",
     "last_check_update",
@@ -114,14 +115,27 @@ function checkUpdates(force) {
       update_check_interval = 24;
     }
 
+    if (retry === undefined) retry = 0;
+
     if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined) {
       downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
       if (time_delta > 0 || force) {
         ajaxGet("https://iitc.modos189.ru/updates.json", true, function (response) {
-          if (response && response[updateChannel] !== local[updateChannel+'_iitc_version'] || force) {
-            downloadMeta(local);
+          if (response) {
+            if (response[updateChannel] !== local[updateChannel+'_iitc_version'] || force) {
+              downloadMeta(local);
+            }
+          } else {
+            retry += 1;
+            let seconds = retry*retry;
+            console.log(retry, seconds);
+            chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
+            clearTimeout(update_timeout_id);
+            update_timeout_id = setTimeout(function(){
+              checkUpdates(true, retry);
+            }, seconds*1000);
           }
         });
       }
@@ -140,6 +154,7 @@ function checkUpdates(force) {
 
 function downloadMeta(local) {
   ajaxGet("https://iitc.modos189.ru/"+updateChannel+".json", true, function (response) {
+    if (response === undefined) return;
 
     let plugins = response[updateChannel+'_plugins'];
     let plugins_local = local[updateChannel+'_plugins_local'];

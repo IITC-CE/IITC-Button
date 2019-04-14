@@ -174,6 +174,9 @@ chrome.runtime.onMessage.addListener(function(request) {
         element.classList.remove("active");
       }
       break;
+    case "showMessage":
+      showMessage(request.message);
+      break;
   }
 });
 
