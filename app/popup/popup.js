@@ -300,7 +300,7 @@ function checkStatusLocalServer() {
   xhr2.open("GET", "http://" + host + "/" + channel + ".json", true);
   xhr2.timeout = 1000;
   xhr2.onreadystatechange = function() {
-    if (xhr1.readyState === 4 && xhr2.status === 200) {
+    if (xhr2.readyState === 4 && xhr2.status === 200) {
       document.getElementById("local-server__input__channel").classList.remove("local-server__input__err");
       document.getElementById("local-server__input__channel").classList.add("local-server__input__ok");
     }
