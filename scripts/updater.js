@@ -31,6 +31,7 @@ Object.prototype.sortByKey = function(key){
 };
 
 let update_timeout_id = null;
+let external_update_timeout_id = null;
 checkUpdates();
 checkExternalUpdates();
 
@@ -122,20 +123,19 @@ function checkUpdates(force, retry) {
       network_channel = updateChannel;
     }
 
-    let update_check_interval = local[updateChannel+'_update_check_interval'];
-    if (!update_check_interval) {
-      update_check_interval = 24;
-    }
+    let update_check_interval = local[updateChannel+'_update_check_interval']*60*60;
+    if (!update_check_interval) update_check_interval = 24*60*60;
+    if (updateChannel === 'local') update_check_interval = 5; // check every 10 seconds
 
     if (retry === undefined) retry = 0;
 
     if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined || updateChannel === 'local') {
-      clearTimeout(update_timeout_id);
+      clearTimeout(update_timeout_id); update_timeout_id = null;
       downloadMeta(local);
     } else {
-      let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_update;
+      let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
-        clearTimeout(update_timeout_id);
+        clearTimeout(update_timeout_id); update_timeout_id = null;
         ajaxGet(network_host+"/updates.json", true, function (response) {
           if (response) {
             if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
@@ -160,7 +160,7 @@ function checkUpdates(force, retry) {
 
       update_timeout_id = setTimeout(function () {
         checkUpdates();
-      }, update_check_interval * 60 * 60 * 1000);
+      }, update_check_interval * 1000);
     }
   });
 }
@@ -215,26 +215,26 @@ function checkExternalUpdates(force) {
       network_channel = updateChannel;
     }
 
-    let update_check_interval = local['external_update_check_interval'];
+    let update_check_interval = local['external_update_check_interval']*60*60;
     if (!update_check_interval) {
-      update_check_interval = 24;
+      update_check_interval = 24*60*60;
     }
 
-    let time_delta = Math.floor(Date.now() / 1000)-update_check_interval*60*60-local.last_check_external_update;
+    let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_external_update;
     if (time_delta >= 0 || force) {
-      clearTimeout(update_timeout_id);
+      clearTimeout(external_update_timeout_id); external_update_timeout_id = null;
       updateExternalPlugins(local);
     }
 
-    if (!update_timeout_id) {
+    if (!external_update_timeout_id) {
       save({
         'last_check_external_update': Math.floor(Date.now() / 1000)
       });
 
-      clearTimeout(update_timeout_id);
-      update_timeout_id = setTimeout(function () {
+      clearTimeout(external_update_timeout_id); external_update_timeout_id = null;
+      external_update_timeout_id = setTimeout(function () {
         checkUpdates();
-      }, update_check_interval * 60 * 60 * 1000);
+      }, update_check_interval * 1000);
     }
   });
 }
