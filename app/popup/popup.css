@@ -234,7 +234,7 @@ body#options .section.options, body#plugins .section.plugins {
  * h2
  */
 h2 {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin: 0;
     padding: 2px 12px 3px 10px;
 }
