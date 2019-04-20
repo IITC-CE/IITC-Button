@@ -161,10 +161,10 @@ function initialize(tabId) {
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
       chrome.tabs.executeScript(tabId, {
-        runAt: "document_idle",
+        runAt: "document_end",
         file: './scripts/pre.js'
       }, () => {
-        loadJS(tabId, "document_idle", iitc_code, function () {
+        loadJS(tabId, "document_end", iitc_code, function () {
           activeIITCTab = tabId;
 
           let plugins_local = data[updateChannel+'_plugins_local'];
@@ -172,7 +172,7 @@ function initialize(tabId) {
             Object.keys(plugins_local).forEach(function(id) {
               let plugin = plugins_local[id];
               if (plugin['status'] === 'on') {
-                loadJS(tabId, "document_idle", plugin['code'], function () {
+                loadJS(tabId, "document_end", plugin['code'], function () {
                   console.info('plugin %s loaded', id);
                 });
               }
@@ -184,7 +184,7 @@ function initialize(tabId) {
             Object.keys(plugins_user).forEach(function(id) {
               let plugin = plugins_user[id];
               if (plugin['status'] === 'on') {
-                loadJS(tabId, "document_idle", plugin['code'], function () {
+                loadJS(tabId, "document_end", plugin['code'], function () {
                   console.info('userscript %s loaded', id);
                 });
               }

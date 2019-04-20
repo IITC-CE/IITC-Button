@@ -312,6 +312,7 @@ h2:first-letter {
 .local-server__input {
     box-sizing: border-box;
     width: 50%;
+    padding: 5px 3px;
     flex: auto;
     font-weight: 500;
     transition: color 0.2s linear;
