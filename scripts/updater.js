@@ -53,43 +53,44 @@ chrome.runtime.onMessage.addListener(function(request) {
   }
 });
 
-function save(options) {
+const save = (options) => new Promise(resolve => {
   let data = {};
   Object.keys(options).forEach(function (key) {
     if (['iitc_version', 'iitc_code', 'plugins', 'plugins_local', 'plugins_user'].indexOf(key) !== -1) {
+      console.log('save '+updateChannel+'_'+key);
       data[updateChannel+'_'+key] = options[key];
     } else {
       data[key] = options[key];
     }
   });
-  chrome.storage.local.set(data);
-}
+  chrome.storage.local.set(data, resolve());
+});
 
-let ajaxGet = function (url, parseJSON, callback) {
-  callback = (typeof callback == 'function' ? callback : false);
+
+const ajaxGet = (url, parseJSON) => new Promise(resolve => {
   let xhr = null;
   xhr = new XMLHttpRequest();
   if (!xhr) return null;
   xhr.timeout = 5000;
   xhr.open("GET", url+"?"+Date.now(),true);
   xhr.onreadystatechange=function() {
-    if (xhr.readyState === 4 && callback) {
+    if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         showProgress(false);
         let response = xhr.responseText;
         if (parseJSON) {
           response = JSON.parse(response);
         }
-        callback(response)
+        resolve(response)
       } else {
-        callback(null)
+        resolve(null)
       }
     }
   };
   xhr.send(null);
   showProgress(true);
-  return xhr;
-};
+});
+
 
 // If popup is closed, message goes nowhere and an error occurs. Ignore.
 function showProgress(value) {
@@ -109,7 +110,7 @@ function checkUpdates(force, retry) {
     "release_plugins",               "test_plugins",               "local_plugins",
     "release_plugins_local",         "test_plugins_local",         "local_plugins_local",
     "release_plugins_user",          "test_plugins_user",          "local_plugins_user"
-  ], function(local) {
+  ], async function(local) {
 
     if (local.update_channel) updateChannel = local.update_channel;
     if (local.local_server_host) local_server_host = local.local_server_host;
@@ -125,36 +126,35 @@ function checkUpdates(force, retry) {
 
     let update_check_interval = local[updateChannel+'_update_check_interval']*60*60;
     if (!update_check_interval) update_check_interval = 24*60*60;
-    if (updateChannel === 'local') update_check_interval = 5; // check every 10 seconds
+    if (updateChannel === 'local') update_check_interval = 5; // check every 5 seconds
 
     if (retry === undefined) retry = 0;
 
     if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined || updateChannel === 'local') {
       clearTimeout(update_timeout_id); update_timeout_id = null;
-      downloadMeta(local);
+      await downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id); update_timeout_id = null;
-        ajaxGet(network_host+"/updates.json", true, function (response) {
-          if (response) {
-            if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
-              downloadMeta(local);
-            }
-          } else {
-            retry += 1;
-            let seconds = retry*retry;
-            chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
-            update_timeout_id = setTimeout(function(){
-              checkUpdates(true, retry);
-            }, seconds*1000);
+        let response = await ajaxGet(network_host+"/updates.json", true);
+        if (response) {
+          if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
+            await downloadMeta(local);
           }
-        });
+        } else {
+          retry += 1;
+          let seconds = retry*retry;
+          chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
+          update_timeout_id = setTimeout(function(){
+            checkUpdates(true, retry);
+          }, seconds*1000);
+        }
       }
     }
 
     if (!update_timeout_id) {
-      save({
+      await save({
         'last_check_update': Math.floor(Date.now() / 1000)
       });
 
@@ -165,31 +165,29 @@ function checkUpdates(force, retry) {
   });
 }
 
-function downloadMeta(local) {
-  ajaxGet(network_host+"/"+network_channel+".json", true, function (response) {
-    if (response === undefined) return;
+async function downloadMeta(local) {
+  let response = await ajaxGet(network_host+"/"+network_channel+".json", true);
+  if (response === undefined) return;
 
-    let plugins = response[network_channel+'_plugins'];
-    let plugins_local = local[updateChannel+'_plugins_local'];
-    let plugins_user = local[updateChannel+'_plugins_user'];
+  let plugins = response[network_channel+'_plugins'];
+  let plugins_local = local[updateChannel+'_plugins_local'];
+  let plugins_user = local[updateChannel+'_plugins_user'];
 
-    ajaxGet(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false, function (response) {
-      if (response) {
-        save({
-          'iitc_code': response
-        })
-      }
-    });
-
-    plugins_local = updateLocalPlugins(plugins, plugins_local);
-
-    plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
-    save({
-      'iitc_version': response[network_channel+'_iitc_version'],
-      'plugins': plugins,
-      'plugins_local': plugins_local,
-      'plugins_user': plugins_user
+  let iitc_code = await ajaxGet(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false);
+  if (iitc_code) {
+    await save({
+      'iitc_code': iitc_code
     })
+  }
+
+  plugins_local = await updateLocalPlugins(plugins, plugins_local);
+
+  plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
+  await save({
+    'iitc_version': response[network_channel+'_iitc_version'],
+    'plugins': plugins,
+    'plugins_local': plugins_local,
+    'plugins_user': plugins_user
   });
 }
 
@@ -201,7 +199,7 @@ function checkExternalUpdates(force) {
     "last_check_external_update",
     "external_update_check_interval",
     "release_plugins_user",          "test_plugins_user"
-  ], function(local){
+  ], async function(local){
 
     if (local.update_channel) updateChannel = local.update_channel;
     if (local.local_server_host) local_server_host = local.local_server_host;
@@ -223,11 +221,11 @@ function checkExternalUpdates(force) {
     let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_external_update;
     if (time_delta >= 0 || force) {
       clearTimeout(external_update_timeout_id); external_update_timeout_id = null;
-      updateExternalPlugins(local);
+      await updateExternalPlugins(local);
     }
 
     if (!external_update_timeout_id) {
-      save({
+      await save({
         'last_check_external_update': Math.floor(Date.now() / 1000)
       });
 
@@ -239,56 +237,54 @@ function checkExternalUpdates(force) {
   });
 }
 
-function updateExternalPlugins(local) {
+async function updateExternalPlugins(local) {
   let plugins_user = local[updateChannel+'_plugins_user'];
   if (plugins_user) {
-    let updates = false;
+    let exist_updates = false;
     let hash = "?"+Date.now();
 
-    Object.keys(plugins_user).forEach(function (id) {
+    let promises = Object.keys(plugins_user).map(async function(id) {
       let plugin = plugins_user[id];
 
       if (plugin['updateURL'] && plugin['downloadURL']) {
 
         // download meta info
-        ajaxGet(plugin['updateURL']+hash, false, function (response) {
-          if (response) {
-            let meta = parse_meta(response);
-            // if new version
-            if (meta && meta['version'] && meta['version'] !== plugin['version']) {
-              // download userscript
-              ajaxGet(plugin['updateURL']+hash, false, function (response) {
-                if (response) {
-                  updates = true;
-                  plugins_user[id]['code'] = response;
-                  ['name", "id", "version", "description", "updateURL", "downloadURL", "supportURL'].forEach(function(key) {
-                    if (meta[key]) {
-                      plugins_user[id][key] = meta[key];
-                    }
-                  });
+        let response_meta = await ajaxGet(plugin['updateURL']+hash, false);
+        if (response_meta) {
+          let meta = parse_meta(response_meta);
+          // if new version
+          if (meta && meta['version'] && meta['version'] !== plugin['version']) {
+            // download userscript
+            let response_code = await ajaxGet(plugin['updateURL']+hash, false);
+            if (response_code) {
+              exist_updates = true;
+              plugins_user[id]['code'] = response_code;
+              ['name", "id", "version", "description", "updateURL", "downloadURL", "supportURL'].forEach(function(key) {
+                if (meta[key]) {
+                  plugins_user[id][key] = meta[key];
                 }
               });
             }
           }
-        });
-
+        }
       }
     });
 
-    if (updates) {
-      save({
+    await Promise.all(promises);
+    if (exist_updates) {
+      await save({
         'plugins_user': plugins_user
       })
     }
   }
 }
 
-function updateLocalPlugins(plugins, plugins_local) {
+async function updateLocalPlugins(plugins, plugins_local) {
   // If no plugins installed
   if (plugins_local === undefined) return {};
 
   // Iteration local plugins
-  Object.keys(plugins_local).forEach(function (id) {
+  let promises = Object.keys(plugins_local).map(async function(id) {
     let filename = plugins_local[id]['filename'];
 
     let keep = false;
@@ -302,19 +298,18 @@ function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      ajaxGet(network_host+"/build/" + network_channel + "/plugins/" + filename, false, function (response) {
-        plugins_local[id]['code'] = response;
-      });
+      let code = await ajaxGet(network_host+"/build/" + network_channel + "/plugins/" + filename, false);
+      if (code) plugins_local[id]['code'] = code;
     } else {
       delete plugins_local[id];
     }
   });
-
+  await Promise.all(promises);
   return plugins_local;
 }
 
 function managePlugin(id, category, action) {
-  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], function(local) {
+  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], async function(local) {
     let plugins = local[updateChannel+'_plugins'];
     let plugins_local = local[updateChannel+'_plugins_local'];
     let plugins_user = local[updateChannel+'_plugins_user'];
@@ -334,7 +329,7 @@ function managePlugin(id, category, action) {
           plugins_local[id]['status'] = 'on';
         }
 
-        save({
+        await save({
           'plugins': plugins,
           'plugins_local': plugins_local,
           'plugins_user': plugins_user
@@ -345,24 +340,22 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        ajaxGet(network_host+"/build/"+network_channel+"/plugins/"+filename, false, function (response) {
-          if (response) {
-            plugins[category]['plugins'][id]['status'] = 'on';
-            plugins[category]['count_plugins_active'] += 1;
-            plugins_local[id] = {
-              'category': category,
-              'filename': filename,
-              'status': 'on',
-              'code': response
-            };
+        let response = await ajaxGet(network_host+"/build/"+network_channel+"/plugins/"+filename, false);
+        if (response) {
+          plugins[category]['plugins'][id]['status'] = 'on';
+          plugins[category]['count_plugins_active'] += 1;
+          plugins_local[id] = {
+            'category': category,
+            'filename': filename,
+            'status': 'on',
+            'code': response
+          };
 
-            save({
-              'plugins': plugins,
-              'plugins_local': plugins_local
-            })
-
-          }
-        });
+          await save({
+            'plugins': plugins,
+            'plugins_local': plugins_local
+          })
+        }
       }
 
     }
@@ -379,7 +372,7 @@ function managePlugin(id, category, action) {
         plugins_local[id]['status'] = 'off';
       }
 
-      save({
+      await save({
         'plugins': plugins,
         'plugins_local': plugins_local,
         'plugins_user': plugins_user
@@ -405,7 +398,7 @@ function managePlugin(id, category, action) {
         }
       });
 
-      save({
+      await save({
         'plugins': plugins,
         'plugins_local': plugins_local,
         'plugins_user': plugins_user
@@ -415,7 +408,7 @@ function managePlugin(id, category, action) {
 }
 
 function addUserScripts(scripts) {
-  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], function(local) {
+  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], async function(local) {
     let plugins = local[updateChannel + '_plugins'];
     let plugins_local = local[updateChannel + '_plugins_local'];
     let plugins_user = local[updateChannel + '_plugins_user'];
@@ -435,7 +428,7 @@ function addUserScripts(scripts) {
 
     plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
 
-    save({
+    await save({
       'plugins': plugins,
       'plugins_local': plugins_local,
       'plugins_user': plugins_user
