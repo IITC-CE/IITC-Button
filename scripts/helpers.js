@@ -30,3 +30,25 @@ function parse_meta(code) {
   }
   return data;
 }
+
+const ajaxGet = (url, parseJSON) => new Promise(resolve => {
+  let xhr = null;
+  xhr = new XMLHttpRequest();
+  if (!xhr) return null;
+  xhr.timeout = 5000;
+  xhr.open("GET", url+"?"+Date.now(),true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        if (parseJSON) {
+          response = JSON.parse(response);
+        }
+        resolve(response)
+      } else {
+        resolve(null)
+      }
+    }
+  };
+  xhr.send(null);
+});

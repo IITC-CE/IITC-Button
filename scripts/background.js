@@ -19,6 +19,15 @@ chrome.runtime.onMessage.addListener(function(request) {
       break;
   }
 });
+// Handler .user.js
+chrome.webNavigation.onBeforeNavigate.addListener(
+  function (requestDetails) {
+    chrome.tabs.create({
+      url: chrome.extension.getURL('/app/jsview/main.html?url='+requestDetails.url)
+    });
+  },
+  {url: [{pathSuffix: ".user.js"}]}
+);
 
 async function onRequestOpenIntel(id) {
   if (!id) return;

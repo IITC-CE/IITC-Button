@@ -13,6 +13,7 @@
     "tabs",
     "cookies",
     "storage",
+    "webNavigation",
     "https://*.ingress.com/intel",
     "https://iitc.modos189.ru/*",
     "http://*/*.json",

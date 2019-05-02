@@ -67,28 +67,11 @@ const save = (options) => new Promise(resolve => {
 });
 
 
-const ajaxGet = (url, parseJSON) => new Promise(resolve => {
-  let xhr = null;
-  xhr = new XMLHttpRequest();
-  if (!xhr) return null;
-  xhr.timeout = 5000;
-  xhr.open("GET", url+"?"+Date.now(),true);
-  xhr.onreadystatechange=function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        showProgress(false);
-        let response = xhr.responseText;
-        if (parseJSON) {
-          response = JSON.parse(response);
-        }
-        resolve(response)
-      } else {
-        resolve(null)
-      }
-    }
-  };
-  xhr.send(null);
+const ajaxGetWithProgress = (url, parseJSON) => new Promise(async resolve => {
   showProgress(true);
+  let response = await ajaxGet(url, parseJSON);
+  if (response) showProgress(false);
+  resolve(response);
 });
 
 
@@ -137,7 +120,7 @@ function checkUpdates(force, retry) {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id); update_timeout_id = null;
-        let response = await ajaxGet(network_host+"/updates.json", true);
+        let response = await ajaxGetWithProgress(network_host+"/updates.json", true);
         if (response) {
           if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
             await downloadMeta(local);
@@ -166,14 +149,14 @@ function checkUpdates(force, retry) {
 }
 
 async function downloadMeta(local) {
-  let response = await ajaxGet(network_host+"/"+network_channel+".json", true);
+  let response = await ajaxGetWithProgress(network_host+"/"+network_channel+".json", true);
   if (response === undefined) return;
 
   let plugins = response[network_channel+'_plugins'];
   let plugins_local = local[updateChannel+'_plugins_local'];
   let plugins_user = local[updateChannel+'_plugins_user'];
 
-  let iitc_code = await ajaxGet(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false);
+  let iitc_code = await ajaxGetWithProgress(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false);
   if (iitc_code) {
     await save({
       'iitc_code': iitc_code
@@ -249,13 +232,13 @@ async function updateExternalPlugins(local) {
       if (plugin['updateURL'] && plugin['downloadURL']) {
 
         // download meta info
-        let response_meta = await ajaxGet(plugin['updateURL']+hash, false);
+        let response_meta = await ajaxGetWithProgress(plugin['updateURL']+hash, false);
         if (response_meta) {
           let meta = parse_meta(response_meta);
           // if new version
           if (meta && meta['version'] && meta['version'] !== plugin['version']) {
             // download userscript
-            let response_code = await ajaxGet(plugin['updateURL']+hash, false);
+            let response_code = await ajaxGetWithProgress(plugin['updateURL']+hash, false);
             if (response_code) {
               exist_updates = true;
               plugins_user[id]['code'] = response_code;
@@ -298,7 +281,7 @@ async function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      let code = await ajaxGet(network_host+"/build/" + network_channel + "/plugins/" + filename, false);
+      let code = await ajaxGetWithProgress(network_host+"/build/" + network_channel + "/plugins/" + filename, false);
       if (code) plugins_local[id]['code'] = code;
     } else {
       delete plugins_local[id];
@@ -340,7 +323,7 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        let response = await ajaxGet(network_host+"/build/"+network_channel+"/plugins/"+filename, false);
+        let response = await ajaxGetWithProgress(network_host+"/build/"+network_channel+"/plugins/"+filename, false);
         if (response) {
           plugins[category]['plugins'][id]['status'] = 'on';
           plugins[category]['count_plugins_active'] += 1;

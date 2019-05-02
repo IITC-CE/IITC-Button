@@ -16,49 +16,36 @@ url_input.addEventListener("keyup", function(event) {
   if (event.key === "Enter") { loadByUrl(); }
 });
 const url_button = document.getElementById("url_button");
-url_button.addEventListener("click", function () {
-  loadByUrl();
+url_button.addEventListener("click", async function () {
+  await loadByUrl();
 }, false);
 
-function loadByUrl() {
+async function loadByUrl() {
   let url = url_input.value;
   url_button.classList.remove('active');
-  console.log('loadByUrl');
 
+  let code = await ajaxGet(url);
+  if (code) {
+    let scripts = [];
+    let message = '';
+    const meta = parse_meta(code);
+    let filename = url.substr(url.lastIndexOf("/")+1);
 
-  let xhr = null;
-  xhr = new XMLHttpRequest();
-  if (!xhr) return null;
-  xhr.timeout = 5000;
-  xhr.open("GET", url,true);
-  xhr.onreadystatechange=function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        let code = xhr.responseText;
-
-        let scripts = [];
-        let message = '';
-        const meta = parse_meta(code);
-        let filename = url.substr(url.lastIndexOf("/")+1);
-
-        if (meta === {} || meta['id'] === undefined) {
-          message += filename+" is not a valid UserScript.\n";
-        } else {
-          message += filename+" has been added to the UserScripts category.\n";
-          meta['filename'] = filename;
-          scripts.push({'meta': meta, 'code': code})
-        }
-
-        alert(message);
-        chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
-      } else {
-        alert('Address is not available');
-      }
-      url_input.value = '';
-      url_button.classList.add('active');
+    if (meta === {} || meta['id'] === undefined) {
+      message += filename+" is not a valid UserScript.\n";
+    } else {
+      message += filename+" has been added to the UserScripts category.\n";
+      meta['filename'] = filename;
+      scripts.push({'meta': meta, 'code': code})
     }
-  };
-  xhr.send(null);
+
+    alert(message);
+    chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
+  } else {
+    alert('Address is not available');
+  }
+  url_input.value = '';
+  url_button.classList.add('active');
 }
 
 // Get the file if it was chosen from the pick list
