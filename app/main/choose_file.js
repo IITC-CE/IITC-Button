@@ -11,6 +11,56 @@ dropbox.addEventListener("click", function () {
   document.getElementById("input").click();
 }, false);
 
+const url_input = document.getElementById("url_input");
+url_input.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") { loadByUrl(); }
+});
+const url_button = document.getElementById("url_button");
+url_button.addEventListener("click", function () {
+  loadByUrl();
+}, false);
+
+function loadByUrl() {
+  let url = url_input.value;
+  url_button.classList.remove('active');
+  console.log('loadByUrl');
+
+
+  let xhr = null;
+  xhr = new XMLHttpRequest();
+  if (!xhr) return null;
+  xhr.timeout = 5000;
+  xhr.open("GET", url,true);
+  xhr.onreadystatechange=function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let code = xhr.responseText;
+
+        let scripts = [];
+        let message = '';
+        const meta = parse_meta(code);
+        let filename = url.substr(url.lastIndexOf("/")+1);
+
+        if (meta === {} || meta['id'] === undefined) {
+          message += filename+" is not a valid UserScript.\n";
+        } else {
+          message += filename+" has been added to the UserScripts category.\n";
+          meta['filename'] = filename;
+          scripts.push({'meta': meta, 'code': code})
+        }
+
+        alert(message);
+        chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
+      } else {
+        alert('Address is not available');
+      }
+      url_input.value = '';
+      url_button.classList.add('active');
+    }
+  };
+  xhr.send(null);
+}
+
 // Get the file if it was chosen from the pick list
 function handlePicked() {
   processingFile(this.files);
