@@ -166,32 +166,33 @@ function initialize(tabId) {
       }, () => {
         loadJS(tabId, "document_end", iitc_code, function () {
           activeIITCTab = tabId;
-
-          let plugins_local = data[updateChannel+'_plugins_local'];
-          if (plugins_local !== undefined) {
-            Object.keys(plugins_local).forEach(function(id) {
-              let plugin = plugins_local[id];
-              if (plugin['status'] === 'on') {
-                loadJS(tabId, "document_end", plugin['code'], function () {
-                  console.info('plugin %s loaded', id);
-                });
-              }
-            });
-          }
-
-          let plugins_user = data[updateChannel+'_plugins_user'];
-          if (plugins_user !== undefined) {
-            Object.keys(plugins_user).forEach(function(id) {
-              let plugin = plugins_user[id];
-              if (plugin['status'] === 'on') {
-                loadJS(tabId, "document_end", plugin['code'], function () {
-                  console.info('userscript %s loaded', id);
-                });
-              }
-            });
-          }
-
         });
+
+        let plugins_local = data[updateChannel+'_plugins_local'];
+        if (plugins_local !== undefined) {
+        Object.keys(plugins_local).forEach(function(id) {
+            let plugin = plugins_local[id];
+            if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_end", plugin['code'], function () {
+                console.info('plugin %s loaded', id);
+            });
+            }
+        });
+        }
+
+        let plugins_user = data[updateChannel+'_plugins_user'];
+        if (plugins_user !== undefined) {
+        Object.keys(plugins_user).forEach(function(id) {
+            let plugin = plugins_user[id];
+            if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_end", plugin['code'], function () {
+                console.info('userscript %s loaded', id);
+            });
+            }
+        });
+        }
+
+        
       });
 
     }
