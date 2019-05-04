@@ -3,7 +3,7 @@ IITC-Button WebExtension
 
 Intel map of Ingress game with IITC-CE in your browser.
 
-Get it on [Firefox Add-ons](https://addons.mozilla.org/ru/firefox/addon/iitc-button) and [Chrome Web Store](https://chrome.google.com/webstore/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn)
+Get it on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/iitc-button) and [Chrome Web Store](https://chrome.google.com/webstore/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn)
 
 ---
 
