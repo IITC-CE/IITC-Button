@@ -270,7 +270,7 @@ async function getActiveTab() {
 } */
 function isIngressUrl(url) {
   if (url) {
-    return (/intel.ingress.com\/intel/.test(url))
+    return (/intel.ingress.com/.test(url))
   }
   return false
 }

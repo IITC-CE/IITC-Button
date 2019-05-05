@@ -14,7 +14,7 @@
     "cookies",
     "storage",
     "webNavigation",
-    "https://*.ingress.com/intel",
+    "https://intel.ingress.com/*",
     "https://iitc.modos189.ru/*",
     "http://*/*.json",
     "http://*/*.meta.js",
