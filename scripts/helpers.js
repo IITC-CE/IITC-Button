@@ -52,3 +52,12 @@ const ajaxGet = (url, parseJSON) => new Promise(resolve => {
   };
   xhr.send(null);
 });
+
+// Implementation of partial sufficient compatibility with GreaseMonkey
+function preparationUserScript(plugin, name) {
+  if (name === undefined) name = '';
+
+  return 'var GM_info = {"script": {"version": "'+plugin['version']+'",' +
+                        '"name": "'+name+'",' +
+                        '"description": "'+plugin['desc']+'"}}; '+plugin['code']+'; true'
+}

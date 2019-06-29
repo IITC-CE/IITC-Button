@@ -323,11 +323,15 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
+        let version = plugins[category]['plugins'][id]['version'];
+        let desc = plugins[category]['plugins'][id]['desc'];
         let response = await ajaxGetWithProgress(network_host+"/build/"+network_channel+"/plugins/"+filename, false);
         if (response) {
           plugins[category]['plugins'][id]['status'] = 'on';
           plugins[category]['count_plugins_active'] += 1;
           plugins_local[id] = {
+            'version': version,
+            'desc': desc,
             'category': category,
             'filename': filename,
             'status': 'on',

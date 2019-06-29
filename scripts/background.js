@@ -159,6 +159,7 @@ function initialize(tabId) {
     "IITC_is_enabled",
     "update_channel",
     "release_iitc_code",     "test_iitc_code",     "local_iitc_code",
+    "release_iitc_version",  "test_iitc_version",  "local_iitc_version",
     "release_plugins_local", "test_plugins_local", "local_plugins_local",
     "release_plugins_user",  "test_plugins_user",  "local_plugins_user"
   ], function(data) {
@@ -166,38 +167,40 @@ function initialize(tabId) {
     if (data.update_channel) updateChannel = data.update_channel;
 
     let status = data['IITC_is_enabled'];
-    let iitc_code = data[updateChannel+'_iitc_code'];
+    let iitc_code = data[updateChannel+'_iitc_code']
+    let iitc_version = data[updateChannel+'_iitc_version'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
       chrome.tabs.executeScript(tabId, {
         runAt: "document_end",
         file: './scripts/pre.js'
       }, () => {
-        loadJS(tabId, "document_end", iitc_code, function () {
+        let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
+        loadJS(tabId, "document_end", inject_iitc_code, function () {
           activeIITCTab = tabId;
         });
 
         let plugins_local = data[updateChannel+'_plugins_local'];
         if (plugins_local !== undefined) {
         Object.keys(plugins_local).forEach(function(id) {
-            let plugin = plugins_local[id];
-            if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", plugin['code'], function () {
-                console.info('plugin %s loaded', id);
+          let plugin = plugins_local[id];
+          if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
+              console.info('plugin %s loaded', id);
             });
-            }
+          }
         });
         }
 
         let plugins_user = data[updateChannel+'_plugins_user'];
         if (plugins_user !== undefined) {
         Object.keys(plugins_user).forEach(function(id) {
-            let plugin = plugins_user[id];
-            if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", plugin['code'], function () {
-                console.info('userscript %s loaded', id);
+          let plugin = plugins_user[id];
+          if (plugin['status'] === 'on') {
+            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
+              console.info('userscript %s loaded', id);
             });
-            }
+          }
         });
         }
 
@@ -216,7 +219,7 @@ function loadJS(tabId, runAt, code, callback) {
 
   chrome.tabs.executeScript(tabId, {
     runAt: runAt,
-    code: code+";true"
+    code: code
   }, () => {
     if(chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError.message);
