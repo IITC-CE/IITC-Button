@@ -323,9 +323,6 @@ h2:first-letter {
 .local-server__input__err {
     color: var(--state-off);
 }
-.local-server__input:first-child {
-    margin-right: 5px;
-}
 
 /*
  * message
@@ -343,7 +340,7 @@ h2:first-letter {
     transition: bottom 0.3s ease-in-out;
     z-index: 10;
 }
-.message.open {
+.message.opened {
     bottom: 0;
 }
 
