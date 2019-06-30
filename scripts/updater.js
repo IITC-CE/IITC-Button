@@ -68,9 +68,12 @@ const save = (options) => new Promise(resolve => {
 
 
 const ajaxGetWithProgress = (url, parseJSON) => new Promise(async resolve => {
-  showProgress(true);
+  let progressIntervalId = setInterval(function() { showProgress(true) }, 300);
   let response = await ajaxGet(url, parseJSON);
-  if (response) showProgress(false);
+  if (response) {
+    clearInterval(progressIntervalId);
+    showProgress(false);
+  }
   resolve(response);
 });
 

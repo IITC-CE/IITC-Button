@@ -87,8 +87,10 @@ let app = new Vue({
       let updateChannel = event.target.value;
       chrome.storage.local.set({
         'update_channel': updateChannel
-      });
-      showMessage("Update in progress…"+updateChannel);
+      }, () => {
+	      this.forceUpdate()
+	    });
+      showMessage("Update in progress…");
     },
     'changeUpdateCheckInterval': function (type) {
       let key = type+'_update_check_interval';
