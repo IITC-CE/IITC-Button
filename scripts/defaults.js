@@ -5,3 +5,5 @@ let local_server_channel = "local";
 
 let network_host = iitc_host;
 let network_channel = updateChannel;
+
+let loaded_plugins = [];

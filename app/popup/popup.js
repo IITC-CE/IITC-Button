@@ -70,12 +70,12 @@ let app = new Vue({
       this.plugins[plugin_id].status = action;
       this.plugins[plugin_id].icon = 'toggle_'+action;
       showMessage("Changes will be applied after rebooting Intel");
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.plugin_category, 'action': action});
+      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': action});
     },
     'deletePlugin': function (plugin_id) {
       delete this.plugins[plugin_id];
       showMessage("Changes will be applied after rebooting Intel");
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.plugin_category, 'action': "delete"});
+      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': "delete"});
     },
     'savePlugin': function (id) {
       chrome.storage.local.get([this.updateChannel+"_plugins_user"], (data) => {

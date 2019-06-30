@@ -315,6 +315,8 @@ function managePlugin(id, category, action) {
           plugins_local[id]['status'] = 'on';
         }
 
+        loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins_local[id], id));
+
         await save({
           'plugins': plugins,
           'plugins_local': plugins_local,
@@ -340,6 +342,8 @@ function managePlugin(id, category, action) {
             'status': 'on',
             'code': response
           };
+
+          loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins_local[id], id));
 
           await save({
             'plugins': plugins,

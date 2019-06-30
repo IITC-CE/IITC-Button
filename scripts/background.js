@@ -109,6 +109,7 @@ async function onUpdatedListener(tabId, status) {
 
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
+        loaded_plugins = [];
         console.log('detected intel.ingress.com/intel page on active tab %d', tabId);
         console.log('requested iitc launch');
         console.log('initializing iitc');
@@ -173,7 +174,7 @@ function initialize(tabId) {
         file: './scripts/pre.js'
       }, () => {
         let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
-        loadJS(tabId, "document_end", inject_iitc_code, function () {
+        loadJS(tabId, "document_end", "ingress-intel-total-conversion@jonatkins", inject_iitc_code, function () {
           activeIITCTab = tabId;
         });
 
@@ -182,9 +183,7 @@ function initialize(tabId) {
         Object.keys(plugins_local).forEach(function(id) {
           let plugin = plugins_local[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
-              console.info('plugin %s loaded', id);
-            });
+            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
           }
         });
         }
@@ -194,9 +193,7 @@ function initialize(tabId) {
         Object.keys(plugins_user).forEach(function(id) {
           let plugin = plugins_user[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
-              console.info('userscript %s loaded', id);
-            });
+            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
           }
         });
         }
@@ -210,8 +207,16 @@ function initialize(tabId) {
 }
 
 
-function loadJS(tabId, runAt, code, callback) {
-  if(!tabId) { console.log('no tabId!'); return}
+function loadJS(tabId, runAt, id, code, callback) {
+  if (!tabId) { console.log('no tabId!'); return }
+
+  if (loaded_plugins.includes(id)) {
+    console.info('Plugin %s is already loaded. Skip', id);
+    return
+  } else {
+    loaded_plugins.push(id);
+  }
+
   callback = (typeof callback == 'function' ? callback : false);
 
   chrome.tabs.executeScript(tabId, {
@@ -221,6 +226,7 @@ function loadJS(tabId, runAt, code, callback) {
     if(chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError.message);
     }
+    console.info('plugin %s loaded', id);
     if (callback) callback();
   });
 
