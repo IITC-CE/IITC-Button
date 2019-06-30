@@ -10,5 +10,86 @@
     },
     "titleDefault": {
         "message": "Открыть Intel"
+    },
+    "needRebootIntel": {
+        "message": "Применится после перезагрузки Intel"
+    },
+    "updateInProgress": {
+        "message": "Происходит обновление…"
+    },
+    "changesApplied": {
+        "message": "Изменения применены"
+    },
+    "noData": {
+        "message": "Нет данных"
+    },
+    "addExternalPlugin": {
+        "message": "Добавить сторонний плагин"
+    },
+    "iitcHomePage": {
+        "message": "IITC-CE Сайт"
+    },
+    "iitcTelegram": {
+        "message": "IITC-CE Telegram канал"
+    },
+    "iitcGithub": {
+        "message": "IITC-CE GitHub репозиторий"
+    },
+    "iitcButtonOptions": {
+        "message": "Настройки IITC-Кнопки"
+    },
+    "updateNow": {
+        "message": "обновить сейчас"
+    },
+    "choosingUpdateChannel": {
+        "message": "Канал обновлений IITC-CE"
+    },
+    "release": {
+        "message": "Релиз"
+    },
+    "testBuilds": {
+        "message": "Тестовые сборки"
+    },
+    "localServer": {
+        "message": "Локальный сервер"
+    },
+    "updateFrequency": {
+        "message": "Проверка обновлений IITC-CE"
+    },
+    "updateExternalFrequency": {
+        "message": "Проверка обновлений сторонних плагинов"
+    },
+    "every6hours": {
+        "message": "Каждые 6 часов"
+    },
+    "every12hours": {
+        "message": "Каждые 12 часов"
+    },
+    "everyDay": {
+        "message": "Каждый день"
+    },
+    "everyWeek": {
+        "message": "Каждую неделю"
+    },
+    "anyChannel": {
+        "message": "Все каналы:"
+    },
+    "badgeExternal": {
+        "message": "сторонний"
+    },
+    "localServerURL": {
+        "message": "Адрес локального сервера"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "openSupport": {
+        "message": "Открыть страницу поддержки:"
+    },
+    "pluginSave": {
+        "message": "Сохранить"
+    },
+    "pluginDelete": {
+        "message": "Удалить"
     }
 }

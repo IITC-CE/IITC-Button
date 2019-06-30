@@ -35,24 +35,24 @@
                         <i class="element__action material-icons">keyboard_arrow_right</i>
                     </div>
                     <div v-if="objIsEmpty(categories)" class="element item-wrapper list__item">
-                        <span class="element__text">No data</span>
+                        <span class="element__text">{{ i18n('noData') }}</span>
                     </div>
 
                 </div>
                 <div class="item-wrapper hr"></div>
-                <div class="element item-wrapper list__item list__item_add" v-on:click="openLink('/app/main/main.html')"><i class="element__icon material-icons">add</i><span class="element__text">Add external plugins</span></div>
+                <div class="element item-wrapper list__item list__item_add" v-on:click="openLink('/app/main/main.html')"><i class="element__icon material-icons">add</i><span class="element__text">{{ i18n('addExternalPlugin') }}</span></div>
                 <div class="item-wrapper hr"></div>
-                <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">IITC-CE Home page</span></div>
-                <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">IITC-CE Telegram channel</span></div>
-                <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">IITC-CE GitHub repository</span></div>
+                <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">{{ i18n('iitcHomePage') }}</span></div>
+                <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">{{ i18n('iitcTelegram') }}</span></div>
+                <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">{{ i18n('iitcGithub') }}</span></div>
             </div>
         </section>
         <section class="section options">
             <header class="header element">
-                <i class="element__icon header__icon material-icons" v-on:click="back">keyboard_arrow_left</i><span class="element__text header__text">IITC-CE Button options</span> <div class="button" v-on:click="forceUpdate">update now</div>
+                <i class="element__icon header__icon material-icons" v-on:click="back">keyboard_arrow_left</i><span class="element__text header__text">{{ i18n('iitcButtonOptions') }}</span> <div class="button" v-on:click="forceUpdate">{{ i18n('updateNow') }}</div>
             </header>
             <div class="settings-section">
-                <h2>Choosing a IITC-CE update channel</h2>
+                <h2>{{ i18n('choosingUpdateChannel') }}</h2>
                 <p v-for="(item, i) in updateChannels" class="input-field">
                     <input type="radio" v-bind:id="item.value" name="update-channel" v-bind:value="i" v-model="updateChannel" v-on:click="changeUpdateChannel">
                     <label v-bind:for="item.value">{{ item.name }}</label>
@@ -60,17 +60,17 @@
             </div>
             <div class="hr"></div>
             <div class="settings-section">
-                <h2>IITC-CE checks for updates</h2>
+                <h2>{{ i18n('updateFrequency') }}</h2>
                 <div class="input-field update-check">
                     <div class="update-check__col">
                         <div class="update-check__setting">
-                            <span class="update-check__label">Release:</span>
+                            <div class="update-check__label-wrapper"><span class="update-check__label">{{ i18n('release') }}:</span></div>
                             <select id="release_update_check_interval" class="update-check__input" name="update-interval" v-model="release_update_check_interval" v-on:change="changeUpdateCheckInterval('release')">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
                         </div>
                         <div class="update-check__setting">
-                            <span class="update-check__label">Test builds:</span>
+                            <div class="update-check__label-wrapper"><span class="update-check__label">{{ i18n('testBuilds') }}:</span></div>
                             <select id="test_update_check_interval" class="update-check__input" name="update-interval" v-model="test_update_check_interval" v-on:change="changeUpdateCheckInterval('test')">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
@@ -80,11 +80,11 @@
             </div>
             <div class="hr"></div>
             <div class="settings-section">
-                <h2>External plugins checks for updates</h2>
+                <h2>{{ i18n('updateExternalFrequency') }}</h2>
                 <div class="input-field update-check">
                     <div class="update-check__col">
                         <div class="update-check__setting">
-                            <span class="update-check__label">Any:</span>
+                            <div class="update-check__label-wrapper"><span class="update-check__label">{{ i18n('anyChannel') }}</span></div>
                             <select id="external_update_check_interval" class="update-check__input" name="update-interval" v-model="external_update_check_interval" v-on:change="changeUpdateCheckInterval('external')">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
@@ -94,9 +94,9 @@
             </div>
             <div class="hr"></div>
             <div class="settings-section">
-                <h2>Local server address</h2>
+                <h2>{{ i18n('localServerURL') }}</h2>
                 <div class="input-field local-server">
-                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHost" placeholder="host url" v-on:input="changeLocalServer" />
+                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHost" v-bind:placeholder="i18n('placeholderLocalServer')" v-on:input="changeLocalServer" />
                 </div>
             </div>
         </section>
@@ -108,15 +108,15 @@
                 <div class="plugins-list">
                     <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginTitle(plugin)" v-bind:data-category="category_name" v-bind:data-id="plugin.id">
                         <span class="element__text" v-on:click="managePlugin(plugin.id, plugin.status)">{{ plugin.name }}</span>
-                        <span v-if="plugin.status === 'user'" class="element__user">custom</span>
+                        <span v-if="plugin.status === 'user'" class="element__user">{{ i18n('badgeExternal') }}</span>
                         <template v-if="category_name === 'UserScripts'">
-                            <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="'Open support page: '+plugin.supportURL">home</i>
-                            <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" title="Save">save</i>
-                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" title="Delete">close</i>
+                            <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="i18n('openSupport')+' '+plugin.supportURL">home</i>
+                            <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" v-bind:title="i18n('pluginSave')">save</i>
+                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="pluginDelete">close</i>
                         </template>
                         <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, plugin.status)">{{ pluginIcon(plugin) }}</i>
                     </div>
-                    <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">No data</span></div>
+                    <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">{{ i18n('noData') }}</span></div>
                 </div>
             </div>
         </section>

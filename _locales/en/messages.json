@@ -1,11 +1,11 @@
 {
     "extName": {
         "message": "IITC-Button",
-        "description": "Main title on the Chrome Web Store"
+        "description": "Name of the extension"
     },
     "extDescription": {
         "message": "Launch IITC for Ingress Intel with ease.",
-        "description": "Short description on the Chrome Web Store"
+        "description": "Description of the extension"
     },
     "lang": {
         "message": "en"
@@ -13,5 +13,86 @@
     "titleDefault": {
         "message": "Open Intel",
         "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "Changes will be applied after rebooting Intel"
+    },
+    "updateInProgress": {
+        "message": "Update in progress…"
+    },
+    "changesApplied": {
+        "message": "Changes were applied"
+    },
+    "noData": {
+        "message": "No data"
+    },
+    "addExternalPlugin": {
+        "message": "Add external plugin"
+    },
+    "iitcHomePage": {
+        "message": "IITC-CE Home page"
+    },
+    "iitcTelegram": {
+        "message": "IITC-CE Telegram channel"
+    },
+    "iitcGithub": {
+        "message": "IITC-CE GitHub repository"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Button options"
+    },
+    "updateNow": {
+        "message": "update now"
+    },
+    "choosingUpdateChannel": {
+        "message": "Choosing a IITC-CE update channel"
+    },
+    "release": {
+        "message": "Release"
+    },
+    "testBuilds": {
+        "message": "Test builds"
+    },
+    "localServer": {
+        "message": "Local server"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE checks for updates"
+    },
+    "updateExternalFrequency": {
+        "message": "External plugins checks for updates"
+    },
+    "every6hours": {
+        "message": "Every 6 Hours"
+    },
+    "every12hours": {
+        "message": "Every 12 Hours"
+    },
+    "everyDay": {
+        "message": "Every Day"
+    },
+    "everyWeek": {
+        "message": "Every Week"
+    },
+    "anyChannel": {
+        "message": "Any channel:"
+    },
+    "badgeExternal": {
+        "message": "external"
+    },
+    "localServerURL": {
+        "message": "Local server address"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "openSupport": {
+        "message": "Open support page:"
+    },
+    "pluginSave": {
+        "message": "Save"
+    },
+    "pluginDelete": {
+        "message": "Удалить"
     }
 }

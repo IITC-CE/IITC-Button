@@ -1,3 +1,7 @@
+function i18n(msg, arg) {
+  return chrome.i18n.getMessage(msg, arg)
+}
+
 function parse_meta(code) {
   let meta = code.split('\n');
 
