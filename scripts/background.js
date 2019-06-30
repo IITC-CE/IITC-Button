@@ -106,9 +106,6 @@ async function onUpdatedListener(tabId, status) {
       }
     }
     console.log('tab is active: ', active);
-    if (active) {
-      //chrome.pageAction.show(tabId);
-    } else return false;
 
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
