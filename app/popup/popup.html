@@ -106,15 +106,15 @@
             </header>
             <div class="list">
                 <div class="plugins-list">
-                    <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="plugin.title" v-bind:data-category="category_name" v-bind:data-id="plugin.id">
-                        <span class="element__text" v-on:click="managePlugin(plugin.id, category_name, plugin.status)">{{ plugin.name }}</span>
+                    <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginTitle(plugin)" v-bind:data-category="category_name" v-bind:data-id="plugin.id">
+                        <span class="element__text" v-on:click="managePlugin(plugin.id, plugin.status)">{{ plugin.name }}</span>
                         <span v-if="plugin.status === 'user'" class="element__user">custom</span>
                         <template v-if="category_name === 'UserScripts'">
-                            <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openSupportUrl(plugin.supportURL)" v-bind:title="'Open support page: '+plugin.supportURL">home</i>
+                            <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="'Open support page: '+plugin.supportURL">home</i>
                             <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" title="Save">save</i>
-                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id, category_name)" title="Delete">close</i>
+                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" title="Delete">close</i>
                         </template>
-                        <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, category_name, plugin.status)">{{ plugin.icon }}</i>
+                        <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, plugin.status)">{{ pluginIcon(plugin) }}</i>
                     </div>
                     <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">No data</span></div>
                 </div>
@@ -124,6 +124,7 @@
     </div>
 
     <script src="/app/vue.js"></script>
+    <script src="/scripts/helpers.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>

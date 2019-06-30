@@ -38,11 +38,9 @@ let app = new Vue({
         window.close();
       })
     },
-    'toggleIITC': function (event) {
+    'toggleIITC': function () {
       let checkedValue = this.IITC_is_enabled;
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
-      })
+      chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
     },
     'openLink': function (url) {
       chrome.tabs.create({ url: url });
@@ -58,35 +56,26 @@ let app = new Vue({
     'openCategory': function (category_name) {
       document.body.id = "plugins";
       this.category_name = category_name;
-
-      let plugins = this.categories[category_name]['plugins'];
-      Object.keys(plugins).forEach(function(id) {
-        plugins[id]['icon'] = (plugins[id]['status'] === 'user') ? 'close' : 'toggle_' + plugins[id]['status'];
-      });
-      // Hack to reset the list of plugins.
-      // Otherwise, duplicate plugins (observed when switching from category UserScripts) are moved to top of the list.
-      this.plugins = {};
-      this.plugins = plugins;
+      this.plugins = this.categories[category_name]['plugins'];
     },
-    'managePlugin': function (plugin_id, plugin_category, status) {
-      let action = null;
-      if (status === 'on') {
-        action = "off";
-      } else {
-        action = "on";
-      }
+    'pluginTitle': function (plugin) {
+      return ((this.category_name === 'UserScripts') ? '[v'+plugin['version']+'] ' : '') + plugin['desc'];
+    },
+    'pluginIcon': function (plugin) {
+      return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];
+    },
+    'managePlugin': function (plugin_id, status) {
+      let action = (status === "on") ? "off" : "on";
+
       this.plugins[plugin_id].status = action;
       this.plugins[plugin_id].icon = 'toggle_'+action;
       showMessage("Changes will be applied after rebooting Intel");
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': action});
+      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.plugin_category, 'action': action});
     },
-    'deletePlugin': function (plugin_id, plugin_category) {
+    'deletePlugin': function (plugin_id) {
       delete this.plugins[plugin_id];
       showMessage("Changes will be applied after rebooting Intel");
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': plugin_category, 'action': "delete"});
-    },
-    'openSupportUrl': function (event) {
-      this.openLink(event);
+      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.plugin_category, 'action': "delete"});
     },
     'savePlugin': function (id) {
       chrome.storage.local.get([this.updateChannel+"_plugins_user"], (data) => {
@@ -99,11 +88,10 @@ let app = new Vue({
       chrome.storage.local.set({
         'update_channel': updateChannel
       });
-      showMessage("Update in progress…");
+      showMessage("Update in progress…"+updateChannel);
     },
     'changeUpdateCheckInterval': function (type) {
       let key = type+'_update_check_interval';
-
       let setData = {};
       setData[key] = this[key];
 
@@ -116,14 +104,14 @@ let app = new Vue({
       chrome.runtime.sendMessage({'type': "forceFullUpdate"});
       showMessage("Update in progress…");
     },
-    'changeLocalServer': function () {
+    'changeLocalServer': async function () {
       let host = event.target.value;
-      if (checkStatusLocalServer(host)) {
+      if (await checkStatusLocalServer(host)) {
         chrome.storage.local.set({
           'local_server_host': "http://" + host
         }, function () {
           if (this.updateChannel === 'local') {
-            this.forceUpdate();
+            this.forceUpdate()
           }
         });
       }
@@ -188,30 +176,16 @@ chrome.storage.local.get([
 });
 
 
-
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (let key in changes) {
-    let storageChange = changes[key];
-    // console.log('Storage key "%s" in namespace "%s" changed. ' +
-    //             'Old value was "%s", new value is "%s".',
-    //             key,
-    //             namespace,
-    //             storageChange.oldValue,
-    //             storageChange.newValue);
     if (key === app.$data.updateChannel+"_plugins") {
       app.$data.categories = {};
-      app.$data.categories = storageChange.newValue;
-      let category_name = app.$data.category_name
+      app.$data.categories = changes[key].newValue;
+      let category_name = app.$data.category_name;
       if (category_name !== '') {
-        let plugins = app.$data.categories[category_name].plugins;
-        Object.keys(plugins).forEach(function(id) {
-          plugins[id]['title'] = ((category_name === 'UserScripts') ? plugins[id]['icon'] : '') + plugins[id]['desc'];
-          plugins[id]['icon'] = (plugins[id]['status'] === 'user') ? 'close' : 'toggle_' + plugins[id]['status'];
-        });
-        app.$data.plugins = plugins;
+        app.$data.plugins = app.$data.categories[category_name].plugins;
       }
     }
-
   }
 });
 
@@ -228,17 +202,3 @@ const saveJS = (function () {
         window.URL.revokeObjectURL(url);
     };
 }());
-
-function checkStatusLocalServer(host) {
-  app.$data.localServerStatus = 'err';
-
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://" + host, true);
-  xhr.timeout = 1000;
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      app.$data.localServerStatus = 'ok';
-    }
-  };
-  xhr.send(null);
-}

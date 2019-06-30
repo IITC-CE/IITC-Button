@@ -61,3 +61,22 @@ function preparationUserScript(plugin, name) {
                         '"name": "'+name+'",' +
                         '"description": "'+plugin['desc']+'"}}; '+plugin['code']+'; true'
 }
+
+const checkStatusLocalServer = (host) => new Promise(resolve => {
+  app.$data.localServerStatus = 'err';
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://"+host+"/meta.json", true);
+  xhr.timeout = 1000;
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        app.$data.localServerStatus = 'ok';
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    }
+  };
+  xhr.send(null);
+});
