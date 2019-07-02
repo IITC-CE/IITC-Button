@@ -93,6 +93,54 @@
         "message": "Save"
     },
     "pluginDelete": {
-        "message": "Удалить"
+        "message": "Delete"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ is not a valid UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ has been added to the External category.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Address is not available"
+    },
+    "errorReadingFile": {
+        "message": "An error occurred while reading $PLUGIN_NAME$ file.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "or"
+    },
+    "dropJSHereOrClick": {
+        "message": "Drop <i>.js</i> files here or click to upload."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin with the same ID will be overwritten by the new plugin."
+    },
+    "clickInstallPlugin": {
+        "message": "This is a IITC plugin. Click install to start using it."
+    },
+    "install": {
+        "message": "Install"
+    },
+    "loading": {
+        "message": "Loading…"
     }
 }

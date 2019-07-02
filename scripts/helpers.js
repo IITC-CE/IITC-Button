@@ -1,4 +1,4 @@
-function i18n(msg, arg) {
+function _(msg, arg) {
   return chrome.i18n.getMessage(msg, arg)
 }
 

@@ -1,13 +1,13 @@
 let updateChannelsData = {
-  release: {name: i18n('release'), value: 'release'},
-  test: {name: i18n('testBuilds'), value: 'test',},
-  local: {name: i18n('localServer'), value: 'local'}
+  release: {name: _('release'), value: 'release'},
+  test: {name: _('testBuilds'), value: 'test',},
+  local: {name: _('localServer'), value: 'local'}
 };
 let updateIntervalsData = [
-  {name: i18n('every6hours'), value: '6'},
-  {name: i18n('every12hours'), value: '12'},
-  {name: i18n('everyDay'), value: '24'},
-  {name: i18n('everyWeek'), value: '168'}
+  {name: _('every6hours'), value: '6'},
+  {name: _('every12hours'), value: '12'},
+  {name: _('everyDay'), value: '24'},
+  {name: _('everyWeek'), value: '168'}
 ];
 
 let app = new Vue({
@@ -69,12 +69,12 @@ let app = new Vue({
 
       this.plugins[plugin_id].status = action;
       this.plugins[plugin_id].icon = 'toggle_'+action;
-      showMessage(this.i18n("needRebootIntel"));
+      showMessage(this._("needRebootIntel"));
       chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': action});
     },
     'deletePlugin': function (plugin_id) {
       delete this.plugins[plugin_id];
-      showMessage(this.i18n("needRebootIntel"));
+      showMessage(this._("needRebootIntel"));
       chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': "delete"});
     },
     'savePlugin': function (id) {
@@ -90,7 +90,7 @@ let app = new Vue({
       }, () => {
 	      this.forceUpdate()
 	    });
-      showMessage(this.i18n("updateInProgress"));
+      showMessage(this._("updateInProgress"));
     },
     'changeUpdateCheckInterval': function (type) {
       let key = type+'_update_check_interval';
@@ -99,12 +99,12 @@ let app = new Vue({
 
       chrome.storage.local.set(setData, () => {
         chrome.runtime.sendMessage({'type': (type === 'external') ? "externalUpdate" : "safeUpdate"});
-        showMessage(this.i18n("changesApplied"));
+        showMessage(this._("changesApplied"));
       });
     },
     'forceUpdate': function () {
       chrome.runtime.sendMessage({'type': "forceFullUpdate"});
-      showMessage(this.i18n("updateInProgress"));
+      showMessage(this._("updateInProgress"));
     },
     'changeLocalServer': async function () {
       let host = event.target.value;
@@ -118,8 +118,8 @@ let app = new Vue({
         });
       }
     },
-    'i18n': (msg, arg) => {
-      return i18n(msg, arg)
+    '_': (msg, arg) => {
+      return _(msg, arg)
     }
 
   }

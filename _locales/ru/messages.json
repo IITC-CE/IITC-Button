@@ -91,5 +91,53 @@
     },
     "pluginDelete": {
         "message": "Удалить"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ не является валидным пользовательским скриптом.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ добавлен в категорию Сторонние.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Адрес недоступен"
+    },
+    "errorReadingFile": {
+        "message": "Произошла ошибка при чтении файла $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "или"
+    },
+    "dropJSHereOrClick": {
+        "message": "Выберите <i>.js</i> файл или переместите его сюда."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "При совпадении ID плагин будет перезаписан новым."
+    },
+    "clickInstallPlugin": {
+        "message": "Это плагин IITC. Установите, чтобы начать использовать."
+    },
+    "install": {
+        "message": "Установить"
+    },
+    "loading": {
+        "message": "Загрузка…"
     }
 }

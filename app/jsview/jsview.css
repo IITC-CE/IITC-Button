@@ -26,13 +26,16 @@ h3 {
 #addUserScript {
   padding: 1.8em;
   margin: auto;
-  width: 600px;
+  width: 620px;
   height: 68px;
   font-size: 18px;
   transition: opacity .1s linear;
 }
 #addUserScript.hide {
   opacity: 0;
+}
+#addUserScript .col {
+  padding-right: 10px;
 }
 
 pre {
