@@ -1,3 +1,7 @@
+function _(msg, arg) {
+  return chrome.i18n.getMessage(msg, arg)
+}
+
 function parse_meta(code) {
   let meta = code.split('\n');
 
@@ -20,7 +24,6 @@ function parse_meta(code) {
       let value = sp.slice(2).join(" ");
       if (["name", "id", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
         if (data[key]) continue;
-        if (key === "description") key = "desc";
         if (key === "name") {
           value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
         }
@@ -59,5 +62,24 @@ function preparationUserScript(plugin, name) {
 
   return 'var GM_info = {"script": {"version": "'+plugin['version']+'",' +
                         '"name": "'+name+'",' +
-                        '"description": "'+plugin['desc']+'"}}; '+plugin['code']+'; true'
+                        '"description": "'+plugin['description']+'"}}; '+plugin['code']+'; true'
 }
+
+const checkStatusLocalServer = (host) => new Promise(resolve => {
+  app.$data.localServerStatus = 'err';
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://"+host+"/meta.json", true);
+  xhr.timeout = 1000;
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        app.$data.localServerStatus = 'ok';
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    }
+  };
+  xhr.send(null);
+});

@@ -12,10 +12,10 @@ onRemoved.addListener(onRemovedListener);
 chrome.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
     case "requestOpenIntel":
-      onRequestOpenIntel(request.tab);
+      onRequestOpenIntel(request.tab).finally();
       break;
     case "toggleIITC":
-      onToggleIITC(request.value);
+      onToggleIITC(request.value).finally();
       break;
   }
 });
@@ -106,12 +106,10 @@ async function onUpdatedListener(tabId, status) {
       }
     }
     console.log('tab is active: ', active);
-    if (active) {
-      //chrome.pageAction.show(tabId);
-    } else return false;
 
     if (status.status === 'complete') {
       if (isIngressUrl(url)) {
+        loaded_plugins = [];
         console.log('detected intel.ingress.com/intel page on active tab %d', tabId);
         console.log('requested iitc launch');
         console.log('initializing iitc');
@@ -157,18 +155,18 @@ function initialize(tabId) {
 
   chrome.storage.local.get([
     "IITC_is_enabled",
-    "update_channel",
+    "channel",
     "release_iitc_code",     "test_iitc_code",     "local_iitc_code",
     "release_iitc_version",  "test_iitc_version",  "local_iitc_version",
     "release_plugins_local", "test_plugins_local", "local_plugins_local",
     "release_plugins_user",  "test_plugins_user",  "local_plugins_user"
   ], function(data) {
 
-    if (data.update_channel) updateChannel = data.update_channel;
+    if (data.channel) channel = data.channel;
 
     let status = data['IITC_is_enabled'];
-    let iitc_code = data[updateChannel+'_iitc_code']
-    let iitc_version = data[updateChannel+'_iitc_version'];
+    let iitc_code = data[channel+'_iitc_code']
+    let iitc_version = data[channel+'_iitc_version'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
       chrome.tabs.executeScript(tabId, {
@@ -176,30 +174,26 @@ function initialize(tabId) {
         file: './scripts/pre.js'
       }, () => {
         let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
-        loadJS(tabId, "document_end", inject_iitc_code, function () {
+        loadJS(tabId, "document_end", "ingress-intel-total-conversion@jonatkins", inject_iitc_code, function () {
           activeIITCTab = tabId;
         });
 
-        let plugins_local = data[updateChannel+'_plugins_local'];
+        let plugins_local = data[channel+'_plugins_local'];
         if (plugins_local !== undefined) {
         Object.keys(plugins_local).forEach(function(id) {
           let plugin = plugins_local[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
-              console.info('plugin %s loaded', id);
-            });
+            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
           }
         });
         }
 
-        let plugins_user = data[updateChannel+'_plugins_user'];
+        let plugins_user = data[channel+'_plugins_user'];
         if (plugins_user !== undefined) {
         Object.keys(plugins_user).forEach(function(id) {
           let plugin = plugins_user[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", preparationUserScript(plugin, id), function () {
-              console.info('userscript %s loaded', id);
-            });
+            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
           }
         });
         }
@@ -213,8 +207,16 @@ function initialize(tabId) {
 }
 
 
-function loadJS(tabId, runAt, code, callback) {
-  if(!tabId) { console.log('no tabId!'); return}
+function loadJS(tabId, runAt, id, code, callback) {
+  if (!tabId) { console.log('no tabId!'); return }
+
+  if (loaded_plugins.includes(id)) {
+    console.info('Plugin %s is already loaded. Skip', id);
+    return
+  } else {
+    loaded_plugins.push(id);
+  }
+
   callback = (typeof callback == 'function' ? callback : false);
 
   chrome.tabs.executeScript(tabId, {
@@ -224,6 +226,7 @@ function loadJS(tabId, runAt, code, callback) {
     if(chrome.runtime.lastError) {
       console.log(chrome.runtime.lastError.message);
     }
+    console.info('plugin %s loaded', id);
     if (callback) callback();
   });
 

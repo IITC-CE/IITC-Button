@@ -1,11 +1,11 @@
 {
     "extName": {
         "message": "IITC-Button",
-        "description": "Main title on the Chrome Web Store"
+        "description": "Name of the extension"
     },
     "extDescription": {
         "message": "Launch IITC for Ingress Intel with ease.",
-        "description": "Short description on the Chrome Web Store"
+        "description": "Description of the extension"
     },
     "lang": {
         "message": "en"
@@ -13,5 +13,146 @@
     "titleDefault": {
         "message": "Open Intel",
         "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "Changes will be applied after rebooting Intel"
+    },
+    "updateInProgress": {
+        "message": "Update in progress…"
+    },
+    "changesApplied": {
+        "message": "Changes were applied"
+    },
+    "noData": {
+        "message": "No data"
+    },
+    "addExternalPlugin": {
+        "message": "Add external plugin"
+    },
+    "iitcHomePage": {
+        "message": "IITC-CE Home page"
+    },
+    "iitcTelegram": {
+        "message": "IITC-CE Telegram channel"
+    },
+    "iitcGithub": {
+        "message": "IITC-CE GitHub repository"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Button options"
+    },
+    "updateNow": {
+        "message": "update now"
+    },
+    "choosingUpdateChannel": {
+        "message": "Choosing a IITC-CE update channel"
+    },
+    "release": {
+        "message": "Release"
+    },
+    "testBuilds": {
+        "message": "Test builds"
+    },
+    "localServer": {
+        "message": "Local server"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE checks for updates"
+    },
+    "updateExternalFrequency": {
+        "message": "External plugins checks for updates"
+    },
+    "every6hours": {
+        "message": "Every 6 Hours"
+    },
+    "every12hours": {
+        "message": "Every 12 Hours"
+    },
+    "everyDay": {
+        "message": "Every Day"
+    },
+    "everyWeek": {
+        "message": "Every Week"
+    },
+    "anyChannel": {
+        "message": "Any channel:"
+    },
+    "badgeExternal": {
+        "message": "external"
+    },
+    "localServerURL": {
+        "message": "Local server address"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "openSupport": {
+        "message": "Open support page:"
+    },
+    "pluginSave": {
+        "message": "Save"
+    },
+    "pluginDelete": {
+        "message": "Delete"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ is not a valid UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ has been added to the External category.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Address is not available"
+    },
+    "errorReadingFile": {
+        "message": "An error occurred while reading $PLUGIN_NAME$ file.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "or"
+    },
+    "dropJSHereOrClick": {
+        "message": "Drop <i>.js</i> files here or click to upload."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin with the same ID will be overwritten by the new plugin."
+    },
+    "clickInstallPlugin": {
+        "message": "This is a IITC plugin. Click install to start using it."
+    },
+    "install": {
+        "message": "Install"
+    },
+    "loading": {
+        "message": "Loading…"
+    },
+    "serverNotAvailableRetry": {
+        "message": "The server is not available. Retry after $NUM$ second",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "external": {
+        "message": "External"
     }
 }

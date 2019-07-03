@@ -30,6 +30,7 @@ Object.prototype.sortByKey = function(key){
   return result;
 };
 
+let progressIntervalId = null;
 let update_timeout_id = null;
 let external_update_timeout_id = null;
 checkUpdates();
@@ -57,8 +58,8 @@ const save = (options) => new Promise(resolve => {
   let data = {};
   Object.keys(options).forEach(function (key) {
     if (['iitc_version', 'iitc_code', 'plugins', 'plugins_local', 'plugins_user'].indexOf(key) !== -1) {
-      console.log('save '+updateChannel+'_'+key);
-      data[updateChannel+'_'+key] = options[key];
+      console.log('save '+channel+'_'+key);
+      data[channel+'_'+key] = options[key];
     } else {
       data[key] = options[key];
     }
@@ -68,9 +69,13 @@ const save = (options) => new Promise(resolve => {
 
 
 const ajaxGetWithProgress = (url, parseJSON) => new Promise(async resolve => {
-  showProgress(true);
+  clearInterval(progressIntervalId);
+  progressIntervalId = setInterval(function() { showProgress(true) }, 300);
   let response = await ajaxGet(url, parseJSON);
-  if (response) showProgress(false);
+  if (response) {
+    clearInterval(progressIntervalId);
+    showProgress(false);
+  }
   resolve(response);
 });
 
@@ -84,10 +89,9 @@ function showProgress(value) {
 
 function checkUpdates(force, retry) {
   chrome.storage.local.get([
-    "update_channel",
+    "channel",
     "last_check_update",
     "local_server_host",
-    "local_server_channel",
     "release_update_check_interval", "test_update_check_interval", "local_update_check_interval",
     "release_iitc_version",          "test_iitc_version",          "local_iitc_version",
     "release_plugins",               "test_plugins",               "local_plugins",
@@ -95,40 +99,34 @@ function checkUpdates(force, retry) {
     "release_plugins_user",          "test_plugins_user",          "local_plugins_user"
   ], async function(local) {
 
-    if (local.update_channel) updateChannel = local.update_channel;
-    if (local.local_server_host) local_server_host = local.local_server_host;
-    if (local.local_server_channel) local_server_channel = local.local_server_channel;
+    if (local.channel) channel = local.channel;
+    if (local.local_server_host) network_host['local'] = "http://" + local.local_server_host;
 
-    if (updateChannel === 'local') {
-      network_host = local_server_host;
-      network_channel = local_server_channel;
-    } else {
-      network_host = iitc_host;
-      network_channel = updateChannel;
+    let update_check_interval = local[channel+'_update_check_interval']*60*60;
+    if (!update_check_interval) update_check_interval = 24*60*60;
+    if (channel === 'local') update_check_interval = 5; // check every 5 seconds
+
+    if (retry === undefined) {
+      clearTimeout(update_timeout_id); update_timeout_id = null;
+      retry = 0;
     }
 
-    let update_check_interval = local[updateChannel+'_update_check_interval']*60*60;
-    if (!update_check_interval) update_check_interval = 24*60*60;
-    if (updateChannel === 'local') update_check_interval = 5; // check every 5 seconds
-
-    if (retry === undefined) retry = 0;
-
-    if (local[updateChannel+'_iitc_version'] === undefined || local.last_check_update === undefined || updateChannel === 'local') {
+    if (local[channel+'_iitc_version'] === undefined || local.last_check_update === undefined || channel === 'local') {
       clearTimeout(update_timeout_id); update_timeout_id = null;
       await downloadMeta(local);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id); update_timeout_id = null;
-        let response = await ajaxGetWithProgress(network_host+"/updates.json", true);
+        let response = await ajaxGetWithProgress(network_host[channel]+"/.build-timestamp");
         if (response) {
-          if (response[network_channel] !== local[updateChannel+'_iitc_version'] || force) {
+          if (response[network_host[channel]] !== local[channel+'_iitc_version'] || force) {
             await downloadMeta(local);
           }
         } else {
           retry += 1;
           let seconds = retry*retry;
-          chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
+          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry')});
           update_timeout_id = setTimeout(function(){
             checkUpdates(true, retry);
           }, seconds*1000);
@@ -149,14 +147,14 @@ function checkUpdates(force, retry) {
 }
 
 async function downloadMeta(local) {
-  let response = await ajaxGetWithProgress(network_host+"/"+network_channel+".json", true);
-  if (response === undefined) return;
+  let response = await ajaxGetWithProgress(network_host[channel]+"/meta.json", true);
+  if (!response) return;
 
-  let plugins = response[network_channel+'_plugins'];
-  let plugins_local = local[updateChannel+'_plugins_local'];
-  let plugins_user = local[updateChannel+'_plugins_user'];
+  let plugins = response['categories'];
+  let plugins_local = local[channel+'_plugins_local'];
+  let plugins_user = local[channel+'_plugins_user'];
 
-  let iitc_code = await ajaxGetWithProgress(network_host+"/build/"+network_channel+"/total-conversion-build.user.js", false);
+  let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js", false);
   if (iitc_code) {
     await save({
       'iitc_code': iitc_code
@@ -167,7 +165,7 @@ async function downloadMeta(local) {
 
   plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
   await save({
-    'iitc_version': response[network_channel+'_iitc_version'],
+    'iitc_version': response['iitc_version'],
     'plugins': plugins,
     'plugins_local': plugins_local,
     'plugins_user': plugins_user
@@ -176,25 +174,13 @@ async function downloadMeta(local) {
 
 function checkExternalUpdates(force) {
   chrome.storage.local.get([
-    "update_channel",
-    "local_server_host",
-    "local_server_channel",
+    "channel",
     "last_check_external_update",
     "external_update_check_interval",
-    "release_plugins_user",          "test_plugins_user"
+    "release_plugins_user",          "test_plugins_user",          "local_plugins_user"
   ], async function(local){
 
-    if (local.update_channel) updateChannel = local.update_channel;
-    if (local.local_server_host) local_server_host = local.local_server_host;
-    if (local.local_server_channel) local_server_channel = local.local_server_channel;
-
-    if (updateChannel === 'local') {
-      network_host = local_server_host;
-      network_channel = local_server_channel;
-    } else {
-      network_host = iitc_host;
-      network_channel = updateChannel;
-    }
+    if (local.channel) channel = local.channel;
 
     let update_check_interval = local['external_update_check_interval']*60*60;
     if (!update_check_interval) {
@@ -221,7 +207,7 @@ function checkExternalUpdates(force) {
 }
 
 async function updateExternalPlugins(local) {
-  let plugins_user = local[updateChannel+'_plugins_user'];
+  let plugins_user = local[channel+'_plugins_user'];
   if (plugins_user) {
     let exist_updates = false;
     let hash = "?"+Date.now();
@@ -241,12 +227,8 @@ async function updateExternalPlugins(local) {
             let response_code = await ajaxGetWithProgress(plugin['updateURL']+hash, false);
             if (response_code) {
               exist_updates = true;
+              plugins_user[id] = meta;
               plugins_user[id]['code'] = response_code;
-              ['name", "id", "version", "description", "updateURL", "downloadURL", "supportURL'].forEach(function(key) {
-                if (meta[key]) {
-                  plugins_user[id][key] = meta[key];
-                }
-              });
             }
           }
         }
@@ -281,7 +263,7 @@ async function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      let code = await ajaxGetWithProgress(network_host+"/build/" + network_channel + "/plugins/" + filename, false);
+      let code = await ajaxGetWithProgress(network_host[channel]+"/plugins/" + filename, false);
       if (code) plugins_local[id]['code'] = code;
     } else {
       delete plugins_local[id];
@@ -292,25 +274,27 @@ async function updateLocalPlugins(plugins, plugins_local) {
 }
 
 function managePlugin(id, category, action) {
-  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], async function(local) {
-    let plugins = local[updateChannel+'_plugins'];
-    let plugins_local = local[updateChannel+'_plugins_local'];
-    let plugins_user = local[updateChannel+'_plugins_user'];
+  chrome.storage.local.get([channel+"_plugins", channel+"_plugins_local", channel+"_plugins_user"], async function(local) {
+    let plugins = local[channel+'_plugins'];
+    let plugins_local = local[channel+'_plugins_local'];
+    let plugins_user = local[channel+'_plugins_user'];
     if (action === 'on') {
 
-      if (category !== "UserScripts" && plugins_local !== undefined && plugins_local[id] !== undefined ||
-          category === "UserScripts" && plugins_user !== undefined && plugins_user[id] !== undefined) {
+      if (category !== "External" && plugins_local !== undefined && plugins_local[id] !== undefined ||
+          category === "External" && plugins_user !== undefined && plugins_user[id] !== undefined) {
 
         // Protection against erroneous double activation
         if (plugins[category]['plugins'][id]['status'] !== 'on') {
           plugins[category]['count_plugins_active'] += 1;
         }
         plugins[category]['plugins'][id]['status'] = 'on';
-        if (category === "UserScripts") {
+        if (category === "External") {
           plugins_user[id]['status'] = 'on';
         } else {
           plugins_local[id]['status'] = 'on';
         }
+
+        loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins[category]['plugins'][id], id));
 
         await save({
           'plugins': plugins,
@@ -323,20 +307,16 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        let version = plugins[category]['plugins'][id]['version'];
-        let desc = plugins[category]['plugins'][id]['desc'];
-        let response = await ajaxGetWithProgress(network_host+"/build/"+network_channel+"/plugins/"+filename, false);
+        let response = await ajaxGetWithProgress(network_host[channel]+"/plugins/"+filename, false);
         if (response) {
           plugins[category]['plugins'][id]['status'] = 'on';
           plugins[category]['count_plugins_active'] += 1;
-          plugins_local[id] = {
-            'version': version,
-            'desc': desc,
-            'category': category,
-            'filename': filename,
-            'status': 'on',
-            'code': response
-          };
+          plugins_local[id] = plugins[category]['plugins'][id];
+          plugins_local[id]['category'] = category;
+          plugins_local[id]['status'] = 'on';
+          plugins_local[id]['code'] = response;
+
+          loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins_local[id], id));
 
           await save({
             'plugins': plugins,
@@ -353,7 +333,7 @@ function managePlugin(id, category, action) {
         plugins[category]['count_plugins_active'] -= 1;
       }
       plugins[category]['plugins'][id]['status'] = 'off';
-      if (category === 'UserScripts') {
+      if (category === 'External') {
         plugins_user[id]['status'] = 'off';
       } else {
         plugins_local[id]['status'] = 'off';
@@ -368,14 +348,14 @@ function managePlugin(id, category, action) {
     }
     if (action === 'delete') {
 
-      plugins['UserScripts']['count_plugins'] -= 1;
-      if (plugins['UserScripts']['plugins'][id]['status'] === 'on') {
-        plugins['UserScripts']['count_plugins_active'] -= 1;
+      plugins['External']['count_plugins'] -= 1;
+      if (plugins['External']['plugins'][id]['status'] === 'on') {
+        plugins['External']['count_plugins_active'] -= 1;
       }
-      if (plugins['UserScripts']['count_plugins'] === 0) {
-        delete plugins['UserScripts'];
+      if (plugins['External']['count_plugins'] === 0) {
+        delete plugins['External'];
       } else {
-        delete plugins['UserScripts']['plugins'][id];
+        delete plugins['External']['plugins'][id];
       }
       delete plugins_user[id];
 
@@ -395,10 +375,10 @@ function managePlugin(id, category, action) {
 }
 
 function addUserScripts(scripts) {
-  chrome.storage.local.get([updateChannel+"_plugins", updateChannel+"_plugins_local", updateChannel+"_plugins_user"], async function(local) {
-    let plugins = local[updateChannel + '_plugins'];
-    let plugins_local = local[updateChannel + '_plugins_local'];
-    let plugins_user = local[updateChannel + '_plugins_user'];
+  chrome.storage.local.get([channel+"_plugins", channel+"_plugins_local", channel+"_plugins_user"], async function(local) {
+    let plugins = local[channel + '_plugins'];
+    let plugins_local = local[channel + '_plugins_local'];
+    let plugins_user = local[channel + '_plugins_user'];
 
     if (plugins_local === undefined) plugins_local = {};
     if (plugins_user === undefined) plugins_user = {};
@@ -430,11 +410,11 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
 
   let plugins_user_length = Object.keys(plugins_user).length;
 
-  // Placing the UserScripts section in top
+  // Placing the External plugins section in top
   if (plugins_user_length) {
-    data['UserScripts'] = {
-      'name': 'UserScripts',
-      'desc': '',
+    data['External'] = {
+      'name': 'External',
+      'description': '',
       'plugins': {},
       'count_plugins': 0,
       'count_plugins_active': 0,
@@ -457,7 +437,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
         plugins[plugin['id']] = plugin;
       }
     });
-    if (count_all > 0 || cat === 'UserScripts') {
+    if (count_all > 0 || cat === 'External') {
       data[cat]['plugins'] = plugins.sortByKey('name');
       data[cat]['count_plugins'] = count_all;
       data[cat]['count_plugins_active'] = 0;
@@ -475,7 +455,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
     data[plugin_cat]['count_plugins_active'] += 1;
   });
 
-  // Build UserScripts
+  // Build External plugins
   if (plugins_user_length) {
     let count_all = 0;
     let count_active = 0;
@@ -496,9 +476,9 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
       if (plugins_user[id]['status'] === 'on') count_active += 1;
       userscripts[id] = plugins_user[id];
     });
-    data['UserScripts']['plugins'] = userscripts.sortByKey('name');
-    data['UserScripts']['count_plugins'] = count_all;
-    data['UserScripts']['count_plugins_active'] = count_active;
+    data['External']['plugins'] = userscripts.sortByKey('name');
+    data['External']['count_plugins'] = count_all;
+    data['External']['count_plugins_active'] = count_active;
   }
 
   return data;

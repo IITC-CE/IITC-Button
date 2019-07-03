@@ -32,9 +32,9 @@ async function loadByUrl() {
     let filename = url.substr(url.lastIndexOf("/")+1);
 
     if (meta === {} || meta['id'] === undefined) {
-      message += filename+" is not a valid UserScript.\n";
+      message += _("notValidUserScript", filename)+"\n";
     } else {
-      message += filename+" has been added to the UserScripts category.\n";
+      message += _("addedUserScript", filename)+"\n";
       meta['filename'] = filename;
       scripts.push({'meta': meta, 'code': code})
     }
@@ -42,7 +42,7 @@ async function loadByUrl() {
     alert(message);
     chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
   } else {
-    alert('Address is not available');
+    alert(_("addressNotAvailable"));
   }
   url_input.value = '';
   url_button.classList.add('active');
@@ -75,14 +75,14 @@ const processingFile = async (fileList) => {
       const meta = parse_meta(code);
 
       if (meta === {} || meta['id'] === undefined) {
-        message += file['name']+" is not a valid UserScript.\n";
+        message += _("notValidUserScript", file['name'])+"\n";
       } else {
-        message += meta['name']+" has been added to the UserScripts category.\n";
+        message += _("addedUserScript", meta['name'])+"\n";
         meta['filename'] = file['name'];
         scripts.push({'meta': meta, 'code': code})
       }
     } catch (e) {
-      message += "An error occurred while reading "+file['name']+" file.\n";
+      message += _("errorReadingFile", file['name'])+"\n";
     }
 
   }
@@ -117,3 +117,10 @@ function dragover(e) {
   e.stopPropagation();
   e.preventDefault();
 }
+
+window.addEventListener('DOMContentLoaded', function() {
+  document.title = _('extName');
+  document.getElementById('or').innerText = _('or');
+  document.getElementById('dropJSHereOrClick').innerHTML = _('dropJSHereOrClick');
+  document.getElementById('willBeOverwrittenByNewPlugin').innerText = _('willBeOverwrittenByNewPlugin');
+})

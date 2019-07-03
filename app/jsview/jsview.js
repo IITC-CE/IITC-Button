@@ -1,5 +1,5 @@
 function escapeHtml(text) {
-  var map = {
+  let map = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -11,6 +11,11 @@ function escapeHtml(text) {
 }
 
 document.addEventListener('DOMContentLoaded', async function(){
+  document.title = _('extName');
+  document.getElementById('clickInstallPlugin').innerText = _('clickInstallPlugin');
+  document.getElementById('install').innerText = _('install');
+  document.getElementById('code').innerText = _('loading');
+
   let url = new URL(window.location.href).searchParams.get("url");
 
   let code = await ajaxGet(url);
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 			const btn_install = document.getElementById("install");
 			btn_install.addEventListener("click", function () {
 
-				let message = filename + " has been added to the UserScripts category.\n";
+				let message = _("addedUserScript", filename)+"\n";
 				meta['filename'] = filename;
 				let script = [{'meta': meta, 'code': code}];
 
@@ -39,6 +44,6 @@ document.addEventListener('DOMContentLoaded', async function(){
 		}
 
   } else {
-    alert('Address is not available');
+    document.getElementById('code').innerText = _('addressNotAvailable');
   }
 });

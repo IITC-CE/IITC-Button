@@ -1,6 +1,6 @@
 body {
     cursor: default;
-    min-width: 300px;
+    min-width: 325px;
     min-height: 546px;
     overflow: hidden;
     margin: 0;
@@ -301,6 +301,16 @@ h2:first-letter {
 }
 .update-check__label {
     padding-right: 5px;
+    line-height: 11px;
+    text-align: right;
+}
+.update-check__label-wrapper {
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	width: 30%;
+	float: left;
+	height: 30px;
 }
 
 /*
@@ -323,9 +333,6 @@ h2:first-letter {
 .local-server__input__err {
     color: var(--state-off);
 }
-.local-server__input:first-child {
-    margin-right: 5px;
-}
 
 /*
  * message
@@ -340,10 +347,20 @@ h2:first-letter {
     padding: 0 10px 0 10px;
     color: var(--color-white);
     font-weight: 400;
+    white-space: nowrap;
     transition: bottom 0.3s ease-in-out;
     z-index: 10;
 }
-.message.open {
+#message::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 40px;
+	height: 100%;
+	background: linear-gradient(to right, #3333, #333 100%);
+}
+.message.opened {
     bottom: 0;
 }
 
@@ -392,17 +409,17 @@ h2:first-letter {
         background-color: #222;
     }
     50%, 100% {
-        background-color: #333;
+        background-color: #444;
     }
 }
 @keyframes preloader-front {
     0% {
         width: 0;
-        background-color: #333;
+        background-color: #444;
     }
     49.9999% {
         width: 100%;
-        background-color: #333;
+        background-color: #444;
     }
     50% {
         width: 0;
