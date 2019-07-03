@@ -59,7 +59,7 @@ let app = new Vue({
       this.plugins = this.categories[category_name]['plugins'];
     },
     'pluginTitle': function (plugin) {
-      return ((this.category_name === 'UserScripts') ? '[v'+plugin['version']+'] ' : '') + plugin['description'];
+      return ((this.category_name === 'External') ? '[v'+plugin['version']+'] ' : '') + plugin['description'];
     },
     'pluginIcon': function (plugin) {
       return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];

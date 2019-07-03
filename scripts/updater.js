@@ -279,15 +279,15 @@ function managePlugin(id, category, action) {
     let plugins_user = local[channel+'_plugins_user'];
     if (action === 'on') {
 
-      if (category !== "UserScripts" && plugins_local !== undefined && plugins_local[id] !== undefined ||
-          category === "UserScripts" && plugins_user !== undefined && plugins_user[id] !== undefined) {
+      if (category !== "External" && plugins_local !== undefined && plugins_local[id] !== undefined ||
+          category === "External" && plugins_user !== undefined && plugins_user[id] !== undefined) {
 
         // Protection against erroneous double activation
         if (plugins[category]['plugins'][id]['status'] !== 'on') {
           plugins[category]['count_plugins_active'] += 1;
         }
         plugins[category]['plugins'][id]['status'] = 'on';
-        if (category === "UserScripts") {
+        if (category === "External") {
           plugins_user[id]['status'] = 'on';
         } else {
           plugins_local[id]['status'] = 'on';
@@ -331,7 +331,7 @@ function managePlugin(id, category, action) {
         plugins[category]['count_plugins_active'] -= 1;
       }
       plugins[category]['plugins'][id]['status'] = 'off';
-      if (category === 'UserScripts') {
+      if (category === 'External') {
         plugins_user[id]['status'] = 'off';
       } else {
         plugins_local[id]['status'] = 'off';
@@ -346,14 +346,14 @@ function managePlugin(id, category, action) {
     }
     if (action === 'delete') {
 
-      plugins['UserScripts']['count_plugins'] -= 1;
-      if (plugins['UserScripts']['plugins'][id]['status'] === 'on') {
-        plugins['UserScripts']['count_plugins_active'] -= 1;
+      plugins['External']['count_plugins'] -= 1;
+      if (plugins['External']['plugins'][id]['status'] === 'on') {
+        plugins['External']['count_plugins_active'] -= 1;
       }
-      if (plugins['UserScripts']['count_plugins'] === 0) {
-        delete plugins['UserScripts'];
+      if (plugins['External']['count_plugins'] === 0) {
+        delete plugins['External'];
       } else {
-        delete plugins['UserScripts']['plugins'][id];
+        delete plugins['External']['plugins'][id];
       }
       delete plugins_user[id];
 
@@ -408,10 +408,10 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
 
   let plugins_user_length = Object.keys(plugins_user).length;
 
-  // Placing the UserScripts section in top
+  // Placing the External plugins section in top
   if (plugins_user_length) {
-    data['UserScripts'] = {
-      'name': 'UserScripts',
+    data['External'] = {
+      'name': 'External',
       'description': '',
       'plugins': {},
       'count_plugins': 0,
@@ -435,7 +435,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
         plugins[plugin['id']] = plugin;
       }
     });
-    if (count_all > 0 || cat === 'UserScripts') {
+    if (count_all > 0 || cat === 'External') {
       data[cat]['plugins'] = plugins.sortByKey('name');
       data[cat]['count_plugins'] = count_all;
       data[cat]['count_plugins_active'] = 0;
@@ -453,7 +453,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
     data[plugin_cat]['count_plugins_active'] += 1;
   });
 
-  // Build UserScripts
+  // Build External plugins
   if (plugins_user_length) {
     let count_all = 0;
     let count_active = 0;
@@ -474,9 +474,9 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
       if (plugins_user[id]['status'] === 'on') count_active += 1;
       userscripts[id] = plugins_user[id];
     });
-    data['UserScripts']['plugins'] = userscripts.sortByKey('name');
-    data['UserScripts']['count_plugins'] = count_all;
-    data['UserScripts']['count_plugins_active'] = count_active;
+    data['External']['plugins'] = userscripts.sortByKey('name');
+    data['External']['count_plugins'] = count_all;
+    data['External']['count_plugins_active'] = count_active;
   }
 
   return data;
