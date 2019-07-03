@@ -29,7 +29,7 @@
                 </div>
                 <div class="categories">
 
-                    <div v-for="cat in categories" class="element item-wrapper list__item" v-bind:title="cat.desc" v-on:click="openCategory(cat.name)">
+                    <div v-for="cat in categories" class="element item-wrapper list__item" v-bind:title="cat.description" v-on:click="openCategory(cat.name)">
                         <span class="element__text">{{ cat.name }}</span>
                         <span class="element__counter">{{ cat.count_plugins_active }}&nbsp;/&nbsp;{{ cat.count_plugins }}</span>
                         <i class="element__action material-icons">keyboard_arrow_right</i>
@@ -54,7 +54,7 @@
             <div class="settings-section">
                 <h2>{{ _('choosingUpdateChannel') }}</h2>
                 <p v-for="(item, i) in updateChannels" class="input-field">
-                    <input type="radio" v-bind:id="item.value" name="update-channel" v-bind:value="i" v-model="updateChannel" v-on:click="changeUpdateChannel">
+                    <input type="radio" v-bind:id="item.value" name="update-channel" v-bind:value="i" v-model="channel" v-on:click="changeUpdateChannel">
                     <label v-bind:for="item.value">{{ item.name }}</label>
                 </p>
             </div>

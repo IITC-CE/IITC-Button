@@ -12,10 +12,10 @@ onRemoved.addListener(onRemovedListener);
 chrome.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
     case "requestOpenIntel":
-      onRequestOpenIntel(request.tab);
+      onRequestOpenIntel(request.tab).finally();
       break;
     case "toggleIITC":
-      onToggleIITC(request.value);
+      onToggleIITC(request.value).finally();
       break;
   }
 });
@@ -155,18 +155,18 @@ function initialize(tabId) {
 
   chrome.storage.local.get([
     "IITC_is_enabled",
-    "update_channel",
+    "channel",
     "release_iitc_code",     "test_iitc_code",     "local_iitc_code",
     "release_iitc_version",  "test_iitc_version",  "local_iitc_version",
     "release_plugins_local", "test_plugins_local", "local_plugins_local",
     "release_plugins_user",  "test_plugins_user",  "local_plugins_user"
   ], function(data) {
 
-    if (data.update_channel) updateChannel = data.update_channel;
+    if (data.channel) channel = data.channel;
 
     let status = data['IITC_is_enabled'];
-    let iitc_code = data[updateChannel+'_iitc_code']
-    let iitc_version = data[updateChannel+'_iitc_version'];
+    let iitc_code = data[channel+'_iitc_code']
+    let iitc_version = data[channel+'_iitc_version'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
       chrome.tabs.executeScript(tabId, {
@@ -178,7 +178,7 @@ function initialize(tabId) {
           activeIITCTab = tabId;
         });
 
-        let plugins_local = data[updateChannel+'_plugins_local'];
+        let plugins_local = data[channel+'_plugins_local'];
         if (plugins_local !== undefined) {
         Object.keys(plugins_local).forEach(function(id) {
           let plugin = plugins_local[id];
@@ -188,7 +188,7 @@ function initialize(tabId) {
         });
         }
 
-        let plugins_user = data[updateChannel+'_plugins_user'];
+        let plugins_user = data[channel+'_plugins_user'];
         if (plugins_user !== undefined) {
         Object.keys(plugins_user).forEach(function(id) {
           let plugin = plugins_user[id];

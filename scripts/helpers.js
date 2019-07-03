@@ -24,7 +24,6 @@ function parse_meta(code) {
       let value = sp.slice(2).join(" ");
       if (["name", "id", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
         if (data[key]) continue;
-        if (key === "description") key = "desc";
         if (key === "name") {
           value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
         }
@@ -63,7 +62,7 @@ function preparationUserScript(plugin, name) {
 
   return 'var GM_info = {"script": {"version": "'+plugin['version']+'",' +
                         '"name": "'+name+'",' +
-                        '"description": "'+plugin['desc']+'"}}; '+plugin['code']+'; true'
+                        '"description": "'+plugin['description']+'"}}; '+plugin['code']+'; true'
 }
 
 const checkStatusLocalServer = (host) => new Promise(resolve => {

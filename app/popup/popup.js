@@ -16,7 +16,7 @@ let app = new Vue({
     'IITC_is_enabled': true,
     'categories': {},
     'plugins': {},
-    'updateChannel': 'release',
+    'channel': 'release',
     'updateChannels': updateChannelsData,
     'updateIntervals': updateIntervalsData,
     'release_update_check_interval': 24,
@@ -59,7 +59,7 @@ let app = new Vue({
       this.plugins = this.categories[category_name]['plugins'];
     },
     'pluginTitle': function (plugin) {
-      return ((this.category_name === 'UserScripts') ? '[v'+plugin['version']+'] ' : '') + plugin['desc'];
+      return ((this.category_name === 'UserScripts') ? '[v'+plugin['version']+'] ' : '') + plugin['description'];
     },
     'pluginIcon': function (plugin) {
       return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];
@@ -78,15 +78,15 @@ let app = new Vue({
       chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': "delete"});
     },
     'savePlugin': function (id) {
-      chrome.storage.local.get([this.updateChannel+"_plugins_user"], (data) => {
-        let plugin = data[this.updateChannel+"_plugins_user"][id];
+      chrome.storage.local.get([this.channel+"_plugins_user"], (data) => {
+        let plugin = data[this.channel+"_plugins_user"][id];
         saveJS(plugin['code'], plugin['filename']);
       });
     },
     'changeUpdateChannel': function (event) {
-      let updateChannel = event.target.value;
+      let channel = event.target.value;
       chrome.storage.local.set({
-        'update_channel': updateChannel
+        'channel': channel
       }, () => {
 	      this.forceUpdate()
 	    });
@@ -110,9 +110,9 @@ let app = new Vue({
       let host = event.target.value;
       if (await checkStatusLocalServer(host)) {
         chrome.storage.local.set({
-          'local_server_host': "http://" + host
+          'local_server_host': host
         }, function () {
-          if (this.updateChannel === 'local') {
+          if (this.channel === 'local') {
             this.forceUpdate()
           }
         });
@@ -150,18 +150,18 @@ chrome.runtime.onMessage.addListener(function(request) {
 
 chrome.storage.local.get([
   "IITC_is_enabled",
-  "update_channel",
+  "channel",
   "local_server_host",
   "release_plugins",               "test_plugins",               "local_plugins",
   "release_update_check_interval", "test_update_check_interval", "external_update_check_interval"
 ], function(data) {
 
-  if (data.update_channel) {
-    app.$data.updateChannel = data.update_channel;
+  if (data.channel) {
+    app.$data.channel = data.channel;
   }
 
   // initialize categories
-  app.$data.categories = data[app.$data.updateChannel+'_plugins'];
+  app.$data.categories = data[app.$data.channel+'_plugins'];
 
   // initialize toggleIITC
   let status = data.IITC_is_enabled;
@@ -177,14 +177,14 @@ chrome.storage.local.get([
   });
 
   if (data.local_server_host) {
-    app.$data.localServerHost = data.local_server_host.replace("http://", "");
+    app.$data.localServerHost = data.local_server_host;
   }
 });
 
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (let key in changes) {
-    if (key === app.$data.updateChannel+"_plugins") {
+    if (key === app.$data.channel+"_plugins") {
       app.$data.categories = {};
       app.$data.categories = changes[key].newValue;
       let category_name = app.$data.category_name;
