@@ -58,8 +58,8 @@ let app = new Vue({
       this.category_name = category_name;
       this.plugins = this.categories[category_name]['plugins'];
     },
-    'pluginTitle': function (plugin) {
-      return ((this.category_name === 'External') ? '[v'+plugin['version']+'] ' : '') + plugin['description'];
+    'pluginDescription': function (plugin) {
+      return ((this.category_name === 'External') ? '[v'+plugin['version']+'] ' : '') + this.__('description', plugin);
     },
     'pluginIcon': function (plugin) {
       return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];
@@ -120,8 +120,14 @@ let app = new Vue({
     },
     '_': (msg, arg) => {
       return _(msg, arg)
+    },
+    '__': (key, item) => {
+      let lang = chrome.i18n.getUILanguage();
+      if ((key === 'name') && (item[key] === 'External')) {
+        return this._('external');
+      }
+      return ((key + ":" + lang) in item) ? item[key + ":" + lang] : item[key]
     }
-
   }
 });
 

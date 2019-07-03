@@ -69,6 +69,7 @@ const save = (options) => new Promise(resolve => {
 
 
 const ajaxGetWithProgress = (url, parseJSON) => new Promise(async resolve => {
+  clearInterval(progressIntervalId);
   progressIntervalId = setInterval(function() { showProgress(true) }, 300);
   let response = await ajaxGet(url, parseJSON);
   if (response) {
@@ -125,7 +126,7 @@ function checkUpdates(force, retry) {
         } else {
           retry += 1;
           let seconds = retry*retry;
-          chrome.runtime.sendMessage({'type': "showMessage", 'message': 'The server is not available. Retry after '+seconds+' second'});
+          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry')});
           update_timeout_id = setTimeout(function(){
             checkUpdates(true, retry);
           }, seconds*1000);

@@ -142,5 +142,17 @@
     },
     "loading": {
         "message": "Loading…"
+    },
+    "serverNotAvailableRetry": {
+        "message": "The server is not available. Retry after $NUM$ second",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "external": {
+        "message": "External"
     }
 }

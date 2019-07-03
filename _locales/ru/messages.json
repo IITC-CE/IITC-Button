@@ -139,5 +139,17 @@
     },
     "loading": {
         "message": "Загрузка…"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Сервер недоступен. Повторная попытка через $NUM$ секунд",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "external": {
+        "message": "Сторонние"
     }
 }
