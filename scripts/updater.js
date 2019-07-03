@@ -293,7 +293,7 @@ function managePlugin(id, category, action) {
           plugins_local[id]['status'] = 'on';
         }
 
-        loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins_local[id], id));
+        loadJS(activeIITCTab, "document_end", id, preparationUserScript(plugins[category]['plugins'][id], id));
 
         await save({
           'plugins': plugins,

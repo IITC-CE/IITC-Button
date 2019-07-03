@@ -112,7 +112,7 @@
                         <template v-if="category_name === 'External'">
                             <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="_('openSupport')+' '+plugin.supportURL">home</i>
                             <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" v-bind:title="_('pluginSave')">save</i>
-                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="pluginDelete">close</i>
+                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="_('pluginDelete')">close</i>
                         </template>
                         <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, plugin.status)">{{ pluginIcon(plugin) }}</i>
                     </div>
