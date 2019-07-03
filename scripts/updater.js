@@ -100,7 +100,7 @@ function checkUpdates(force, retry) {
   ], async function(local) {
 
     if (local.channel) channel = local.channel;
-    if (local.local_server_host) network_o_host['local'] = "http://" + local.local_server_host;
+    if (local.local_server_host) network_host['local'] = "http://" + local.local_server_host;
 
     let update_check_interval = local[channel+'_update_check_interval']*60*60;
     if (!update_check_interval) update_check_interval = 24*60*60;
@@ -118,9 +118,9 @@ function checkUpdates(force, retry) {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id); update_timeout_id = null;
-        let response = await ajaxGetWithProgress(network_o_host[channel]+"/.build-timestamp");
+        let response = await ajaxGetWithProgress(network_host[channel]+"/.build-timestamp");
         if (response) {
-          if (response[network_o_host[channel]] !== local[channel+'_iitc_version'] || force) {
+          if (response[network_host[channel]] !== local[channel+'_iitc_version'] || force) {
             await downloadMeta(local);
           }
         } else {
@@ -147,14 +147,14 @@ function checkUpdates(force, retry) {
 }
 
 async function downloadMeta(local) {
-  let response = await ajaxGetWithProgress(network_o_host[channel]+"/meta.json", true);
+  let response = await ajaxGetWithProgress(network_host[channel]+"/meta.json", true);
   if (!response) return;
 
   let plugins = response['categories'];
   let plugins_local = local[channel+'_plugins_local'];
   let plugins_user = local[channel+'_plugins_user'];
 
-  let iitc_code = await ajaxGetWithProgress(network_o_host[channel]+"/total-conversion-build.user.js", false);
+  let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js", false);
   if (iitc_code) {
     await save({
       'iitc_code': iitc_code
@@ -263,7 +263,7 @@ async function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      let code = await ajaxGetWithProgress(network_o_host[channel]+"/plugins/" + filename, false);
+      let code = await ajaxGetWithProgress(network_host[channel]+"/plugins/" + filename, false);
       if (code) plugins_local[id]['code'] = code;
     } else {
       delete plugins_local[id];
@@ -306,7 +306,8 @@ function managePlugin(id, category, action) {
         if (plugins_local === undefined) {
           plugins_local = {};
         }
-        let response = await ajaxGetWithProgress(network_o_host[channel]+"/plugins/"+filename, false);
+        let filename = plugins[category]['plugins'][id]['filename'];
+        let response = await ajaxGetWithProgress(network_host[channel]+"/plugins/"+filename, false);
         if (response) {
           plugins[category]['plugins'][id]['status'] = 'on';
           plugins[category]['count_plugins_active'] += 1;
