@@ -104,7 +104,6 @@ function initialize() {
     let iitc_version = data[channel+'_iitc_version'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
-
         let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
         injectUserScript(inject_iitc_code);
 

@@ -1,5 +1,10 @@
 let loaded_plugins = [];
 
+document.addEventListener("DOMContentLoaded", function() {
+  window.onload = function() {};
+  document.body.onload = function() {};
+});
+
 document.addEventListener('IITCButtonInitJS', function (e) {
   let code = e.detail;
 
