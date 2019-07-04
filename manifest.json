@@ -32,6 +32,13 @@
     ],
     "persistent": false
   },
+  "content_scripts": [
+    {
+      "matches" : ["https://intel.ingress.com/*"],
+      "run_at": "document_start",
+      "js": ["scripts/loader.js"]
+    }
+  ],
   "browser_action": {
     "browser_style": true,
     "default_popup": "app/popup/popup.html",

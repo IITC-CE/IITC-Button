@@ -4,5 +4,3 @@ let network_host = {
   'test': "https://iitc.modos189.ru/build/test",
   'local': "http://127.0.0.1:8000"
 }
-
-let loaded_plugins = [];
