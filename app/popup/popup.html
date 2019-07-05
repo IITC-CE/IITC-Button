@@ -10,51 +10,53 @@
 </head>
 <body id="main-menu" class="body">
 
-    <div id="app">
-
-        <section class="section main-menu">
-            <div class="list">
-                <div class="title">
-                    <div class="title__logo-wrapper title__button" v-on:click.prevent="openIITC">
-                        <object class="title__logo" type="image/svg+xml" data="/assets/images/IITC-black-horizontally.svg"></object>
-                        <div id="progressbar" class="progressbar" v-bind:class="{ active: showProgressbar }"></div>
-                    </div>
-                    <div class="title__button" v-on:click="openOptions"><i class="title__settings material-icons">settings</i></div>
-                    <input id="toggleIITC" v-on:change="toggleIITC" type="checkbox" class="toggle" v-model="IITC_is_enabled" />
-                    <div class="title__button">
-                        <div class="title__toggle">
-                            <label for="toggleIITC" class="toggle"></label>
-                        </div>
+    <script type="text/x-template" id="section-main-menu-template">
+        <div class="list">
+            <div class="title">
+                <div class="title__logo-wrapper title__button" v-on:click.prevent="openIITC">
+                    <object class="title__logo" type="image/svg+xml" data="/assets/images/IITC-black-horizontally.svg"></object>
+                    <div id="progressbar" class="progressbar" v-bind:class="{ active: showProgressbar }"></div>
+                </div>
+                <div class="title__button" v-on:click="openOptions"><i class="title__settings material-icons">settings</i></div>
+                <input id="toggleIITC" type="checkbox" class="toggle" v-model="iitc_is_enabled_toggle" />
+                <div class="title__button">
+                    <div class="title__toggle">
+                        <label for="toggleIITC" class="toggle"></label>
                     </div>
                 </div>
-                <div class="categories">
+            </div>
+            <div class="categories">
 
-                    <div v-for="cat in categories" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
+                <template v-for="cat in categories">
+                    <div v-if="cat.name" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
                         <span class="element__text">{{ __('name', cat) }}</span>
                         <span class="element__counter">{{ cat.count_plugins_active }}&nbsp;/&nbsp;{{ cat.count_plugins }}</span>
                         <i class="element__action material-icons">keyboard_arrow_right</i>
                     </div>
-                    <div v-if="objIsEmpty(categories)" class="element item-wrapper list__item">
-                        <span class="element__text">{{ _('noData') }}</span>
-                    </div>
-
+                </template>
+                <div v-if="objIsEmpty(categories)" class="element item-wrapper list__item">
+                    <span class="element__text">{{ _('noData') }}</span>
                 </div>
-                <div class="item-wrapper hr"></div>
-                <div class="element item-wrapper list__item list__item_add" v-on:click="openLink('/app/main/main.html')"><i class="element__icon material-icons">add</i><span class="element__text">{{ _('addExternalPlugin') }}</span></div>
-                <div class="item-wrapper hr"></div>
-                <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">{{ _('iitcHomePage') }}</span></div>
-                <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">{{ _('iitcTelegram') }}</span></div>
-                <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">{{ _('iitcGithub') }}</span></div>
+
             </div>
-        </section>
-        <section class="section options">
+            <div class="item-wrapper hr"></div>
+            <div class="element item-wrapper list__item list__item_add" v-on:click="openLink('/app/main/main.html')"><i class="element__icon material-icons">add</i><span class="element__text">{{ _('addExternalPlugin') }}</span></div>
+            <div class="item-wrapper hr"></div>
+            <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">{{ _('iitcHomePage') }}</span></div>
+            <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">{{ _('iitcTelegram') }}</span></div>
+            <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">{{ _('iitcGithub') }}</span></div>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="section-options-template">
+        <div>
             <header class="header element">
                 <i class="element__icon header__icon material-icons" v-on:click="back">keyboard_arrow_left</i><span class="element__text header__text">{{ _('iitcButtonOptions') }}</span> <div class="button" v-on:click="forceUpdate">{{ _('updateNow') }}</div>
             </header>
             <div class="settings-section">
                 <h2>{{ _('choosingUpdateChannel') }}</h2>
                 <p v-for="(item, i) in updateChannels" class="input-field">
-                    <input type="radio" v-bind:id="item.value" name="update-channel" v-bind:value="i" v-model="channel" v-on:click="changeUpdateChannel">
+                    <input type="radio" v-bind:id="item.value" name="update-channel" v-bind:value="i" v-model="channelSelect">
                     <label v-bind:for="item.value">{{ item.name }}</label>
                 </p>
             </div>
@@ -65,13 +67,13 @@
                     <div class="update-check__col">
                         <div class="update-check__setting">
                             <div class="update-check__label-wrapper"><span class="update-check__label">{{ _('release') }}:</span></div>
-                            <select id="release_update_check_interval" class="update-check__input" name="update-interval" v-model="release_update_check_interval" v-on:change="changeUpdateCheckInterval('release')">
+                            <select id="release_update_check_interval" class="update-check__input" name="update-interval" v-model="release_update_check_interval_select">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
                         </div>
                         <div class="update-check__setting">
                             <div class="update-check__label-wrapper"><span class="update-check__label">{{ _('testBuilds') }}:</span></div>
-                            <select id="test_update_check_interval" class="update-check__input" name="update-interval" v-model="test_update_check_interval" v-on:change="changeUpdateCheckInterval('test')">
+                            <select id="test_update_check_interval" class="update-check__input" name="update-interval" v-model="test_update_check_interval_select">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
                         </div>
@@ -85,7 +87,7 @@
                     <div class="update-check__col">
                         <div class="update-check__setting">
                             <div class="update-check__label-wrapper"><span class="update-check__label">{{ _('anyChannel') }}</span></div>
-                            <select id="external_update_check_interval" class="update-check__input" name="update-interval" v-model="external_update_check_interval" v-on:change="changeUpdateCheckInterval('external')">
+                            <select id="external_update_check_interval" class="update-check__input" name="update-interval" v-model="external_update_check_interval_select">
                                 <option v-for="item in updateIntervals" v-bind:value="item.value">{{ item.name }}</option>
                             </select>
                         </div>
@@ -96,13 +98,16 @@
             <div class="settings-section">
                 <h2>{{ _('localServerURL') }}</h2>
                 <div class="input-field local-server">
-                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHost" v-bind:placeholder="_('placeholderLocalServer')" v-on:input="changeLocalServer" />
+                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHostInput" v-bind:placeholder="_('placeholderLocalServer')" v-on:input="changeLocalServer" />
                 </div>
             </div>
-        </section>
-        <section class="section plugins">
+        </div>
+    </script>
+
+    <script type="text/x-template" id="section-plugins-template">
+        <div>
             <header class="header element">
-                <i class="element__icon header__icon material-icons" v-on:click="back">keyboard_arrow_left</i><span class="element__text header__text">{{ category_name }}</span>
+                <i class="element__icon header__icon material-icons" v-on:click="back">keyboard_arrow_left</i><span v-if="category_name" class="element__text header__text">{{ __('name', categories[category_name]) }}</span>
             </header>
             <div class="list">
                 <div class="plugins-list">
@@ -114,17 +119,50 @@
                             <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" v-bind:title="_('pluginSave')">save</i>
                             <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="_('pluginDelete')">close</i>
                         </template>
-                        <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, plugin.status)">{{ pluginIcon(plugin) }}</i>
+                        <i class="element__action material-icons" v-on:click="managePlugin(plugin)">{{ pluginIcon(plugin) }}</i>
                     </div>
                     <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">{{ _('noData') }}</span></div>
                 </div>
             </div>
+        </div>
+    </script>
+
+    <div id="app">
+        <section class="section main-menu">
+            <section-main-menu
+                v-bind:show-progressbar=showProgressbar
+                v-bind:iitc_is_enabled=IITC_is_enabled
+                v-bind:categories=categories>
+            </section-main-menu>
+        </section>
+        <section class="section options">
+            <section-options
+                v-bind:update-channels="updateChannels"
+                v-bind:update-intervals="updateIntervals"
+                v-bind:channel="channel"
+                v-bind:release_update_check_interval="release_update_check_interval"
+                v-bind:test_update_check_interval="test_update_check_interval"
+                v-bind:external_update_check_interval="external_update_check_interval"
+                v-bind:local-server-host="localServerHost"
+                v-bind:local-server-status="localServerStatus">
+            </section-options>
+        </section>
+        <section class="section plugins">
+            <section-plugins
+                v-bind:category_name=category_name
+                v-bind:plugins=plugins
+                v-bind:categories=categories>
+            </section-plugins>
         </section>
         <div id="message" class="message" v-bind:class="{ opened: message.opened }">{{ message.text }}</div>
     </div>
 
     <script src="/app/vue.js"></script>
     <script src="/scripts/helpers.js"></script>
-    <script src="popup.js"></script>
+    <script src="./components/mixins.js"></script>
+    <script src="./components/section-main-menu.js"></script>
+    <script src="./components/section-options.js"></script>
+    <script src="./components/section-plugins.js"></script>
+    <script src="./popup.js"></script>
 </body>
 </html>

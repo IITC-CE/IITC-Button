@@ -141,7 +141,7 @@
         "message": "Загрузка…"
     },
     "serverNotAvailableRetry": {
-        "message": "Сервер недоступен. Повторная попытка через $NUM$ секунд",
+        "message": "Сервер недоступен. Повторная попытка через $NUM$ сек.",
         "placeholders": {
             "num": {
                 "content": "$1",
