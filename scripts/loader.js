@@ -1,4 +1,5 @@
 let loaded_plugins = [];
+let sandbox = 'window.plugin = {};window.plugin.missions = true;';
 
 function getPlayerData() {
   if (window.wrappedJSObject) {
@@ -7,12 +8,13 @@ function getPlayerData() {
 
     // Chrome does not provide access to WINDOW.
     // Old IITC code is used to retrieve user data.
-    var scr = document.getElementsByTagName('script');
-    for (var x in scr) {
-      var s = scr[x];
+    let scr = document.getElementsByTagName('script');
+    let d;
+    for (let x in scr) {
+      let s = scr[x];
       if (s.src) continue;
       if (s.type !== 'text/javascript') continue;
-      var d = s.innerHTML.split('\n');
+      d = s.innerHTML.split('\n');
       break;
     }
 
@@ -30,24 +32,23 @@ function getPlayerData() {
       throw("Couldn't retrieve player data. Are you logged in?");
     }
 
-    for (var i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i++) {
       if (!d[i].match('var PLAYER = ')) continue;
-      eval(d[i]);
+      sandbox += d[i]+'window.PLAYER = PLAYER;';
       break;
     }
 
   }
-  window.unsafeWindow = window;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   window.onload = function() {};
   document.body.onload = function() {};
+  getPlayerData();
 });
 
 document.addEventListener('IITCButtonInitJS', function (e) {
   let code = e.detail;
-  if (!window.PLAYER) getPlayerData();
 
   let GM_info_raw = code.substring(0, code.indexOf(";"));
   let GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
@@ -58,8 +59,7 @@ document.addEventListener('IITCButtonInitJS', function (e) {
   } else {
     loaded_plugins.push(id);
     console.info('Plugin %s loaded', id);
-
-    new Function(code)();
+    new Function(sandbox+code)();
   }
 
 });
