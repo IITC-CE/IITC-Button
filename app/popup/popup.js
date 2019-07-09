@@ -10,6 +10,7 @@ let updateIntervalsData = [
   {name: _('everyWeek'), value: '168'}
 ];
 
+
 let app = new Vue({
   el: '#app',
   data: {
@@ -28,106 +29,13 @@ let app = new Vue({
     'localServerHost': '127.0.0.1:8000',
     'localServerStatus': ''
   },
-  methods: {
-    'objIsEmpty': function (obj) {
-      return ((typeof obj !== 'object') || (Object.keys(obj).length === 0))
-    },
-    'openIITC': function () {
-      chrome.runtime.sendMessage({'type': "requestOpenIntel"});
-      window.close();
-    },
-    'toggleIITC': function () {
-      let checkedValue = this.IITC_is_enabled;
-      chrome.runtime.sendMessage({'type': "toggleIITC", 'value': checkedValue});
-    },
-    'openLink': function (url) {
-      chrome.tabs.create({ url: url });
-      window.close();
-    },
-    'back': function () {
-      document.body.id = "main-menu";
-    },
-    'openOptions': function () {
-      document.body.id = "options";
-      checkStatusLocalServer(this.localServerHost);
-    },
-    'openCategory': function (category_name) {
-      document.body.id = "plugins";
-      this.category_name = category_name;
-      this.plugins = this.categories[category_name]['plugins'];
-    },
-    'pluginDescription': function (plugin) {
-      return ((this.category_name === 'External') ? '[v'+plugin['version']+'] ' : '') + this.__('description', plugin);
-    },
-    'pluginIcon': function (plugin) {
-      return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];
-    },
-    'managePlugin': function (plugin_id, status) {
-      let action = (status === "on") ? "off" : "on";
-
-      this.plugins[plugin_id].status = action;
-      this.plugins[plugin_id].icon = 'toggle_'+action;
-      showMessage(this._("needRebootIntel"));
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': action});
-    },
-    'deletePlugin': function (plugin_id) {
-      delete this.plugins[plugin_id];
-      showMessage(this._("needRebootIntel"));
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': "delete"});
-    },
-    'savePlugin': function (id) {
-      chrome.storage.local.get([this.channel+"_plugins_user"], (data) => {
-        let plugin = data[this.channel+"_plugins_user"][id];
-        saveJS(plugin['code'], plugin['filename']);
-      });
-    },
-    'changeUpdateChannel': function (event) {
-      let channel = event.target.value;
-      chrome.storage.local.set({
-        'channel': channel
-      }, () => {
-	      this.forceUpdate()
-	    });
-      showMessage(this._("updateInProgress"));
-    },
-    'changeUpdateCheckInterval': function (type) {
-      let key = type+'_update_check_interval';
-      let setData = {};
-      setData[key] = this[key];
-
-      chrome.storage.local.set(setData, () => {
-        chrome.runtime.sendMessage({'type': (type === 'external') ? "externalUpdate" : "safeUpdate"});
-        showMessage(this._("changesApplied"));
-      });
-    },
-    'forceUpdate': function () {
-      chrome.runtime.sendMessage({'type': "forceFullUpdate"});
-      showMessage(this._("updateInProgress"));
-    },
-    'changeLocalServer': async function () {
-      let host = event.target.value;
-      if (await checkStatusLocalServer(host)) {
-        chrome.storage.local.set({
-          'local_server_host': host
-        }, function () {
-          if (this.channel === 'local') {
-            this.forceUpdate()
-          }
-        });
-      }
-    },
-    '_': (msg, arg) => {
-      return _(msg, arg)
-    },
-    '__': (key, item) => {
-      let lang = chrome.i18n.getUILanguage();
-      if ((key === 'name') && (item[key] === 'External')) {
-        return this._('external');
-      }
-      return ((key + ":" + lang) in item) ? item[key + ":" + lang] : item[key]
-    }
+  components: {
+    'component-main-menu': ComponentMainMenu,
+    'component-options': ComponentOptions,
+    'component-plugins': ComponentPlugins
   }
 });
+
 
 let message_timeout_id = null;
 function showMessage(msg) {
@@ -191,24 +99,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (key === app.$data.channel+"_plugins") {
       app.$data.categories = {};
       app.$data.categories = changes[key].newValue;
+      console.log('up cats');
       let category_name = app.$data.category_name;
       if (category_name !== '') {
-        app.$data.plugins = app.$data.categories[category_name].plugins;
+        if (app.$data.categories[category_name]) {
+          app.$data.plugins = app.$data.categories[category_name].plugins;
+        } else {
+          app.$data.plugins = {};
+        }
       }
     }
   }
 });
-
-const saveJS = (function () {
-    let a = document.createElement("a");
-    document.body.appendChild(a);
-    a.style = "display: none";
-    return function (data, fileName) {
-        let blob = new Blob([data], {type: "application/x-javascript"}),
-            url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
-}());

@@ -126,7 +126,7 @@ function checkUpdates(force, retry) {
         } else {
           retry += 1;
           let seconds = retry*retry;
-          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry')});
+          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry', seconds)});
           update_timeout_id = setTimeout(function(){
             checkUpdates(true, retry);
           }, seconds*1000);
