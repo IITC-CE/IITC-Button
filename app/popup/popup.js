@@ -33,10 +33,8 @@ let app = new Vue({
       return ((typeof obj !== 'object') || (Object.keys(obj).length === 0))
     },
     'openIITC': function () {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.runtime.sendMessage({'type': "requestOpenIntel", 'tab': tabs[0].id});
-        window.close();
-      })
+      chrome.runtime.sendMessage({'type': "requestOpenIntel"});
+      window.close();
     },
     'toggleIITC': function () {
       let checkedValue = this.IITC_is_enabled;

@@ -1,18 +1,16 @@
-let activeIITCTab = null;
+let lastIITCTab = null;
 const {
-  onActivated,
   onUpdated,
   onRemoved
 } = chrome.tabs;
 // tab
-onActivated.addListener(onActivatedListener);
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 
 chrome.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
     case "requestOpenIntel":
-      onRequestOpenIntel(request.tab).finally();
+      onRequestOpenIntel().finally();
       break;
     case "toggleIITC":
       onToggleIITC(request.value).finally();
@@ -29,61 +27,38 @@ chrome.webNavigation.onBeforeNavigate.addListener(
   {url: [{pathSuffix: ".user.js"}]}
 );
 
-async function onRequestOpenIntel(id) {
-  if (!id) return;
-  const {
-    active,
-    url
-  } = await getTabInfo(id);
-  if (activeIITCTab) {
-    let isActive = false;
 
-    try {
-      isActive = await getTabInfo(activeIITCTab);
-    } catch (e) {
-      console.warn('tab not found:', activeIITCTab);
-    }
-
-    if (!!isActive) {
-      console.log('found activeIITCTab %s', activeIITCTab);
-      return setTabActive(activeIITCTab);
-    } else {
-      activeIITCTab = null;
+async function onRequestOpenIntel() {
+  if (lastIITCTab) {
+    const tabInfo = await getTabInfo(lastIITCTab);
+    if (isIngressUrl(tabInfo.url)) {
+      console.log('detected ingress.com/intel page on tab %d', lastIITCTab);
+      return setTabActive(lastIITCTab);
     }
   }
-  if (active) {
-    if (isIngressUrl(url)) {
-      console.log('detected ingress.com/intel page on active tab %d', id);
-      return;
-    }
 
-    return chrome.tabs.create({
-      url: 'https://intel.ingress.com/intel',
-      pinned: true
-    }, function(tab) {
-      activeIITCTab = tab.id;
-    });
-  }
+  return chrome.tabs.create({
+    url: 'https://intel.ingress.com/intel',
+    pinned: true
+  }, function(tab) {
+    lastIITCTab = tab.id;
+  });
 }
 
 async function onToggleIITC(value) {
   chrome.storage.local.set({'IITC_is_enabled': value}, async function() {
-    if (activeIITCTab) {
-      let isActive = false;
 
-      try {
-        isActive = await getTabInfo(activeIITCTab);
-      } catch (e) {
-        console.warn('tab not found:', activeIITCTab);
+    // Fetch all completly loaded Ingress Intel tabs
+    chrome.tabs.query({
+        "url": "https://intel.ingress.com/*",
+        "status": "complete"
+    }, function (tabs) {
+
+      for (let tab of Object.values(tabs)) {
+        chrome.tabs.reload(tab.id);
       }
 
-      if (!!isActive) {
-        console.log('found activeIITCTab %s', activeIITCTab);
-        return chrome.tabs.reload(activeIITCTab);
-      } else {
-        activeIITCTab = null;
-      }
-    }
+    });
   });
 
 }
@@ -92,66 +67,26 @@ async function onToggleIITC(value) {
 // tab listeners
 async function onUpdatedListener(tabId, status) {
   if (status.status) {
-    console.log(JSON.stringify(status));
-    console.log(status.status, ':tab updated #', tabId);
-
-    const {
-      active,
-      url
-    } = await getTabInfo(tabId);
-    if (tabId === activeIITCTab) {
-      console.log('remove activeIITCTab');
-      if(status.status === 'loading' && status.url) {
-        console.info('navigate to %s', status.url);
-      }
-    }
-    console.log('tab is active: ', active);
-
     if (status.status === 'complete') {
-      if (isIngressUrl(url)) {
-        loaded_plugins = [];
-        console.log('detected intel.ingress.com/intel page on active tab %d', tabId);
+      const tabInfo = await getTabInfo(tabId);
+      if (isIngressUrl(tabInfo.url)) {
+        console.log('detected intel.ingress.com/intel page on tab %d', tabId);
         console.log('requested iitc launch');
-        console.log('initializing iitc');
-        initialize(tabId);
+        initialize();
+        lastIITCTab = tabId;
       }
     }
-
     return false;
   }
 }
 
 function onRemovedListener(tabId) {
-  console.log(tabId + ': closing');
-  if (activeIITCTab === tabId) {
-    activeIITCTab = null;
-    console.log('removed iitc flags')
+  if (lastIITCTab === tabId) {
+    lastIITCTab = null;
   }
 }
 
-async function onActivatedListener({
-  tabId,
-  url
-}) {
-  if (!tabId) {
-    throw new Error('not tabId found')
-  }
-  const tabInfo = await getTabInfo(tabId);
-  if (tabInfo) {
-    const isIngressTab = isIngressUrl(tabInfo.url)
-
-    if (isIngressTab) {
-      console.log('tab has Intel url #', tabId);
-    }
-  }
-
-  const {
-    active
-  } = await getTabInfo(tabId);
-  //if (active) chrome.pageAction.show(tabId);
-}
-
-function initialize(tabId) {
+function initialize() {
 
   chrome.storage.local.get([
     "IITC_is_enabled",
@@ -169,21 +104,15 @@ function initialize(tabId) {
     let iitc_version = data[channel+'_iitc_version'];
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
-      chrome.tabs.executeScript(tabId, {
-        runAt: "document_end",
-        file: './scripts/pre.js'
-      }, () => {
         let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
-        loadJS(tabId, "document_end", "ingress-intel-total-conversion@jonatkins", inject_iitc_code, function () {
-          activeIITCTab = tabId;
-        });
+        injectUserScript(inject_iitc_code);
 
         let plugins_local = data[channel+'_plugins_local'];
         if (plugins_local !== undefined) {
         Object.keys(plugins_local).forEach(function(id) {
           let plugin = plugins_local[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
+            injectUserScript(preparationUserScript(plugin, id));
           }
         });
         }
@@ -193,13 +122,12 @@ function initialize(tabId) {
         Object.keys(plugins_user).forEach(function(id) {
           let plugin = plugins_user[id];
           if (plugin['status'] === 'on') {
-            loadJS(tabId, "document_end", id, preparationUserScript(plugin, id));
+            injectUserScript(preparationUserScript(plugin, id));
           }
         });
         }
 
-        
-      });
+
 
     }
   });
@@ -207,27 +135,29 @@ function initialize(tabId) {
 }
 
 
-function loadJS(tabId, runAt, id, code, callback) {
-  if (!tabId) { console.log('no tabId!'); return }
+function injectUserScript(code) {
+  let inject = `
+    document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
+      detail: `+JSON.stringify(code)+`
+    }));
+  `
+  // Fetch all completly loaded Ingress Intel tabs
+  chrome.tabs.query({
+      "url": "https://intel.ingress.com/*",
+      "status": "complete"
+  }, function (tabs) {
 
-  if (loaded_plugins.includes(id)) {
-    console.info('Plugin %s is already loaded. Skip', id);
-    return
-  } else {
-    loaded_plugins.push(id);
-  }
-
-  callback = (typeof callback == 'function' ? callback : false);
-
-  chrome.tabs.executeScript(tabId, {
-    runAt: runAt,
-    code: code
-  }, () => {
-    if(chrome.runtime.lastError) {
-      console.log(chrome.runtime.lastError.message);
+    for (let tab of Object.values(tabs)) {
+      console.log(tab);
+      chrome.tabs.executeScript(tab.id, {
+        code: inject
+      }, () => {
+        if (chrome.runtime.lastError) {
+          console.log(chrome.runtime.lastError.message);
+        }
+      });
     }
-    console.info('plugin %s loaded', id);
-    if (callback) callback();
+
   });
 
 }
@@ -240,10 +170,9 @@ function setTabActive(tabId) {
       setWindowFocused(tab.windowId)
     } catch (e) {
       console.log(e);
-      activeIITCTab = null;
+      lastIITCTab = null;
       console.log('repeated click with updated params');
-      let id = await getActiveTab();
-      onRequestOpenIntel(id);
+      onRequestOpenIntel().finally();
     }
   });
 }
@@ -256,24 +185,6 @@ function getTabInfo(tabId) {
   return new Promise(resolve => chrome.tabs.get(tabId, resolve));
 }
 
-async function getActiveTab() {
-  return new Promise(resolve => chrome.tabs.query({ active: true }, resolve))
-    .then(function(current) {
-      if (current && current[0]) {
-      return current[0].id
-      } else {
-        throw new Error('current tab not found')
-      }
-  });
-}
-
-/* function togglePageAction(state, id) {
-  state = state ? 'show' : 'hide';
-
-  chrome.pageAction.setIcon({ tabId: id, path: state ? "assets/images/48/logo.png" : "assets/images/19/logo-ok.png" });
-  chrome.pageAction.setTitle({ tabId: id, title: state ? "open IITC" : "Intel Ingress Enable is Activated" });
-  chrome.pageAction[state](id);
-} */
 function isIngressUrl(url) {
   if (url) {
     return (/intel.ingress.com/.test(url))
