@@ -1,7 +1,7 @@
 body {
     cursor: default;
     min-width: 325px;
-    min-height: 546px;
+    min-height: 513px;
     overflow: hidden;
     margin: 0;
     color: #222;
@@ -169,6 +169,15 @@ input[type=checkbox].toggle:checked + .title__button {
 }
 .categories .item-wrapper:last-child {
     border-bottom: 1px solid var(--color-white);
+}
+
+/*
+ * links-grid
+ */
+.links-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    font-size: 90%;
 }
 
 /*

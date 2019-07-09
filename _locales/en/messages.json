@@ -29,14 +29,17 @@
     "addExternalPlugin": {
         "message": "Add external plugin"
     },
-    "iitcHomePage": {
-        "message": "IITC-CE Home page"
-    },
     "iitcTelegram": {
-        "message": "IITC-CE Telegram channel"
+        "message": "News in Telegram"
+    },
+    "iitcReddit": {
+        "message": "Discuss on r/IITC"
+    },
+    "iitcHomePage": {
+        "message": "Home page"
     },
     "iitcGithub": {
-        "message": "IITC-CE GitHub repository"
+        "message": "GitHub repository"
     },
     "iitcButtonOptions": {
         "message": "IITC-CE Button options"

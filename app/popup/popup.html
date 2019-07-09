@@ -42,9 +42,13 @@
             <div class="item-wrapper hr"></div>
             <div class="element item-wrapper list__item list__item_add" v-on:click="openLink('/app/main/main.html')"><i class="element__icon material-icons">add</i><span class="element__text">{{ _('addExternalPlugin') }}</span></div>
             <div class="item-wrapper hr"></div>
-            <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">{{ _('iitcHomePage') }}</span></div>
-            <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">{{ _('iitcTelegram') }}</span></div>
-            <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">{{ _('iitcGithub') }}</span></div>
+            <div class="links-grid">
+                <div class="element item-wrapper list__item list__item_telegram" v-on:click="openLink('https://t.me/iitc_news')"><i class="element__icon material-icons">announcement</i><span class="element__text">{{ _('iitcTelegram') }}</span></div>
+                <div class="element item-wrapper list__item list__item_reddit" v-on:click="openLink('https://www.reddit.com/r/IITC/')"><i class="element__icon material-icons">forum</i><span class="element__text">{{ _('iitcReddit') }}</span></div>
+
+                <div class="element item-wrapper list__item list__item_homepage" v-on:click="openLink('https://iitc.modos189.ru')"><i class="element__icon material-icons">link</i><span class="element__text">{{ _('iitcHomePage') }}</span></div>
+                <div class="element item-wrapper list__item list__item_github" v-on:click="openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')"><i class="element__icon material-icons">developer_board</i><span class="element__text">{{ _('iitcGithub') }}</span></div>
+            </div>
         </div>
     </script>
 
