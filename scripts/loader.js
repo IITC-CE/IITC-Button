@@ -42,11 +42,14 @@ function getPlayerData() {
 }
 
 function preparePage() {
-  document.addEventListener("DOMContentLoaded", function() {
-    window.onload = function() {};
-    document.body.onload = function() {};
-    getPlayerData();
-  });
+
+  let injectCode = "window.onload = function() {}; document.body.onload = function() {};";
+
+  let script = document.createElement('script');
+  script.textContent = injectCode;
+  (document.head||document.documentElement).appendChild(script);
+
+  getPlayerData();
 
   document.addEventListener('IITCButtonInitJS', function (e) {
     let code = e.detail;
@@ -67,7 +70,7 @@ function preparePage() {
 }
 
 chrome.storage.local.get(["IITC_is_enabled"], function(data) {
-  if (data["IITC_is_enabled"]) {
+  if (data["IITC_is_enabled"] !== false) {
     preparePage();
   }
 });
