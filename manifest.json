@@ -35,7 +35,7 @@
   "content_scripts": [
     {
       "matches" : ["https://intel.ingress.com/*"],
-      "run_at": "document_start",
+      "run_at": "document_end",
       "js": ["scripts/loader.js"]
     }
   ],

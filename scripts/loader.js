@@ -41,25 +41,36 @@ function getPlayerData() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  window.onload = function() {};
-  document.body.onload = function() {};
+function preparePage() {
+
+  let injectCode = "window.onload = function() {}; document.body.onload = function() {};";
+
+  let script = document.createElement('script');
+  script.textContent = injectCode;
+  (document.head||document.documentElement).appendChild(script);
+
   getPlayerData();
-});
 
-document.addEventListener('IITCButtonInitJS', function (e) {
-  let code = e.detail;
+  document.addEventListener('IITCButtonInitJS', function (e) {
+    let code = e.detail;
 
-  let GM_info_raw = code.substring(0, code.indexOf(";"));
-  let GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
-  let id = GM_info.script.name;
+    let GM_info_raw = code.substring(0, code.indexOf(";"));
+    let GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
+    let id = GM_info.script.name;
 
-  if (loaded_plugins.includes(id)) {
-    console.info('Plugin %s is already loaded. Skip', id);
-  } else {
-    loaded_plugins.push(id);
-    console.info('Plugin %s loaded', id);
-    new Function(sandbox+code)();
+    if (loaded_plugins.includes(id)) {
+      console.info('Plugin %s is already loaded. Skip', id);
+    } else {
+      loaded_plugins.push(id);
+      console.info('Plugin %s loaded', id);
+      new Function(sandbox+code)();
+    }
+
+  });
+}
+
+chrome.storage.local.get(["IITC_is_enabled"], function(data) {
+  if (data["IITC_is_enabled"] !== false) {
+    preparePage();
   }
-
 });
