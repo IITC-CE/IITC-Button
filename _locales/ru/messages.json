@@ -1,6 +1,6 @@
 {
     "extName": {
-        "message": "IITC-Кнопка"
+        "message": "IITC-Button"
     },
     "extDescription": {
         "message": "Запускайте Ingress Intel с IITC в один клик."
