@@ -70,8 +70,7 @@ async function onUpdatedListener(tabId, status) {
     if (status.status === 'complete') {
       const tabInfo = await getTabInfo(tabId);
       if (isIngressUrl(tabInfo.url)) {
-        console.log('detected intel.ingress.com/intel page on tab %d', tabId);
-        console.log('requested iitc launch');
+        console.log('detected intel.ingress.com page on tab %d', tabId);
         initialize();
         lastIITCTab = tabId;
       }
@@ -148,7 +147,6 @@ function injectUserScript(code) {
   }, function (tabs) {
 
     for (let tab of Object.values(tabs)) {
-      console.log(tab);
       chrome.tabs.executeScript(tab.id, {
         code: inject
       }, () => {

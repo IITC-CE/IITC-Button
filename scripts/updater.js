@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(function(request) {
 const save = (options) => new Promise(resolve => {
   let data = {};
   Object.keys(options).forEach(function (key) {
-    if (['iitc_version', 'iitc_code', 'plugins', 'plugins_local', 'plugins_user'].indexOf(key) !== -1) {
+    if (['iitc_version', 'last_modified', 'iitc_code', 'plugins', 'plugins_local', 'plugins_user'].indexOf(key) !== -1) {
       console.log('save '+channel+'_'+key);
       data[channel+'_'+key] = options[key];
     } else {
@@ -68,10 +68,10 @@ const save = (options) => new Promise(resolve => {
 });
 
 
-const ajaxGetWithProgress = (url, parseJSON) => new Promise(async resolve => {
+const ajaxGetWithProgress = (url, variant) => new Promise(async resolve => {
   clearInterval(progressIntervalId);
   progressIntervalId = setInterval(function() { showProgress(true) }, 300);
-  let response = await ajaxGet(url, parseJSON);
+  let response = await ajaxGet(url, variant);
   if (response) {
     clearInterval(progressIntervalId);
     showProgress(false);
@@ -93,7 +93,7 @@ function checkUpdates(force, retry) {
     "last_check_update",
     "local_server_host",
     "release_update_check_interval", "test_update_check_interval", "local_update_check_interval",
-    "release_iitc_version",          "test_iitc_version",          "local_iitc_version",
+    "release_last_modified",         "test_last_modified",         "local_last_modified",
     "release_plugins",               "test_plugins",               "local_plugins",
     "release_plugins_local",         "test_plugins_local",         "local_plugins_local",
     "release_plugins_user",          "test_plugins_user",          "local_plugins_user"
@@ -111,22 +111,23 @@ function checkUpdates(force, retry) {
       retry = 0;
     }
 
-    if (local[channel+'_iitc_version'] === undefined || local.last_check_update === undefined || channel === 'local') {
+    if (local[channel+'_last_modified'] === undefined || local.last_check_update === undefined) {
       clearTimeout(update_timeout_id); update_timeout_id = null;
-      await downloadMeta(local);
+      await downloadMeta(local, null);
     } else {
       let time_delta = Math.floor(Date.now() / 1000)-update_check_interval-local.last_check_update;
       if (time_delta >= 0 || force) {
         clearTimeout(update_timeout_id); update_timeout_id = null;
-        let response = await ajaxGetWithProgress(network_host[channel]+"/.build-timestamp");
-        if (response) {
-          if (response[network_host[channel]] !== local[channel+'_iitc_version'] || force) {
-            await downloadMeta(local);
+        let last_modified = await ajaxGetWithProgress(network_host[channel]+"/meta.json", "Last-Modified");
+        if (last_modified) {
+          if (last_modified !== local[channel+'_last_modified'] || force) {
+            await downloadMeta(local, last_modified);
           }
         } else {
           retry += 1;
           let seconds = retry*retry;
-          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry', seconds)});
+          if (seconds > 60*60*24) seconds = 60*60*24;
+          chrome.runtime.sendMessage({'type': "showMessage", 'message': _('serverNotAvailableRetry', seconds.toString())});
           update_timeout_id = setTimeout(function(){
             checkUpdates(true, retry);
           }, seconds*1000);
@@ -146,15 +147,15 @@ function checkUpdates(force, retry) {
   });
 }
 
-async function downloadMeta(local) {
-  let response = await ajaxGetWithProgress(network_host[channel]+"/meta.json", true);
+async function downloadMeta(local, last_modified) {
+  let response = await ajaxGetWithProgress(network_host[channel]+"/meta.json", "parseJSON");
   if (!response) return;
 
   let plugins = response['categories'];
   let plugins_local = local[channel+'_plugins_local'];
   let plugins_user = local[channel+'_plugins_user'];
 
-  let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js", false);
+  let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js");
   if (iitc_code) {
     await save({
       'iitc_code': iitc_code
@@ -166,6 +167,7 @@ async function downloadMeta(local) {
   plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
   await save({
     'iitc_version': response['iitc_version'],
+    'last_modified': last_modified,
     'plugins': plugins,
     'plugins_local': plugins_local,
     'plugins_user': plugins_user
@@ -218,13 +220,13 @@ async function updateExternalPlugins(local) {
       if (plugin['updateURL'] && plugin['downloadURL']) {
 
         // download meta info
-        let response_meta = await ajaxGetWithProgress(plugin['updateURL']+hash, false);
+        let response_meta = await ajaxGetWithProgress(plugin['updateURL']+hash);
         if (response_meta) {
           let meta = parse_meta(response_meta);
           // if new version
           if (meta && meta['version'] && meta['version'] !== plugin['version']) {
             // download userscript
-            let response_code = await ajaxGetWithProgress(plugin['updateURL']+hash, false);
+            let response_code = await ajaxGetWithProgress(plugin['updateURL']+hash);
             if (response_code) {
               exist_updates = true;
               plugins_user[id] = meta;
@@ -263,7 +265,7 @@ async function updateLocalPlugins(plugins, plugins_local) {
     });
 
     if (filename && keep) {
-      let code = await ajaxGetWithProgress(network_host[channel]+"/plugins/" + filename, false);
+      let code = await ajaxGetWithProgress(network_host[channel]+"/plugins/" + filename);
       if (code) plugins_local[id]['code'] = code;
     } else {
       delete plugins_local[id];
@@ -307,7 +309,7 @@ function managePlugin(id, category, action) {
           plugins_local = {};
         }
         let filename = plugins[category]['plugins'][id]['filename'];
-        let response = await ajaxGetWithProgress(network_host[channel]+"/plugins/"+filename, false);
+        let response = await ajaxGetWithProgress(network_host[channel]+"/plugins/"+filename);
         if (response) {
           plugins[category]['plugins'][id]['status'] = 'on';
           plugins[category]['count_plugins_active'] += 1;
