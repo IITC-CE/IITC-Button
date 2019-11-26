@@ -431,14 +431,16 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
   Object.keys(data).forEach(function (cat) {
     let plugins = {};
     let count_all = 0;
-    Object.keys(data[cat]['plugins']).forEach(function (id) {
-      let plugin = data[cat]['plugins'][id];
-      if (plugins[plugin['id']] === undefined) {
-        count_all += 1;
-        plugin['status'] = 'off';
-        plugins[plugin['id']] = plugin;
-      }
-    });
+    if ('plugins' in data[cat]) {
+      Object.keys(data[cat]['plugins']).forEach(function (id) {
+        let plugin = data[cat]['plugins'][id];
+        if (plugins[plugin['id']] === undefined) {
+          count_all += 1;
+          plugin['status'] = 'off';
+          plugins[plugin['id']] = plugin;
+        }
+      });
+    }
     if (count_all > 0 || cat === 'External') {
       data[cat]['plugins'] = plugins.sortByKey('name');
       data[cat]['count_plugins'] = count_all;
