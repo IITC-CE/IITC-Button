@@ -13,7 +13,7 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
     },
     'openOptions': function () {
       document.body.id = "options";
-      checkStatusLocalServer(this.localServerHost);
+      checkStatusLocalServer(app.$data.localServerHost);
     },
     'openCategory': function (category_name) {
       document.body.id = "plugins";

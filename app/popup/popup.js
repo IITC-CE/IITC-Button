@@ -109,5 +109,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
         }
       }
     }
+    if (key === "local_server_host") {
+      app.$data.localServerHost = changes[key].newValue;
+    }
   }
 });
