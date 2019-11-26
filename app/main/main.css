@@ -5,7 +5,6 @@ body {
   background: #E8E9EC;
   color: #222;
   font-size: 18px;
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
   overflow: hidden;
 }
 
@@ -83,7 +82,10 @@ body {
   top: 0;
   bottom: 0;
   right: 0;
+  line-height: 26px;
   padding: 2px 15px;
+  border: 1px solid #cdc7c2;
+  border-left: 0;
   border-radius: 0 2px 2px 0;
   font-size: 1.2em;
   color: #00000000;
