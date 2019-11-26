@@ -32,13 +32,13 @@ async function onRequestOpenIntel() {
   if (lastIITCTab) {
     const tabInfo = await getTabInfo(lastIITCTab);
     if (isIngressUrl(tabInfo.url)) {
-      console.log('detected ingress.com/intel page on tab %d', lastIITCTab);
+      console.log('detected intel.ingress.com page on tab %d', lastIITCTab);
       return setTabActive(lastIITCTab);
     }
   }
 
   return chrome.tabs.create({
-    url: 'https://intel.ingress.com/intel',
+    url: 'https://intel.ingress.com/',
     pinned: true
   }, function(tab) {
     lastIITCTab = tab.id;
