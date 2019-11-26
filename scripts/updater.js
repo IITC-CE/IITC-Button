@@ -412,7 +412,6 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
 
   let plugins_user_length = Object.keys(plugins_user).length;
 
-  // Placing the External plugins section in top
   if (plugins_user_length) {
     data['External'] = {
       'name': 'External',
@@ -425,7 +424,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
 
   if (raw_plugins["Obsolete"] !== undefined) delete raw_plugins["Obsolete"];
   if (raw_plugins["Deleted"] !== undefined) delete raw_plugins["Deleted"];
-  data = {...data, ...raw_plugins.sortByKey('name')};
+  data = {...data, ...raw_plugins};
 
   // Prepare plugins
   Object.keys(data).forEach(function (cat) {
@@ -440,13 +439,13 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
           plugins[plugin['id']] = plugin;
         }
       });
-    }
-    if (count_all > 0 || cat === 'External') {
-      data[cat]['plugins'] = plugins.sortByKey('name');
-      data[cat]['count_plugins'] = count_all;
-      data[cat]['count_plugins_active'] = 0;
-    } else {
-      delete data[cat];
+      if (count_all > 0 || cat === 'External') {
+        data[cat]['plugins'] = plugins.sortByKey('name');
+        data[cat]['count_plugins'] = count_all;
+        data[cat]['count_plugins_active'] = 0;
+      } else {
+        delete data[cat];
+      }
     }
   });
 

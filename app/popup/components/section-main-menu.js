@@ -19,6 +19,38 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
       document.body.id = "plugins";
       this.$root.$data.category_name = category_name;
       this.$root.$data.plugins = this.categories[category_name]['plugins'];
+    },
+    'sortCategories': function(obj) {
+
+      let arr = Object.keys(obj).map(function(key){
+        return obj[key];
+      });
+
+      for (let i=0;i<arr.length;i++) {
+        for (let j=i+1; j<arr.length; j++) {
+          if (this.__('name', arr[i]).toLowerCase() > this.__('name', arr[j]).toLowerCase()) {
+            let swap = arr[i];
+            arr[i] = arr[j];
+            arr[j] = swap;
+          }
+        }
+      }
+
+      // Move "External" to top
+      let el_external = null;
+      for (let i=0;i<arr.length;i++) {
+        if (arr[i].name.toLowerCase() === 'external') el_external = i;
+      }
+      if (el_external !== null) arr.unshift(...arr.splice(el_external,1));
+
+      // Move "Misc" to bottom
+      let el_misc = null;
+      for (let i=0;i<arr.length;i++) {
+        if (arr[i].name.toLowerCase() === 'misc') el_misc = i;
+      }
+      if (el_misc !== null) arr.push(arr.splice(el_misc,1)[0]);
+
+      return arr;
     }
   },
   computed: {
