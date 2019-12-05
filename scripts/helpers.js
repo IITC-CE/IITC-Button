@@ -34,20 +34,28 @@ function parse_meta(code) {
   return data;
 }
 
-const ajaxGet = (url, parseJSON) => new Promise(resolve => {
+const ajaxGet = (url, variant) => new Promise(resolve => {
+  let method = (variant === "Last-Modified") ? "HEAD" : "GET";
+
   let xhr = null;
   xhr = new XMLHttpRequest();
   if (!xhr) return null;
   xhr.timeout = 5000;
-  xhr.open("GET", url+"?"+Date.now(),true);
+  xhr.open(method, url+"?"+Date.now(),true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        let response = xhr.responseText;
-        if (parseJSON) {
-          response = JSON.parse(response);
+
+        if (variant === "Last-Modified") {
+          resolve(xhr.getResponseHeader('Last-Modified'))
+        } else {
+          let response = xhr.responseText;
+          if (variant === "parseJSON") {
+            response = JSON.parse(response);
+          }
+          resolve(response)
         }
-        resolve(response)
+
       } else {
         resolve(null)
       }
@@ -69,7 +77,7 @@ const checkStatusLocalServer = (host) => new Promise(resolve => {
   app.$data.localServerStatus = 'err';
 
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://"+host+"/meta.json", true);
+  xhr.open("GET", "http://"+host+"/meta.json?"+Date.now(), true);
   xhr.timeout = 1000;
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {

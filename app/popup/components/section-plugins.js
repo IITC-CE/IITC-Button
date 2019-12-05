@@ -32,7 +32,6 @@ let ComponentPlugins = Vue.component('section-plugins', {
     },
     'savePlugin': function (id) {
       chrome.storage.local.get([this.$root.channel+"_plugins_user"], (data) => {
-        console.log(data);
         let plugin = data[this.$root.channel+"_plugins_user"][id];
         saveJS(plugin['code'], plugin['filename']);
       });

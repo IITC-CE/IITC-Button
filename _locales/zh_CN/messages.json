@@ -1,11 +1,9 @@
 {
     "extName": {
-        "message": "IITC-按键",
-        "description": "Main title on the Chrome Web Store"
+        "message": "IITC-Button"
     },
     "extDescription": {
-        "message": "启动IITC为进入英特尔轻松.",
-        "description": "Short description on the Chrome Web Store"
+        "message": "启动IITC为进入英特尔轻松."
     },
     "lang": {
         "message": "zh_cn"

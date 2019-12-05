@@ -99,7 +99,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (key === app.$data.channel+"_plugins") {
       app.$data.categories = {};
       app.$data.categories = changes[key].newValue;
-      console.log('up cats');
+
       let category_name = app.$data.category_name;
       if (category_name !== '') {
         if (app.$data.categories[category_name]) {
@@ -108,6 +108,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
           app.$data.plugins = {};
         }
       }
+    }
+    if (key === "local_server_host") {
+      app.$data.localServerHost = changes[key].newValue;
     }
   }
 });
