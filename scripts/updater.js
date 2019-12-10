@@ -465,13 +465,20 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
     let userscripts = {};
     Object.keys(plugins_user).forEach(function (id) {
       Object.keys(data).forEach(function (cat) {
-        if (data[cat]['plugins'][id] !== undefined) {
-          if (data[cat]['plugins'][id]['status'] === 'on') {
-            data[cat]['count_plugins_active'] -= 1;
-          }
-          data[cat]['plugins'][id]['status'] = 'user';
-          if (plugins_local[id] !== undefined) {
-            plugins_local[id]['status'] = 'user';
+        // check for "plugins" key. Right now there's nothing in "Keys" and it causes a fault
+        if( "plugins" in data[cat] ) {
+          // Now see if what we're going to add is even in the "plugins" for that key/value pair.
+          if ( id in data[cat]['plugins'] ) {
+            // Make sure it's not undefined.
+            if (data[cat]['plugins'][id] !== undefined) {
+              if (data[cat]['plugins'][id]['status'] === 'on') {
+                data[cat]['count_plugins_active'] -= 1;
+              }
+              data[cat]['plugins'][id]['status'] = 'user';
+              if (plugins_local[id] !== undefined) {
+                plugins_local[id]['status'] = 'user';
+              }
+            }
           }
         }
       });
