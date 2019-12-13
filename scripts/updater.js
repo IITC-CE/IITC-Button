@@ -257,11 +257,16 @@ async function updateLocalPlugins(plugins, plugins_local) {
     let keep = false;
     // View all categories, because the plugin could change the category
     Object.keys(plugins).forEach(function (cat) {
-      plugins[cat]['plugins'].forEach(function (plugin) {
-        if (plugin['id'] === id) {
-          keep = true;
-        }
-      });
+
+      // Check for "plugins" key. If there are no plugins, this causes an error
+      if( "plugins" in plugins[cat] ) {
+        plugins[cat]['plugins'].forEach(function (plugin) {
+          if (plugin['id'] === id) {
+            keep = true;
+          }
+        });
+      }
+
     });
 
     if (filename && keep) {
@@ -465,7 +470,7 @@ function rebuildingCategoriesPlugins(raw_plugins, plugins_local, plugins_user) {
     let userscripts = {};
     Object.keys(plugins_user).forEach(function (id) {
       Object.keys(data).forEach(function (cat) {
-        // check for "plugins" key. Right now there's nothing in "Keys" and it causes a fault
+        // Check for "plugins" key. If there are no plugins, this causes an error
         if( "plugins" in data[cat] ) {
           // Now see if what we're going to add is even in the "plugins" for that key/value pair.
           if ( id in data[cat]['plugins'] ) {
