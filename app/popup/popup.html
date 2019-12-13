@@ -29,7 +29,7 @@
             <div class="categories">
 
                 <template v-for="cat in sortCategories(categories)">
-                    <div v-if="cat.name" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
+                    <div v-if="cat.name && cat.count_plugins" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
                         <span class="element__text">{{ __('name', cat) }}</span>
                         <span class="element__counter">{{ cat.count_plugins_active }}&nbsp;/&nbsp;{{ cat.count_plugins }}</span>
                         <i class="element__action material-icons">keyboard_arrow_right</i>
