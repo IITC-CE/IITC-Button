@@ -1,7 +1,4 @@
 {
-    "extName": {
-        "message": "IITC-Button"
-    },
     "extDescription": {
         "message": "Запускайте Ingress Intel с IITC в один клик."
     },
@@ -39,7 +36,7 @@
         "message": "GitHub репозиторий"
     },
     "iitcButtonOptions": {
-        "message": "Настройки IITC-Кнопки"
+        "message": "Настройки IITC Button"
     },
     "updateNow": {
         "message": "обновить сейчас"

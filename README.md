@@ -1,4 +1,4 @@
-IITC-Button WebExtension
+IITC Button WebExtension
 ========================
 
 Intel map of Ingress game with IITC-CE in your browser.
@@ -9,7 +9,7 @@ Get it on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/iitc-button
 
 > IITC is a browser add-on that modifies the Ingress intel map. It is faster than the standard site, and offers many more features. It is available for desktop browsers, such as Firefox and Chrome, and as a mobile application.
 
-###### [IITC-CE Website](https://iitc.modos189.ru/) | [IITC-CE Repository](https://github.com/IITC-CE/ingress-intel-total-conversion) | [News in Telegram](https://teleg.run/iitc_news) | [Discuss on Reddit](https://www.reddit.com/r/IITC/)
+###### [IITC-CE Website](https://iitc.app/) | [IITC-CE Repository](https://github.com/IITC-CE/ingress-intel-total-conversion) | [News in Telegram](https://teleg.run/iitc_news) | [Discuss on Reddit](https://www.reddit.com/r/IITC/)
 
 ---
 

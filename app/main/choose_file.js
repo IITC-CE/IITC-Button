@@ -1,3 +1,5 @@
+//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+
 // Listen for a file being selected through the file picker
 const inputElement = document.getElementById("input");
 inputElement.addEventListener("change", handlePicked, false);
@@ -62,7 +64,7 @@ function drop(e) {
 }
 
 /*
- * Validation UserScript and adding to IITC-Button
+ * Validation UserScript and adding to IITC Button
 */
 const processingFile = async (fileList) => {
   let scripts = [];
@@ -119,7 +121,6 @@ function dragover(e) {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  document.title = _('extName');
   document.getElementById('or').innerText = _('or');
   document.getElementById('dropJSHereOrClick').innerHTML = _('dropJSHereOrClick');
   document.getElementById('willBeOverwrittenByNewPlugin').innerText = _('willBeOverwrittenByNewPlugin');

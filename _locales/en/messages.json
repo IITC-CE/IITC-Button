@@ -1,8 +1,4 @@
 {
-    "extName": {
-        "message": "IITC-Button",
-        "description": "Name of the extension"
-    },
     "extDescription": {
         "message": "Launch IITC for Ingress Intel with ease.",
         "description": "Description of the extension"

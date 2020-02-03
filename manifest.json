@@ -1,5 +1,5 @@
 {
-  "name": "__MSG_extName__",
+  "name": "IITC Button",
   "description": "__MSG_extDescription__",
   "version": "1.3.1",
   "minimum_chrome_version": "61",
@@ -15,7 +15,7 @@
     "storage",
     "webNavigation",
     "https://intel.ingress.com/*",
-    "https://iitc.modos189.ru/*",
+    "https://iitc.app/*",
     "http://*/*.json",
     "http://*/*.meta.js",
     "http://*/*.user.js",

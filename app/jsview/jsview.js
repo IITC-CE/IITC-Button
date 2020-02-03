@@ -1,3 +1,5 @@
+//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+
 function escapeHtml(text) {
   let map = {
     '&': '&amp;',
@@ -11,7 +13,6 @@ function escapeHtml(text) {
 }
 
 document.addEventListener('DOMContentLoaded', async function(){
-  document.title = _('extName');
   document.getElementById('clickInstallPlugin').innerText = _('clickInstallPlugin');
   document.getElementById('install').innerText = _('install');
   document.getElementById('code').innerText = _('loading');
