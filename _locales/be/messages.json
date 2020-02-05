@@ -1,1 +1,88 @@
-{}
+{
+    "iitcButtonOptions": {
+        "message": "Налады IITC-CE кнопкі"
+    },
+    "updateNow": {
+        "message": "Абнавіць зараз"
+    },
+    "release": {
+        "message": "Выпуск"
+    },
+    "testBuilds": {
+        "message": "Тэставая зборка"
+    },
+    "localServer": {
+        "message": "Лакальны сервер"
+    },
+    "updateFrequency": {
+        "message": "Праверка абнаўленняў IITC-CE"
+    },
+    "every6hours": {
+        "message": "Кожныя шэсць гадзін"
+    },
+    "every12hours": {
+        "message": "Кожныя дванаццаць гадзін"
+    },
+    "everyDay": {
+        "message": "Кожны дзень"
+    },
+    "everyWeek": {
+        "message": "Кожны тыдзень"
+    },
+    "lang": {
+        "message": "by"
+    },
+    "titleDefault": {
+        "message": "Адчыніць Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "Змены будуць ужыты пасля перазагрузкі Intel"
+    },
+    "updateInProgress": {
+        "message": "Абнаўляецца…"
+    },
+    "noData": {
+        "message": "Няма дадзеных"
+    },
+    "addExternalPlugin": {
+        "message": "Дабавіць знешнюю ўбудову"
+    },
+    "iitcTelegram": {
+        "message": "Навіны ў Тэлеграме"
+    },
+    "iitcReddit": {
+        "message": "Абмеркаванне ў r/IITC"
+    },
+    "badgeExternal": {
+        "message": "знешні"
+    },
+    "localServerURL": {
+        "message": "Адрас лакальнага сервера"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "iitcHomePage": {
+        "message": "Хатняя старонка"
+    },
+    "changesApplied": {
+        "message": "Змены былі ўжытыя"
+    },
+    "extDescription": {
+        "message": "Лёгкі запуск IITC.",
+        "description": "Description of the extension"
+    },
+    "iitcGithub": {
+        "message": "GitHub сховішча"
+    },
+    "choosingUpdateChannel": {
+        "message": "Выбар канала абнаўлення IITC-CE"
+    },
+    "updateExternalFrequency": {
+        "message": "Праверка абнаўленняў знешніх убудоў"
+    },
+    "anyChannel": {
+        "message": "Усе каналы:"
+    }
+}
