@@ -9,7 +9,7 @@
         "message": "Открыть Intel"
     },
     "needRebootIntel": {
-        "message": "Применится после перезагрузки Intel"
+        "message": "Изменения применятся после перезагрузки Intel"
     },
     "updateInProgress": {
         "message": "Происходит обновление…"
