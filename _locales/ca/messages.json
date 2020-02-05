@@ -1,1 +1,9 @@
-{}
+{
+    "lang": {
+        "message": "en"
+    },
+    "titleDefault": {
+        "message": "Obrir Intel",
+        "description": "Title for the button at the application panel"
+    }
+}
