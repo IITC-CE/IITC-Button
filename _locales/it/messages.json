@@ -22,7 +22,7 @@
         "message": "L'indirizzo non è raggiungibile"
     },
     "notValidUserScript": {
-        "message": "$PLUGIN_NAME$ non è uno UserScript valido",
+        "message": "$PLUGIN_NAME$ non è uno UserScript valido.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
