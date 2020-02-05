@@ -1,1 +1,157 @@
-{}
+{
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ wurde zur Kategorie External hinzugefügt.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "needRebootIntel": {
+        "message": "Änderungen werden nach dem Neustart der Karte angewendet"
+    },
+    "extDescription": {
+        "message": "IITC für Ingress mit Leichtigkeit starten.",
+        "description": "Description of the extension"
+    },
+    "titleDefault": {
+        "message": "Intel öffnen",
+        "description": "Title for the button at the application panel"
+    },
+    "updateInProgress": {
+        "message": "Update in Bearbeitung…"
+    },
+    "lang": {
+        "message": "engl."
+    },
+    "iitcReddit": {
+        "message": "Diskussionen über r/IITC"
+    },
+    "changesApplied": {
+        "message": "Änderungen wurden angewendet"
+    },
+    "noData": {
+        "message": "Keine Daten"
+    },
+    "addExternalPlugin": {
+        "message": "Externes Plugin hinzufügen"
+    },
+    "iitcTelegram": {
+        "message": "Neuigkeiten in Telegram"
+    },
+    "iitcHomePage": {
+        "message": "Homepage"
+    },
+    "iitcGithub": {
+        "message": "GitHub Repository"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Button Optionen"
+    },
+    "updateNow": {
+        "message": "Jetzt updaten"
+    },
+    "choosingUpdateChannel": {
+        "message": "IITC-CE Updatekanal auswählen"
+    },
+    "release": {
+        "message": "Veröffentlichung"
+    },
+    "testBuilds": {
+        "message": "Testversionen"
+    },
+    "localServer": {
+        "message": "Lokaler Server"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE Updateprüfung"
+    },
+    "updateExternalFrequency": {
+        "message": "Externe Plugins auf Updates prüfen"
+    },
+    "every6hours": {
+        "message": "Alle 6 Stunden"
+    },
+    "every12hours": {
+        "message": "Alle 12 Stunden"
+    },
+    "everyDay": {
+        "message": "Jeden Tag"
+    },
+    "everyWeek": {
+        "message": "Jede Woche"
+    },
+    "anyChannel": {
+        "message": "Jeder Kanal:"
+    },
+    "badgeExternal": {
+        "message": "externe"
+    },
+    "localServerURL": {
+        "message": "Lokale Serveradresse"
+    },
+    "openSupport": {
+        "message": "Supportseite öffnen:"
+    },
+    "pluginSave": {
+        "message": "Speichern"
+    },
+    "pluginDelete": {
+        "message": "Löschen"
+    },
+    "addressNotAvailable": {
+        "message": "Adresse ist nicht verfügbar"
+    },
+    "clickInstallPlugin": {
+        "message": "Dies ist ein IITC Plugin. Installieren klicken um es zu benutzen."
+    },
+    "loading": {
+        "message": "Lade…"
+    },
+    "external": {
+        "message": "Extern"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Der Server ist nicht erreichbar. Neuer Versuch in $NUM$ Sekunden",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "or": {
+        "message": "oder"
+    },
+    "dropJSHereOrClick": {
+        "message": "<i>.js</i> Dateien hier ablegen oder klicken zum Upload."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin mit der selben ID wird durch das neue Plugin überschrieben."
+    },
+    "install": {
+        "message": "Installieren"
+    },
+    "errorReadingFile": {
+        "message": "Ein Fehler ist während der Verarbeitung von $PLUGIN_NAME$ aufgetreten.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ ist kein valides UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    }
+}
