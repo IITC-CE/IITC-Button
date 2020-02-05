@@ -1,1 +1,157 @@
-{}
+{
+    "serverNotAvailableRetry": {
+        "message": "El servidor no está disponible. Reintentando en $NUM$ segundos",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "every12hours": {
+        "message": "Cada 12 horas"
+    },
+    "everyDay": {
+        "message": "Diariamente"
+    },
+    "everyWeek": {
+        "message": "Semanalmente"
+    },
+    "anyChannel": {
+        "message": "Cualquier medio:"
+    },
+    "badgeExternal": {
+        "message": "Externo"
+    },
+    "localServerURL": {
+        "message": "Dirección de servidor local"
+    },
+    "pluginSave": {
+        "message": "Guardar"
+    },
+    "testBuilds": {
+        "message": "Versiones de prueba"
+    },
+    "localServer": {
+        "message": "Servidor local"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE buscará actualizaciones"
+    },
+    "updateExternalFrequency": {
+        "message": "Buscar actualizaciones de los plugin externos"
+    },
+    "every6hours": {
+        "message": "Cada 6 horas"
+    },
+    "openSupport": {
+        "message": "Abrir página de soporte:"
+    },
+    "titleDefault": {
+        "message": "Abrir Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "extDescription": {
+        "message": "Inicie fácilmente IITC en el Intel de Ingress.",
+        "description": "Description of the extension"
+    },
+    "lang": {
+        "message": "esp-la"
+    },
+    "needRebootIntel": {
+        "message": "Los cambios aplicarán después de reiniciar Intel"
+    },
+    "updateInProgress": {
+        "message": "Actualización en curso…"
+    },
+    "changesApplied": {
+        "message": "Se aplicaron los cambios"
+    },
+    "noData": {
+        "message": "Sin datos"
+    },
+    "addExternalPlugin": {
+        "message": "Adicionar plugin externo"
+    },
+    "iitcTelegram": {
+        "message": "Noticias en Telegram"
+    },
+    "iitcReddit": {
+        "message": "Discutir en r/IITC"
+    },
+    "iitcHomePage": {
+        "message": "Página inicial"
+    },
+    "iitcGithub": {
+        "message": "Repositorio GitHub"
+    },
+    "iitcButtonOptions": {
+        "message": "Opciones del botón IITC-CE"
+    },
+    "updateNow": {
+        "message": "actualizar ahora"
+    },
+    "choosingUpdateChannel": {
+        "message": "Elija un canal de actualización de IITC-CE"
+    },
+    "release": {
+        "message": "Versión definitiva"
+    },
+    "pluginDelete": {
+        "message": "Borrar"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ no es un plugin válido.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ se adicionó a la categoría de plugins Extrrnos.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Dirección no disponible"
+    },
+    "errorReadingFile": {
+        "message": "Ocurrió un error leyendo el archivo $PLUGIN_NAME$ del plugin.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "o"
+    },
+    "clickInstallPlugin": {
+        "message": "Este es un plugin para IITC. Haga clic en Instalar para comenzar a usarlo."
+    },
+    "install": {
+        "message": "Instalar"
+    },
+    "loading": {
+        "message": "Cargando…"
+    },
+    "external": {
+        "message": "Externo"
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Otro plugin con el mismo ID será sobrescrito con el nuevo plugin."
+    },
+    "dropJSHereOrClick": {
+        "message": "Arrastre aquí archivos <i>.js</i> o haga clic para cargarlos."
+    }
+}
