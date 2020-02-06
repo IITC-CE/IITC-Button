@@ -1,1 +1,25 @@
-{}
+{
+    "lang": {
+        "message": "es"
+    },
+    "titleDefault": {
+        "message": "Abrir el Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "Los cambios se aplicarán después de reiniciar el Intel"
+    },
+    "updateInProgress": {
+        "message": "Actualización en curso…"
+    },
+    "changesApplied": {
+        "message": "Se aplicaron los cambios"
+    },
+    "noData": {
+        "message": "no hay datos"
+    },
+    "extDescription": {
+        "message": "Inicie IITC para Ingress Intel con facilidad.",
+        "description": "Description of the extension"
+    }
+}
