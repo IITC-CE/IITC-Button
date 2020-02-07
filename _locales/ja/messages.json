@@ -1,1 +1,44 @@
-{}
+{
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ は正しいユーザースクリプトではありません。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "pluginSave": {
+        "message": "保存"
+    },
+    "pluginDelete": {
+        "message": "削除"
+    },
+    "localServerURL": {
+        "message": "ローカルサーバーアドレス"
+    },
+    "everyDay": {
+        "message": "毎日"
+    },
+    "everyWeek": {
+        "message": "毎週"
+    },
+    "errorReadingFile": {
+        "message": "$PLUGIN_NAME$ を読み込み中にエラーが発生しました。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "または"
+    },
+    "openSupport": {
+        "message": "サポートページを開く:"
+    }
+}
