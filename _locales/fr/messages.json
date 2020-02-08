@@ -1,1 +1,62 @@
-{}
+{
+    "noData": {
+        "message": "Pas de données"
+    },
+    "addExternalPlugin": {
+        "message": "Ajouter un plugin externe"
+    },
+    "iitcHomePage": {
+        "message": "Accueil"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "pluginSave": {
+        "message": "Enregistrer"
+    },
+    "pluginDelete": {
+        "message": "Supprimer"
+    },
+    "or": {
+        "message": "ou"
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Le plugin avec le même ID sera écrasé par le nouveau plugin."
+    },
+    "clickInstallPlugin": {
+        "message": "Ceci est un plugin IITC. Cliquer install pour commencer à l'utiliser."
+    },
+    "install": {
+        "message": "Installer"
+    },
+    "loading": {
+        "message": "Chargement…"
+    },
+    "external": {
+        "message": "Externe"
+    },
+    "iitcGithub": {
+        "message": "Dépôt GitHub"
+    },
+    "errorReadingFile": {
+        "message": "Une erreur est survenue lors de la lecture du fichier $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "serverNotAvailableRetry": {
+        "message": "Le serveur n'est pas disponible. Réessayer après $NUM$ secondes.",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "updateInProgress": {
+        "message": "Mise à jour en cours…"
+    }
+}
