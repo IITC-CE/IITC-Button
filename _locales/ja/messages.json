@@ -40,5 +40,17 @@
     },
     "openSupport": {
         "message": "サポートページを開く:"
+    },
+    "noData": {
+        "message": "データがありません"
+    },
+    "changesApplied": {
+        "message": "変更が適用されました"
+    },
+    "updateInProgress": {
+        "message": "アップデート中…"
+    },
+    "needRebootIntel": {
+        "message": "変更は、インテルマップの再起動後に有効になります"
     }
 }
