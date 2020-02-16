@@ -52,5 +52,29 @@
     },
     "needRebootIntel": {
         "message": "変更は、インテルマップの再起動後に有効になります"
+    },
+    "install": {
+        "message": "インストール"
+    },
+    "serverNotAvailableRetry": {
+        "message": "現在サーバーは利用できません。$NUM$秒後に再試行してください。",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "iitcHomePage": {
+        "message": "ホームページ"
+    },
+    "every6hours": {
+        "message": "6時間おき"
+    },
+    "every12hours": {
+        "message": "12時間おき"
+    },
+    "loading": {
+        "message": "読込中…"
     }
 }
