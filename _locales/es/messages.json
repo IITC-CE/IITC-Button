@@ -3,23 +3,23 @@
         "message": "es"
     },
     "titleDefault": {
-        "message": "Abrir el Intel",
+        "message": "Abrir Intel",
         "description": "Title for the button at the application panel"
     },
     "needRebootIntel": {
-        "message": "Los cambios se aplicarán después de reiniciar el Intel"
+        "message": "Se reiniciará IITC, Cambios Guardados."
     },
     "updateInProgress": {
-        "message": "Actualización en curso…"
+        "message": "Actualizando…"
     },
     "changesApplied": {
-        "message": "Se aplicaron los cambios"
+        "message": "Cambios Aplicados"
     },
     "noData": {
-        "message": "no hay datos"
+        "message": "Sin Datos"
     },
     "extDescription": {
-        "message": "Inicie IITC para Ingress Intel con facilidad.",
+        "message": "Inicio fácil de IITC Ingress Intel.",
         "description": "Description of the extension"
     },
     "badgeExternal": {
@@ -32,31 +32,31 @@
         "message": "Conversar en r/IITC"
     },
     "iitcHomePage": {
-        "message": "Página inicial"
+        "message": "Página Principal"
     },
     "iitcGithub": {
-        "message": "Repositorio de GitHub"
+        "message": "Repositorio GitHub"
     },
     "iitcButtonOptions": {
         "message": "Opciones del Botón IITC-CE"
     },
     "updateNow": {
-        "message": "Actualizar ahora"
+        "message": "Actualizar"
     },
     "release": {
-        "message": "Versión de lanzamiento"
+        "message": "Versión OK"
     },
     "testBuilds": {
-        "message": "Versión de prueba"
+        "message": "Versión Beta"
     },
     "localServer": {
-        "message": "Versión de servidor local"
+        "message": "Servidor local"
     },
     "updateFrequency": {
         "message": "IITC-CE busca actualizaciones"
     },
     "updateExternalFrequency": {
-        "message": "Plugins externos checan actualizaciones"
+        "message": "Plugins externos buscan actualizaciones"
     },
     "every6hours": {
         "message": "Cada 6 horas"
@@ -71,7 +71,7 @@
         "message": "Cada semana"
     },
     "anyChannel": {
-        "message": "Cualquier versión:"
+        "message": "Algún Canal:"
     },
     "localServerURL": {
         "message": "Dirección de servidor local"
@@ -92,7 +92,7 @@
         "message": "Añadir plugin externo"
     },
     "choosingUpdateChannel": {
-        "message": "Escoge un canal de actualizaciones para IITC-CE"
+        "message": "Cambiar canal de actualizaciones IITC-CE"
     },
     "external": {
         "message": "Externo"
