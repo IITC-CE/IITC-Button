@@ -76,5 +76,9 @@
     },
     "loading": {
         "message": "読込中…"
+    },
+    "titleDefault": {
+        "message": "Intelを開く",
+        "description": "Title for the button at the application panel"
     }
 }
