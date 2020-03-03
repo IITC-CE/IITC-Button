@@ -80,5 +80,75 @@
     "titleDefault": {
         "message": "Intelを開く",
         "description": "Title for the button at the application panel"
+    },
+    "badgeExternal": {
+        "message": "外部"
+    },
+    "choosingUpdateChannel": {
+        "message": "IITC-CE更新チャネルを選択"
+    },
+    "lang": {
+        "message": "英語"
+    },
+    "external": {
+        "message": "外部"
+    },
+    "clickInstallPlugin": {
+        "message": "これはIITCプラグインです。インストールをクリックして使ってみましょう。"
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "同じIDのプラグインが新規プラグインによって上書きされます。"
+    },
+    "dropJSHereOrClick": {
+        "message": "<i>.js</i> ファイルをここにドロップするか、クリックしてアップロードしてください。"
+    },
+    "addressNotAvailable": {
+        "message": "有効なアドレスではありません"
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ は外部カテゴリに追加されました。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "updateExternalFrequency": {
+        "message": "外部プラグインの更新を確認"
+    },
+    "updateFrequency": {
+        "message": "IITC-CEの更新を確認"
+    },
+    "localServer": {
+        "message": "ローカルサーバ"
+    },
+    "testBuilds": {
+        "message": "テスト版"
+    },
+    "release": {
+        "message": "リリース"
+    },
+    "updateNow": {
+        "message": "今すぐ更新"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CEボタンオプション"
+    },
+    "iitcGithub": {
+        "message": "GitHubリポジトリ"
+    },
+    "iitcReddit": {
+        "message": "r/IITC で話す"
+    },
+    "iitcTelegram": {
+        "message": "Telegramで最新情報"
+    },
+    "addExternalPlugin": {
+        "message": "外部プラグインを追加"
+    },
+    "extDescription": {
+        "message": "Ingressインテルマップ用IITCを簡単に起動します",
+        "description": "Description of the extension"
     }
 }
