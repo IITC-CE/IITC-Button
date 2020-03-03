@@ -1,1 +1,157 @@
-{}
+{
+    "release": {
+        "message": "Σταθερή έκδοση"
+    },
+    "lang": {
+        "message": "αγγλικά"
+    },
+    "external": {
+        "message": "Εξωτερικά"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Ο διακομιστής δεν είναι διαθέσιμος. Δοκιμάστε ξανά μετά από $NUM$ δευτερόλεπτα",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "Φόρτωση…"
+    },
+    "install": {
+        "message": "Εγκατάσταση"
+    },
+    "clickInstallPlugin": {
+        "message": "Αυτό είναι ένα πρόσθετο IITC. Κάντε κλικ στην εγκατάσταση για να αρχίσετε να το χρησιμοποιείτε."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Πρόσθετα με την ίδια Ταυτότητα θα αντικατασταθούν από το νέο πρόσθετο."
+    },
+    "dropJSHereOrClick": {
+        "message": "Τοποθετήστε αρχεία <i>.js</i> εδώ ή κάντε κλικ για μεταφόρτωση."
+    },
+    "or": {
+        "message": "ή"
+    },
+    "errorReadingFile": {
+        "message": "Παρουσιάστηκε σφάλμα κατά την ανάγνωση του αρχείου $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Η διεύθυνση δεν είναι διαθέσιμη"
+    },
+    "addedUserScript": {
+        "message": "Το $PLUGIN_NAME$ έχει προστεθεί στην κατηγορία Εξωτερικά.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "Το $PLUGIN_NAME$ δεν είναι έγκυρο σενάριο χρήστη.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "Διαγραφή"
+    },
+    "pluginSave": {
+        "message": "Αποθήκευση"
+    },
+    "openSupport": {
+        "message": "Άνοιγμα σελίδας υποστήριξης:"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "localServerURL": {
+        "message": "Διεύθυνση τοπικού διακομιστή"
+    },
+    "badgeExternal": {
+        "message": "Εξωτερικά"
+    },
+    "anyChannel": {
+        "message": "Οποιοδήποτε κανάλι:"
+    },
+    "everyWeek": {
+        "message": "Κάθε Εβδομάδα"
+    },
+    "everyDay": {
+        "message": "Κάθε Ημέρα"
+    },
+    "every12hours": {
+        "message": "Κάθε 12 Ώρες"
+    },
+    "every6hours": {
+        "message": "Κάθε 6 Ώρες"
+    },
+    "updateExternalFrequency": {
+        "message": "Εξωτερικά πρόσθετα έλεγχος για ενημερώσεις"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE έλεγχος για ενημερώσεις"
+    },
+    "localServer": {
+        "message": "Τοπικός διακομιστής"
+    },
+    "testBuilds": {
+        "message": "Δοκιμαστικές εκδόσεις"
+    },
+    "choosingUpdateChannel": {
+        "message": "Επιλογή καναλιού ενημέρωσης IITC-CE"
+    },
+    "updateNow": {
+        "message": "ενημέρωση τώρα"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE επιλογές"
+    },
+    "iitcGithub": {
+        "message": "Αποθετήριο GitHub"
+    },
+    "iitcHomePage": {
+        "message": "Αρχική σελίδα"
+    },
+    "iitcReddit": {
+        "message": "Συζητήστε στο r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Νέα στο Telegram"
+    },
+    "addExternalPlugin": {
+        "message": "Εισαγωγή εξωτερικού πρόσθετου"
+    },
+    "noData": {
+        "message": "Χωρίς δεδομένα"
+    },
+    "changesApplied": {
+        "message": "Οι αλλαγές εφαρμόστηκαν"
+    },
+    "updateInProgress": {
+        "message": "Αναβάθμιση σε εξέλιξη…"
+    },
+    "needRebootIntel": {
+        "message": "Οι αλλαγές θα εφαρμοστούν μετά την επανεκκίνηση του Intel"
+    },
+    "titleDefault": {
+        "message": "Άνοιγμα Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "extDescription": {
+        "message": "Ξεκινήστε το IITC για τον χάρτη Ingress Intel με ευκολία.",
+        "description": "Description of the extension"
+    }
+}
