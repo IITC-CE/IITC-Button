@@ -1,1 +1,89 @@
-{}
+{
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ hozzáadva a Külső kategóriába.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ nem érvényes UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "external": {
+        "message": "Külső"
+    },
+    "serverNotAvailableRetry": {
+        "message": "A szerver nem elérhető. Újrapróbálkozás $NUM$ mp. múlva",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "Betöltés…"
+    },
+    "install": {
+        "message": "Telepítés"
+    },
+    "or": {
+        "message": "vagy"
+    },
+    "errorReadingFile": {
+        "message": "Hiba történt a $PLUGIN_NAME$ fájl olvasása során.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Cím nem elérhető"
+    },
+    "pluginDelete": {
+        "message": "Törlés"
+    },
+    "openSupport": {
+        "message": "Támogatási oldal megnyitása:"
+    },
+    "pluginSave": {
+        "message": "Mentés"
+    },
+    "everyWeek": {
+        "message": "Hetente"
+    },
+    "everyDay": {
+        "message": "Naponta"
+    },
+    "every12hours": {
+        "message": "12 óránként"
+    },
+    "every6hours": {
+        "message": "6 óránként"
+    },
+    "localServer": {
+        "message": "Helyi szerver"
+    },
+    "updateNow": {
+        "message": "frissítés most"
+    },
+    "iitcHomePage": {
+        "message": "Kezdőoldal"
+    },
+    "addExternalPlugin": {
+        "message": "Bővítmény hozzáadása"
+    },
+    "updateInProgress": {
+        "message": "Frissítés folyamatban…"
+    }
+}
