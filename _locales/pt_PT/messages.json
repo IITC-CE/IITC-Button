@@ -1,1 +1,157 @@
-{}
+{
+    "titleDefault": {
+        "message": "Abrir Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "As alterações serão aplicadas depois de reiniciar o Intel"
+    },
+    "updateInProgress": {
+        "message": "Actualização em progresso…"
+    },
+    "changesApplied": {
+        "message": "As alterações foram aplicadas"
+    },
+    "noData": {
+        "message": "Sem dados"
+    },
+    "iitcTelegram": {
+        "message": "Novidades no Telegram"
+    },
+    "iitcHomePage": {
+        "message": "Página inicial"
+    },
+    "iitcGithub": {
+        "message": "Repositório GitHub"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Botão de opções"
+    },
+    "updateNow": {
+        "message": "Actualize agora"
+    },
+    "release": {
+        "message": "Lançamento"
+    },
+    "testBuilds": {
+        "message": "Versões de Teste"
+    },
+    "localServer": {
+        "message": "Servidor Local"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE Verificar actualizações"
+    },
+    "updateExternalFrequency": {
+        "message": "Plugins externos verificar actualizações"
+    },
+    "every6hours": {
+        "message": "Todas as 6 horas"
+    },
+    "every12hours": {
+        "message": "A cada 12 horas"
+    },
+    "everyDay": {
+        "message": "A cada dia"
+    },
+    "everyWeek": {
+        "message": "A cada semana"
+    },
+    "badgeExternal": {
+        "message": "Externo"
+    },
+    "lang": {
+        "message": "pt"
+    },
+    "iitcReddit": {
+        "message": "Discussão no r/IITC"
+    },
+    "localServerURL": {
+        "message": "Endereço do servidor local"
+    },
+    "openSupport": {
+        "message": "Abrir página de suporte:"
+    },
+    "pluginSave": {
+        "message": "Guardar"
+    },
+    "pluginDelete": {
+        "message": "Apagar"
+    },
+    "or": {
+        "message": "ou"
+    },
+    "addedUserScript": {
+        "message": "$ PLUGIN_NAME $ foi adicionado à categoria Externa.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "O endereço não está disponível"
+    },
+    "dropJSHereOrClick": {
+        "message": "Solte os arquivos <i>.js</i> aqui ou clique em upload."
+    },
+    "clickInstallPlugin": {
+        "message": "Este é um plugin IITC. Clique instalar para o começar a usar."
+    },
+    "install": {
+        "message": "Instalar"
+    },
+    "external": {
+        "message": "Externo"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "errorReadingFile": {
+        "message": "Ocorreu um erro ao ler o arquivo $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "O plug-in com o mesmo ID será substituído pelo novo plug-in."
+    },
+    "loading": {
+        "message": "A carregar…"
+    },
+    "serverNotAvailableRetry": {
+        "message": "O servidor não está disponível. Tente novamente depois de $NUM$ segundos",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ Não é um plugin válido.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "extDescription": {
+        "message": "Inicie o IITC para Ingress Intel com facilidade.",
+        "description": "Description of the extension"
+    },
+    "addExternalPlugin": {
+        "message": "Adicionar plugin externo"
+    },
+    "choosingUpdateChannel": {
+        "message": "Escolhendo um canal de atualização IITC-CE"
+    },
+    "anyChannel": {
+        "message": "Qualquer canal:"
+    }
+}
