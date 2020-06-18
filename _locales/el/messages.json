@@ -6,7 +6,7 @@
         "message": "αγγλικά"
     },
     "external": {
-        "message": "Εξωτερικά"
+        "message": "\tΕξωτερικά"
     },
     "serverNotAvailableRetry": {
         "message": "Ο διακομιστής δεν είναι διαθέσιμος. Δοκιμάστε ξανά μετά από $NUM$ δευτερόλεπτα",
@@ -147,7 +147,7 @@
         "message": "Οι αλλαγές θα εφαρμοστούν μετά την επανεκκίνηση του Intel"
     },
     "titleDefault": {
-        "message": "Άνοιγμα Intel",
+        "message": "Άνοιγμα Χάρτη",
         "description": "Title for the button at the application panel"
     },
     "extDescription": {
