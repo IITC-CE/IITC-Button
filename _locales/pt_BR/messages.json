@@ -36,7 +36,7 @@
         }
     },
     "external": {
-        "message": "Externo"
+        "message": "\tExterno"
     },
     "extDescription": {
         "message": "Inicie o IITC para Ingress Intel com facilidade.",
