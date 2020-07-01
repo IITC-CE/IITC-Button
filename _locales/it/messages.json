@@ -82,7 +82,76 @@
         "message": "Le modifiche verranno applicate dopo aver riavviato la Intel"
     },
     "titleDefault": {
-        "message": "Apri la Intel",
+        "message": "Apri Intel",
         "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "it"
+    },
+    "errorReadingFile": {
+        "message": "Si è verificato un errore leggendo $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScript": {
+        "message": "$PLUGIN_NAME$ è stato aggiunto nella categoria Esterni.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "external": {
+        "message": "\tEsterni"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Il server non è disponibile. Riprova tra $NUM$ secondi",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "Caricamento…"
+    },
+    "install": {
+        "message": "Installa"
+    },
+    "clickInstallPlugin": {
+        "message": "Questo è un plugin IITC. Fai click su Installa per iniziare ad usarlo."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin con lo stesso ID saranno sovrascritti dal nuovo plugin."
+    },
+    "dropJSHereOrClick": {
+        "message": "Rilascia i files <i>.js</i> qui oppure fai click su carica."
+    },
+    "or": {
+        "message": "oppure"
+    },
+    "openSupport": {
+        "message": "Apri pagina di supporto:"
+    },
+    "badgeExternal": {
+        "message": "esterno"
+    },
+    "anyChannel": {
+        "message": "Tutti i canali:"
+    },
+    "localServer": {
+        "message": "Server locale"
+    },
+    "testBuilds": {
+        "message": "Versioni di prova"
+    },
+    "release": {
+        "message": "Rilascio"
     }
 }
