@@ -83,7 +83,7 @@
         "message": "Discutir en r/IITC"
     },
     "iitcHomePage": {
-        "message": "Página inicial"
+        "message": "Página de inicio"
     },
     "iitcGithub": {
         "message": "Repositorio GitHub"
@@ -146,7 +146,7 @@
         "message": "Cargando…"
     },
     "external": {
-        "message": "Externo"
+        "message": "\tExterno"
     },
     "willBeOverwrittenByNewPlugin": {
         "message": "Otro plugin con el mismo ID será sobrescrito con el nuevo plugin."

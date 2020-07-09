@@ -7,16 +7,16 @@
         "description": "Title for the button at the application panel"
     },
     "needRebootIntel": {
-        "message": "Se reiniciará IITC, Cambios Guardados."
+        "message": "Los cambios se aplicarán después de reiniciar Intel"
     },
     "updateInProgress": {
         "message": "Actualizando…"
     },
     "changesApplied": {
-        "message": "Cambios Aplicados"
+        "message": "Se aplicaron los cambios"
     },
     "noData": {
-        "message": "Sin Datos"
+        "message": "No hay Datos"
     },
     "extDescription": {
         "message": "Inicio fácil de IITC Ingress Intel.",
@@ -95,7 +95,7 @@
         "message": "Cambiar canal de actualizaciones IITC-CE"
     },
     "external": {
-        "message": "Externo"
+        "message": "\tExterno"
     },
     "addressNotAvailable": {
         "message": "Dirección no disponible"
