@@ -27,7 +27,7 @@
         }
     },
     "external": {
-        "message": "Zewnętrzne"
+        "message": "\tZewnętrzne"
     },
     "serverNotAvailableRetry": {
         "message": "Serwer jest niedostępny. Ponów próbę po $NUM$ sekundzie",
