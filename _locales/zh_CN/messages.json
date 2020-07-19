@@ -34,7 +34,7 @@
         "message": "测试版本"
     },
     "iitcReddit": {
-        "message": "Discuss on r/IITC"
+        "message": "在r/IITC中讨论"
     },
     "iitcButtonOptions": {
         "message": "IITC-CE 按钮选项"
@@ -103,7 +103,7 @@
         "message": "加载中…"
     },
     "external": {
-        "message": "外部"
+        "message": "\t外部"
     },
     "updateInProgress": {
         "message": "正在更新…"
