@@ -1,1 +1,50 @@
-{}
+{
+    "updateNow": {
+        "message": "업데이트"
+    },
+    "iitcGithub": {
+        "message": "GitHub repository"
+    },
+    "noData": {
+        "message": "데이터 없음"
+    },
+    "iitcHomePage": {
+        "message": "홈 페이지"
+    },
+    "testBuilds": {
+        "message": "테스트 빌드"
+    },
+    "release": {
+        "message": "릴리즈"
+    },
+    "localServer": {
+        "message": "로컬 서버"
+    },
+    "every12hours": {
+        "message": "매 12시간 마다"
+    },
+    "every6hours": {
+        "message": "매 6시간 마다"
+    },
+    "everyDay": {
+        "message": "매일"
+    },
+    "localServerURL": {
+        "message": "로컬 서버 주소"
+    },
+    "pluginDelete": {
+        "message": "삭제"
+    },
+    "pluginSave": {
+        "message": "저장"
+    },
+    "loading": {
+        "message": "로딩 중…"
+    },
+    "install": {
+        "message": "설치"
+    },
+    "clickInstallPlugin": {
+        "message": "이것은 IITC 플러그인 입니다. 클릭하여 사용을 시작합니다."
+    }
+}
