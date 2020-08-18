@@ -7,5 +7,59 @@
     },
     "titleDefault": {
         "message": "Відкрити Intel"
+    },
+    "install": {
+        "message": "Завантажити"
+    },
+    "or": {
+        "message": "або"
+    },
+    "pluginDelete": {
+        "message": "Видалити"
+    },
+    "pluginSave": {
+        "message": "Зберегти"
+    },
+    "openSupport": {
+        "message": "Відкрити сторінку підтримки:"
+    },
+    "placeholderLocalServer": {
+        "message": "127.0.0.1"
+    },
+    "localServerURL": {
+        "message": "Адреса локального сервера"
+    },
+    "everyWeek": {
+        "message": "Кожен тиждень"
+    },
+    "everyDay": {
+        "message": "Кожен день"
+    },
+    "every12hours": {
+        "message": "Кожні 12 годин"
+    },
+    "every6hours": {
+        "message": "Кожні 6 годин"
+    },
+    "updateNow": {
+        "message": "Оновити зараз"
+    },
+    "iitcHomePage": {
+        "message": "Домашня сторінка"
+    },
+    "iitcTelegram": {
+        "message": "Новини в Telegram"
+    },
+    "noData": {
+        "message": "Нема даних"
+    },
+    "changesApplied": {
+        "message": "Зміни застосовані"
+    },
+    "updateInProgress": {
+        "message": "Оновлення в процесі…"
+    },
+    "needRebootIntel": {
+        "message": "Зміни буде застосовано після перезавантаження Intel"
     }
 }
