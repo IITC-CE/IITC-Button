@@ -369,7 +369,9 @@ function managePlugin(id, category, action) {
       delete plugins_user[id];
 
       Object.keys(plugins).forEach(function(cat) {
-        if (plugins[cat]['plugins'][id] !== undefined && plugins[cat]['plugins'][id]['status'] === 'user') {
+        if (plugins[cat]['plugins'] !== undefined &&
+            plugins[cat]['plugins'][id] !== undefined &&
+            plugins[cat]['plugins'][id]['status'] === 'user') {
           plugins[cat]['plugins'][id]['status'] = 'off';
         }
       });

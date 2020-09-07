@@ -24,6 +24,10 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
     },
     'sortCategories': function(obj) {
 
+      if (obj === undefined) {
+        return {}
+      }
+
       let arr = Object.keys(obj).map(function(key){
         return obj[key];
       });

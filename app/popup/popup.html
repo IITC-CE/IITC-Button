@@ -117,14 +117,14 @@
             <div class="list">
                 <div class="plugins-list">
                     <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginDescription(plugin)" v-bind:data-category="category_name" v-bind:data-id="plugin.id">
+                        <i class="element__action material-icons" v-on:click="managePlugin(plugin.id, plugin.status)">{{ pluginIcon(plugin) }}</i>
                         <span class="element__text" v-on:click="managePlugin(plugin.id, plugin.status)">{{ __('name', plugin) }}</span>
                         <span v-if="plugin.status === 'user'" class="element__user">{{ _('badgeExternal') }}</span>
                         <template v-if="category_name === 'External'">
                             <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="_('openSupport')+' '+plugin.supportURL">home</i>
                             <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" v-bind:title="_('pluginSave')">save</i>
-                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="_('pluginDelete')">close</i>
+                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="_('pluginDelete')">delete</i>
                         </template>
-                        <i class="element__action material-icons" v-on:click="managePlugin(plugin)">{{ pluginIcon(plugin) }}</i>
                     </div>
                     <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">{{ _('noData') }}</span></div>
                 </div>

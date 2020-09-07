@@ -13,12 +13,19 @@ let ComponentPlugins = Vue.component('section-plugins', {
       return ((this.category_name === 'External') ? '[v'+plugin['version']+'] ' : '') + this.__('description', plugin);
     },
     'pluginIcon': function (plugin) {
-      return (plugin['status'] === 'user') ? 'close' : 'toggle_' + plugin['status'];
+      return (plugin['status'] === 'user') ? 'delete' : 'toggle_' + plugin['status'];
     },
     'managePlugin': function (plugin_id, status) {
-      let action = (status === "on") ? "off" : "on";
-      this.plugins[plugin_id].status = action;
-      this.plugins[plugin_id].icon = 'toggle_'+action;
+      let action = "";
+      if (status === "user") {
+          action = "delete";
+          this.plugins[plugin_id].status = "off";
+          this.plugins[plugin_id].icon = 'toggle_off';
+      } else {
+          action = (status === "on") ? "off" : "on";
+          this.plugins[plugin_id].status = action;
+          this.plugins[plugin_id].icon = 'toggle_'+action;
+      }
       showMessage(this._("needRebootIntel"));
       chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': action});
     },
