@@ -157,23 +157,29 @@ async function downloadMeta(local, last_modified) {
   let plugins_local = local[channel+'_plugins_local'];
   let plugins_user = local[channel+'_plugins_user'];
 
-  let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js");
-  if (iitc_code) {
-    await save({
-      'iitc_code': iitc_code
-    })
-  }
-
-  plugins_local = await updateLocalPlugins(plugins, plugins_local);
-
-  plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
-  await save({
-    'iitc_version': response['iitc_version'],
-    'last_modified': last_modified,
-    'plugins': plugins,
-    'plugins_local': plugins_local,
-    'plugins_user': plugins_user
+  let p_iitc = new Promise(async () => {
+    let iitc_code = await ajaxGetWithProgress(network_host[channel]+"/total-conversion-build.user.js");
+    if (iitc_code) {
+      await save({
+        'iitc_code': iitc_code
+      })
+    }
   });
+
+  let p_plugins = new Promise(async () => {
+    plugins_local = await updateLocalPlugins(plugins, plugins_local);
+
+    plugins = rebuildingCategoriesPlugins(plugins, plugins_local, plugins_user);
+    await save({
+      'iitc_version': response['iitc_version'],
+      'last_modified': last_modified,
+      'plugins': plugins,
+      'plugins_local': plugins_local,
+      'plugins_user': plugins_user
+    });
+  });
+
+  await Promise.all([p_iitc, p_plugins]);
 }
 
 function checkExternalUpdates(force) {

@@ -42,7 +42,7 @@ const ajaxGet = (url, variant) => new Promise(resolve => {
   let xhr = null;
   xhr = new XMLHttpRequest();
   if (!xhr) return null;
-  xhr.timeout = 5000;
+  xhr.timeout = 10*1000;
   xhr.open(method, url+"?"+Date.now(),true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
