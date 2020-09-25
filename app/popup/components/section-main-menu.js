@@ -5,7 +5,8 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
   props: {
     'showProgressbar': Boolean,
     'iitc_is_enabled': Boolean,
-    'categories': Object
+    'categories': Object,
+    'plugins_flat': Object
   },
   mixins: [mixin],
   methods: {
@@ -20,7 +21,33 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
     'openCategory': function (category_name) {
       document.body.id = "plugins";
       this.$root.$data.category_name = category_name;
-      this.$root.$data.plugins = this.categories[category_name]['plugins'];
+
+      this.$root.$data.plugins = Object.entries(this.$root.$data.plugins_flat).reduce(function (category_plugins, plugin_pair) {
+        const [plugin_uid, plugin_obj] = plugin_pair;
+        if (plugin_obj['category'] === category_name) {
+          category_plugins[plugin_uid] = plugin_obj;
+        }
+        return category_plugins;
+      }, {});
+    },
+    'countPlugins': function (categories, plugins) {
+      Object.keys(categories).forEach(function (cat) {
+        const [count_plugins, count_plugins_active] = Object.entries(plugins).reduce(function (counter_pair, plugin_pair) {
+          const [, plugin_obj] = plugin_pair;
+          let [total, active] = counter_pair;
+          if (plugin_obj['category'] === cat) {
+            total += 1;
+            if (plugin_obj['status'] === "on") {
+              active += 1;
+            }
+          }
+          return [total, active];
+        }, [0, 0]);
+
+        categories[cat]['count_plugins'] = count_plugins;
+        categories[cat]['count_plugins_active'] = count_plugins_active;
+      })
+      return categories
     },
     'sortCategories': function(obj) {
 
@@ -41,13 +68,6 @@ let ComponentMainMenu = Vue.component('section-main-menu', {
           }
         }
       }
-
-      // Move "External" to top
-      let el_external = null;
-      for (let i=0;i<arr.length;i++) {
-        if (arr[i].name.toLowerCase() === 'external') el_external = i;
-      }
-      if (el_external !== null) arr.unshift(...arr.splice(el_external,1));
 
       // Move "Misc" to bottom
       let el_misc = null;

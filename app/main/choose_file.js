@@ -33,10 +33,10 @@ async function loadByUrl() {
     const meta = parse_meta(code);
     let filename = url.substr(url.lastIndexOf("/")+1);
 
-    if (meta === {} || meta['id'] === undefined) {
+    if (meta === {} || meta['name'] === undefined) {
       message += _("notValidUserScript", filename)+"\n";
     } else {
-      message += _("addedUserScript", filename)+"\n";
+      message += _("addedUserScriptTo", [filename, meta['category']])+"\n";
       meta['filename'] = filename;
       scripts.push({'meta': meta, 'code': code})
     }
@@ -76,7 +76,7 @@ const processingFile = async (fileList) => {
       const code = await readUploadedFileAsText(file);
       const meta = parse_meta(code);
 
-      if (meta === {} || meta['id'] === undefined) {
+      if (meta === {} || meta['name'] === undefined) {
         message += _("notValidUserScript", file['name'])+"\n";
       } else {
         message += _("addedUserScript", meta['name'])+"\n";

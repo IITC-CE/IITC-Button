@@ -103,12 +103,16 @@
             }
         }
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ has been added to the External category.",
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ has been added to the \"$PLUGIN_CATEGORY$\" category.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
                 "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
             }
         }
     },

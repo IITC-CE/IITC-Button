@@ -15,33 +15,42 @@ let ComponentPlugins = Vue.component('section-plugins', {
     'pluginIcon': function (plugin) {
       return (plugin['status'] === 'user') ? 'delete' : 'toggle_' + plugin['status'];
     },
-    'managePlugin': function (plugin_id, status) {
+    'managePlugin': function (plugin_uid, status) {
       let action = "";
       if (status === "user") {
           action = "delete";
-          this.plugins[plugin_id].status = "off";
-          this.plugins[plugin_id].icon = 'toggle_off';
+          this.plugins[plugin_uid].status = "off";
+          this.plugins[plugin_uid].icon = 'toggle_off';
       } else {
           action = (status === "on") ? "off" : "on";
-          this.plugins[plugin_id].status = action;
-          this.plugins[plugin_id].icon = 'toggle_'+action;
+          this.plugins[plugin_uid].status = action;
+          this.plugins[plugin_uid].icon = 'toggle_'+action;
       }
       showMessage(this._("needRebootIntel"));
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': action});
+      chrome.runtime.sendMessage({'type': "managePlugin", 'uid': plugin_uid, 'category': this.category_name, 'action': action});
     },
-    'deletePlugin': function (plugin_id) {
-      let plugins = this.categories[this.category_name].plugins;
-      delete plugins[plugin_id];
-      if (Object.values(plugins).length <= 0) {
+    'deletePlugin': function (plugin_uid) {
+      const cat = this.category_name;
+      let plugins = this.$root.$data.plugins;
+      if (!plugins[plugin_uid]['override'])
+          delete plugins[plugin_uid];
+
+      const count_plugins = Object.entries(plugins).reduce(function (total, plugin_pair) {
+          const [, plugin_obj] = plugin_pair;
+            if (plugin_obj['category'] === cat) total += 1;
+            return total;
+      }, 0);
+
+      if (count_plugins <= 0) {
         this.back();
         this.categories[this.category_name].name = '';
       }
       showMessage(this._("needRebootIntel"));
-      chrome.runtime.sendMessage({'type': "managePlugin", 'id': plugin_id, 'category': this.category_name, 'action': "delete"});
+      chrome.runtime.sendMessage({'type': "managePlugin", 'uid': plugin_uid, 'category': this.category_name, 'action': "delete"});
     },
-    'savePlugin': function (id) {
+    'savePlugin': function (uid) {
       chrome.storage.local.get([this.$root.channel+"_plugins_user"], (data) => {
-        let plugin = data[this.$root.channel+"_plugins_user"][id];
+        let plugin = data[this.$root.channel+"_plugins_user"][uid];
         saveJS(plugin['code'], plugin['filename']);
       });
     },
