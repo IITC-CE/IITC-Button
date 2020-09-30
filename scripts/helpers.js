@@ -24,7 +24,7 @@ function parse_meta(code) {
 
       let key = sp[1].replace("@", "");
       let value = sp.slice(2).join(" ");
-      if (["name", "id", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
+      if (["name", "namespace", "category", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
         if (data[key]) continue;
         if (key === "name") {
           value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
@@ -93,3 +93,19 @@ const checkStatusLocalServer = (host) => new Promise(resolve => {
   };
   xhr.send(null);
 });
+
+function getUID(plugin) {
+  let available_fields = [];
+
+  if (plugin['name']) {
+    available_fields.push(plugin['name']);
+  } else {
+    available_fields.push(plugin['filename'])
+  }
+
+  if (plugin['namespace']) {
+    available_fields.push(plugin['namespace']);
+  }
+
+  return available_fields.join("+")
+}

@@ -6,9 +6,6 @@ let mixin = {
     '__': function (key, item) {
       if ((item === undefined)||(!(key in item))) return '';
       let lang = chrome.i18n.getUILanguage();
-      if ((key === 'name') && (item[key] === 'External')) {
-        return _('external');
-      }
       return ((key + ":" + lang) in item) ? item[key + ":" + lang] : item[key]
     },
     'objIsEmpty': function (obj) {

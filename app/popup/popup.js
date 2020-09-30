@@ -19,6 +19,7 @@ let app = new Vue({
     'IITC_is_enabled': true,
     'categories': {},
     'plugins': {},
+    'plugins_flat': {},
     'channel': 'release',
     'updateChannels': updateChannelsData,
     'updateIntervals': updateIntervalsData,
@@ -28,7 +29,7 @@ let app = new Vue({
     'category_name': '',
     'message': {'opened': false, 'text': ''},
     'showProgressbar': false,
-    'localServerHost': '127.0.0.1:8000',
+    'localServerHost': 'localhost:8000',
     'localServerStatus': ''
   },
   components: {
@@ -66,7 +67,8 @@ chrome.storage.local.get([
   "IITC_is_enabled",
   "channel",
   "local_server_host",
-  "release_plugins",               "test_plugins",               "local_plugins",
+  "release_categories",            "test_categories",            "local_categories",
+  "release_plugins_flat",          "test_plugins_flat",          "local_plugins_flat",
   "release_update_check_interval", "test_update_check_interval", "external_update_check_interval"
 ], function(data) {
 
@@ -75,7 +77,10 @@ chrome.storage.local.get([
   }
 
   // initialize categories
-  app.$data.categories = data[app.$data.channel+'_plugins'];
+  app.$data.categories = data[app.$data.channel+'_categories'];
+
+  // initialize all plugins
+  app.$data.plugins_flat = data[app.$data.channel+'_plugins_flat'];
 
   // initialize toggleIITC
   let status = data.IITC_is_enabled;
@@ -98,21 +103,34 @@ chrome.storage.local.get([
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (let key in changes) {
-    if (key === app.$data.channel+"_plugins") {
+
+    if (key === app.$data.channel+"_categories") {
       app.$data.categories = {};
       app.$data.categories = changes[key].newValue;
+    }
 
+    if (key === app.$data.channel+"_plugins_flat") {
+      app.$data.plugins_flat = changes[key].newValue;
       let category_name = app.$data.category_name;
       if (category_name !== '') {
         if (app.$data.categories[category_name]) {
-          app.$data.plugins = app.$data.categories[category_name].plugins;
+
+          app.$data.plugins = Object.entries(changes[key].newValue).reduce(function (category_plugins, plugin_pair) {
+            const [plugin_uid, plugin_obj] = plugin_pair;
+            if (plugin_obj.category === category_name) {
+              category_plugins[plugin_uid] = plugin_obj;
+            }
+            return category_plugins;
+          }, {});
         } else {
           app.$data.plugins = {};
         }
       }
     }
+
     if (key === "local_server_host") {
       app.$data.localServerHost = changes[key].newValue;
     }
+
   }
 });

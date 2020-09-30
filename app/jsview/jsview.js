@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function(){
     hljs.highlightBlock(codeblock);
 
     const meta = parse_meta(code);
-    if (meta['id'] !== undefined && meta['name'] !== undefined) {
+    if (meta['name'] !== undefined) {
 
     	document.getElementById("addUserScript").classList.remove('hide');
     	document.getElementById("addUserScript-title").innerText = meta['name'];
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 			const btn_install = document.getElementById("install");
 			btn_install.addEventListener("click", function () {
 
-				let message = _("addedUserScript", filename)+"\n";
+				let message = _("addedUserScriptTo", [filename, _(meta['category'])])+"\n";
 				meta['filename'] = filename;
 				let script = [{'meta': meta, 'code': code}];
 

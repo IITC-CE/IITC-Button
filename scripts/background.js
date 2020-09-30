@@ -88,12 +88,12 @@ function onRemovedListener(tabId) {
 }
 
 function initialize() {
-
   chrome.storage.local.get([
     "IITC_is_enabled",
     "channel",
     "release_iitc_code",     "test_iitc_code",     "local_iitc_code",
     "release_iitc_version",  "test_iitc_version",  "local_iitc_version",
+    "release_plugins_flat",  "test_plugins_flat",  "local_plugins_flat",
     "release_plugins_local", "test_plugins_local", "local_plugins_local",
     "release_plugins_user",  "test_plugins_user",  "local_plugins_user"
   ], function(data) {
@@ -103,36 +103,26 @@ function initialize() {
     let status = data['IITC_is_enabled'];
     let iitc_code = data[channel+'_iitc_code']
     let iitc_version = data[channel+'_iitc_version'];
+
+    let plugins_local = data[channel+'_plugins_local'];
+    let plugins_user = data[channel+'_plugins_user'];
+
     if ((status === undefined || status === true) && iitc_code !== undefined) {
 
-        let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
-        injectUserScript(inject_iitc_code);
+      let inject_iitc_code = preparationUserScript({'version': iitc_version, 'code': iitc_code});
+      injectUserScript(inject_iitc_code);
 
-        let plugins_local = data[channel+'_plugins_local'];
-        if (plugins_local !== undefined) {
-        Object.keys(plugins_local).forEach(function(id) {
-          let plugin = plugins_local[id];
-          if (plugin['status'] === 'on') {
-            injectUserScript(preparationUserScript(plugin, id));
-          }
-        });
+      let plugins_flat = data[channel+'_plugins_flat'];
+      Object.keys(plugins_flat).forEach(function(uid) {
+        if (plugins_flat[uid]['status'] === 'on') {
+          injectUserScript(preparationUserScript(
+              (plugins_flat[uid]['user'] === true) ? plugins_user[uid] : plugins_local[uid],
+              uid
+          ));
         }
-
-        let plugins_user = data[channel+'_plugins_user'];
-        if (plugins_user !== undefined) {
-        Object.keys(plugins_user).forEach(function(id) {
-          let plugin = plugins_user[id];
-          if (plugin['status'] === 'on') {
-            injectUserScript(preparationUserScript(plugin, id));
-          }
-        });
-        }
-
-
-
+      });
     }
   });
-
 }
 
 
