@@ -152,7 +152,7 @@ async function downloadMeta(local, last_modified) {
     });
   }
 
-  await Promise.all([p_iitc, p_plugins]);
+  await Promise.all([p_iitc, p_plugins].map(fn => fn()))
 }
 
 function getCategories(data) {
