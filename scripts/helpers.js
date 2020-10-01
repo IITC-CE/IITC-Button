@@ -67,17 +67,26 @@ const ajaxGet = (url, variant) => new Promise((resolve, reject) => {
   xhr.send(null);
 });
 
+function h(str) {
+  if (str === undefined) {
+    str = ""
+  } else {
+    str = str.replace('"', '\\"')
+  }
+  return str
+}
+
 // Implementation of partial sufficient compatibility with GreaseMonkey
 function preparationUserScript(plugin, name) {
   if (name === undefined) name = '';
 
   return `var GM_info = {
             "script": {
-              "version": "${plugin['version']}",
-              "name": "${name}",
-              "description": "${plugin['description']}"
+              "version": "${h(plugin['version'])}",
+              "name": "${h(name)}",
+              "description": "${h(plugin['description'])}"
             }
-          };
+          };/* END GM_info */
           ${plugin['code']}; true`;
 }
 

@@ -56,7 +56,7 @@ function preparePage() {
   document.addEventListener('IITCButtonInitJS', function (e) {
     const code = e.detail;
 
-    const GM_info_raw = code.substring(0, code.indexOf(";"));
+    const GM_info_raw = code.substring(0, code.indexOf(";/* END GM_info */"));
     const GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
     const id = GM_info.script.name;
 
