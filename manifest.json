@@ -24,10 +24,11 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "/scripts/defaults.js",
-      "/scripts/helpers.js",
-      "/scripts/background.js",
-      "/scripts/updater.js"
+      "assets/js/browser-polyfill.min.js",
+      "scripts/defaults.js",
+      "scripts/helpers.js",
+      "scripts/background.js",
+      "scripts/updater.js"
     ],
     "persistent": false
   },
@@ -35,7 +36,7 @@
     {
       "matches" : ["https://intel.ingress.com/*"],
       "run_at": "document_end",
-      "js": ["scripts/loader.js"]
+      "js": ["assets/js/browser-polyfill.min.js", "scripts/loader.js"]
     }
   ],
   "browser_action": {

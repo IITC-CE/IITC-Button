@@ -1,11 +1,11 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-let updateChannelsData = {
+const updateChannelsData = {
   release: {name: _('release'), value: 'release'},
   test: {name: _('testBuilds'), value: 'test',},
   local: {name: _('localServer'), value: 'local'}
 };
-let updateIntervalsData = [
+const updateIntervalsData = [
   {name: _('every6hours'), value: '6'},
   {name: _('every12hours'), value: '12'},
   {name: _('everyDay'), value: '24'},
@@ -13,7 +13,7 @@ let updateIntervalsData = [
 ];
 
 
-let app = new Vue({
+const app = new Vue({
   el: '#app',
   data: {
     'IITC_is_enabled': true,
@@ -51,7 +51,8 @@ function showMessage(msg) {
   }, 3000);
 }
 
-chrome.runtime.onMessage.addListener(function(request) {
+
+browser.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
     case "showProgressbar":
       app.$data.showProgressbar = request.value;
@@ -60,17 +61,20 @@ chrome.runtime.onMessage.addListener(function(request) {
       showMessage(request.message);
       break;
   }
+  return new Promise((resolve) => {
+    setTimeout(() => {resolve()}, 1);
+  })
 });
 
 
-chrome.storage.local.get([
+browser.storage.local.get([
   "IITC_is_enabled",
   "channel",
   "local_server_host",
   "release_categories",            "test_categories",            "local_categories",
   "release_plugins_flat",          "test_plugins_flat",          "local_plugins_flat",
   "release_update_check_interval", "test_update_check_interval", "external_update_check_interval"
-], function(data) {
+]).then(data => {
 
   if (data.channel) {
     app.$data.channel = data.channel;
@@ -83,13 +87,13 @@ chrome.storage.local.get([
   app.$data.plugins_flat = data[app.$data.channel+'_plugins_flat'];
 
   // initialize toggleIITC
-  let status = data.IITC_is_enabled;
+  const status = data.IITC_is_enabled;
   if (status === false) {
     app.$data.IITC_is_enabled = false
   }
 
-  ['release', 'test', 'external'].forEach(function(channel) {
-    let update_check_interval = data[channel+'_update_check_interval'];
+  ['release', 'test', 'external'].forEach(channel => {
+    const update_check_interval = data[channel+'_update_check_interval'];
     if (update_check_interval) {
       app.$data[channel+"_update_check_interval"] = update_check_interval;
     }
@@ -101,21 +105,22 @@ chrome.storage.local.get([
 });
 
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
+browser.storage.onChanged.addListener(function(changes) {
   for (let key in changes) {
+    const new_value = changes[key].newValue;
 
     if (key === app.$data.channel+"_categories") {
       app.$data.categories = {};
-      app.$data.categories = changes[key].newValue;
+      app.$data.categories = new_value;
     }
 
     if (key === app.$data.channel+"_plugins_flat") {
-      app.$data.plugins_flat = changes[key].newValue;
-      let category_name = app.$data.category_name;
+      app.$data.plugins_flat = new_value;
+      const category_name = app.$data.category_name;
       if (category_name !== '') {
         if (app.$data.categories[category_name]) {
 
-          app.$data.plugins = Object.entries(changes[key].newValue).reduce(function (category_plugins, plugin_pair) {
+          app.$data.plugins = Object.entries(new_value).reduce((category_plugins, plugin_pair) => {
             const [plugin_uid, plugin_obj] = plugin_pair;
             if (plugin_obj.category === category_name) {
               category_plugins[plugin_uid] = plugin_obj;
@@ -129,8 +134,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     }
 
     if (key === "local_server_host") {
-      app.$data.localServerHost = changes[key].newValue;
+      app.$data.localServerHost = new_value;
     }
-
   }
 });

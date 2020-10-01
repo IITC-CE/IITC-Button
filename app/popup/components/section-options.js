@@ -1,6 +1,16 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-let ComponentOptions = Vue.component('section-options', {
+const saveUpdateInterval = (async (channel) => {
+  const key = channel+'_update_check_interval';
+  const setData = {};
+  setData[key] = this[key];
+
+  await browser.storage.local.set(setData);
+  await browser.runtime.sendMessage({'type': "safeUpdate"});
+  showMessage(this._("changesApplied"));
+});
+
+const ComponentOptions = Vue.component('section-options', {
   template: '#section-options-template',
   props: {
     'updateChannels': Object,
@@ -14,84 +24,83 @@ let ComponentOptions = Vue.component('section-options', {
   },
   mixins: [mixin],
   methods: {
-    'forceUpdate': function () {
-      chrome.runtime.sendMessage({'type': "forceFullUpdate"});
+    'forceUpdate': async function() {
+      await browser.runtime.sendMessage({'type': "forceFullUpdate"});
       showMessage(this._("updateInProgress"));
     },
-    'changeLocalServer': async function (event) {
-      let host = event.target.value;
+    'changeLocalServer': async function(event) {
+      const host = event.target.value;
       if (await checkStatusLocalServer(host)) {
-        chrome.storage.local.set({
+        await browser.storage.local.set({
           'local_server_host': host
-        }, function () {
-          if (this.channel === 'local') {
-            this.forceUpdate()
-          }
-        });
+        })
+
+        if (this.channel === 'local') {
+          await this.forceUpdate()
+        }
       }
     }
   },
   computed: {
     'channelSelect': {
-      get: function () {
+      get: function() {
         return this.channel;
       },
-      set: function (newValue) {
+      set: async function(newValue) {
         this.$emit('update:channel', newValue);
         this.$root.channel = newValue;
-        chrome.storage.local.set({
+        await browser.storage.local.set({
           'channel': newValue
-        }, () => {
-          this.forceUpdate()
-        });
+        })
         showMessage(this._("updateInProgress"));
+        await this.forceUpdate();
+
+        const data = await browser.storage.local.get([
+          "release_categories",            "test_categories",            "local_categories",
+          "release_plugins_flat",          "test_plugins_flat",          "local_plugins_flat"
+        ]);
+
+        // reinitialize categories
+        this.$root.categories = data[newValue+'_categories'];
+        
+        // reinitialize all plugins
+        this.$root.plugins_flat = data[newValue+'_plugins_flat'];
       }
     },
     'release_update_check_interval_select': {
-      get: function () {
+      get: function() {
         return parseInt(this.release_update_check_interval);
       },
-      set: function (newValue) {
-        saveUpdateInterval('release');
+      set: async function(newValue) {
+        await saveUpdateInterval('release');
         this.$emit('update:release_update_check_interval', newValue)
       }
     },
     'test_update_check_interval_select': {
-      get: function () {
+      get: function() {
         return parseInt(this.test_update_check_interval);
       },
-      set: function (newValue) {
-        saveUpdateInterval('test');
+      set: async function(newValue) {
+        await saveUpdateInterval('test');
         this.$emit('update:test_update_check_interval', newValue)
       }
     },
     'external_update_check_interval_select': {
-      get: function () {
+      get: function() {
         return parseInt(this.external_update_check_interval);
       },
-      set: function (newValue) {
-        saveUpdateInterval('external');
+      set: async function(newValue) {
+        await saveUpdateInterval('external');
         this.$emit('update:external_update_check_interval', newValue);
       }
     },
     'localServerHostInput': {
-      get: function () {
+      get: function() {
         return this.localServerHost;
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.$emit('update:localServerHost', newValue)
       }
     }
   }
-});
-
-let saveUpdateInterval = (function (channel) {
-  let key = channel+'_update_check_interval';
-    let setData = {};
-    setData[key] = this[key];
-
-    chrome.storage.local.set(setData, () => {
-      chrome.runtime.sendMessage({'type': (channel === 'external') ? "externalUpdate" : "safeUpdate"});
-      showMessage(this._("changesApplied"));
-    });
 });
