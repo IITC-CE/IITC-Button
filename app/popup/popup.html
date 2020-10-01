@@ -28,7 +28,7 @@
             </div>
             <div class="categories">
 
-                <template v-for="cat in sortCategories(countPlugins(categories, plugins_flat))">
+                <template v-for="cat in sortIITCObj(countPlugins(categories, plugins_flat))">
                     <div v-if="cat.name && cat.count_plugins" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
                         <span class="element__text">{{ __('name', cat) }}</span>
                         <span class="element__counter">{{ cat.count_plugins_active }}&nbsp;/&nbsp;{{ cat.count_plugins }}</span>
@@ -116,7 +116,7 @@
             </header>
             <div class="list">
                 <div class="plugins-list">
-                    <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginDescription(plugin)" v-bind:data-category="category_name" v-bind:data-uid="plugin.uid">
+                    <div v-for="plugin in sortIITCObj(plugins)" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginDescription(plugin)" v-bind:data-category="category_name" v-bind:data-uid="plugin.uid">
                         <i class="element__action material-icons" v-on:click="managePlugin(plugin.uid, plugin.status)">{{ pluginIcon(plugin) }}</i>
                         <span class="element__text" v-on:click="managePlugin(plugin.uid, plugin.status)">{{ __('name', plugin) }}</span>
                         <span v-if="plugin.override" class="element__user">{{ _('badgeOverride') }}</span>

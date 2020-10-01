@@ -17,6 +17,26 @@ const mixin = {
     },
     'back': function() {
       document.body.id = "main-menu";
+    },
+    'sortIITCObj': function(obj) {
+
+      if (obj === undefined) {
+        return {}
+      }
+
+      const arr = Object.keys(obj).map(key => obj[key]);
+
+      for (let i=0;i<arr.length;i++) {
+        for (let j=i+1; j<arr.length; j++) {
+          if (this.__('name', arr[i]).toLowerCase() > this.__('name', arr[j]).toLowerCase()) {
+            let swap = arr[i];
+            arr[i] = arr[j];
+            arr[j] = swap;
+          }
+        }
+      }
+
+      return arr;
     }
   }
 }
