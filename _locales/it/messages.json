@@ -36,9 +36,6 @@
     "pluginSave": {
         "message": "Salva"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Indirizzo del server locale"
     },
@@ -97,15 +94,6 @@
             }
         }
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ è stato aggiunto nella categoria Esterni.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "external": {
         "message": "\tEsterni"
     },
@@ -138,9 +126,6 @@
     },
     "openSupport": {
         "message": "Apri pagina di supporto:"
-    },
-    "badgeExternal": {
-        "message": "esterno"
     },
     "anyChannel": {
         "message": "Tutti i canali:"

@@ -22,9 +22,6 @@
         "message": "Inicio fácil de IITC Ingress Intel.",
         "description": "Description of the extension"
     },
-    "badgeExternal": {
-        "message": "Externos"
-    },
     "iitcTelegram": {
         "message": "Noticias en Telegram"
     },
@@ -85,9 +82,6 @@
     "pluginDelete": {
         "message": "Borrar"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "addExternalPlugin": {
         "message": "Añadir plugin externo"
     },
@@ -120,15 +114,6 @@
     },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ no es un UserScript válido.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ ha sido añadido a la categoría de Externos.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",

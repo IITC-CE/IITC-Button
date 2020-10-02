@@ -23,9 +23,6 @@
     "openSupport": {
         "message": "Відкрити сторінку підтримки:"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Адреса локального сервера"
     },

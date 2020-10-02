@@ -1,16 +1,4 @@
 {
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ wurde zur Kategorie External hinzugefügt.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "needRebootIntel": {
         "message": "Änderungen werden nach dem Neustart der Karte angewendet"
     },
@@ -87,9 +75,6 @@
     },
     "anyChannel": {
         "message": "Jeder Kanal:"
-    },
-    "badgeExternal": {
-        "message": "externe"
     },
     "localServerURL": {
         "message": "Lokale Serveradresse"

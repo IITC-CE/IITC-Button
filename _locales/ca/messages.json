@@ -58,15 +58,6 @@
     "addressNotAvailable": {
         "message": "L'adreça no està disponible"
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ ha estat afegit a la categoria Externa.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ no és un UserScript vàlid.",
         "placeholders": {
@@ -85,14 +76,8 @@
     "openSupport": {
         "message": "Obre la pàgina de suport:"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Adreça del servidor local"
-    },
-    "badgeExternal": {
-        "message": "extern"
     },
     "anyChannel": {
         "message": "Qualsevol canal:"

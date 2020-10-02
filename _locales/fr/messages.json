@@ -8,9 +8,6 @@
     "iitcHomePage": {
         "message": "Accueil"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "pluginSave": {
         "message": "Enregistrer"
     },
@@ -58,15 +55,6 @@
     },
     "updateInProgress": {
         "message": "Mise à jour en cours…"
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ a été ajouté à la catégorie Externe.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
     },
     "everyWeek": {
         "message": "Toutes les semaines"
@@ -117,9 +105,6 @@
                 "example": "awesome-plugin.user.js"
             }
         }
-    },
-    "badgeExternal": {
-        "message": "Externe"
     },
     "everyDay": {
         "message": "Tout les jours"

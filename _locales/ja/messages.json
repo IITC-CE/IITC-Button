@@ -8,9 +8,6 @@
             }
         }
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "pluginSave": {
         "message": "保存"
     },
@@ -81,9 +78,6 @@
         "message": "Intelを開く",
         "description": "Title for the button at the application panel"
     },
-    "badgeExternal": {
-        "message": "外部"
-    },
     "choosingUpdateChannel": {
         "message": "IITC-CE更新チャネルを選択"
     },
@@ -104,15 +98,6 @@
     },
     "addressNotAvailable": {
         "message": "有効なアドレスではありません"
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ は外部カテゴリに追加されました。",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
     },
     "updateExternalFrequency": {
         "message": "外部プラグインの更新を確認"

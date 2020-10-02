@@ -69,14 +69,8 @@
     "everyWeek": {
         "message": "每周"
     },
-    "badgeExternal": {
-        "message": "外部"
-    },
     "localServerURL": {
         "message": "本地服务器地址"
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
     },
     "pluginSave": {
         "message": "保存"
@@ -122,15 +116,6 @@
     },
     "anyChannel": {
         "message": "任何渠道 :"
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ 已添加到“外部”类别。",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
     },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ 不是一个有效的插件。",

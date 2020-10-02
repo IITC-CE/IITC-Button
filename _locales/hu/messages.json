@@ -1,13 +1,4 @@
 {
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ hozzáadva a Külső kategóriába.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ nem érvényes UserScript.",
         "placeholders": {

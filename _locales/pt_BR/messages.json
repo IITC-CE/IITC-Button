@@ -8,15 +8,6 @@
             }
         }
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ foi adicionado à categoria Externa.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "errorReadingFile": {
         "message": "Ocorreu um erro ao ler $PLUGIN_NAME$ arquivo.",
         "placeholders": {
@@ -115,14 +106,8 @@
     "anyChannel": {
         "message": "Qualquer canal:"
     },
-    "badgeExternal": {
-        "message": "Externo"
-    },
     "localServerURL": {
         "message": "Endereço do servidor local"
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
     },
     "pluginSave": {
         "message": "Salvar"

@@ -54,14 +54,8 @@
     "iitcReddit": {
         "message": "Абмеркаванне ў r/IITC"
     },
-    "badgeExternal": {
-        "message": "знешні"
-    },
     "localServerURL": {
         "message": "Адрас лакальнага сервера"
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
     },
     "iitcHomePage": {
         "message": "Хатняя старонка"

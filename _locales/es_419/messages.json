@@ -8,9 +8,6 @@
             }
         }
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "every12hours": {
         "message": "Cada 12 horas"
     },
@@ -22,9 +19,6 @@
     },
     "anyChannel": {
         "message": "Cualquier medio:"
-    },
-    "badgeExternal": {
-        "message": "Externo"
     },
     "localServerURL": {
         "message": "Dirección de servidor local"
@@ -105,15 +99,6 @@
     },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ no es un plugin válido.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ se adicionó a la categoría de plugins Extrrnos.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",

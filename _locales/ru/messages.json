@@ -74,14 +74,8 @@
     "anyChannel": {
         "message": "Все каналы:"
     },
-    "badgeExternal": {
-        "message": "сторонний"
-    },
     "localServerURL": {
         "message": "Адрес локального сервера"
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
     },
     "openSupport": {
         "message": "Открыть страницу поддержки:"
@@ -94,15 +88,6 @@
     },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ не является валидным пользовательским скриптом.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ добавлен в категорию Сторонние.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",

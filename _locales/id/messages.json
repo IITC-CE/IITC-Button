@@ -35,15 +35,6 @@
     "addressNotAvailable": {
         "message": "Alamat tidak tersedia"
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ telah ditambahkan ke kategori Eksternal.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ bukan UserScript tervalidasi.",
         "placeholders": {
@@ -64,9 +55,6 @@
     },
     "localServerURL": {
         "message": "Alamat server lokal"
-    },
-    "badgeExternal": {
-        "message": "eksternal"
     },
     "anyChannel": {
         "message": "Kanal manapun:"

@@ -57,9 +57,6 @@
     "everyWeek": {
         "message": "A cada semana"
     },
-    "badgeExternal": {
-        "message": "Externo"
-    },
     "lang": {
         "message": "pt"
     },
@@ -81,15 +78,6 @@
     "or": {
         "message": "ou"
     },
-    "addedUserScript": {
-        "message": "$ PLUGIN_NAME $ foi adicionado à categoria Externa.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "addressNotAvailable": {
         "message": "O endereço não está disponível"
     },
@@ -104,9 +92,6 @@
     },
     "external": {
         "message": "Externo"
-    },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
     },
     "errorReadingFile": {
         "message": "Ocorreu um erro ao ler o arquivo $PLUGIN_NAME$.",

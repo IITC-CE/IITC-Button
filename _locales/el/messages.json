@@ -47,15 +47,6 @@
     "addressNotAvailable": {
         "message": "Η διεύθυνση δεν είναι διαθέσιμη"
     },
-    "addedUserScript": {
-        "message": "Το $PLUGIN_NAME$ έχει προστεθεί στην κατηγορία Εξωτερικά.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "Το $PLUGIN_NAME$ δεν είναι έγκυρο σενάριο χρήστη.",
         "placeholders": {
@@ -74,14 +65,8 @@
     "openSupport": {
         "message": "Άνοιγμα σελίδας υποστήριξης:"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Διεύθυνση τοπικού διακομιστή"
-    },
-    "badgeExternal": {
-        "message": "Εξωτερικά"
     },
     "anyChannel": {
         "message": "Οποιοδήποτε κανάλι:"

@@ -48,15 +48,6 @@
     "addressNotAvailable": {
         "message": "Adresa není dostupná"
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ byl přidán do Externích pluginů.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ není použitelný UserScript.",
         "placeholders": {
@@ -75,14 +66,8 @@
     "openSupport": {
         "message": "Otevřít stránku s podporou:"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Adresa lokálního serveru"
-    },
-    "badgeExternal": {
-        "message": "externí"
     },
     "anyChannel": {
         "message": "Jakýkoliv zdroj:"

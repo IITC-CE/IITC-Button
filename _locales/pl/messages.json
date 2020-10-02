@@ -8,15 +8,6 @@
             }
         }
     },
-    "addedUserScript": {
-        "message": "$PLUGIN_NAME$ został dodany do kategorii Zewnętrzne.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "awesome-plugin.user.js"
-            }
-        }
-    },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ nie jest prawidłowym skryptem użytkownika.",
         "placeholders": {
@@ -68,14 +59,8 @@
     "openSupport": {
         "message": "Otwórz stronę pomocy technicznej:"
     },
-    "placeholderLocalServer": {
-        "message": "127.0.0.1"
-    },
     "localServerURL": {
         "message": "Adres lokalnego serwera"
-    },
-    "badgeExternal": {
-        "message": "Zewnętrzne"
     },
     "anyChannel": {
         "message": "Dowolne źródło:"
