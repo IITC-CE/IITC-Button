@@ -3,8 +3,7 @@
 let progress_interval_id = null;
 let update_timeout_id = null;
 let external_update_timeout_id = null;
-checkUpdates().then();
-checkExternalUpdates().then();
+runExtension().then()
 
 browser.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
@@ -24,6 +23,15 @@ browser.runtime.onMessage.addListener(function(request) {
       break;
   }
 });
+
+async function runExtension() {
+  let version = browser.runtime.getManifest().version;
+  let last_version = await browser.storage.local.get('lastversion');
+  if (!last_version || last_version !== version) {
+    await checkUpdates(true);
+    await checkExternalUpdates(true);
+  }
+}
 
 async function save(options) {
   const data = {};
