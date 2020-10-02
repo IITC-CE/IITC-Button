@@ -1,14 +1,16 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
+let wait_timeout_id = null;
+
 function _(msg, arg) {
-  return chrome.i18n.getMessage(msg, arg)
+  return browser.i18n.getMessage(msg, arg)
 }
 
 function parse_meta(code) {
-  let meta = code.split('\n');
+  const meta = code.split('\n');
 
   let is_userscript = false;
-  let data = {};
+  const data = {};
   for (let i = 0; i < meta.length; i++) {
     let line = meta[i];
     if (line.indexOf("==UserScript==") > (- 1)) {
@@ -20,11 +22,11 @@ function parse_meta(code) {
     }
     if (is_userscript) {
       line = line.trim();
-      let sp = line.split(/\s+/);
+      const sp = line.split(/\s+/);
 
-      let key = sp[1].replace("@", "");
+      const key = sp[1].replace("@", "");
       let value = sp.slice(2).join(" ");
-      if (["name", "id", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
+      if (["name", "namespace", "category", "version", "description", "updateURL", "downloadURL", "supportURL"].indexOf(key) !== -1) {
         if (data[key]) continue;
         if (key === "name") {
           value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
@@ -36,13 +38,12 @@ function parse_meta(code) {
   return data;
 }
 
-const ajaxGet = (url, variant) => new Promise(resolve => {
-  let method = (variant === "Last-Modified") ? "HEAD" : "GET";
+const ajaxGet = (url, variant) => new Promise((resolve, reject) => {
+  const method = (variant === "Last-Modified") ? "HEAD" : "GET";
 
-  let xhr = null;
-  xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   if (!xhr) return null;
-  xhr.timeout = 5000;
+  xhr.timeout = 10*1000;
   xhr.open(method, url+"?"+Date.now(),true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -59,27 +60,41 @@ const ajaxGet = (url, variant) => new Promise(resolve => {
         }
 
       } else {
-        resolve(null)
+        reject(null)
       }
     }
   };
   xhr.send(null);
 });
 
+function h(str) {
+  if (str === undefined) {
+    str = ""
+  } else {
+    str = str.replace('"', '\\"')
+  }
+  return str
+}
+
 // Implementation of partial sufficient compatibility with GreaseMonkey
 function preparationUserScript(plugin, name) {
   if (name === undefined) name = '';
 
-  return 'var GM_info = {"script": {"version": "'+plugin['version']+'",' +
-                        '"name": "'+name+'",' +
-                        '"description": "'+plugin['description']+'"}}; '+plugin['code']+'; true'
+  return `var GM_info = {
+            "script": {
+              "version": "${h(plugin['version'])}",
+              "name": "${h(name)}",
+              "description": "${h(plugin['description'])}"
+            }
+          };/* END GM_info */
+          ${plugin['code']}; true`;
 }
 
 const checkStatusLocalServer = (host) => new Promise(resolve => {
   app.$data.localServerStatus = 'err';
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://"+host+"/meta.json?"+Date.now(), true);
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `http://${host}/meta.json?${Date.now()}`, true);
   xhr.timeout = 1000;
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -93,3 +108,26 @@ const checkStatusLocalServer = (host) => new Promise(resolve => {
   };
   xhr.send(null);
 });
+
+function getUID(plugin) {
+  const available_fields = [];
+
+  if (plugin['name']) {
+    available_fields.push(plugin['name']);
+  } else {
+    available_fields.push(plugin['filename'])
+  }
+
+  if (plugin['namespace']) {
+    available_fields.push(plugin['namespace']);
+  }
+
+  return available_fields.join("+")
+}
+
+async function wait(seconds) {
+  return new Promise(resolve => {
+    clearTimeout(wait_timeout_id); wait_timeout_id = null;
+    wait_timeout_id = setTimeout(resolve, seconds*1000);
+  });
+}

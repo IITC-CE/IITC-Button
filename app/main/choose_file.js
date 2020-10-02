@@ -23,36 +23,42 @@ url_button.addEventListener("click", async function () {
 }, false);
 
 async function loadByUrl() {
-  let url = url_input.value;
+  const url = url_input.value;
   url_button.classList.remove('active');
 
-  let code = await ajaxGet(url);
+  let code;
+  try {
+    code = await ajaxGet(url);
+  } catch {
+    alert(_("addressNotAvailable"));
+  }
+
   if (code) {
-    let scripts = [];
+    const scripts = [];
     let message = '';
     const meta = parse_meta(code);
-    let filename = url.substr(url.lastIndexOf("/")+1);
+    const filename = url.substr(url.lastIndexOf("/")+1);
 
-    if (meta === {} || meta['id'] === undefined) {
+    if (meta === {} || meta['name'] === undefined) {
       message += _("notValidUserScript", filename)+"\n";
     } else {
-      message += _("addedUserScript", filename)+"\n";
+      message += _("addedUserScriptTo", [filename, meta['category']])+"\n";
       meta['filename'] = filename;
       scripts.push({'meta': meta, 'code': code})
     }
 
+    console.log(message);
     alert(message);
-    chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
-  } else {
-    alert(_("addressNotAvailable"));
+    await browser.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
   }
+
   url_input.value = '';
   url_button.classList.add('active');
 }
 
 // Get the file if it was chosen from the pick list
 function handlePicked() {
-  processingFile(this.files);
+  processingFile(this.files).then();
 }
 
 // Get the file if it was dragged into the sidebar drop zone
@@ -60,26 +66,26 @@ function drop(e) {
   e.stopPropagation();
   e.preventDefault();
 
-  processingFile(e.dataTransfer.files);
+  processingFile(e.dataTransfer.files).then();
 }
 
 /*
  * Validation UserScript and adding to IITC Button
 */
 const processingFile = async (fileList) => {
-  let scripts = [];
+  const scripts = [];
   let message = '';
   for (let i = 0; i < fileList.length; i++) {
-    let file = fileList[i];
+    const file = fileList[i];
 
     try {
       const code = await readUploadedFileAsText(file);
       const meta = parse_meta(code);
 
-      if (meta === {} || meta['id'] === undefined) {
+      if (meta === {} || meta['name'] === undefined) {
         message += _("notValidUserScript", file['name'])+"\n";
       } else {
-        message += _("addedUserScript", meta['name'])+"\n";
+        message += _("addedUserScriptTo", [meta['name'], meta['category']])+"\n";
         meta['filename'] = file['name'];
         scripts.push({'meta': meta, 'code': code})
       }
@@ -89,7 +95,7 @@ const processingFile = async (fileList) => {
 
   }
   alert(message);
-  chrome.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
+  await browser.runtime.sendMessage({'type': "addUserScripts", 'scripts': scripts});
 };
 
 const readUploadedFileAsText = (inputFile) => {

@@ -28,7 +28,7 @@
             </div>
             <div class="categories">
 
-                <template v-for="cat in sortCategories(categories)">
+                <template v-for="cat in sortIITCObj(countPlugins(categories, plugins_flat))">
                     <div v-if="cat.name && cat.count_plugins" class="element item-wrapper list__item" v-bind:title="__('description', cat)" v-on:click="openCategory(cat.name)">
                         <span class="element__text">{{ __('name', cat) }}</span>
                         <span class="element__counter">{{ cat.count_plugins_active }}&nbsp;/&nbsp;{{ cat.count_plugins }}</span>
@@ -103,7 +103,7 @@
             <div class="settings-section">
                 <h2>{{ _('localServerURL') }}</h2>
                 <div class="input-field local-server">
-                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHostInput" v-bind:placeholder="_('placeholderLocalServer')" v-on:input="changeLocalServer" />
+                    <input type="text" id="local-server__input__host" class="local-server__input local-server__input__host" placeholder="localhost:8000" v-bind:class="{ 'local-server__input__ok': localServerStatus === 'ok', 'local-server__input__err': localServerStatus === 'err' }" v-model="localServerHostInput" v-on:input="changeLocalServer" />
                 </div>
             </div>
         </div>
@@ -116,15 +116,15 @@
             </header>
             <div class="list">
                 <div class="plugins-list">
-                    <div v-for="plugin in plugins" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginDescription(plugin)" v-bind:data-category="category_name" v-bind:data-id="plugin.id">
-                        <span class="element__text" v-on:click="managePlugin(plugin.id, plugin.status)">{{ __('name', plugin) }}</span>
-                        <span v-if="plugin.status === 'user'" class="element__user">{{ _('badgeExternal') }}</span>
-                        <template v-if="category_name === 'External'">
+                    <div v-for="plugin in sortIITCObj(plugins)" class="element item-wrapper list__item" v-bind:class="plugin.status" v-bind:title="pluginDescription(plugin)" v-bind:data-category="category_name" v-bind:data-uid="plugin.uid">
+                        <i class="element__action material-icons" v-on:click="managePlugin(plugin.uid, plugin.status)">{{ pluginIcon(plugin) }}</i>
+                        <span class="element__text" v-on:click="managePlugin(plugin.uid, plugin.status)">{{ __('name', plugin) }}</span>
+                        <span v-if="plugin.override" class="element__user">{{ _('badgeOverride') }}</span>
+                        <template v-if="plugin.user">
                             <i v-if="plugin.supportURL" class="element__action___extra material-icons" v-on:click="openLink(plugin.supportURL)" v-bind:title="_('openSupport')+' '+plugin.supportURL">home</i>
-                            <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.id)" v-bind:title="_('pluginSave')">save</i>
-                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.id)" v-bind:title="_('pluginDelete')">close</i>
+                            <i class="element__action___extra material-icons" v-on:click="savePlugin(plugin.uid)" v-bind:title="_('pluginSave')">save</i>
+                            <i class="element__action___extra element__action___extra-delete material-icons" v-on:click="deletePlugin(plugin.uid)" v-bind:title="_('pluginDelete')">delete</i>
                         </template>
-                        <i class="element__action material-icons" v-on:click="managePlugin(plugin)">{{ pluginIcon(plugin) }}</i>
                     </div>
                     <div v-if="objIsEmpty(plugins)" class="element item-wrapper list__item"><span class="element__text">{{ _('noData') }}</span></div>
                 </div>
@@ -137,7 +137,8 @@
             <section-main-menu
                 v-bind:show-progressbar=showProgressbar
                 v-bind:iitc_is_enabled=IITC_is_enabled
-                v-bind:categories=categories>
+                v-bind:categories=categories
+                v-bind:plugins_flat=plugins_flat>
             </section-main-menu>
         </section>
         <section class="section options">
@@ -162,7 +163,8 @@
         <div id="message" class="message" v-bind:class="{ opened: message.opened }">{{ message.text }}</div>
     </div>
 
-    <script src="/app/vue.js"></script>
+    <script src="/assets/js/browser-polyfill.min.js"></script>
+    <script src="/assets/js/vue.js"></script>
     <script src="/scripts/helpers.js"></script>
     <script src="./components/mixins.js"></script>
     <script src="./components/section-main-menu.js"></script>

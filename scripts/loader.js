@@ -1,6 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-let loaded_plugins = [];
+const loaded_plugins = [];
 let sandbox = 'window.plugin = {};window.plugin.missions = true;';
 
 function getPlayerData() {
@@ -10,7 +10,7 @@ function getPlayerData() {
 
     // Chrome does not provide access to WINDOW.
     // Old IITC code is used to retrieve user data.
-    let scr = document.getElementsByTagName('script');
+    const scr = document.getElementsByTagName('script');
     let d;
     for (let x in scr) {
       let s = scr[x];
@@ -45,33 +45,33 @@ function getPlayerData() {
 
 function preparePage() {
 
-  let injectCode = "window.onload = function() {}; document.body.onload = function() {};";
+  const injectCode = "window.onload = function() {}; document.body.onload = function() {};";
 
-  let script = document.createElement('script');
+  const script = document.createElement('script');
   script.textContent = injectCode;
   (document.head||document.documentElement).appendChild(script);
 
   getPlayerData();
 
   document.addEventListener('IITCButtonInitJS', function (e) {
-    let code = e.detail;
+    const code = e.detail;
 
-    let GM_info_raw = code.substring(0, code.indexOf(";"));
-    let GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
-    let id = GM_info.script.name;
+    const GM_info_raw = code.substring(0, code.indexOf(";/* END GM_info */"));
+    const GM_info = new Function("GM_info", GM_info_raw+';return GM_info')();
+    const id = GM_info.script.name;
 
     if (loaded_plugins.includes(id)) {
-      console.info('Plugin %s is already loaded. Skip', id);
+      console.debug(`Plugin ${id} is already loaded. Skip`);
     } else {
       loaded_plugins.push(id);
-      console.info('Plugin %s loaded', id);
+      console.debug(`Plugin ${id} loaded`);
       new Function(sandbox+code)();
     }
 
   });
 }
 
-chrome.storage.local.get(["IITC_is_enabled"], function(data) {
+browser.storage.local.get(["IITC_is_enabled"]).then((data) => {
   if (data["IITC_is_enabled"] !== false) {
     preparePage();
   }
