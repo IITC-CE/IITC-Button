@@ -50,6 +50,7 @@ async function getUrl(url, variant, retry) {
     await wait(seconds);
   }
 
+  await wait(0);
   clearInterval(progress_interval_id);
   progress_interval_id = setInterval(async () => { await showProgress(true) }, 300);
   try {
