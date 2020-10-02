@@ -1,7 +1,7 @@
 {
   "name": "IITC Button",
   "description": "__MSG_extDescription__",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "minimum_chrome_version": "61",
   "applications": {
     "gecko": {
