@@ -432,7 +432,8 @@ function rebuildingArrayCategoriesPlugins(categories, raw_plugins, plugins_local
 
   // Build local plugins
   Object.keys(plugins_local).forEach(plugin_uid => {
-    data[plugin_uid]['status'] = plugins_local[plugin_uid]['status'];
+    if (data[plugin_uid] && plugins_local[plugin_uid])
+      data[plugin_uid]['status'] = plugins_local[plugin_uid]['status'];
   });
 
   // Build External plugins
