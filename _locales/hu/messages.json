@@ -76,5 +76,18 @@
     },
     "updateInProgress": {
         "message": "Frissítés folyamatban…"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ hozzáadva a \"$PLUGIN_CATEGORY$\" kategóriába.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

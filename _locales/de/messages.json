@@ -138,5 +138,18 @@
                 "example": "awesome-plugin.user.js"
             }
         }
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ wurde zur Kategorie \"$PLUGIN_CATEGORY$\" hinzugefügt.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

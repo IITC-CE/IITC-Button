@@ -138,5 +138,18 @@
     "extDescription": {
         "message": "Ξεκινήστε το IITC για τον χάρτη Ingress Intel με ευκολία.",
         "description": "Description of the extension"
+    },
+    "addedUserScriptTo": {
+        "message": "Το $PLUGIN_NAME$ έχει προστεθεί στην κατηγορία \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

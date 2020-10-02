@@ -138,5 +138,18 @@
     },
     "changesApplied": {
         "message": "Els canvis s'han aplicat"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ ha estat afegit a la categoria \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

@@ -138,5 +138,18 @@
     },
     "needRebootIntel": {
         "message": "Les changements s’appliqueront au redémarrage de l'Intel"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ a été ajouté à la catégorie \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

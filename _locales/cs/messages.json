@@ -138,5 +138,18 @@
     "titleDefault": {
         "message": "Otevřít Intel",
         "description": "Title for the button at the application panel"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ byl přidán do \"$PLUGIN_CATEGORY$\" pluginů.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }

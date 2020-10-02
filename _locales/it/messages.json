@@ -138,5 +138,18 @@
     },
     "release": {
         "message": "Rilascio"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ è stato aggiunto nella categoria \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }
