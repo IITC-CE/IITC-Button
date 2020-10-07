@@ -1,0 +1,130 @@
+{
+    "serverNotAvailableRetry": {
+        "message": "Server tidak tersedia. Ulangi setelah $NUM$ detik",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "install": {
+        "message": "Pasang"
+    },
+    "clickInstallPlugin": {
+        "message": "Ini adalah plugin IITC. Tekan tombol pasang untuk mulai menggunakannya."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin dengan ID yang sama akan ditulis ulang oleh plugin baru."
+    },
+    "dropJSHereOrClick": {
+        "message": "Jatuhkan file <i>.js</i> disini atau tekan untuk mengunggah."
+    },
+    "or": {
+        "message": "atau"
+    },
+    "errorReadingFile": {
+        "message": "Kesalahan terjadi saat membaca file $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Alamat tidak tersedia"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ bukan UserScript tervalidasi.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "Hapus"
+    },
+    "pluginSave": {
+        "message": "Simpan"
+    },
+    "openSupport": {
+        "message": "Buka halaman support:"
+    },
+    "localServerURL": {
+        "message": "Alamat server lokal"
+    },
+    "anyChannel": {
+        "message": "Kanal manapun"
+    },
+    "everyWeek": {
+        "message": "Setiap Minggu"
+    },
+    "everyDay": {
+        "message": "Setiap Hari"
+    },
+    "every12hours": {
+        "message": "Setiap 12 jam"
+    },
+    "every6hours": {
+        "message": "Setiap 6 jam"
+    },
+    "updateExternalFrequency": {
+        "message": "Periksa update untuk plugin eksternal"
+    },
+    "updateFrequency": {
+        "message": "Periksa update untuk IITC-CE"
+    },
+    "localServer": {
+        "message": "Server lokal"
+    },
+    "choosingUpdateChannel": {
+        "message": "Memilih kanal update IITC-CE"
+    },
+    "updateNow": {
+        "message": "perbarui sekarang"
+    },
+    "iitcButtonOptions": {
+        "message": "Pilihan tombol IITC-CE"
+    },
+    "iitcGithub": {
+        "message": "Repositori GitHub"
+    },
+    "iitcHomePage": {
+        "message": "Halaman muka"
+    },
+    "iitcReddit": {
+        "message": "Diskusi di r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Berita di Telegram"
+    },
+    "addExternalPlugin": {
+        "message": "Tambah plugin eksternal"
+    },
+    "noData": {
+        "message": "Tidak ada data"
+    },
+    "changesApplied": {
+        "message": "Perubahan telah diaplikasikan"
+    },
+    "updateInProgress": {
+        "message": "Pembaruan sedang berlangsung…"
+    },
+    "needRebootIntel": {
+        "message": "Perubahan akan diaplikasikan setelah Intel reboot"
+    },
+    "titleDefault": {
+        "message": "Buka Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "en"
+    },
+    "extDescription": {
+        "message": "Luncurkan IITC untuk Ingress Intel dengan mudah.",
+        "description": "Description of the extension"
+    }
+}

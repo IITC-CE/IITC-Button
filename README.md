@@ -24,3 +24,28 @@ This extensions launch Intel Ingress Total Conversion in few seconds after insta
 ### It`s totally safe!
 
 Theoretically, you violates ToS, but as you totally relies on intel.ingress.com API, you use just Intel site. All other modifications (UI, Plugin features, etc.) modifies only your browser view! It's like adblock activated in your browser.
+
+---
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
