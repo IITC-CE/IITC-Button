@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - node
+
+script:
+  - npm run lint
+  - npm run build
+
+before_deploy:
+  - export RELEASE_EXTENSION_FILE=$(ls artifacts/*.zip)
+  - echo "Deploying ${RELEASE_EXTENSION_FILE} to GitHub releases"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Y7USO7U1GC6ea8I98+5PNY8gFZcWlui1I23SFqnuGjuNZx1NhlSViW2CGeqfpqtw6KysQAMRc7V/isFGIUHtUYTLxlNpgZngFTpdgrnB8OCCZKbGIA9pyl+Mm3QTWiZm158oW8iL23grFPe7vMK2VYFAewOeSjxDNeYvoUdVunK4911GTR/KgL85S9ieLjqGZcIQS1dG54UgXa4fsokB7CQioV368zLxOtiOVfrYxYOccquxPnQbNpmd3E4oajK6BUbkr1YkaYfxIMtMbBV5YmnuORm364Uk+8QElkhIai3/XzcLU/cqyI36L28Y5oR1W1KJ7u7MSoGzF+17xMDEJSZloSdcTl5Rb2ZWURaAZu7D/QaNJGBN541c98S8A8oSBbB6tPOSdj9J4vx6geYbyslsaMo5qZ+3A9INb9X6ZqkXJuaKNALqgGfpeSfTXiIoJ3cmUJCTVAItvr2eoWUm+PvxrTliivlAoEbGfUXQGWuFHpyzju/vxepwDhPZPudpngDkaDhL7sDpkBp1cg8uibA7wXru6oRFuIw/B4S6qTj3qEGU7b9+1UmKj5RxAx8DisMydVJBcE8/KmBRESsguiM1on5cNprvv9G930/ogM69wd3DdEFf4OQ8+1RlEHhB1qZFT28m8aJLE5RhGRQ4TceT8cMK2AB30WphuE+1dUA=
+  file: '${RELEASE_EXTENSION_FILE}'
+  on:
+    repo: IITC-CE/IITC-Button
+    tags: true # Only on a new git tag
+  skip_cleanup: true # To keep, otherwise your `.zip` will be cleaned
