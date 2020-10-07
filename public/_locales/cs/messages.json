@@ -1,0 +1,155 @@
+{
+    "extDescription": {
+        "message": "Zjednodušte si používání IITC pro Ingress Intel.",
+        "description": "Description of the extension"
+    },
+    "lang": {
+        "message": "cs"
+    },
+    "external": {
+        "message": "Externí"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Server není dostupný. Další pokus za $NUM$ vteřin",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "Načítaní…"
+    },
+    "install": {
+        "message": "Instalovat"
+    },
+    "clickInstallPlugin": {
+        "message": "Toto je IITC plugin. Klikněte na \"Instalovat\" abyste ho mohli začít používat."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin se stejným ID bude přepsán novým pluginem."
+    },
+    "dropJSHereOrClick": {
+        "message": "Přetáhněte sem <i>.js</i> soubory nebo klikněte pro nahrání souboru."
+    },
+    "or": {
+        "message": "nebo"
+    },
+    "errorReadingFile": {
+        "message": "Nastala chyba při čtení souboru $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Adresa není dostupná"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ není použitelný UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "Smazat"
+    },
+    "pluginSave": {
+        "message": "Uložit"
+    },
+    "openSupport": {
+        "message": "Otevřít stránku s podporou:"
+    },
+    "localServerURL": {
+        "message": "Adresa lokálního serveru"
+    },
+    "anyChannel": {
+        "message": "Jakýkoliv zdroj"
+    },
+    "everyWeek": {
+        "message": "Každý týden"
+    },
+    "everyDay": {
+        "message": "Každý den"
+    },
+    "every12hours": {
+        "message": "Každých 12 hodin"
+    },
+    "every6hours": {
+        "message": "Každých 6 hodin"
+    },
+    "updateExternalFrequency": {
+        "message": "Kontrola aktualizací externích pluginů"
+    },
+    "updateFrequency": {
+        "message": "Kontrola aktualizací IITC-CE"
+    },
+    "localServer": {
+        "message": "Lokální server"
+    },
+    "testBuilds": {
+        "message": "Testovací verze"
+    },
+    "release": {
+        "message": "Stabilní verze"
+    },
+    "choosingUpdateChannel": {
+        "message": "Vybírání zdroje IITC-CE aktualizací"
+    },
+    "updateNow": {
+        "message": "aktualizovat nyní"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Button nastavení"
+    },
+    "iitcGithub": {
+        "message": "GitHub repozitář"
+    },
+    "iitcHomePage": {
+        "message": "Domovská stránka"
+    },
+    "iitcReddit": {
+        "message": "Diskuze na r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Novinky v Telegramu"
+    },
+    "addExternalPlugin": {
+        "message": "Přidat externí plugin"
+    },
+    "noData": {
+        "message": "Žádná data"
+    },
+    "changesApplied": {
+        "message": "Změny byly použity"
+    },
+    "updateInProgress": {
+        "message": "Probíhá aktualizace…"
+    },
+    "needRebootIntel": {
+        "message": "Změny budou použity při restartu Intelu"
+    },
+    "titleDefault": {
+        "message": "Otevřít Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ byl přidán do \"$PLUGIN_CATEGORY$\" pluginů.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    }
+}
