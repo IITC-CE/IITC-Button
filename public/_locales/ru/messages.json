@@ -1,6 +1,6 @@
 {
     "extDescription": {
-        "message": "Запускайте Ingress Intel с IITC в один клик."
+        "message": "Запуск IITC для Ingress в один клик."
     },
     "lang": {
         "message": "ru"
@@ -9,7 +9,7 @@
         "message": "Открыть Intel"
     },
     "needRebootIntel": {
-        "message": "Изменения применятся после перезагрузки Intel"
+        "message": "Изменения применятся после перезапуска Intel"
     },
     "updateInProgress": {
         "message": "Происходит обновление…"
@@ -126,7 +126,7 @@
         "message": "Загрузка…"
     },
     "serverNotAvailableRetry": {
-        "message": "Сервер недоступен. Повторная попытка через $NUM$ сек.",
+        "message": "Сервер недоступен. Повторная попытка через $NUM$ сек",
         "placeholders": {
             "num": {
                 "content": "$1",

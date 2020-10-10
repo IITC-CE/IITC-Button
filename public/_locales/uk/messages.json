@@ -9,7 +9,7 @@
         "message": "Відкрити Intel"
     },
     "install": {
-        "message": "Завантажити"
+        "message": "Встановити"
     },
     "or": {
         "message": "або"
@@ -58,5 +58,96 @@
     },
     "needRebootIntel": {
         "message": "Зміни буде застосовано після перезавантаження Intel"
+    },
+    "iitcButtonOptions": {
+        "message": "Налаштування IITC-CE Button"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ не є дійсним UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "errorReadingFile": {
+        "message": "Під час читання $PLUGIN_NAME$ сталася помилка.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "dropJSHereOrClick": {
+        "message": "Перетягніть сюди <i>.js</i> файли або натисніть, щоб завантажити."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "При збігу ID плагін буде перезаписан новим."
+    },
+    "clickInstallPlugin": {
+        "message": "Це плагін IITC. Натисни встановити щоб почати його використовувати."
+    },
+    "loading": {
+        "message": "Завантаження…"
+    },
+    "addExternalPlugin": {
+        "message": "Додати зовнішній плагін"
+    },
+    "iitcReddit": {
+        "message": "Обговорити на r/IITC"
+    },
+    "choosingUpdateChannel": {
+        "message": "Канал оновлень IITC-CE"
+    },
+    "release": {
+        "message": "Реліз"
+    },
+    "testBuilds": {
+        "message": "Тестова версія"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE перевіряє наявність оновлень"
+    },
+    "updateExternalFrequency": {
+        "message": "Перевірка оновлень зовнішніх плагінів"
+    },
+    "localServer": {
+        "message": "Локальний сервер"
+    },
+    "iitcGithub": {
+        "message": "Репозиторій GitHub"
+    },
+    "anyChannel": {
+        "message": "Будь-якій канал:"
+    },
+    "addressNotAvailable": {
+        "message": "Недоступний"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Сервер не доступний. Повторна спроба через $NUM$ сек",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "external": {
+        "message": "Зовнішні"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ додано до категорії \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }
