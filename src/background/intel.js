@@ -1,6 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-import { preparationUserScript } from "../helpers";
-import { injectUserScript } from "./injector";
+import { getUID, parse_meta, preparationUserScript } from "../helpers";
+import { getTabsToInject, injectUserScript } from "./injector";
 
 let lastIITCTab = null;
 
@@ -87,25 +87,36 @@ async function initialize() {
   const plugins_user = data[channel + "_plugins_user"];
 
   if ((status === undefined || status === true) && iitc_code !== undefined) {
-    const inject_iitc_code = preparationUserScript({
-      version: iitc_version,
-      code: iitc_code
-    });
-    await injectUserScript(inject_iitc_code);
+    const tabs = await getTabsToInject();
+    const userscripts = [];
+
+    const iitc_meta = parse_meta(iitc_code);
+    const iitc_uid = getUID(iitc_meta);
+    const inject_iitc_code = preparationUserScript(
+      {
+        version: iitc_version,
+        code: iitc_code
+      },
+      iitc_uid
+    );
+    userscripts.push(inject_iitc_code);
 
     const plugins_flat = data[channel + "_plugins_flat"];
     for (const uid of Object.keys(plugins_flat)) {
       if (plugins_flat[uid]["status"] === "on") {
-        await injectUserScript(
+        userscripts.push(
           preparationUserScript(
             plugins_flat[uid]["user"] === true
               ? plugins_user[uid]
               : plugins_local[uid],
             uid
-          )
+          ),
+          tabs
         );
       }
     }
+
+    await Promise.all(userscripts.map(code => injectUserScript(code, tabs)));
   }
 }
 

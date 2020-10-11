@@ -296,7 +296,7 @@ async function updateExternalPlugins(local) {
     let exist_updates = false;
     const hash = `?${Date.now()}`;
 
-    for await (const uid of Object.keys(plugins_user)) {
+    for (const uid of Object.keys(plugins_user)) {
       const plugin = plugins_user[uid];
 
       if (plugin["updateURL"] && plugin["downloadURL"]) {
@@ -335,7 +335,7 @@ async function updateLocalPlugins(plugins_flat, plugins_local) {
   if (plugins_local === undefined) return {};
 
   // Iteration local plugins
-  for await (const uid of Object.keys(plugins_local)) {
+  for (const uid of Object.keys(plugins_local)) {
     let filename = plugins_local[uid]["filename"];
 
     if (filename && plugins_flat[uid]) {

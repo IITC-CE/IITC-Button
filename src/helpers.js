@@ -89,13 +89,14 @@ function h(str) {
 }
 
 // Implementation of partial sufficient compatibility with GreaseMonkey
-export function preparationUserScript(plugin, name) {
-  if (name === undefined) name = "";
+export function preparationUserScript(plugin, uid) {
+  if (uid === undefined) uid = "";
 
   return `var GM_info = {
             "script": {
+              "uid": "${h(uid)}",
               "version": "${h(plugin["version"])}",
-              "name": "${h(name)}",
+              "name": "${h(plugin["name"])}",
               "description": "${h(plugin["description"])}"
             }
           };/* END GM_info */
