@@ -55,13 +55,13 @@ function preparePage() {
 
     const GM_info_raw = code.substring(0, code.indexOf(";/* END GM_info */"));
     const GM_info = new Function("GM_info", GM_info_raw + ";return GM_info")();
-    const id = GM_info.script.name;
+    const uid = GM_info.script.uid;
 
-    if (loaded_plugins.includes(id)) {
-      console.debug(`Plugin ${id} is already loaded. Skip`);
+    if (loaded_plugins.includes(uid)) {
+      console.debug(`Plugin ${uid} is already loaded. Skip`);
     } else {
-      loaded_plugins.push(id);
-      console.debug(`Plugin ${id} loaded`);
+      loaded_plugins.push(uid);
+      console.debug(`Plugin ${uid} loaded`);
       new Function(sandbox + code)();
     }
   });
