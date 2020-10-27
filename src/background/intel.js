@@ -90,6 +90,20 @@ async function initialize() {
     const tabs = await getTabsToInject();
     const userscripts = [];
 
+    const plugins_flat = data[channel + "_plugins_flat"];
+    for (const uid of Object.keys(plugins_flat)) {
+      if (plugins_flat[uid]["status"] === "on") {
+        userscripts.push(
+          preparationUserScript(
+            plugins_flat[uid]["user"] === true
+              ? plugins_user[uid]
+              : plugins_local[uid],
+            uid
+          )
+        );
+      }
+    }
+
     const iitc_meta = parse_meta(iitc_code);
     const iitc_uid = getUID(iitc_meta);
     const inject_iitc_code = preparationUserScript(
@@ -100,21 +114,6 @@ async function initialize() {
       iitc_uid
     );
     userscripts.push(inject_iitc_code);
-
-    const plugins_flat = data[channel + "_plugins_flat"];
-    for (const uid of Object.keys(plugins_flat)) {
-      if (plugins_flat[uid]["status"] === "on") {
-        userscripts.push(
-          preparationUserScript(
-            plugins_flat[uid]["user"] === true
-              ? plugins_user[uid]
-              : plugins_local[uid],
-            uid
-          ),
-          tabs
-        );
-      }
-    }
 
     await Promise.all(userscripts.map(code => injectUserScript(code, tabs)));
   }
