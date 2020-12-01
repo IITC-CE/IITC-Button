@@ -1,14 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import {
-  _,
-  ajaxGet,
-  clearWait,
-  getUID,
-  parse_meta,
-  preparationUserScript,
-  wait
-} from "../helpers";
+import { _, ajaxGet, clearWait, getUID, parseMeta, wait } from "../helpers";
 import { on_extension_update } from "./extension";
 import { injectUserScript } from "./injector";
 
@@ -303,7 +295,7 @@ async function updateExternalPlugins(local) {
         // download meta info
         const response_meta = await getUrl(plugin["updateURL"] + hash);
         if (response_meta) {
-          let meta = parse_meta(response_meta);
+          let meta = parseMeta(response_meta);
           // if new version
           if (
             meta &&
@@ -377,12 +369,9 @@ export async function managePlugin(uid, category, action) {
       }
 
       await injectUserScript(
-        preparationUserScript(
-          plugins_flat[uid]["user"] === true
-            ? plugins_user[uid]
-            : plugins_local[uid],
-          uid
-        )
+        plugins_flat[uid]["user"] === true
+          ? plugins_user[uid]["code"]
+          : plugins_local[uid]["code"]
       );
 
       await save({
@@ -400,7 +389,7 @@ export async function managePlugin(uid, category, action) {
         plugins_local[uid] = plugins_flat[uid];
         plugins_local[uid]["code"] = response;
 
-        await injectUserScript(preparationUserScript(plugins_local[uid], uid));
+        await injectUserScript(plugins_local[uid]["code"]);
 
         await save({
           plugins_flat: plugins_flat,

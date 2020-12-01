@@ -1,68 +1,79 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+import { getUID, getUniqId, parseMeta } from "../helpers";
+import { GM } from "./gm-api";
+
 const loaded_plugins = [];
-let sandbox = "window.plugin = {};window.plugin.missions = true;";
 
-function getPlayerData() {
-  if (window.wrappedJSObject) {
-    window.PLAYER = window.wrappedJSObject.PLAYER;
-  } else {
-    // Chrome does not provide access to WINDOW.
-    // Old IITC code is used to retrieve user data.
-    const scr = document.getElementsByTagName("script");
-    let d;
-    for (let x in scr) {
-      let s = scr[x];
-      if (s.src) continue;
-      if (s.type !== "text/javascript") continue;
-      d = s.innerHTML.split("\n");
-      break;
-    }
+document.addEventListener("DOMContentLoaded", function() {
+  window.onload = function() {};
+  document.body.onload = function() {};
+});
 
-    if (!d) {
-      // page doesn’t have a script tag with player information.
-      if (document.getElementById("header_email")) {
-        // however, we are logged in.
-        // it used to be regularly common to get temporary 'account not enabled' messages from the intel site.
-        // however, this is no longer common. more common is users getting account suspended/banned - and this
-        // currently shows the 'not enabled' message. so it's safer to not repeatedly reload in this case
-        // setTimeout('location.reload();', 3*1000);
-        throw "Page doesn't have player data, but you are logged in.";
-      }
-      // FIXME: handle nia takedown in progress
-      throw "Couldn't retrieve player data. Are you logged in?";
-    }
-
-    for (let i = 0; i < d.length; i++) {
-      if (!d[i].match("var PLAYER = ")) continue;
-      sandbox += d[i] + "window.PLAYER = PLAYER;";
-      break;
-    }
-  }
+function inject(code) {
+  const script = document.createElement("script");
+  script.appendChild(document.createTextNode(code));
+  (document.body || document.head || document.documentElement).appendChild(
+    script
+  );
+  script.parentElement.removeChild(script);
 }
 
 function preparePage() {
-  const injectCode =
-    "window.onload = function() {}; document.body.onload = function() {};";
+  inject(
+    `((${GM.toString()}))()\n//# sourceURL=${browser.runtime.getURL(
+      "js/GM_api.js"
+    )}`
+  );
 
-  const script = document.createElement("script");
-  script.textContent = injectCode;
-  (document.head || document.documentElement).appendChild(script);
-
-  getPlayerData();
+  document.addEventListener("xmlHttpRequestBridge", async function(e) {
+    const data = e.detail;
+    await browser.runtime.sendMessage({
+      type: "xmlHttpRequestHandler",
+      value: data
+    });
+  });
 
   document.addEventListener("IITCButtonInitJS", function(e) {
-    const code = e.detail;
+    const tab_id = e.detail.tab_id;
+    const code = e.detail.code;
 
-    const GM_info_raw = code.substring(0, code.indexOf(";/* END GM_info */"));
-    const GM_info = new Function("GM_info", GM_info_raw + ";return GM_info")();
-    const uid = GM_info.script.uid;
+    const meta = parseMeta(code);
+    const uid = getUID(meta);
+    meta["uid"] = uid;
+
+    let dataKey = sessionStorage.getItem(uid);
+    if (!dataKey) {
+      dataKey = getUniqId("VMin");
+      sessionStorage.setItem(uid, dataKey);
+    }
 
     if (loaded_plugins.includes(uid)) {
       console.debug(`Plugin ${uid} is already loaded. Skip`);
     } else {
       loaded_plugins.push(uid);
       console.debug(`Plugin ${uid} loaded`);
-      new Function(sandbox + code)();
+
+      const name = encodeURIComponent(meta.name);
+      const injectedCode = [
+        "((GM)=>{",
+        // an implementation of GM API v3 based on GM API v4
+        "const GM_info = GM.info; const unsafeWindow = window;",
+        "const GM_getValue = (key, value) => GM._getValueSync(key, value);",
+        "const GM_setValue = (key, value) => GM._setValueSync(key, value);",
+        "const GM_xmlhttpRequest = (details) => GM.xmlHttpRequest(details);",
+
+        code,
+        // adding a new line in case the code ends with a line comment
+        code.endsWith("\n") ? "" : "\n",
+        `})(GM("${dataKey}", ${tab_id}, ${JSON.stringify(meta)}))`,
+
+        // Firefox lists .user.js among our own content scripts so a space at start will group them
+        `\n//# sourceURL=${browser.runtime.getURL(
+          "plugins/%20" + name + ".user.js"
+        )}`
+      ].join("");
+
+      inject(injectedCode);
     }
   });
 }

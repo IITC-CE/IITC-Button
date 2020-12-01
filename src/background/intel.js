@@ -1,5 +1,4 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-import { getUID, parse_meta, preparationUserScript } from "../helpers";
 import { getTabsToInject, injectUserScript } from "./injector";
 
 let lastIITCTab = null;
@@ -63,9 +62,6 @@ async function initialize() {
     "release_iitc_code",
     "test_iitc_code",
     "local_iitc_code",
-    "release_iitc_version",
-    "test_iitc_version",
-    "local_iitc_version",
     "release_plugins_flat",
     "test_plugins_flat",
     "local_plugins_flat",
@@ -81,7 +77,6 @@ async function initialize() {
 
   const status = data["IITC_is_enabled"];
   const iitc_code = data[channel + "_iitc_code"];
-  const iitc_version = data[channel + "_iitc_version"];
 
   const plugins_local = data[channel + "_plugins_local"];
   const plugins_user = data[channel + "_plugins_user"];
@@ -94,26 +89,14 @@ async function initialize() {
     for (const uid of Object.keys(plugins_flat)) {
       if (plugins_flat[uid]["status"] === "on") {
         userscripts.push(
-          preparationUserScript(
-            plugins_flat[uid]["user"] === true
-              ? plugins_user[uid]
-              : plugins_local[uid],
-            uid
-          )
+          plugins_flat[uid]["user"] === true
+            ? plugins_user[uid]["code"]
+            : plugins_local[uid]["code"]
         );
       }
     }
 
-    const iitc_meta = parse_meta(iitc_code);
-    const iitc_uid = getUID(iitc_meta);
-    const inject_iitc_code = preparationUserScript(
-      {
-        version: iitc_version,
-        code: iitc_code
-      },
-      iitc_uid
-    );
-    userscripts.push(inject_iitc_code);
+    userscripts.push(iitc_code);
 
     await Promise.all(userscripts.map(code => injectUserScript(code, tabs)));
   }
