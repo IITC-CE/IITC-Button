@@ -11,14 +11,8 @@
   "permissions": [
     "tabs",
     "storage",
-    "webNavigation",
-    "https://intel.ingress.com/*",
-    "https://iitc.app/*",
-    "http://*/*.json",
-    "http://*/*.meta.js",
-    "http://*/*.user.js",
-    "https://*/*.meta.js",
-    "https://*/*.user.js"
+    "<all_urls>",
+    "webNavigation"
   ],
   "default_locale": "en",
   "background": {
@@ -29,9 +23,10 @@
   },
   "content_scripts": [
     {
-      "matches" : ["https://intel.ingress.com/*"],
-      "run_at": "document_end",
-      "js": ["js/content-script.js"]
+      "matches" : ["<all_urls>"],
+      "run_at": "document_start",
+      "js": ["js/content-script.js"],
+      "all_frames": true
     }
   ],
   "browser_action": {

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { _, ajaxGet, parse_meta } from "../helpers";
+import { _, ajaxGet, parseMeta } from "../helpers";
 
 export default {
   name: "BlockURL",
@@ -52,7 +52,7 @@ export default {
       if (code) {
         const scripts = [];
         let message = "";
-        const meta = parse_meta(code);
+        const meta = parseMeta(code);
         const filename = url.substr(url.lastIndexOf("/") + 1);
 
         if (meta === {} || meta["name"] === undefined) {
