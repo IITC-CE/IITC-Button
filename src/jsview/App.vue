@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { _, ajaxGet, parseMeta } from "../helpers";
+import { _, parseMeta } from "../helpers";
 
 export default {
   name: "App",
@@ -32,42 +32,36 @@ export default {
     _: _
   },
   async mounted() {
-    const url = new URL(window.location.href).searchParams.get("url");
+    const uniqId = new URL(window.location.href).searchParams.get("uniqId");
+    const data = await browser.storage.local.get(uniqId);
+    const { url, code } = data[uniqId];
+    await browser.storage.local.remove(uniqId);
 
-    let code;
-    try {
-      code = await ajaxGet(url);
-    } catch {
-      this.status = _("addressNotAvailable");
-    }
+    this.code = code;
+    this.show_header = true;
 
-    if (code) {
-      this.code = code;
-      this.show_header = true;
+    const meta = parseMeta(code);
+    if (meta["name"] !== undefined) {
+      this.plugin_name = meta["name"];
+      const filename = url.substr(url.lastIndexOf("/") + 1);
+      const btn_install = document.getElementById("install");
+      btn_install.addEventListener(
+        "click",
+        async () => {
+          const message =
+            _("addedUserScriptTo", [filename, meta["category"]]) + "\n";
+          meta["filename"] = filename;
+          const script = [{ meta: meta, code: code }];
 
-      const meta = parseMeta(code);
-      if (meta["name"] !== undefined) {
-        this.plugin_name = meta["name"];
-        const filename = url.substr(url.lastIndexOf("/") + 1);
-        const btn_install = document.getElementById("install");
-        btn_install.addEventListener(
-          "click",
-          async () => {
-            const message =
-              _("addedUserScriptTo", [filename, meta["category"]]) + "\n";
-            meta["filename"] = filename;
-            const script = [{ meta: meta, code: code }];
-
-            alert(message);
-            await browser.runtime.sendMessage({
-              type: "addUserScripts",
-              scripts: script
-            });
-            this.show_header = false;
-          },
-          false
-        );
-      }
+          alert(message);
+          await browser.runtime.sendMessage({
+            type: "addUserScripts",
+            scripts: script
+          });
+          this.show_header = false;
+        },
+        false
+      );
     }
   }
 };

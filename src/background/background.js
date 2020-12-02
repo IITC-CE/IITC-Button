@@ -12,6 +12,7 @@ import {
   managePlugin,
   runExtension
 } from "./manager";
+import { onBeforeRequest } from "./requests";
 
 const { onUpdated, onRemoved } = browser.tabs;
 onUpdated.addListener(onUpdatedListener);
@@ -33,15 +34,21 @@ browser.runtime.onMessage.addListener(async request => {
   }
 });
 
-browser.webNavigation.onBeforeNavigate.addListener(
-  async requestDetails => {
-    browser.tabs.create({
-      url: await browser.extension.getURL(
-        `/jsview.html?url=${requestDetails.url}`
-      )
-    });
+browser.webRequest.onBeforeRequest.addListener(
+  onBeforeRequest,
+  {
+    urls: [
+      // 1. *:// comprises only http/https
+      // 2. the API ignores #hash part
+      // 3. Firefox: onBeforeRequest does not work with file:// or moz-extension://
+      "*://*/*.user.js",
+      "*://*/*.user.js?*",
+      "file://*/*.user.js",
+      "file://*/*.user.js?*"
+    ],
+    types: ["main_frame"]
   },
-  { url: [{ pathSuffix: ".user.js" }] }
+  ["blocking"]
 );
 
 browser.runtime.onMessage.addListener(function(request) {

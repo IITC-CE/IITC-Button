@@ -12,14 +12,12 @@
     "tabs",
     "storage",
     "<all_urls>",
-    "webNavigation"
+    "webRequest",
+    "webRequestBlocking"
   ],
   "default_locale": "en",
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
+    "page": "background.html"
   },
   "content_scripts": [
     {
