@@ -103,6 +103,15 @@ export function preparationUserScript(plugin, uid) {
           ${plugin["code"]}; true`;
 }
 
+export function getUniqId(prefix = "VM") {
+  const now = performance.now();
+  return (
+    prefix +
+    Math.floor((now - Math.floor(now)) * 1e12).toString(36) +
+    Math.floor(Math.random() * 1e12).toString(36)
+  );
+}
+
 /* exported getUID */
 export function getUID(plugin) {
   const available_fields = [];
