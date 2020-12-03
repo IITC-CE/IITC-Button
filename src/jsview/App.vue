@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { _, parse_meta } from "../helpers";
+import { _, parseMeta } from "../helpers";
 
 export default {
   name: "App",
@@ -40,7 +40,7 @@ export default {
     this.code = code;
     this.show_header = true;
 
-    const meta = parse_meta(code);
+    const meta = parseMeta(code);
     if (meta["name"] !== undefined) {
       this.plugin_name = meta["name"];
       const filename = url.substr(url.lastIndexOf("/") + 1);

@@ -28,6 +28,9 @@ browser.runtime.onMessage.addListener(async request => {
     case "toggleIITC":
       await onToggleIITC(request.value);
       break;
+    case "xmlHttpRequestHandler":
+      await xmlHttpRequestHandler(request.value);
+      break;
   }
 });
 
@@ -66,3 +69,38 @@ browser.runtime.onMessage.addListener(function(request) {
       break;
   }
 });
+
+async function xmlHttpRequestHandler(data) {
+  async function xmlResponse(tab_id, callback, response) {
+    const injectedCode = `
+    document.dispatchEvent(new CustomEvent('onXmlHttpRequestHandler', {
+      detail: JSON.stringify({
+        callback: "${String(callback)}",
+        response: ${String(response)}
+      })
+    }));
+  `;
+
+    try {
+      await browser.tabs.executeScript(data.tab_id, {
+        code: injectedCode
+      });
+    } catch (error) {
+      console.error(`An error occurred while execute script: ${error.message}`);
+    }
+  }
+
+  const req = new XMLHttpRequest();
+  req.onload = function() {
+    const response = {
+      readyState: this.readyState,
+      responseHeaders: this.responseHeaders,
+      responseText: this.responseText,
+      status: this.status,
+      statusText: this.statusText
+    };
+    xmlResponse(data.tab_id, data.onload, JSON.stringify(response));
+  };
+  req.open(data.method, data.url, true, data.user, data.password);
+  req.send();
+}

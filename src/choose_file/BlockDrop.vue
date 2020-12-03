@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { _, parse_meta } from "../helpers";
+import { _, parseMeta } from "../helpers";
 
 /*
  * Validation UserScript and adding to IITC Button
@@ -45,7 +45,7 @@ const processingFile = async fileList => {
 
     try {
       const code = await readUploadedFileAsText(file);
-      const meta = parse_meta(code);
+      const meta = parseMeta(code);
 
       if (meta === {} || meta["name"] === undefined) {
         message += _("notValidUserScript", file["name"]) + "\n";
