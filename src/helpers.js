@@ -1,56 +1,54 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 export let wait_timeout_id = null;
 
+// Allow metadata lines to start with WHITESPACE? '//' SPACE
+// Allow anything to follow the predefined text of the metaStart/End
+// The SPACE must be on the same line and specifically \x20 as \s would also match \r\n\t
+// Note: when there's no valid metablock, an empty string is matched for convenience
+const METABLOCK_RE = /(?:^|\n)\s*\/\/\x20==UserScript==([\s\S]*?\n)\s*\/\/\x20==\/UserScript==|$/;
+
+const META_ARRAY_TYPES = [
+  "include",
+  "exclude",
+  "match",
+  "excludeMatch",
+  "require",
+  "grant"
+];
+
 export function _(msg, arg) {
   return browser.i18n.getMessage(msg, arg);
 }
 
-export function parse_meta(code) {
-  const meta = code.split("\n");
+export function parseMeta(code) {
+  const meta = {};
+  const metaBody = code.match(METABLOCK_RE)[1] || "";
+  metaBody.replace(
+    /(?:^|\n)\s*\/\/\x20(@\S+)(.*)/g,
+    (_match, rawKey, rawValue) => {
+      const [keyName, locale] = rawKey.slice(1).split(":");
+      const camelKey = keyName.replace(/[-_](\w)/g, (m, g) => g.toUpperCase());
+      const key = locale ? `${camelKey}:${locale.toLowerCase()}` : camelKey;
 
-  let is_userscript = false;
-  const data = {};
-  for (let i = 0; i < meta.length; i++) {
-    let line = meta[i];
-    if (line.indexOf("==UserScript==") > -1) {
-      is_userscript = true;
-      continue;
-    }
-    if (line.indexOf("==/UserScript==") > -1) {
-      return data;
-    }
-    if (is_userscript) {
-      line = line.trim();
-      const sp = line.split(/\s+/);
-
-      const key = sp[1].replace("@", "");
-      let value = sp.slice(2).join(" ");
-      if (
-        [
-          "name",
-          "namespace",
-          "category",
-          "version",
-          "description",
-          "updateURL",
-          "downloadURL",
-          "supportURL"
-        ].indexOf(key) !== -1
-      ) {
-        if (data[key]) continue;
-        if (key === "name") {
-          value = value
-            .replace("IITC plugin: ", "")
-            .replace("IITC Plugin: ", "");
+      let value = rawValue.trim();
+      if (camelKey === "name") {
+        value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
+      }
+      if (META_ARRAY_TYPES.includes(key)) {
+        if (typeof meta[key] === "undefined") {
+          meta[key] = [];
         }
-        data[key] = value;
+        meta[key].push(value);
+      } else {
+        meta[key] = value;
       }
     }
-  }
-  return data;
+  );
+  // @homepageURL: compatible with @homepage
+  if (!meta.homepageURL && meta.homepage) meta.homepageURL = meta.homepage;
+  return meta;
 }
 
-/* exported ajaxGet */
 export const ajaxGet = (url, variant) =>
   new Promise((resolve, reject) => {
     const method = variant === "Last-Modified" ? "HEAD" : "GET";
@@ -79,31 +77,15 @@ export const ajaxGet = (url, variant) =>
     xhr.send(null);
   });
 
-function h(str) {
-  if (str === undefined) {
-    str = "";
-  } else {
-    str = str.replace('"', '\\"');
-  }
-  return str;
+export function getUniqId(prefix = "VM") {
+  const now = performance.now();
+  return (
+    prefix +
+    Math.floor((now - Math.floor(now)) * 1e12).toString(36) +
+    Math.floor(Math.random() * 1e12).toString(36)
+  );
 }
 
-// Implementation of partial sufficient compatibility with GreaseMonkey
-export function preparationUserScript(plugin, uid) {
-  if (uid === undefined) uid = "";
-
-  return `var GM_info = {
-            "script": {
-              "uid": "${h(uid)}",
-              "version": "${h(plugin["version"])}",
-              "name": "${h(plugin["name"])}",
-              "description": "${h(plugin["description"])}"
-            }
-          };/* END GM_info */
-          ${plugin["code"]}; true`;
-}
-
-/* exported getUID */
 export function getUID(plugin) {
   const available_fields = [];
 
