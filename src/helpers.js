@@ -77,21 +77,6 @@ export const ajaxGet = (url, variant) =>
     xhr.send(null);
   });
 
-// Implementation of partial sufficient compatibility with GreaseMonkey
-export function preparationUserScript(plugin, uid) {
-  if (uid === undefined) uid = "";
-
-  return `var GM_info = {
-            "script": {
-              "uid": "${h(uid)}",
-              "version": "${h(plugin["version"])}",
-              "name": "${h(plugin["name"])}",
-              "description": "${h(plugin["description"])}"
-            }
-          };/* END GM_info */
-          ${plugin["code"]}; true`;
-}
-
 export function getUniqId(prefix = "VM") {
   const now = performance.now();
   return (

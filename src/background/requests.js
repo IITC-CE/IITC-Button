@@ -1,6 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import { parse_meta, ajaxGet, getUniqId } from "../helpers";
+import { parseMeta, ajaxGet, getUniqId } from "../helpers";
 
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
@@ -31,7 +31,7 @@ async function maybeInstallUserJs(tabId, url) {
     if (tabId >= 0) browser.tabs.update(tabId, { url });
   }
 
-  if (code && parse_meta(code).name) {
+  if (code && parseMeta(code).name) {
     const tab = (tabId >= 0 && (await browser.tabs.get(tabId))) || {};
     await confirmInstall(url, code);
     if (tab.pendingUrl && tab.url === "chrome://newtab/") {
