@@ -86,6 +86,7 @@ export function getUniqId(prefix = "VM") {
   );
 }
 
+/* exported getUID */
 export function getUID(plugin) {
   const available_fields = [];
 

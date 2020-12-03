@@ -12,21 +12,18 @@
     "tabs",
     "storage",
     "<all_urls>",
-    "webNavigation"
+    "webRequest",
+    "webRequestBlocking"
   ],
   "default_locale": "en",
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
+    "page": "background.html"
   },
   "content_scripts": [
     {
-      "matches" : ["<all_urls>"],
+      "matches" : ["https://intel.ingress.com/*"],
       "run_at": "document_start",
-      "js": ["js/content-script.js"],
-      "all_frames": true
+      "js": ["js/content-script.js"]
     }
   ],
   "browser_action": {

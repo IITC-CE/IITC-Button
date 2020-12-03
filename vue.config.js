@@ -1,5 +1,10 @@
 module.exports = {
   pages: {
+    background: {
+      template: "public/browser-extension.html",
+      entry: "src/background/background.js",
+      title: "background"
+    },
     popup: {
       template: "public/browser-extension.html",
       entry: "./src/popup/main.js",
@@ -21,9 +26,6 @@ module.exports = {
   pluginOptions: {
     browserExtension: {
       componentOptions: {
-        background: {
-          entry: "src/background/background.js"
-        },
         contentScripts: {
           entries: {
             "content-script": ["src/content-scripts/loader.js"]
