@@ -120,7 +120,7 @@
         "message": "Репозиторій GitHub"
     },
     "anyChannel": {
-        "message": "Будь-якій канал:"
+        "message": "Будь-який канал"
     },
     "addressNotAvailable": {
         "message": "Недоступний"
@@ -149,5 +149,8 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "замінити"
     }
 }
