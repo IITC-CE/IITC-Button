@@ -124,6 +124,7 @@ export default {
       const data = await browser.storage.local.get([
         "channel",
         "release_plugins_user",
+        "beta_plugins_user",
         "test_plugins_user",
         "local_plugins_user"
       ]);

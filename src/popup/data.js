@@ -4,9 +4,11 @@ export async function init(self) {
   const data = await browser.storage.local.get([
     "channel",
     "release_categories",
+    "beta_categories",
     "test_categories",
     "local_categories",
     "release_plugins_flat",
+    "beta_plugins_flat",
     "test_plugins_flat",
     "local_plugins_flat"
   ]);
