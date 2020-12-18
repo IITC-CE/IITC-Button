@@ -8,20 +8,22 @@
     ></Header>
     <div class="settings-section">
       <h2>{{ _("choosingUpdateChannel") }}</h2>
-      <p
-        v-for="(item, index) in updateChannels"
-        v-bind:key="index"
-        class="input-field"
-      >
-        <input
-          type="radio"
-          v-bind:id="index"
-          name="update-channel"
-          v-bind:value="index"
-          v-model="channelSelect"
-        />
-        <label v-bind:for="index">{{ item.name }}</label>
-      </p>
+      <div class="channels-row">
+        <p
+          v-for="(item, index) in updateChannels"
+          v-bind:key="index"
+          class="input-field"
+        >
+          <input
+            type="radio"
+            v-bind:id="index"
+            name="update-channel"
+            v-bind:value="index"
+            v-model="channelSelect"
+          />
+          <label v-bind:for="index">{{ item.name }}</label>
+        </p>
+      </div>
     </div>
     <Hr />
     <div class="settings-section">
@@ -30,6 +32,9 @@
         <div class="update-check__col">
           <UpdateCheckIntervalSelector
             v-bind:channel="'release'"
+          ></UpdateCheckIntervalSelector>
+          <UpdateCheckIntervalSelector
+            v-bind:channel="'beta'"
           ></UpdateCheckIntervalSelector>
           <UpdateCheckIntervalSelector
             v-bind:channel="'test'"
@@ -99,9 +104,11 @@ export default {
 
         const data = await browser.storage.local.get([
           "release_categories",
+          "beta_categories",
           "test_categories",
           "local_categories",
           "release_plugins_flat",
+          "beta_plugins_flat",
           "test_plugins_flat",
           "local_plugins_flat"
         ]);
@@ -185,5 +192,9 @@ h2:first-letter {
 }
 .local-server__input__err {
   color: var(--state-off);
+}
+
+.channels-row {
+  column-count: 2;
 }
 </style>

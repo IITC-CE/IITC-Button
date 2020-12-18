@@ -49,6 +49,9 @@
     "release": {
         "message": "Release"
     },
+    "beta": {
+        "message": "Beta"
+    },
     "testBuilds": {
         "message": "Test builds"
     },

@@ -11,6 +11,7 @@ let external_update_timeout_id = null;
 let channel = "release";
 const network_host = {
   release: "https://iitc.app/build/release",
+  beta: "https://iitc.app/build/beta",
   test: "https://iitc.app/build/test",
   local: "http://localhost:8000"
 };
@@ -101,21 +102,27 @@ export async function checkUpdates(force) {
     "last_check_update",
     "local_server_host",
     "release_update_check_interval",
+    "beta_update_check_interval",
     "test_update_check_interval",
     "local_update_check_interval",
     "release_last_modified",
+    "beta_last_modified",
     "test_last_modified",
     "local_last_modified",
     "release_categories",
+    "beta_categories",
     "test_categories",
     "local_categories",
     "release_plugins_flat",
+    "beta_plugins_flat",
     "test_plugins_flat",
     "local_plugins_flat",
     "release_plugins_local",
+    "beta_plugins_local",
     "test_plugins_local",
     "local_plugins_local",
     "release_plugins_user",
+    "beta_plugins_user",
     "test_plugins_user",
     "local_plugins_user"
   ]);
@@ -250,6 +257,7 @@ export async function checkExternalUpdates(force) {
     "last_check_external_update",
     "external_update_check_interval",
     "release_plugins_user",
+    "beta_plugins_user",
     "test_plugins_user",
     "local_plugins_user"
   ]);

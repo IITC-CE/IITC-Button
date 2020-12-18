@@ -6,11 +6,13 @@ export const mixin = {
     return {
       updateChannels: {
         release: { name: _("release") },
+        beta: { name: _("beta") },
         test: { name: _("testBuilds") },
         local: { name: _("localServer") }
       },
       updateChannelsIntervals: {
         release: { name: _("release") },
+        beta: { name: _("beta") },
         test: { name: _("testBuilds") },
         external: { name: _("anyChannel") }
       },
