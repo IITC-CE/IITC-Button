@@ -27,7 +27,7 @@
         }
     },
     "external": {
-        "message": "\tExterno"
+        "message": "Externo"
     },
     "extDescription": {
         "message": "Inicie o IITC para Ingress Intel com facilidade.",
@@ -151,5 +151,8 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "sobrepor"
     }
 }
