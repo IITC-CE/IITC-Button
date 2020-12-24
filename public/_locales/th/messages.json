@@ -63,7 +63,7 @@
         "message": "Local server address"
     },
     "anyChannel": {
-        "message": "ช่องทางอื่นๆ "
+        "message": "ช่องทางอื่นๆ"
     },
     "everyWeek": {
         "message": "ทุกๆ สัปดาห์"
@@ -84,7 +84,7 @@
         "message": "ตรวจสอบการอัพเดท IITC-CE"
     },
     "localServer": {
-        "message": "Local server"
+        "message": "เซิร์ฟเวอร์ภายใน"
     },
     "testBuilds": {
         "message": "ทดสอบ"
@@ -93,13 +93,13 @@
         "message": "สมบูรณ์"
     },
     "choosingUpdateChannel": {
-        "message": "เลือกช่องทางอัพเดต IITC-CE"
+        "message": "เลือกช่องทางในการอัพเดต IITC-CE"
     },
     "updateNow": {
         "message": "อัพเดททันที"
     },
     "iitcButtonOptions": {
-        "message": "\"ตั้งค่า IITC-CE"
+        "message": "ตั้งค่า IITC-CE"
     },
     "iitcGithub": {
         "message": "GitHub repository"
@@ -133,10 +133,26 @@
         "description": "Title for the button at the application panel"
     },
     "lang": {
-        "message": "th"
+        "message": "ภาษาอังกฤษ"
     },
     "extDescription": {
         "message": "เปิดใช้งาน IITC สำหรับ Ingress Intel อย่างง่ายดาย",
         "description": "Description of the extension"
+    },
+    "addedUserScriptTo": {
+        "message": "เพิ่ม $PLUGIN_NAME$ ในหมวดหมู่ \"$PLUGIN_CATEGORY$\" แล้ว",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "badgeOverride": {
+        "message": "แทนที่"
     }
 }
