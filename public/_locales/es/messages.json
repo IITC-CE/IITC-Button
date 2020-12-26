@@ -89,7 +89,7 @@
         "message": "Cambiar canal de actualizaciones IITC-CE"
     },
     "external": {
-        "message": "\tExterno"
+        "message": "Externo"
     },
     "addressNotAvailable": {
         "message": "Dirección no disponible"
@@ -151,5 +151,11 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "anular"
+    },
+    "beta": {
+        "message": "Beta"
     }
 }
