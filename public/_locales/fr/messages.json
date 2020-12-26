@@ -151,5 +151,8 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "passer outre"
     }
 }
