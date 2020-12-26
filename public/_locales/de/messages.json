@@ -11,7 +11,7 @@
         "description": "Title for the button at the application panel"
     },
     "updateInProgress": {
-        "message": "Update in Bearbeitung…"
+        "message": "Update in Bearbeitung …"
     },
     "lang": {
         "message": "engl."
@@ -95,7 +95,7 @@
         "message": "Dies ist ein IITC Plugin. Klicke \"Installieren\", um es benutzen zu können."
     },
     "loading": {
-        "message": "Lade…"
+        "message": "Lade …"
     },
     "external": {
         "message": "Externes"
