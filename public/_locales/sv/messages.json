@@ -29,5 +29,18 @@
     },
     "lang": {
         "message": "sv"
+    },
+    "localServer": {
+        "message": "Lokal server"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "iitcGithub": {
+        "message": "GitHub repository"
+    },
+    "extDescription": {
+        "message": "Starta IITC för Ingress Intel enkelt.",
+        "description": "Description of the extension"
     }
 }
