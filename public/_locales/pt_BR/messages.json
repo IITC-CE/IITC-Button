@@ -154,5 +154,8 @@
     },
     "badgeOverride": {
         "message": "sobrepor"
+    },
+    "beta": {
+        "message": "Beta"
     }
 }
