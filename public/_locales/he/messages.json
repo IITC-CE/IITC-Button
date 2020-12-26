@@ -1,1 +1,67 @@
-{}
+{
+    "updateFrequency": {
+        "message": "בדיקת עדכונים של אייאייטיסי-סיאי"
+    },
+    "updateExternalFrequency": {
+        "message": "בדיקת עדכונים של תוספים חיצוניים"
+    },
+    "localServer": {
+        "message": "שרת מקומי"
+    },
+    "testBuilds": {
+        "message": "גרסאת בדיקה"
+    },
+    "beta": {
+        "message": "בטא"
+    },
+    "release": {
+        "message": "גרסא"
+    },
+    "choosingUpdateChannel": {
+        "message": "בחירת ערוץ עדכונים של אייאייטיסי-סיאי"
+    },
+    "updateNow": {
+        "message": "עדכן עכשיו"
+    },
+    "iitcButtonOptions": {
+        "message": "אפשרויות כפתור אייאייטיסי-סיאי"
+    },
+    "iitcGithub": {
+        "message": "מאגר גיטהאב"
+    },
+    "iitcHomePage": {
+        "message": "דף הבית"
+    },
+    "iitcReddit": {
+        "message": "דון ב-r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "חדשות בטלגרם"
+    },
+    "addExternalPlugin": {
+        "message": "הוסף תוסף חיצוני"
+    },
+    "noData": {
+        "message": "אין מידע"
+    },
+    "changesApplied": {
+        "message": "השינויים הוחלו"
+    },
+    "updateInProgress": {
+        "message": "עדכון בתהליך…"
+    },
+    "needRebootIntel": {
+        "message": "השינויים יוחלו לאחר אתחול מחדש של אינטל"
+    },
+    "titleDefault": {
+        "message": "פתח אינטל",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "עב"
+    },
+    "extDescription": {
+        "message": "השק את אייאייטיסי לאינגרס אינטל בקלות.",
+        "description": "Description of the extension"
+    }
+}
