@@ -42,5 +42,47 @@
     "extDescription": {
         "message": "Starta IITC för Ingress Intel enkelt.",
         "description": "Description of the extension"
+    },
+    "dropJSHereOrClick": {
+        "message": "Släpp <i>.js</i> filer här eller klicka för att ladda upp."
+    },
+    "or": {
+        "message": "eller"
+    },
+    "errorReadingFile": {
+        "message": "Ett fel uppstod vid läsningen av filen $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Adressen är inte tillgänglig"
+    },
+    "pluginDelete": {
+        "message": "Radera"
+    },
+    "pluginSave": {
+        "message": "Spara"
+    },
+    "openSupport": {
+        "message": "Öppna supportsida:"
+    },
+    "localServerURL": {
+        "message": "Lokal serveradress"
+    },
+    "anyChannel": {
+        "message": "Alla kanaler"
+    },
+    "everyWeek": {
+        "message": "Varje vecka"
+    },
+    "everyDay": {
+        "message": "Varje dag"
+    },
+    "updateExternalFrequency": {
+        "message": "Externa plugins sökning efter uppdateringar"
     }
 }
