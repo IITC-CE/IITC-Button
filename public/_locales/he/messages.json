@@ -99,5 +99,60 @@
     },
     "every12hours": {
         "message": "כול 12 שעות"
+    },
+    "external": {
+        "message": "חיצוני"
+    },
+    "serverNotAvailableRetry": {
+        "message": "השרת אינו זמין. נסה שוב בעוד $NUM$ שניות",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "טוען…"
+    },
+    "install": {
+        "message": "התקן"
+    },
+    "clickInstallPlugin": {
+        "message": "זהו תוסף אייאייטיסי. לחץ על התקן כדי להתחיל להשתמש בו."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "תוסף עם אותו מזהה יוחלף על ידי התוסף החדש."
+    },
+    "dropJSHereOrClick": {
+        "message": "זרוק לכאן קבצי <i>.js </i> או לחץ להעלאה."
+    },
+    "or": {
+        "message": "או"
+    },
+    "errorReadingFile": {
+        "message": "אירעה שגיאה בקריאת קובץ $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "כתובת אינה זמינה"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ נוסף לקטגוריה \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }
