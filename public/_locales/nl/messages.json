@@ -1,1 +1,6 @@
-{}
+{
+    "extDescription": {
+        "message": "start IITC voor Ingress Intel met gemak op",
+        "description": "Description of the extension"
+    }
+}
