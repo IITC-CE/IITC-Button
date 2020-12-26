@@ -97,7 +97,7 @@
         "message": "加载中…"
     },
     "external": {
-        "message": "\t外部"
+        "message": "外部"
     },
     "updateInProgress": {
         "message": "正在更新…"
@@ -115,7 +115,7 @@
         "message": "Release"
     },
     "anyChannel": {
-        "message": "任何渠道 "
+        "message": "任何频道"
     },
     "notValidUserScript": {
         "message": "$PLUGIN_NAME$ 不是一个有效的插件。",
@@ -140,5 +140,18 @@
     },
     "badgeOverride": {
         "message": "覆写"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ 已加入“$PLUGIN_CATEGORY$”分类。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }
