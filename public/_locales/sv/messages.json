@@ -1,6 +1,6 @@
 {
     "updateFrequency": {
-        "message": "IITC-CE sökning efter uppdateringar"
+        "message": "IITC-CE söker efter uppdateringar"
     },
     "updateNow": {
         "message": "uppdatera nu"
@@ -84,5 +84,14 @@
     },
     "updateExternalFrequency": {
         "message": "Externa plugins sökning efter uppdateringar"
+    },
+    "external": {
+        "message": "Extern"
+    },
+    "loading": {
+        "message": "Laddar…"
+    },
+    "install": {
+        "message": "Installera"
     }
 }
