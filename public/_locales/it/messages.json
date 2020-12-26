@@ -151,5 +151,11 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "Sovrapposizione"
+    },
+    "beta": {
+        "message": "Beta"
     }
 }
