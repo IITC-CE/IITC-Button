@@ -78,5 +78,81 @@
     },
     "anyChannel": {
         "message": "Усе каналы"
+    },
+    "loading": {
+        "message": "Чакайце…"
+    },
+    "install": {
+        "message": "Усталяваць"
+    },
+    "clickInstallPlugin": {
+        "message": "Гэта плагін IITC. Націсніце \"Усталяваць\", каб пачаць выкарыстоўваць яго."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Плагін з тым самым ID будзе заменены новым плагінам."
+    },
+    "dropJSHereOrClick": {
+        "message": "Перацягніце <i>.js</i> файлы сюды альбо націсніце, каб загрузіць."
+    },
+    "external": {
+        "message": "Знешні"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Сервер недаступны. Паўтарыце спробу пасля $NUM$ сек",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "or": {
+        "message": "ці"
+    },
+    "errorReadingFile": {
+        "message": "Адбылася памылка падчас чытання файла $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Адрас недаступны"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ быў дададзены ў катэгорыю \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ не з'яўляецца сапраўдным сцэнарыям карыстальніка.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "Выдаліць"
+    },
+    "pluginSave": {
+        "message": "Захаваць"
+    },
+    "openSupport": {
+        "message": "Адкрыць старонку падтрымкі:"
+    },
+    "badgeOverride": {
+        "message": "Перавызначыць"
     }
 }
