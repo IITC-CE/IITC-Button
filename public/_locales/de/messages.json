@@ -98,7 +98,7 @@
         "message": "Lade …"
     },
     "external": {
-        "message": "Externes"
+        "message": "Extern"
     },
     "serverNotAvailableRetry": {
         "message": "Der Server ist nicht erreichbar. Neuer Versuch in $NUM$ Sekunden",
@@ -151,5 +151,8 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "Überschreiben"
     }
 }
