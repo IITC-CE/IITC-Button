@@ -152,5 +152,8 @@
     },
     "badgeOverride": {
         "message": "перезаписан"
+    },
+    "beta": {
+        "message": "Бета"
     }
 }

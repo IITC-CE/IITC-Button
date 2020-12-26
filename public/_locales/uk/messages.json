@@ -152,5 +152,8 @@
     },
     "badgeOverride": {
         "message": "замінити"
+    },
+    "beta": {
+        "message": "Бета"
     }
 }
