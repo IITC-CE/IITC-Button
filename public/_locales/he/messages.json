@@ -63,5 +63,41 @@
     "extDescription": {
         "message": "השק את אייאייטיסי לאינגרס אינטל בקלות.",
         "description": "Description of the extension"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ אינו יוזרסקריפט חוקי.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "מחק"
+    },
+    "pluginSave": {
+        "message": "שמור"
+    },
+    "openSupport": {
+        "message": "פתח דף תמיכה:"
+    },
+    "localServerURL": {
+        "message": "כתובת שרת מקומי"
+    },
+    "badgeOverride": {
+        "message": "לעקוף"
+    },
+    "anyChannel": {
+        "message": "כול ערוץ"
+    },
+    "everyWeek": {
+        "message": "כול שבוע"
+    },
+    "everyDay": {
+        "message": "כול יום"
+    },
+    "every12hours": {
+        "message": "כול 12 שעות"
     }
 }
