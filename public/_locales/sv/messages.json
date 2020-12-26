@@ -1,1 +1,33 @@
-{}
+{
+    "updateFrequency": {
+        "message": "IITC-CE sökning efter uppdateringar"
+    },
+    "updateNow": {
+        "message": "uppdatera nu"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC_CE Knappval"
+    },
+    "iitcReddit": {
+        "message": "Diskutera på r/IITC"
+    },
+    "noData": {
+        "message": "Ingen data"
+    },
+    "changesApplied": {
+        "message": "Ändringar tillämpades"
+    },
+    "updateInProgress": {
+        "message": "Uppdatering pågår…"
+    },
+    "needRebootIntel": {
+        "message": "Ändringar kommer att tillämpas efter omstart av Intel"
+    },
+    "titleDefault": {
+        "message": "Öppna Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "sv"
+    }
+}
