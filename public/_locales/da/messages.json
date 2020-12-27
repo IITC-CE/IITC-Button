@@ -1,1 +1,36 @@
-{}
+{
+    "beta": {
+        "message": "Beta"
+    },
+    "updateNow": {
+        "message": "Updater nu"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Knap indstillinger"
+    },
+    "iitcGithub": {
+        "message": "GitHub repository"
+    },
+    "iitcReddit": {
+        "message": "Diskuter på r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Nyt i Telegram"
+    },
+    "addExternalPlugin": {
+        "message": "Tilføj eksternt plugin"
+    },
+    "noData": {
+        "message": "Ingen data"
+    },
+    "updateInProgress": {
+        "message": "Opdaterer…"
+    },
+    "titleDefault": {
+        "message": "Åben Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "en"
+    }
+}
