@@ -93,5 +93,17 @@
     },
     "install": {
         "message": "Installera"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ är inte ett giltigt UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "clickInstallPlugin": {
+        "message": "Detta är ett IITC plugin. Tryck installera för att börja använda det."
     }
 }
