@@ -105,5 +105,24 @@
     },
     "clickInstallPlugin": {
         "message": "Detta är ett IITC plugin. Tryck installera för att börja använda det."
+    },
+    "every12hours": {
+        "message": "Var 12 timme"
+    },
+    "every6hours": {
+        "message": "Var 6 timme"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ har lagts till i \"$PLUGIN_CATEGORY$\" kategorin.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
     }
 }
