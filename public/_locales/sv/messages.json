@@ -113,7 +113,7 @@
         "message": "Var 6 timme"
     },
     "addedUserScriptTo": {
-        "message": "$PLUGIN_NAME$ har lagts till i \"$PLUGIN_CATEGORY$\" kategorin.",
+        "message": "$PLUGIN_NAME$ har lagts till i kategorin \"$PLUGIN_CATEGORY$\".",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
