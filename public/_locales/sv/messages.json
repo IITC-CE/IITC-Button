@@ -104,7 +104,7 @@
         }
     },
     "clickInstallPlugin": {
-        "message": "Detta är ett IITC plugin. Tryck installera för att börja använda det."
+        "message": "Detta är en IITC plugin. Tryck installera för att börja använda den."
     },
     "every12hours": {
         "message": "Var 12 timme"
@@ -133,5 +133,8 @@
                 "example": "5"
             }
         }
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin med samma ID kommer att skrivas över av den nya pluginen."
     }
 }
