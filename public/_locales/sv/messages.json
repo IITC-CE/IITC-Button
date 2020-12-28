@@ -124,5 +124,14 @@
                 "example": "Draw"
             }
         }
+    },
+    "serverNotAvailableRetry": {
+        "message": "Servern är inte tillgänglig. Försök igen efter $NUM$ sekund/er",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
     }
 }
