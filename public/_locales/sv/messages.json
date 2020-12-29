@@ -142,5 +142,8 @@
     },
     "iitcTelegram": {
         "message": "Notiser i Telegram"
+    },
+    "choosingUpdateChannel": {
+        "message": "Välj uppdateringskanal för IITC-CE"
     }
 }
