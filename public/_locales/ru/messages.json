@@ -33,7 +33,7 @@
         "message": "Сайт проекта IITC-CE"
     },
     "iitcGithub": {
-        "message": "GitHub репозиторий"
+        "message": "Репозиторий GitHub"
     },
     "iitcButtonOptions": {
         "message": "Настройки IITC Button"
@@ -151,7 +151,7 @@
         }
     },
     "badgeOverride": {
-        "message": "перезаписан"
+        "message": "перезаписать"
     },
     "beta": {
         "message": "Бета"
