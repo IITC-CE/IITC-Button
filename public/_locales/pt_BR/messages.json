@@ -30,7 +30,7 @@
         "message": "Externo"
     },
     "extDescription": {
-        "message": "Inicie o IITC para Ingress Intel com facilidade.",
+        "message": "Inicie o IITC para o mapa Intel do Ingress com facilidade.",
         "description": "Description of the extension"
     },
     "iitcTelegram": {
