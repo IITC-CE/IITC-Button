@@ -95,7 +95,7 @@
         "message": "Installera"
     },
     "notValidUserScript": {
-        "message": "$PLUGIN_NAME$ är inte ett giltigt UserScript.",
+        "message": "$PLUGIN_NAME$ är inte en giltig UserScript.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -144,7 +144,7 @@
         "message": "Nyheter i Telegram"
     },
     "choosingUpdateChannel": {
-        "message": "Välj uppdateringskanal för IITC-CE"
+        "message": "Välj IITC-CE kanal för uppdateringar"
     },
     "badgeOverride": {
         "message": "Åsidosätt"
