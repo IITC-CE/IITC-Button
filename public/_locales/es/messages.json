@@ -7,7 +7,7 @@
         "description": "Title for the button at the application panel"
     },
     "needRebootIntel": {
-        "message": "Los cambios se aplicarán después de reiniciar Intel"
+        "message": "Se aplicarán cambios tras reiniciar"
     },
     "updateInProgress": {
         "message": "Actualizando…"
@@ -16,7 +16,7 @@
         "message": "Se aplicaron los cambios"
     },
     "noData": {
-        "message": "No hay Datos"
+        "message": "Sin datos"
     },
     "extDescription": {
         "message": "Inicio fácil de IITC Ingress Intel.",

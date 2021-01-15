@@ -53,7 +53,7 @@
         "description": "Description of the extension"
     },
     "lang": {
-        "message": "es"
+        "message": "es_419"
     },
     "needRebootIntel": {
         "message": "Los cambios se aplicarán después de reiniciar Intel"
@@ -151,5 +151,11 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "anular"
+    },
+    "beta": {
+        "message": "Beta"
     }
 }

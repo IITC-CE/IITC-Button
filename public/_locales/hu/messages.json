@@ -89,5 +89,8 @@
                 "example": "Draw"
             }
         }
+    },
+    "lang": {
+        "message": "hu"
     }
 }

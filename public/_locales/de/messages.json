@@ -14,7 +14,7 @@
         "message": "Update in Bearbeitung …"
     },
     "lang": {
-        "message": "engl."
+        "message": "de"
     },
     "iitcReddit": {
         "message": "Diskussionen auf r/IITC"
@@ -95,7 +95,7 @@
         "message": "Dies ist ein IITC Plugin. Klicke \"Installieren\", um es benutzen zu können."
     },
     "loading": {
-        "message": "Lade …"
+        "message": "Laden…"
     },
     "external": {
         "message": "Extern"
@@ -153,6 +153,6 @@
         }
     },
     "badgeOverride": {
-        "message": "Überschreiben"
+        "message": "uberschreiben"
     }
 }

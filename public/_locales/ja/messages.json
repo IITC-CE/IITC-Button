@@ -82,7 +82,7 @@
         "message": "IITC-CE更新チャネルを選択"
     },
     "lang": {
-        "message": "英語"
+        "message": "ja"
     },
     "external": {
         "message": "外部"
@@ -135,5 +135,27 @@
     "extDescription": {
         "message": "Ingressインテルマップ用IITCを簡単に起動します",
         "description": "Description of the extension"
+    },
+    "anyChannel": {
+        "message": "任意のチャンネル"
+    },
+    "addedUserScriptTo": {
+        "message": "プラグイン $PLUGIN_NAME$ はカテゴリ \"$PLUGIN_CATEGORY$\" に追加されました。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "badgeOverride": {
+        "message": "上書"
+    },
+    "beta": {
+        "message": "ベータ"
     }
 }

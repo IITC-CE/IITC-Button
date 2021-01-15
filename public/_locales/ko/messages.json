@@ -46,5 +46,34 @@
     },
     "clickInstallPlugin": {
         "message": "이것은 IITC 플러그인 입니다. 클릭하여 사용을 시작합니다."
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE 버튼 설정"
+    },
+    "iitcTelegram": {
+        "message": "텔레그램 뉴스 보기"
+    },
+    "addExternalPlugin": {
+        "message": "외부 플러그인 추가"
+    },
+    "changesApplied": {
+        "message": "변경사항이 적용되었습니다"
+    },
+    "updateInProgress": {
+        "message": "업데이트 진행중…"
+    },
+    "needRebootIntel": {
+        "message": "변경사항은 새로고침 후 적용될것입니다"
+    },
+    "titleDefault": {
+        "message": "인텔 열기",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "ko"
+    },
+    "extDescription": {
+        "message": "Ingress Intel을 좀 더 편리하게 사용하기 위해 IITC를 실행하세요.",
+        "description": "Description of the extension"
     }
 }

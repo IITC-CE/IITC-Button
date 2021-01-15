@@ -3,7 +3,7 @@
         "message": "Σταθερή έκδοση"
     },
     "lang": {
-        "message": "αγγλικά"
+        "message": "el"
     },
     "external": {
         "message": "\tΕξωτερικά"
@@ -151,5 +151,11 @@
                 "example": "Draw"
             }
         }
+    },
+    "badgeOverride": {
+        "message": "παρακάμψετε"
+    },
+    "beta": {
+        "message": "Beta"
     }
 }

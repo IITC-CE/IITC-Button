@@ -1,1 +1,103 @@
-{}
+{
+    "external": {
+        "message": "外部"
+    },
+    "or": {
+        "message": "或"
+    },
+    "errorReadingFile": {
+        "message": "讀取$PLUGIN_NAME$時發生錯誤.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "無效的地址"
+    },
+    "pluginDelete": {
+        "message": "刪除"
+    },
+    "anyChannel": {
+        "message": "任一頻道"
+    },
+    "everyWeek": {
+        "message": "每星期"
+    },
+    "everyDay": {
+        "message": "每天"
+    },
+    "every12hours": {
+        "message": "每十二小時"
+    },
+    "every6hours": {
+        "message": "每六小時"
+    },
+    "updateExternalFrequency": {
+        "message": "檢查外部插件更新"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE 檢查更新"
+    },
+    "localServer": {
+        "message": "本地伺服器"
+    },
+    "testBuilds": {
+        "message": "測試版本"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "release": {
+        "message": "釋放"
+    },
+    "choosingUpdateChannel": {
+        "message": "選擇IITC-CE 更新途徑"
+    },
+    "updateNow": {
+        "message": "立即更新"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE 接鍵選項"
+    },
+    "iitcGithub": {
+        "message": "GitHub 存庫"
+    },
+    "iitcHomePage": {
+        "message": "主頁面"
+    },
+    "iitcReddit": {
+        "message": "r/IITC 相關討論"
+    },
+    "iitcTelegram": {
+        "message": "Telegram 最新資訊"
+    },
+    "addExternalPlugin": {
+        "message": "增設外部插件"
+    },
+    "noData": {
+        "message": "無資料"
+    },
+    "changesApplied": {
+        "message": "更改已生效。"
+    },
+    "updateInProgress": {
+        "message": "正在更新中…"
+    },
+    "needRebootIntel": {
+        "message": "設定更動將在Intel map重新啟動後使用"
+    },
+    "titleDefault": {
+        "message": "開啟Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "zh_Hant"
+    },
+    "extDescription": {
+        "message": "開啟 IITC 以遨遊 Ingress Intel.",
+        "description": "Description of the extension"
+    }
+}
