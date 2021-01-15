@@ -1,1 +1,43 @@
-{}
+{
+    "release": {
+        "message": "Lanzamento"
+    },
+    "choosingUpdateChannel": {
+        "message": "Seleccionando dunha canle de actualización IITC-CE"
+    },
+    "updateNow": {
+        "message": "actualizar agora"
+    },
+    "iitcButtonOptions": {
+        "message": "Opcións do botón IITC-CE"
+    },
+    "iitcGithub": {
+        "message": "Repositorio GitHub"
+    },
+    "iitcHomePage": {
+        "message": "Páxina de inicio"
+    },
+    "iitcTelegram": {
+        "message": "Novas en Telegram"
+    },
+    "addExternalPlugin": {
+        "message": "Engade pluggin externo"
+    },
+    "noData": {
+        "message": "Sen datos"
+    },
+    "changesApplied": {
+        "message": "Aplicáronse cambios"
+    },
+    "needRebootIntel": {
+        "message": "Os cambios aplicaranse despois de reiniciar Intel"
+    },
+    "titleDefault": {
+        "message": "Abrir Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "extDescription": {
+        "message": "Inicia IITC para Ingress Intel con facilidade.",
+        "description": "Description of the extension"
+    }
+}
