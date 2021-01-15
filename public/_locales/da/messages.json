@@ -9,7 +9,7 @@
         "message": "IITC-CE Knap indstillinger"
     },
     "iitcGithub": {
-        "message": "GitHub repository"
+        "message": "GitHub arkiv"
     },
     "iitcReddit": {
         "message": "Diskuter på r/IITC"
@@ -31,6 +31,131 @@
         "description": "Title for the button at the application panel"
     },
     "lang": {
-        "message": "en"
+        "message": "da"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Serveren er ikke tilgængelig. Prøv igen efter $ NUM $ sekunder",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "dropJSHereOrClick": {
+        "message": "Træk <i> .js </i> filerne her, eller klik for at uploade."
+    },
+    "errorReadingFile": {
+        "message": "Der opstod en fejl under læsning af $ PLUGIN_NAME $ -fil.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addedUserScriptTo": {
+        "message": "$ PLUGIN_NAME $ er føjet til kategorien \"$ PLUGIN_CATEGORY $\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$ PLUGIN_NAME $ er ikke et gyldigt UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "external": {
+        "message": "Ekstern"
+    },
+    "loading": {
+        "message": "Indlæser…"
+    },
+    "install": {
+        "message": "Installere"
+    },
+    "clickInstallPlugin": {
+        "message": "Dette er et IITC-plugin. Klik på installer for at begynde at bruge det."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Plugin med samme ID overskrives af det nye plugin."
+    },
+    "or": {
+        "message": "Eller"
+    },
+    "addressNotAvailable": {
+        "message": "Adressen er ikke tilgængelig"
+    },
+    "pluginDelete": {
+        "message": "Slet"
+    },
+    "pluginSave": {
+        "message": "Gem"
+    },
+    "openSupport": {
+        "message": "Åbn supportsiden:"
+    },
+    "localServerURL": {
+        "message": "Lokal serveradresse"
+    },
+    "badgeOverride": {
+        "message": "tilsidesætte"
+    },
+    "anyChannel": {
+        "message": "Enhver kanal"
+    },
+    "everyWeek": {
+        "message": "Hver uge"
+    },
+    "everyDay": {
+        "message": "Hver dag"
+    },
+    "every12hours": {
+        "message": "Hver 12 time"
+    },
+    "every6hours": {
+        "message": "Hver 6 time"
+    },
+    "updateExternalFrequency": {
+        "message": "Eksterne plugins kontrollerer for opdateringer"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE kontrollerer for opdateringer"
+    },
+    "localServer": {
+        "message": "Lokal server"
+    },
+    "testBuilds": {
+        "message": "Test udgaver"
+    },
+    "release": {
+        "message": "Udgivelses dato"
+    },
+    "choosingUpdateChannel": {
+        "message": "Valg af en IITC-CE opdateringskanal"
+    },
+    "iitcHomePage": {
+        "message": "Hjemmeside"
+    },
+    "changesApplied": {
+        "message": "Ændringer blev anvendt"
+    },
+    "needRebootIntel": {
+        "message": "Ændringer vil blive aktiveret efter Intel er genstartet"
+    },
+    "extDescription": {
+        "message": "Start IITC for Ingress med lethed.",
+        "description": "Description of the extension"
     }
 }

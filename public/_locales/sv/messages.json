@@ -154,5 +154,8 @@
     },
     "release": {
         "message": "Stabil"
+    },
+    "addExternalPlugin": {
+        "message": "Lägg till extern plugin"
     }
 }
