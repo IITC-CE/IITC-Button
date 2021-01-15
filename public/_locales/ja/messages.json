@@ -48,7 +48,7 @@
         "message": "アップデート中…"
     },
     "needRebootIntel": {
-        "message": "変更は、インテルマップの再起動後に有効になります"
+        "message": "変更はインテルマップの再起動後に有効になります"
     },
     "install": {
         "message": "インストール"
