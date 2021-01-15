@@ -6,7 +6,7 @@
         "message": "uppdatera nu"
     },
     "iitcButtonOptions": {
-        "message": "IITC_CE Knappval"
+        "message": "IITC-CE Knapp inställningar"
     },
     "iitcReddit": {
         "message": "Diskutera på r/IITC"
@@ -50,7 +50,7 @@
         "message": "eller"
     },
     "errorReadingFile": {
-        "message": "Ett fel uppstod vid läsningen av filen $PLUGIN_NAME$.",
+        "message": "Ett fel uppstod vid läsning av $PLUGIN_NAME$ filen.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -83,7 +83,7 @@
         "message": "Varje dag"
     },
     "updateExternalFrequency": {
-        "message": "Externa plugins sökning efter uppdateringar"
+        "message": "Externa plugins söker efter uppdateringar"
     },
     "external": {
         "message": "Extern"
@@ -107,10 +107,10 @@
         "message": "Detta är en IITC plugin. Tryck installera för att börja använda den."
     },
     "every12hours": {
-        "message": "Var 12 timme"
+        "message": "Var 12:e timme"
     },
     "every6hours": {
-        "message": "Var 6 timme"
+        "message": "Var 6:e timme"
     },
     "addedUserScriptTo": {
         "message": "$PLUGIN_NAME$ har lagts till i kategorin \"$PLUGIN_CATEGORY$\".",
@@ -126,7 +126,7 @@
         }
     },
     "serverNotAvailableRetry": {
-        "message": "Servern är inte tillgänglig. Försök igen efter $NUM$ sekund/er",
+        "message": "Servern är inte tillgänglig. Försök igen efter $NUM$ sekund(er)",
         "placeholders": {
             "num": {
                 "content": "$1",
@@ -135,15 +135,24 @@
         }
     },
     "willBeOverwrittenByNewPlugin": {
-        "message": "Plugin med samma ID kommer att skrivas över av den nya pluginen."
+        "message": "Plugin med samma ID kommer skrivas över av det nya pluginet."
     },
     "iitcHomePage": {
-        "message": "Hemsida"
+        "message": "Startsida"
     },
     "iitcTelegram": {
-        "message": "Notiser i Telegram"
+        "message": "Nyheter i Telegram"
     },
     "choosingUpdateChannel": {
         "message": "Välj uppdateringskanal för IITC-CE"
+    },
+    "badgeOverride": {
+        "message": "Åsidosätt"
+    },
+    "testBuilds": {
+        "message": "Testbyggen"
+    },
+    "release": {
+        "message": "Stabil"
     }
 }
