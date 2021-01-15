@@ -113,7 +113,7 @@
         "message": "oder"
     },
     "dropJSHereOrClick": {
-        "message": "<i>.js</i> Dateien hier ablegen oder klicken zum Upload."
+        "message": "<i>.js</i> Dateien hier einfügen oder zum Upload klicken."
     },
     "willBeOverwrittenByNewPlugin": {
         "message": "Plugin mit der selben ID wird durch das neue Plugin überschrieben."
