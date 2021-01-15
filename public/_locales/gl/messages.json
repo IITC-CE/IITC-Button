@@ -39,5 +39,14 @@
     "extDescription": {
         "message": "Inicia IITC para Ingress Intel con facilidade.",
         "description": "Description of the extension"
+    },
+    "iitcReddit": {
+        "message": "Discutir en r/IITC"
+    },
+    "updateInProgress": {
+        "message": "Actualización en curso…"
+    },
+    "lang": {
+        "message": "gl"
     }
 }
