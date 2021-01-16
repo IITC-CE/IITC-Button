@@ -1,4 +1,6 @@
 module.exports = {
+  filenameHashing: false,
+  productionSourceMap: false,
   pages: {
     background: {
       template: "public/browser-extension.html",
