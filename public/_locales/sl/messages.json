@@ -15,5 +15,41 @@
     "extDescription": {
         "message": "Zaženite IITC za Intel Ingress z lahkoto.",
         "description": "Description of the extension"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "release": {
+        "message": "Izdati"
+    },
+    "choosingUpdateChannel": {
+        "message": "Izbira kanala za posodobitev IITC-CE"
+    },
+    "updateNow": {
+        "message": "posodobi zdaj"
+    },
+    "iitcButtonOptions": {
+        "message": "Možnosti gumba IITC-CE"
+    },
+    "iitcGithub": {
+        "message": "Skladišče GitHub"
+    },
+    "iitcHomePage": {
+        "message": "Domača stran"
+    },
+    "iitcReddit": {
+        "message": "Pogovor na r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Novice v Telegramu"
+    },
+    "addExternalPlugin": {
+        "message": "Dodajte zunanji vtičnik"
+    },
+    "noData": {
+        "message": "Ni podatkov"
+    },
+    "changesApplied": {
+        "message": "Spremembe so bile uporabljene"
     }
 }
