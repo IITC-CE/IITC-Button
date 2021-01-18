@@ -1,1 +1,19 @@
-{}
+{
+    "updateInProgress": {
+        "message": "Posodobitev v teku…"
+    },
+    "needRebootIntel": {
+        "message": "Spremembe bodo uveljavljene po ponovnem zagonu Intela"
+    },
+    "titleDefault": {
+        "message": "Odprite Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "sl"
+    },
+    "extDescription": {
+        "message": "Zaženite IITC za Intel Ingress z lahkoto.",
+        "description": "Description of the extension"
+    }
+}
