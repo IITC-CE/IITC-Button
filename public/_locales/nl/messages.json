@@ -1,9 +1,161 @@
 {
     "extDescription": {
-        "message": "start IITC voor Ingress Intel met gemak op",
+        "message": "Eenvoudig opstarten van IITC voor Ingress Intel.",
         "description": "Description of the extension"
     },
     "lang": {
         "message": "nl"
+    },
+    "external": {
+        "message": "Extern"
+    },
+    "errorReadingFile": {
+        "message": "Er is een fout opgetreden bij het lezen van het bestand $PLUGIN_NAME$.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "addressNotAvailable": {
+        "message": "Adres is niet beschikbaar"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ werd aan de $PLUGIN_CATEGORY$ categorie toegevoegd.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ is geen geldig UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "openSupport": {
+        "message": "Hulppagina openen:"
+    },
+    "localServerURL": {
+        "message": "Lokaal serveradres"
+    },
+    "anyChannel": {
+        "message": "Eender welk kanaal"
+    },
+    "updateExternalFrequency": {
+        "message": "Externe plugins zoeken naar updates"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE zoekt naar updates"
+    },
+    "localServer": {
+        "message": "Lokale server"
+    },
+    "testBuilds": {
+        "message": "Testversies"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "release": {
+        "message": "Release"
+    },
+    "choosingUpdateChannel": {
+        "message": "Selecteer een IITC-CE update kanaal"
+    },
+    "iitcGithub": {
+        "message": "GitHub archief"
+    },
+    "iitcHomePage": {
+        "message": "Homepagina"
+    },
+    "iitcReddit": {
+        "message": "Bespreek op r/IITC"
+    },
+    "iitcTelegram": {
+        "message": "Nieuws in Telegram"
+    },
+    "addExternalPlugin": {
+        "message": "Externe plugin toevoegen"
+    },
+    "noData": {
+        "message": "Geen data"
+    },
+    "changesApplied": {
+        "message": "Wijzigingen werden bewaard"
+    },
+    "updateInProgress": {
+        "message": "Aan het updaten…"
+    },
+    "needRebootIntel": {
+        "message": "Veranderingen worden bewaard na een herstart van Intel"
+    },
+    "titleDefault": {
+        "message": "Intel openen",
+        "description": "Title for the button at the application panel"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Knop opties"
+    },
+    "badgeOverride": {
+        "message": "opheffen"
+    },
+    "dropJSHereOrClick": {
+        "message": "Sleep hier <i>.js</i> bestanden of klik om te uploaden."
+    },
+    "loading": {
+        "message": "Laden…"
+    },
+    "install": {
+        "message": "Installeren"
+    },
+    "clickInstallPlugin": {
+        "message": "Dit is een IITC plugin. Installeer om te gebruiken."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Een plugin met hetzelfde ID zal overschreven worden door de nieuwe plugin."
+    },
+    "serverNotAvailableRetry": {
+        "message": "De server is niet beschikbaar. Probeer opnieuw over $NUM$ seconden",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "or": {
+        "message": "of"
+    },
+    "pluginDelete": {
+        "message": "Verwijderen"
+    },
+    "pluginSave": {
+        "message": "Bewaren"
+    },
+    "everyWeek": {
+        "message": "Elke week"
+    },
+    "everyDay": {
+        "message": "Elke dag"
+    },
+    "every12hours": {
+        "message": "Iedere 12 uur"
+    },
+    "every6hours": {
+        "message": "Iedere 6 uur"
+    },
+    "updateNow": {
+        "message": "nu updaten"
     }
 }
