@@ -81,7 +81,7 @@
         "message": "無資料"
     },
     "changesApplied": {
-        "message": "更改已生效。"
+        "message": "更改已生效"
     },
     "updateInProgress": {
         "message": "正在更新中…"
@@ -97,7 +97,65 @@
         "message": "zh_Hant"
     },
     "extDescription": {
-        "message": "開啟 IITC 以遨遊 Ingress Intel.",
+        "message": "開啟 IITC 以遨遊 Ingress Intel。",
         "description": "Description of the extension"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ 已經被加入至「$PLUGIN_CATEGORY$」分類。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "serverNotAvailableRetry": {
+        "message": "目前無法使用本伺服器，請在$NUM$秒後重試",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "正在載入…"
+    },
+    "install": {
+        "message": "安裝"
+    },
+    "clickInstallPlugin": {
+        "message": "這是IITC插件，請點擊安裝(install)以開始使用。"
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "擁有相同ID的插件將會以較新者取代。"
+    },
+    "dropJSHereOrClick": {
+        "message": "在此拖放<i>.js</i>檔案或點擊按鈕以上傳。"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$不是有效的使用者腳本。",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginSave": {
+        "message": "儲存"
+    },
+    "openSupport": {
+        "message": "開啟說明頁面:"
+    },
+    "localServerURL": {
+        "message": "本地伺服器網址"
+    },
+    "badgeOverride": {
+        "message": "覆蓋"
     }
 }
