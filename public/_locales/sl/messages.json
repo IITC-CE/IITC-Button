@@ -51,5 +51,111 @@
     },
     "changesApplied": {
         "message": "Spremembe so bile uporabljene"
+    },
+    "addressNotAvailable": {
+        "message": "Naslov ni na voljo"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ je bil dodan v kategorijo \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ ni veljaven UserScript.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "pluginDelete": {
+        "message": "Izbriši"
+    },
+    "pluginSave": {
+        "message": "Shrani"
+    },
+    "openSupport": {
+        "message": "Odpri stran za podporo:"
+    },
+    "localServerURL": {
+        "message": "Naslov lokalnega strežnika"
+    },
+    "badgeOverride": {
+        "message": "zavrnitev"
+    },
+    "anyChannel": {
+        "message": "Kateri koli kanal"
+    },
+    "everyWeek": {
+        "message": "Vsak teden"
+    },
+    "everyDay": {
+        "message": "Vsak dan"
+    },
+    "every12hours": {
+        "message": "Vsakih 12 ur"
+    },
+    "every6hours": {
+        "message": "Vsakih 6 ur"
+    },
+    "updateExternalFrequency": {
+        "message": "Zunanji vtičniki preverijo posodobitve"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE preverja posodobitve"
+    },
+    "localServer": {
+        "message": "Lokalni strežnik"
+    },
+    "testBuilds": {
+        "message": "Testne gradnje"
+    },
+    "external": {
+        "message": "Zunanji"
+    },
+    "serverNotAvailableRetry": {
+        "message": "Strežnik ni na voljo. Ponovno poskusi čez $NUM$ sekund",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "loading": {
+        "message": "Nalaganje…"
+    },
+    "install": {
+        "message": "Namestiti"
+    },
+    "clickInstallPlugin": {
+        "message": "To je vtičnik IITC. Klikni \"namestiti\" gumb, da ga začneš uporabljati."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Vtičnik z istim ID-jem bo novi vtičnik prepisal."
+    },
+    "dropJSHereOrClick": {
+        "message": "Prenesi <i>.js</i> datoteko sem ali klikni za nalaganje."
+    },
+    "or": {
+        "message": "ali"
+    },
+    "errorReadingFile": {
+        "message": "Med branjem datoteke za $PLUGIN_NAME$ je prišlo do napake.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
     }
 }
