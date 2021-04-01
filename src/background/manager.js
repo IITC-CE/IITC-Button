@@ -17,14 +17,21 @@ const network_host = {
 };
 
 export async function runExtension() {
-  let version = browser.runtime.getManifest().version;
-  let last_version = await browser.storage.local.get("lastversion");
-  if (last_version !== version) {
-    if (last_version) {
-      await on_extension_update(last_version);
+  versionCheck();
+}
+
+async function versionCheck() {
+  const currentVersion = browser.runtime.getManifest().version;
+  const lastVersion = await browser.storage.local.get("lastversion").then(obj => obj["lastversion"]);
+
+  if (lastVersion !== currentVersion) {
+    if (lastVersion) {
+      await on_extension_update(lastVersion);
     }
     await checkUpdates(true);
     await checkExternalUpdates(true);
+
+    browser.storage.local.set({ lastversion: currentVersion });
   }
 }
 
