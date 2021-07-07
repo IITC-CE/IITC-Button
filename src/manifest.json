@@ -13,7 +13,8 @@
     "storage",
     "<all_urls>",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "unlimitedStorage"
   ],
   "default_locale": "en",
   "background": {
