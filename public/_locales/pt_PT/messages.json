@@ -25,10 +25,10 @@
         "message": "Repositório GitHub"
     },
     "iitcButtonOptions": {
-        "message": "IITC-CE Botão de opções"
+        "message": "Opções do Botão IITC-CE"
     },
     "updateNow": {
-        "message": "Actualize agora"
+        "message": "Atualizar agora"
     },
     "release": {
         "message": "Lançamento"
@@ -40,19 +40,19 @@
         "message": "Servidor Local"
     },
     "updateFrequency": {
-        "message": "IITC-CE Verificar actualizações"
+        "message": "Verificar atualizações do IITC-CE"
     },
     "updateExternalFrequency": {
-        "message": "Plugins externos verificar actualizações"
+        "message": "Verificar atualizações dos plugins externos"
     },
     "every6hours": {
-        "message": "Todas as 6 horas"
+        "message": "A cada 6 horas"
     },
     "every12hours": {
         "message": "A cada 12 horas"
     },
     "everyDay": {
-        "message": "A cada dia"
+        "message": "Todos os Dias"
     },
     "everyWeek": {
         "message": "A cada semana"
@@ -134,7 +134,7 @@
         "message": "Adicionar plugin externo"
     },
     "choosingUpdateChannel": {
-        "message": "Escolhendo um canal de atualização IITC-CE"
+        "message": "Escolher um canal de atualização para o IITC-CE"
     },
     "anyChannel": {
         "message": "Qualquer canal"
@@ -156,6 +156,6 @@
         "message": "substituir"
     },
     "beta": {
-        "message": "Beto"
+        "message": "Beta"
     }
 }
