@@ -11,7 +11,13 @@
   "permissions": [
     "tabs",
     "storage",
-    "<all_urls>",
+    "https://intel.ingress.com/*",
+    "http://*/*.json",
+    "https://*/*.json",
+    "http://*/*.meta.js",
+    "http://*/*.user.js",
+    "https://*/*.meta.js",
+    "https://*/*.user.js",
     "webRequest",
     "webRequestBlocking",
     "unlimitedStorage"
