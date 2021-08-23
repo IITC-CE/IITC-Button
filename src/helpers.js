@@ -1,11 +1,8 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 export let wait_timeout_id = null;
 
-// Allow metadata lines to start with WHITESPACE? '//' SPACE
-// Allow anything to follow the predefined text of the metaStart/End
-// The SPACE must be on the same line and specifically \x20 as \s would also match \r\n\t
-// Note: when there's no valid metablock, an empty string is matched for convenience
-const METABLOCK_RE = /(?:^|\n)\s*\/\/\x20==UserScript==([\s\S]*?\n)\s*\/\/\x20==\/UserScript==|$/;
+const METABLOCK_RE_HEADER = /==UserScript==\s*([\s\S]*)\/\/\s*==\/UserScript==/m; // Note: \s\S to match linebreaks
+const METABLOCK_RE_ENTRY = /\/\/\s*@(\S+)\s+(.*)$/gm; // example match: "\\ @name some text"
 
 const META_ARRAY_TYPES = [
   "include",
@@ -21,29 +18,32 @@ export function _(msg, arg) {
 }
 
 export function parseMeta(code) {
+  let header = METABLOCK_RE_HEADER.exec(code);
+  if (header === null) return;
+  header = header[1];
   const meta = {};
-  const metaBody = code.match(METABLOCK_RE)[1] || "";
-  metaBody.replace(
-    /(?:^|\n)\s*\/\/\x20(@\S+)(.*)/g,
-    (_match, rawKey, rawValue) => {
-      const [keyName, locale] = rawKey.slice(1).split(":");
-      const camelKey = keyName.replace(/[-_](\w)/g, (m, g) => g.toUpperCase());
-      const key = locale ? `${camelKey}:${locale.toLowerCase()}` : camelKey;
 
-      let value = rawValue.trim();
-      if (camelKey === "name") {
-        value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
-      }
-      if (META_ARRAY_TYPES.includes(key)) {
-        if (typeof meta[key] === "undefined") {
-          meta[key] = [];
-        }
-        meta[key].push(value);
-      } else {
-        meta[key] = value;
-      }
+  let entry = METABLOCK_RE_ENTRY.exec(header);
+  while (entry) {
+    const [keyName, locale] = entry[1].split(":");
+    const camelKey = keyName.replace(/[-_](\w)/g, (m, g) => g.toUpperCase());
+    const key = locale ? `${camelKey}:${locale.toLowerCase()}` : camelKey;
+    let value = entry[2];
+
+    if (camelKey === "name") {
+      value = value.replace("IITC plugin: ", "").replace("IITC Plugin: ", "");
     }
-  );
+    if (META_ARRAY_TYPES.includes(key)) {
+      if (typeof meta[key] === "undefined") {
+        meta[key] = [];
+      }
+      meta[key].push(value);
+    } else {
+      meta[key] = value;
+    }
+
+    entry = METABLOCK_RE_ENTRY.exec(header);
+  }
   // @homepageURL: compatible with @homepage
   if (!meta.homepageURL && meta.homepage) meta.homepageURL = meta.homepage;
   return meta;
