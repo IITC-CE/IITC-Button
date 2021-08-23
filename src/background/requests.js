@@ -1,6 +1,11 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import { parseMeta, ajaxGet, getUniqId } from "../helpers";
+import {
+  parseMeta,
+  ajaxGet,
+  getUniqId,
+  check_meta_match_pattern
+} from "../helpers";
 
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
@@ -17,10 +22,14 @@ export function onBeforeRequest(req) {
     return;
   }
 
-  if (!blacklist.some(matches, url) || whitelist.some(matches, url)) {
-    maybeInstallUserJs(tabId, url).then();
-    return { redirectUrl: "javascript:void 0" }; // eslint-disable-line no-script-url
-  }
+  browser.storage.local.get(["IITC_is_enabled"]).then(data => {
+    if (data["IITC_is_enabled"] !== false) {
+      if (!blacklist.some(matches, url) || whitelist.some(matches, url)) {
+        maybeInstallUserJs(tabId, url).then();
+        return { redirectUrl: "javascript:void 0" }; // eslint-disable-line no-script-url
+      }
+    }
+  });
 }
 
 async function maybeInstallUserJs(tabId, url) {
@@ -31,10 +40,11 @@ async function maybeInstallUserJs(tabId, url) {
     if (tabId >= 0) browser.tabs.update(tabId, { url });
   }
 
-  if (code && parseMeta(code).name) {
-    const tab = (tabId >= 0 && (await browser.tabs.get(tabId))) || {};
-    await confirmInstall(url, code);
-    if (tab.pendingUrl && tab.url === "chrome://newtab/") {
+  if (code) {
+    const meta = parseMeta(code);
+
+    if (meta.name && check_meta_match_pattern(meta)) {
+      await confirmInstall(url, code);
       browser.tabs.remove(tabId);
     }
   }
@@ -47,7 +57,7 @@ async function confirmInstall(url, code) {
   await browser.storage.local.set(cache);
 
   await browser.tabs.create({
-    url: await browser.extension.getURL(`/jsview.html?uniqId=${uniqId}`)
+    url: await browser.runtime.getURL(`/jsview.html?uniqId=${uniqId}`)
   });
 }
 

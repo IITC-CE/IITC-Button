@@ -23,7 +23,7 @@ export async function injectUserScript(code, tabs) {
 // Fetch all completly loaded Ingress Intel tabs
 export async function getTabsToInject() {
   return await browser.tabs.query({
-    url: "https://intel.ingress.com/*",
+    url: ["https://intel.ingress.com/*", "https://missions.ingress.com/*"],
     status: "complete"
   });
 }

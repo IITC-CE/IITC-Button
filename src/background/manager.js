@@ -22,7 +22,9 @@ export async function runExtension() {
 
 async function versionCheck() {
   const currentVersion = browser.runtime.getManifest().version;
-  const lastVersion = await browser.storage.local.get("lastversion").then(obj => obj["lastversion"]);
+  const lastVersion = await browser.storage.local
+    .get("lastversion")
+    .then(obj => obj["lastversion"]);
 
   if (lastVersion !== currentVersion) {
     if (lastVersion) {

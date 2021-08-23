@@ -6,9 +6,8 @@ let lastIITCTab = null;
 export async function onRequestOpenIntel() {
   if (lastIITCTab) {
     const tabInfo = await getTabInfo(lastIITCTab);
-    if (isIngressUrl(tabInfo.url)) {
-      console.debug(`detected intel.ingress.com page on tab ${lastIITCTab}`);
-      await setTabActive(lastIITCTab);
+    if (isIngressIntelUrl(tabInfo.url)) {
+      return await setTabActive(lastIITCTab);
     }
   }
 
@@ -27,10 +26,7 @@ export async function onToggleIITC(value) {
   await browser.storage.local.set({ IITC_is_enabled: value });
 
   // Fetch all completly loaded Ingress Intel tabs
-  const tabs = await browser.tabs.query({
-    url: "https://intel.ingress.com/*",
-    status: "complete"
-  });
+  const tabs = await getTabsToInject();
 
   for (let tab of Object.values(tabs)) {
     await browser.tabs.reload(tab.id);
@@ -42,9 +38,10 @@ export async function onUpdatedListener(tabId, status) {
   if (status.status === "complete") {
     const tabInfo = await getTabInfo(tabId);
     if (isIngressUrl(tabInfo.url)) {
-      console.debug(`detected intel.ingress.com page on tab ${tabId}`);
       await initialize();
-      lastIITCTab = tabId;
+      if (isIngressIntelUrl(tabInfo.url)) {
+        lastIITCTab = tabId;
+      }
     }
   }
 }
@@ -85,7 +82,7 @@ async function initialize() {
   const plugins_local = data[channel + "_plugins_local"];
   const plugins_user = data[channel + "_plugins_user"];
 
-  if ((status === undefined || status === true) && iitc_code !== undefined) {
+  if (status !== false && iitc_code !== undefined) {
     const tabs = await getTabsToInject();
     const userscripts = [];
 
@@ -123,9 +120,20 @@ async function getTabInfo(tabId) {
   return await browser.tabs.get(tabId);
 }
 
-function isIngressUrl(url) {
+function isIngressIntelUrl(url) {
   if (url) {
-    return /intel.ingress.com/.test(url);
+    return /^https:\/\/intel\.ingress\.com/.test(url);
   }
   return false;
+}
+
+function isIngressMissionsUrl(url) {
+  if (url) {
+    return /^https:\/\/missions\.ingress\.com/.test(url);
+  }
+  return false;
+}
+
+function isIngressUrl(url) {
+  return isIngressIntelUrl(url) || isIngressMissionsUrl(url);
 }
