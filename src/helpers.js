@@ -103,6 +103,40 @@ export function getUID(plugin) {
   return available_fields.join("+");
 }
 
+function check_url_match_pattern(url, domain) {
+  if (
+    (/^(http|https|\*):\/\/intel\.ingress\.com\//.test(url) ||
+      /^(http|https|\*):\/\/(www|)\.ingress\.com\/intel/.test(url)) &&
+    (domain === "<all>" || domain === "intel.ingress.com")
+  )
+    return true;
+
+  if (
+    /^(http|https|\*):\/\/missions\.ingress\.com\//.test(url) &&
+    (domain === "<all>" || domain === "missions.ingress.com")
+  )
+    return true;
+
+  return false;
+}
+
+// A simple check for a match Ingress sites.
+// Far from implementing all the features of userscripts @match/@include ( https://violentmonkey.github.io/api/matching/ ),
+// but sufficient for our needs.
+export function check_meta_match_pattern(meta, domain = "<all>") {
+  if (meta.match && meta.match.length) {
+    for (const url of meta.match) {
+      if (check_url_match_pattern(url, domain)) return true;
+    }
+  }
+  if (meta.include && meta.include.length) {
+    for (const url of meta.include) {
+      if (check_url_match_pattern(url, domain)) return true;
+    }
+  }
+  return false;
+}
+
 export async function wait(seconds) {
   return new Promise(resolve => {
     clearTimeout(wait_timeout_id);

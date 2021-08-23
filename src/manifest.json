@@ -12,12 +12,10 @@
     "tabs",
     "storage",
     "https://intel.ingress.com/*",
-    "http://*/*.json",
-    "https://*/*.json",
-    "http://*/*.meta.js",
-    "http://*/*.user.js",
-    "https://*/*.meta.js",
-    "https://*/*.user.js",
+    "https://missions.ingress.com/*",
+    "*://*/*.json",
+    "*://*/*.meta.js",
+    "*://*/*.user.js",
     "webRequest",
     "webRequestBlocking",
     "unlimitedStorage"
@@ -28,7 +26,7 @@
   },
   "content_scripts": [
     {
-      "matches" : ["https://intel.ingress.com/*"],
+      "matches" : ["https://intel.ingress.com/*", "https://missions.ingress.com/*"],
       "run_at": "document_start",
       "js": ["js/content-script.js"]
     }

@@ -3,7 +3,9 @@ import { getUID } from "../helpers";
 import { isSemVer } from "./issemver";
 
 export async function on_extension_update(last_version) {
-  const release_plugins = await browser.storage.local.get("release_plugins").then(obj => obj["release_plugins"]);
+  const release_plugins = await browser.storage.local
+    .get("release_plugins")
+    .then(obj => obj["release_plugins"]);
 
   if (release_plugins || isSemVer(last_version, "< 1.4.0")) {
     const local = await browser.storage.local.get([

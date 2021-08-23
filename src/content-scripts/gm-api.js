@@ -97,7 +97,6 @@ export const GM = function() {
         );
       },
       _access: function(key) {
-        console.log("_access");
         return (
           meta.grant !== undefined &&
           meta.grant.some(permission => {
