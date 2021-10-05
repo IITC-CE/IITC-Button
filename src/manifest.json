@@ -22,7 +22,8 @@
   ],
   "default_locale": "en",
   "background": {
-    "page": "background.html"
+    "page": "background.html",
+    "persistent": false
   },
   "content_scripts": [
     {
