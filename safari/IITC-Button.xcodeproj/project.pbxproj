@@ -44,7 +44,6 @@
 		841A89B8270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
 		841A89B9270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
 		84DAA698270D549A0086E511 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA697270D549A0086E511 /* ContentView.swift */; };
-		84DAA6AA270D669C0086E511 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DAA6A9270D669C0086E511 /* Info.plist */; };
 		84E7DADC2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADD2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADF2709FCE3005F9383 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACD2709FCE1005F9383 /* ContentView.swift */; };
@@ -140,8 +139,8 @@
 		841A89A3270C6EFA0064B01F /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../../dist/_locales; sourceTree = "<group>"; };
 		84DAA697270D549A0086E511 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84DAA69A270D61620086E511 /* pre-build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "pre-build.sh"; sourceTree = "<group>"; };
-		84DAA6A9270D669C0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84DAA6AB270D66B50086E511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DAA6AF270D714B0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DAA6B1270D715F0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCButtonApp.swift; sourceTree = "<group>"; };
 		84E7DACD2709FCE1005F9383 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84E7DACE2709FCE3005F9383 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -217,7 +216,7 @@
 		84DAA695270D547C0086E511 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				84DAA6A9270D669C0086E511 /* Info.plist */,
+				84DAA6AF270D714B0086E511 /* Info.plist */,
 				84DAA696270D54850086E511 /* Views */,
 			);
 			path = iOS;
@@ -274,9 +273,9 @@
 		84E7DADA2709FCE3005F9383 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				84DAA6B1270D715F0086E511 /* Info.plist */,
 				84DAA692270D50DF0086E511 /* Views */,
 				84E7DADB2709FCE3005F9383 /* macOS.entitlements */,
-				84DAA6AB270D66B50086E511 /* Info.plist */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -450,7 +449,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84DAA6AA270D669C0086E511 /* Info.plist in Resources */,
 				84E7DAE02709FCE3005F9383 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,7 +643,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -663,6 +660,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -706,7 +705,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -718,6 +716,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -735,13 +735,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,13 +763,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -799,12 +795,9 @@
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -830,12 +823,9 @@
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -860,8 +850,6 @@
 				INFOPLIST_FILE = "Safari Extension/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension macOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -892,8 +880,6 @@
 				INFOPLIST_FILE = "Safari Extension/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension macOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -922,8 +908,6 @@
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -953,8 +937,6 @@
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
-				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
