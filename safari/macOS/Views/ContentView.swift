@@ -24,8 +24,10 @@ struct ContentView: View {
     var body: some View {
         VStack {
             extensionStateIndicator
+            Button("Open Safari Extension Preference", action: showPreferencesForExtension)
         }
         .frame(minWidth: 240)
+        .padding()
     }
     
     @ViewBuilder
@@ -36,7 +38,6 @@ struct ContentView: View {
             Text(statusText)
                 .foregroundColor(statusColor)
         }
-        .padding()
         .onChange(of: scenePhase) { phase in
             if phase == .active {
                 updateExtensionStatus()
@@ -70,6 +71,10 @@ struct ContentView: View {
                 extensionStatus = solidState.isEnabled ? .enabled : .disabled
             }
         }
+    }
+    
+    private func showPreferencesForExtension() {
+        SFSafariApplication.showPreferencesForExtension(withIdentifier: Self.extensionId)
     }
 }
 
