@@ -23,6 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            Image(nsImage: NSApplication.shared.applicationIconImage)
             extensionStateIndicator
             Button("Open Safari Extension Preference", action: showPreferencesForExtension)
         }
