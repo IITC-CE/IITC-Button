@@ -30,3 +30,6 @@ pnpm-debug.log*
 # Xcode
 ## User settings
 xcuserdata/
+
+## Info.plist Preprocessor
+info-plist-preprocessor.h

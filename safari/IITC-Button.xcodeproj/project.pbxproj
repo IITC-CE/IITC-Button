@@ -6,6 +6,20 @@
 	objectVersion = 55;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		84DAA69B270D61AB0086E511 /* Version */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 84DAA69C270D61AB0086E511 /* Build configuration list for PBXAggregateTarget "Version" */;
+			buildPhases = (
+				84DAA69F270D61B00086E511 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Version;
+			productName = Version;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		841A89A4270C6EFA0064B01F /* background.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A8999270C6EFA0064B01F /* background.html */; };
 		841A89A5270C6EFA0064B01F /* background.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A8999270C6EFA0064B01F /* background.html */; };
@@ -30,6 +44,7 @@
 		841A89B8270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
 		841A89B9270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
 		84DAA698270D549A0086E511 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA697270D549A0086E511 /* ContentView.swift */; };
+		84DAA6AA270D669C0086E511 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DAA6A9270D669C0086E511 /* Info.plist */; };
 		84E7DADC2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADD2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADF2709FCE3005F9383 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACD2709FCE1005F9383 /* ContentView.swift */; };
@@ -42,6 +57,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		84DAA6A1270D62310086E511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E7DAC72709FCE1005F9383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DAA69B270D61AB0086E511;
+			remoteInfo = Version;
+		};
+		84DAA6A3270D62350086E511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E7DAC72709FCE1005F9383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DAA69B270D61AB0086E511;
+			remoteInfo = Version;
+		};
+		84DAA6A5270D62390086E511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E7DAC72709FCE1005F9383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DAA69B270D61AB0086E511;
+			remoteInfo = Version;
+		};
+		84DAA6A7270D623C0086E511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E7DAC72709FCE1005F9383 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84DAA69B270D61AB0086E511;
+			remoteInfo = Version;
+		};
 		84E7DB052709FF25005F9383 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E7DAC72709FCE1005F9383 /* Project object */;
@@ -96,6 +139,9 @@
 		841A89A2270C6EFA0064B01F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../../dist/assets; sourceTree = "<group>"; };
 		841A89A3270C6EFA0064B01F /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../../dist/_locales; sourceTree = "<group>"; };
 		84DAA697270D549A0086E511 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		84DAA69A270D61620086E511 /* pre-build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "pre-build.sh"; sourceTree = "<group>"; };
+		84DAA6A9270D669C0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DAA6AB270D66B50086E511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCButtonApp.swift; sourceTree = "<group>"; };
 		84E7DACD2709FCE1005F9383 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84E7DACE2709FCE3005F9383 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -171,6 +217,7 @@
 		84DAA695270D547C0086E511 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				84DAA6A9270D669C0086E511 /* Info.plist */,
 				84DAA696270D54850086E511 /* Views */,
 			);
 			path = iOS;
@@ -184,6 +231,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		84DAA699270D613F0086E511 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				84DAA69A270D61620086E511 /* pre-build.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		84E7DAC62709FCE1005F9383 = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +246,7 @@
 				84E7DADA2709FCE3005F9383 /* macOS */,
 				84E7DAD42709FCE3005F9383 /* Products */,
 				84E7DB0C2709FF46005F9383 /* Safari Extension */,
+				84DAA699270D613F0086E511 /* Scripts */,
 				84E7DACB2709FCE1005F9383 /* Shared */,
 			);
 			sourceTree = "<group>";
@@ -220,6 +276,7 @@
 			children = (
 				84DAA692270D50DF0086E511 /* Views */,
 				84E7DADB2709FCE3005F9383 /* macOS.entitlements */,
+				84DAA6AB270D66B50086E511 /* Info.plist */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -275,6 +332,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84DAA6A2270D62310086E511 /* PBXTargetDependency */,
 				84E7DB282709FFA2005F9383 /* PBXTargetDependency */,
 			);
 			name = iOS;
@@ -294,6 +352,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84DAA6A4270D62350086E511 /* PBXTargetDependency */,
 				84E7DB062709FF25005F9383 /* PBXTargetDependency */,
 			);
 			name = macOS;
@@ -312,6 +371,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84DAA6A6270D62390086E511 /* PBXTargetDependency */,
 			);
 			name = "Safari Extension macOS";
 			productName = "Safari Extension macOS";
@@ -329,6 +389,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84DAA6A8270D623C0086E511 /* PBXTargetDependency */,
 			);
 			name = "Safari Extension iOS";
 			productName = "Safari Extension iOS";
@@ -345,6 +406,9 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					84DAA69B270D61AB0086E511 = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					84E7DAD22709FCE3005F9383 = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -374,8 +438,9 @@
 			targets = (
 				84E7DAD22709FCE3005F9383 /* iOS */,
 				84E7DAD82709FCE3005F9383 /* macOS */,
-				84E7DAED2709FF25005F9383 /* Safari Extension macOS */,
 				84E7DB102709FFA2005F9383 /* Safari Extension iOS */,
+				84E7DAED2709FF25005F9383 /* Safari Extension macOS */,
+				84DAA69B270D61AB0086E511 /* Version */,
 			);
 		};
 /* End PBXProject section */
@@ -385,6 +450,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84DAA6AA270D669C0086E511 /* Info.plist in Resources */,
 				84E7DAE02709FCE3005F9383 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,6 +501,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		84DAA69F270D61B00086E511 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh ${PROJECT_DIR}/Scripts/pre-build.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		84E7DACF2709FCE3005F9383 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -473,6 +560,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		84DAA6A2270D62310086E511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84DAA69B270D61AB0086E511 /* Version */;
+			targetProxy = 84DAA6A1270D62310086E511 /* PBXContainerItemProxy */;
+		};
+		84DAA6A4270D62350086E511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84DAA69B270D61AB0086E511 /* Version */;
+			targetProxy = 84DAA6A3270D62350086E511 /* PBXContainerItemProxy */;
+		};
+		84DAA6A6270D62390086E511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84DAA69B270D61AB0086E511 /* Version */;
+			targetProxy = 84DAA6A5270D62390086E511 /* PBXContainerItemProxy */;
+		};
+		84DAA6A8270D623C0086E511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84DAA69B270D61AB0086E511 /* Version */;
+			targetProxy = 84DAA6A7270D623C0086E511 /* PBXContainerItemProxy */;
+		};
 		84E7DB062709FF25005F9383 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E7DAED2709FF25005F9383 /* Safari Extension macOS */;
@@ -486,6 +593,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		84DAA69D270D61AB0086E511 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4J48MW8HQS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		84DAA69E270D61AB0086E511 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4J48MW8HQS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		84E7DAE22709FCE3005F9383 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -520,7 +645,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -581,7 +706,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -611,12 +736,12 @@
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -641,12 +766,12 @@
 				DEVELOPMENT_TEAM = 4J48MW8HQS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -675,7 +800,11 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -702,7 +831,11 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -727,6 +860,8 @@
 				INFOPLIST_FILE = "Safari Extension/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension macOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -757,6 +892,8 @@
 				INFOPLIST_FILE = "Safari Extension/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension macOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -785,6 +922,8 @@
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -814,6 +953,8 @@
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -838,6 +979,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		84DAA69C270D61AB0086E511 /* Build configuration list for PBXAggregateTarget "Version" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84DAA69D270D61AB0086E511 /* Debug */,
+				84DAA69E270D61AB0086E511 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84E7DACA2709FCE1005F9383 /* Build configuration list for PBXProject "IITC-Button" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
