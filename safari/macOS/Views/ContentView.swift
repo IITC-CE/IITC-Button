@@ -22,6 +22,14 @@ struct ContentView: View {
     @State private var extensionStatus = ExtensionStatus.unknown
     
     var body: some View {
+        VStack {
+            extensionStateIndicator
+        }
+        .frame(minWidth: 240)
+    }
+    
+    @ViewBuilder
+    private var extensionStateIndicator: some View {
         HStack {
             Text("Safari Extension")
             Spacer()
