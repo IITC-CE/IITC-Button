@@ -13,5 +13,10 @@ struct IITCButtonApp: App {
         WindowGroup {
             ContentView()
         }
+        .commands {
+            #if os(macOS)
+            IITCButtonCommands()
+            #endif
+        }
     }
 }
