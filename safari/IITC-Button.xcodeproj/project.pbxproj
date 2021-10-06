@@ -45,6 +45,9 @@
 		841A89B9270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
 		84DAA698270D549A0086E511 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA697270D549A0086E511 /* ContentView.swift */; };
 		84DAA6B4270D7D990086E511 /* IITCButtonCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA6B3270D7D990086E511 /* IITCButtonCommands.swift */; };
+		84DAA6B6270D92960086E511 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA6B5270D92960086E511 /* Helper.swift */; };
+		84DAA6B7270D990C0086E511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E7DACE2709FCE3005F9383 /* Assets.xcassets */; };
+		84DAA6B8270D990D0086E511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E7DACE2709FCE3005F9383 /* Assets.xcassets */; };
 		84E7DADC2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADD2709FCE3005F9383 /* IITCButtonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */; };
 		84E7DADF2709FCE3005F9383 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E7DACD2709FCE1005F9383 /* ContentView.swift */; };
@@ -143,11 +146,12 @@
 		84DAA6AF270D714B0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84DAA6B1270D715F0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84DAA6B3270D7D990086E511 /* IITCButtonCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCButtonCommands.swift; sourceTree = "<group>"; };
+		84DAA6B5270D92960086E511 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		84E7DACC2709FCE1005F9383 /* IITCButtonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCButtonApp.swift; sourceTree = "<group>"; };
 		84E7DACD2709FCE1005F9383 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84E7DACE2709FCE3005F9383 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		84E7DAD32709FCE3005F9383 /* IITC-Button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84E7DAD92709FCE3005F9383 /* IITC-Button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E7DAD32709FCE3005F9383 /* IITC Button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC Button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E7DAD92709FCE3005F9383 /* IITC Button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC Button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E7DADB2709FCE3005F9383 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		84E7DAEE2709FF25005F9383 /* Safari Extension macOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Safari Extension macOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E7DAF02709FF25005F9383 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				84DAA697270D549A0086E511 /* ContentView.swift */,
+				84DAA6B5270D92960086E511 /* Helper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -264,8 +269,8 @@
 		84E7DAD42709FCE3005F9383 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84E7DAD32709FCE3005F9383 /* IITC-Button.app */,
-				84E7DAD92709FCE3005F9383 /* IITC-Button.app */,
+				84E7DAD32709FCE3005F9383 /* IITC Button.app */,
+				84E7DAD92709FCE3005F9383 /* IITC Button.app */,
 				84E7DAEE2709FF25005F9383 /* Safari Extension macOS.appex */,
 				84E7DB112709FFA2005F9383 /* Safari Extension iOS.appex */,
 			);
@@ -339,7 +344,7 @@
 			);
 			name = iOS;
 			productName = "IITC-Button (iOS)";
-			productReference = 84E7DAD32709FCE3005F9383 /* IITC-Button.app */;
+			productReference = 84E7DAD32709FCE3005F9383 /* IITC Button.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84E7DAD82709FCE3005F9383 /* macOS */ = {
@@ -359,7 +364,7 @@
 			);
 			name = macOS;
 			productName = "IITC-Button (macOS)";
-			productReference = 84E7DAD92709FCE3005F9383 /* IITC-Button.app */;
+			productReference = 84E7DAD92709FCE3005F9383 /* IITC Button.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84E7DAED2709FF25005F9383 /* Safari Extension macOS */ = {
@@ -478,6 +483,7 @@
 				841A89A4270C6EFA0064B01F /* background.html in Resources */,
 				841A89A6270C6EFA0064B01F /* popup.html in Resources */,
 				841A89B8270C6EFA0064B01F /* _locales in Resources */,
+				84DAA6B8270D990D0086E511 /* Assets.xcassets in Resources */,
 				841A89AA270C6EFA0064B01F /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +502,7 @@
 				841A89A5270C6EFA0064B01F /* background.html in Resources */,
 				841A89A7270C6EFA0064B01F /* popup.html in Resources */,
 				841A89B9270C6EFA0064B01F /* _locales in Resources */,
+				84DAA6B7270D990C0086E511 /* Assets.xcassets in Resources */,
 				841A89AB270C6EFA0064B01F /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,6 +537,7 @@
 			files = (
 				84DAA698270D549A0086E511 /* ContentView.swift in Sources */,
 				84E7DADC2709FCE3005F9383 /* IITCButtonApp.swift in Sources */,
+				84DAA6B6270D92960086E511 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +678,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "IITC Button";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -725,6 +734,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "IITC Button";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -750,7 +760,6 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
-				PRODUCT_NAME = "IITC-Button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -778,7 +787,6 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
-				PRODUCT_NAME = "IITC-Button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -808,7 +816,6 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
-				PRODUCT_NAME = "IITC-Button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -836,7 +843,6 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
-				PRODUCT_NAME = "IITC-Button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -8,18 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var presentingHelpSheet = false
+    
     var body: some View {
         NavigationView {
             List {
-                Text("TODO: Helper")
+                Button(action: { presentingHelpSheet.toggle() }) {
+                    Label("How to use", systemImage: "questionmark")
+                }
+                Link("Open Intel Maps", systemImage: "target", destination: .init(string: "https://intel.ingress.com")!)
                 
                 Section("About") {
                     about
                 }
             }
-            .navigationTitle("IITC-Button")
+            .navigationTitle("IITC Button")
         }
         .navigationViewStyle(.stack)
+        .sheet(isPresented: $presentingHelpSheet) {
+            Helper()
+        }
     }
     
     @ViewBuilder
