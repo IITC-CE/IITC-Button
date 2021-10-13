@@ -22,8 +22,13 @@ export async function injectUserScript(code, tabs) {
 
 // Fetch all completly loaded Ingress Intel tabs
 export async function getTabsToInject() {
-  return await browser.tabs.query({
+  let allTabs = await browser.tabs.query({
     url: ["https://intel.ingress.com/*", "https://missions.ingress.com/*"],
     status: "complete"
+  });
+  // Safari always returns all tabs for no reason, must filter manually.
+  return allTabs.filter(function(tab) {
+    return tab.status === "complete" && tab.url
+      && /https:\/\/(intel|missions).ingress.com\/*/.test(tab.url);
   });
 }
