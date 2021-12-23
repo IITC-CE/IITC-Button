@@ -75,5 +75,11 @@
     "extDescription": {
         "message": "Ingress Intel을 좀 더 편리하게 사용하기 위해 IITC를 실행하세요.",
         "description": "Description of the extension"
+    },
+    "beta": {
+        "message": "베타"
+    },
+    "iitcReddit": {
+        "message": "r/IITC에서 토론"
     }
 }
