@@ -18,7 +18,7 @@
         "message": "Instalar"
     },
     "clickInstallPlugin": {
-        "message": "Este é um plugin IITC. Clique em instalar para o começar a usar."
+        "message": "Este é um plugin IITC. Clique em \"instalar\" para o começar a usar."
     },
     "willBeOverwrittenByNewPlugin": {
         "message": "O plugin com o mesmo ID será substituído pelo novo plugin."
@@ -82,10 +82,10 @@
         "message": "Qualquer canal"
     },
     "everyWeek": {
-        "message": "Semanalmente"
+        "message": "Todas as Semanas"
     },
     "everyDay": {
-        "message": "Diariamente"
+        "message": "Todos os Dias"
     },
     "every12hours": {
         "message": "A cada 12 horas"

@@ -7,7 +7,7 @@
         "message": "As alterações serão aplicadas depois de reiniciar o Intel"
     },
     "updateInProgress": {
-        "message": "Actualização em progresso…"
+        "message": "Atualização em progresso…"
     },
     "changesApplied": {
         "message": "As alterações foram aplicadas"
@@ -52,10 +52,10 @@
         "message": "A cada 12 horas"
     },
     "everyDay": {
-        "message": "Todos os Dias"
+        "message": "Diariamente"
     },
     "everyWeek": {
-        "message": "A cada semana"
+        "message": "Semanalmente"
     },
     "lang": {
         "message": "pt_PT"
@@ -85,7 +85,7 @@
         "message": "Solte os arquivos <i>.js</i> aqui ou clique em upload."
     },
     "clickInstallPlugin": {
-        "message": "Este é um plugin IITC. Clique instalar para o começar a usar."
+        "message": "Este é um plugin IITC. Clique em \"instalar\" para o começar a usar."
     },
     "install": {
         "message": "Instalar"
@@ -103,7 +103,7 @@
         }
     },
     "willBeOverwrittenByNewPlugin": {
-        "message": "O plug-in com o mesmo ID será substituído pelo novo plug-in."
+        "message": "O plugin com o mesmo ID será substituído pelo novo plugin."
     },
     "loading": {
         "message": "A carregar…"
@@ -118,7 +118,7 @@
         }
     },
     "notValidUserScript": {
-        "message": "$PLUGIN_NAME$ Não é um plugin válido.",
+        "message": "$PLUGIN_NAME$ não é um plugin válido.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -127,7 +127,7 @@
         }
     },
     "extDescription": {
-        "message": "Inicie o IITC para Ingress Intel com facilidade.",
+        "message": "Inicie o IITC para o mapa Ingress Intel com facilidade.",
         "description": "Description of the extension"
     },
     "addExternalPlugin": {
