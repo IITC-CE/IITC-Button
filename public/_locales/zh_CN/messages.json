@@ -31,7 +31,7 @@
         }
     },
     "testBuilds": {
-        "message": "测试构建"
+        "message": "测试版"
     },
     "iitcReddit": {
         "message": "在r/IITC中讨论"
@@ -112,7 +112,7 @@
         }
     },
     "release": {
-        "message": "版本"
+        "message": "发行版"
     },
     "anyChannel": {
         "message": "任何频道"
