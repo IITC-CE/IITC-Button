@@ -1,5 +1,121 @@
 {
     "lang": {
         "message": "tr"
+    },
+    "testBuilds": {
+        "message": "Test derlemeleri"
+    },
+    "localServer": {
+        "message": "Yerel sunucu"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE güncellemeleri kontrol et"
+    },
+    "updateExternalFrequency": {
+        "message": "Harici eklentiler güncellemeleri kontrol et"
+    },
+    "every6hours": {
+        "message": "Her 6 Saatte Bir"
+    },
+    "every12hours": {
+        "message": "Her 12 Saatte Bir"
+    },
+    "everyDay": {
+        "message": "Her Gün"
+    },
+    "everyWeek": {
+        "message": "Her Hafta"
+    },
+    "localServerURL": {
+        "message": "Yerel sunucu adresi"
+    },
+    "openSupport": {
+        "message": "Destek sayfasını açın:"
+    },
+    "pluginSave": {
+        "message": "Kaydet"
+    },
+    "pluginDelete": {
+        "message": "Sil"
+    },
+    "addressNotAvailable": {
+        "message": "Adres mevcut değil"
+    },
+    "errorReadingFile": {
+        "message": "$PLUGIN_NAME$ dosyası okunurken bir hata oluştu.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "awesome-plugin.user.js"
+            }
+        }
+    },
+    "or": {
+        "message": "veya"
+    },
+    "dropJSHereOrClick": {
+        "message": "<i>.js</i> dosyalarını buraya bırakın veya yüklemek için tıklayın."
+    },
+    "clickInstallPlugin": {
+        "message": "Bu bir IITC eklentisidir. Kullanmaya başlamak için yükle'yi tıklayın."
+    },
+    "install": {
+        "message": "Yükle"
+    },
+    "loading": {
+        "message": "Yükleniyor…"
+    },
+    "external": {
+        "message": "Harici"
+    },
+    "titleDefault": {
+        "message": "Intel'i açın",
+        "description": "Title for the button at the application panel"
+    },
+    "needRebootIntel": {
+        "message": "Değişiklikler, Intel'i yeniden başlattıktan sonra uygulanacak"
+    },
+    "iitcGithub": {
+        "message": "GitHub deposu"
+    },
+    "anyChannel": {
+        "message": "Herhangi bir kanal"
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "Aynı kimliğe sahip eklenti, yeni eklenti tarafından üzerine yazılacaktır."
+    },
+    "extDescription": {
+        "message": "Ingress Intel için IITC'yi kolaylıkla başlatın.",
+        "description": "Description of the extension"
+    },
+    "updateNow": {
+        "message": "şimdi güncelle"
+    },
+    "choosingUpdateChannel": {
+        "message": "IITC-CE güncelleme kanalı seçme"
+    },
+    "iitcHomePage": {
+        "message": "Ana sayfa"
+    },
+    "iitcButtonOptions": {
+        "message": "IITC-CE Düğme seçenekleri"
+    },
+    "addExternalPlugin": {
+        "message": "Harici eklenti ekle"
+    },
+    "iitcTelegram": {
+        "message": "Haberler Telegram'da"
+    },
+    "iitcReddit": {
+        "message": "r/IITC hakkında tartışın"
+    },
+    "changesApplied": {
+        "message": "Değişiklikler uygulandı"
+    },
+    "noData": {
+        "message": "Veri yok"
+    },
+    "updateInProgress": {
+        "message": "Güncelleme devam ediyor…"
     }
 }
