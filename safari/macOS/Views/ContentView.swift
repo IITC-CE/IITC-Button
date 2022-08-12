@@ -16,7 +16,7 @@ struct ContentView: View {
         case enabled
     }
     
-    static private let extensionId = "dev.lucka.IITC-Button.Safari-Extension"
+    static private let extensionId = "org.exarhteam.iitc-button.Safari-Extension"
     
     @Environment(\.scenePhase) private var scenePhase : ScenePhase
     @State private var extensionStatus = ExtensionStatus.unknown

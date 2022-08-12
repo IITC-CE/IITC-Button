@@ -756,7 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -782,7 +782,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -810,7 +810,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -836,7 +836,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -863,7 +863,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button.Safari-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -892,7 +892,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button.Safari-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -919,7 +919,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button.Safari-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -947,7 +947,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.lucka.IITC-Button.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button.Safari-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
