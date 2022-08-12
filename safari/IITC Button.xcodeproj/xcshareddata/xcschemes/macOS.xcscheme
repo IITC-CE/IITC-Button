@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84E7DAD22709FCE3005F9383"
-               BuildableName = "IITC-Button.app"
-               BlueprintName = "iOS"
-               ReferencedContainer = "container:IITC-Button.xcodeproj">
+               BlueprintIdentifier = "84E7DAD82709FCE3005F9383"
+               BuildableName = "IITC Button.app"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:IITC Button.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84E7DAD22709FCE3005F9383"
-            BuildableName = "IITC-Button.app"
-            BlueprintName = "iOS"
-            ReferencedContainer = "container:IITC-Button.xcodeproj">
+            BlueprintIdentifier = "84E7DAD82709FCE3005F9383"
+            BuildableName = "IITC Button.app"
+            BlueprintName = "macOS"
+            ReferencedContainer = "container:IITC Button.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84E7DAD22709FCE3005F9383"
-            BuildableName = "IITC-Button.app"
-            BlueprintName = "iOS"
-            ReferencedContainer = "container:IITC-Button.xcodeproj">
+            BlueprintIdentifier = "84E7DAD82709FCE3005F9383"
+            BuildableName = "IITC Button.app"
+            BlueprintName = "macOS"
+            ReferencedContainer = "container:IITC Button.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

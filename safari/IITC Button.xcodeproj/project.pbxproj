@@ -430,7 +430,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 84E7DACA2709FCE1005F9383 /* Build configuration list for PBXProject "IITC-Button" */;
+			buildConfigurationList = 84E7DACA2709FCE1005F9383 /* Build configuration list for PBXProject "IITC Button" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -756,7 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
+				PRODUCT_BUNDLE_IDENTIFIER = org.exarhteam.iitc-button;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -782,7 +782,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
+				PRODUCT_BUNDLE_IDENTIFIER = org.exarhteam.iitc-button;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -810,7 +810,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
+				PRODUCT_BUNDLE_IDENTIFIER = org.exarhteam.iitc-button;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -836,7 +836,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
+				PRODUCT_BUNDLE_IDENTIFIER = org.exarhteam.iitc-button;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -970,7 +970,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84E7DACA2709FCE1005F9383 /* Build configuration list for PBXProject "IITC-Button" */ = {
+		84E7DACA2709FCE1005F9383 /* Build configuration list for PBXProject "IITC Button" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84E7DAE22709FCE3005F9383 /* Debug */,
