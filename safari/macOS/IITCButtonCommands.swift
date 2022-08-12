@@ -16,7 +16,7 @@ struct IITCButtonCommands: Commands {
             Divider()
             Button("Homepage") { openURL(.init(string: "https://iitc.app")!) }
             Button("Telegram Channel") { openURL(.init(string: "https://t.me/iitc_news")!) }
-            Button("Source Code") { openURL(.init(string: "https://github.com/lucka-me/IITC-Button")!) }
+            Button("Source Code") { openURL(.init(string: "https://github.com/IITC-CE/IITC-Button")!) }
         }
     }
 }

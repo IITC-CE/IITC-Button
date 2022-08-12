@@ -35,7 +35,7 @@ struct ContentView: View {
     private var about: some View {
         Link("Homepage", systemImage: "house", destination: .init(string: "https://iitc.app")!)
         Link("Telegram Channel", systemImage: "paperplane.circle.fill", destination: .init(string: "https://t.me/iitc_news")!)
-        Link("Source Code", systemImage: "swift", destination: .init(string: "https://github.com/lucka-me/IITC-Button")!)
+        Link("Source Code", systemImage: "swift", destination: .init(string: "https://github.com/IITC-CE/IITC-Button")!)
         Label("Version", systemImage: "info")
             .badge(version)
     }
