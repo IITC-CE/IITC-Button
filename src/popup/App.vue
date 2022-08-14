@@ -1,6 +1,6 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div id="app">
+  <div id="app" :class="{ is_safari: is_safari }">
     <section class="section main-menu">
       <SectionMainMenu
         v-bind:categories="categories"
@@ -39,15 +39,27 @@ export default {
       categories: {},
       plugins: {},
       plugins_flat: {},
-      category_name: ""
+      category_name: "",
+      is_safari: this.detect_safari()
     };
   },
   components: { SectionMainMenu, SectionOptions, SectionPlugins, Message },
-  async mounted() {
+  beforeCreate() {
     document.body.id = "main-menu";
+  },
+  async mounted() {
     await data.init(this);
     await data.onChangedListener(this);
     await data.onMessageListener(this);
+  },
+  methods: {
+    detect_safari: function() {
+      let userAgentString = navigator.userAgent;
+      let chromeAgent = userAgentString.indexOf("Chrome") > -1;
+      let safariAgent = userAgentString.indexOf("Safari") > -1;
+
+      return safariAgent && !chromeAgent;
+    }
   }
 };
 </script>
@@ -68,6 +80,13 @@ body {
 
 .material-icons {
   font-size: 20px;
+}
+
+#app {
+  width: 315px;
+  height: 513px;
+  overflow: hidden;
+  /*transform: translateZ(0); * hack of popup size in safari *!*/
 }
 
 object {
@@ -92,11 +111,13 @@ object {
  */
 .section {
   display: block;
+  background: #fff;
   position: absolute;
   top: 0;
   margin-left: 100vw;
   transition: margin-left 0.15s ease-in-out;
   width: 100vw;
+  height: 100vh;
 }
 .section.main-menu {
   margin-left: -100vw;
@@ -108,6 +129,24 @@ body#main-menu .section.main-menu {
 body#options .section.options,
 body#plugins .section.plugins {
   margin-left: 0;
+}
+
+#app.is_safari .section {
+  display: none;
+  width: 100vw;
+}
+
+#app.is_safari .section.main-menu {
+  display: none;
+}
+
+body#main-menu #app.is_safari .section.main-menu {
+  display: block;
+}
+
+body#options #app.is_safari .section.options,
+body#plugins #app.is_safari .section.plugins {
+  display: block;
 }
 
 :root {
