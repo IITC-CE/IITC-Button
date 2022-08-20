@@ -672,7 +672,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
 				INFOPLIST_PREPROCESS = YES;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = PACKAGE_VERSION;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -729,7 +729,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_PREFIX_HEADER = "Shared/info-plist-preprocessor.h";
 				INFOPLIST_PREPROCESS = YES;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = PACKAGE_VERSION;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "IITC Button";
@@ -756,6 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = PACKAGE_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -782,6 +783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = PACKAGE_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -810,6 +812,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = PACKAGE_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -836,6 +839,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = PACKAGE_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.exarhteam.iitc-button";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -905,6 +909,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
@@ -933,6 +938,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = GIT_COMMIT_COUNT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Extension iOS";
