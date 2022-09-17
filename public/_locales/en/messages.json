@@ -157,5 +157,8 @@
     },
     "external": {
         "message": "External"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Search…"
     }
 }
