@@ -49,3 +49,28 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+---
+
+## Build for Safari (MacOS and iOS)
+
+1. Follow the [general build instructions](#project-setup).
+To build for iOS, set the _BROWSER="safari-ios"_ environment variable (example: `BROWSER="safari-ios" npm run build`)
+
+2. Open the Xcode project in the `safari` folder
+
+3. Click run in the top of Xcode
+
+4. [Configure Safari in macOS to Run Unsigned Extensions](https://developer.apple.com/documentation/safariservices/safari_web_extensions/running_your_safari_web_extension#see-also).
+To develop without a certificate, tell Safari to load unsigned extensions using the Develop menu. To enable the Develop menu in Safari:
+   * Choose Safari > Preferences.
+   * Select the Advanced tab.
+   * Check the “Show Develop menu in menu bar” option.
+   * Then, choose Develop > Allow Unsigned Extensions. The Allow Unsigned Extensions setting is reset when you quit Safari; set it again the next time you launch Safari.
+
+5. Now enable the extension
+   * Choose Safari > Preferences.
+   * Select the Extensions tab. This tab shows the localized description, display name, and version number for the selected Safari App Extension. It also provides more information about the permissions claimed by the extension.
+   * Find your new extension in the list on the left, and enable it by selecting the checkbox.
+
+

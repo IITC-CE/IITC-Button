@@ -33,6 +33,12 @@ module.exports = {
             "content-script": ["src/content-scripts/loader.js"]
           }
         }
+      },
+      manifestTransformer: manifest => {
+        if (process.env.BROWSER === "safari-ios") {
+          manifest.background.persistent = false;
+        }
+        return manifest;
       }
     }
   }

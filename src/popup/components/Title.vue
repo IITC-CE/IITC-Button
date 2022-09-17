@@ -5,11 +5,10 @@
       class="title__logo-wrapper title__button"
       v-on:click.prevent="openIITC"
     >
-      <object
+      <img
         class="title__logo"
-        type="image/svg+xml"
-        data="/assets/images/IITC-black-horizontally.svg"
-      ></object>
+        src="/assets/images/IITC-black-horizontally.webp"
+      />
       <ProgressBar></ProgressBar>
     </div>
     <div class="title__button" v-on:click="openOptions">
@@ -53,9 +52,10 @@ export default {
 }
 .title__logo {
   height: 50px;
-  width: 100%;
+  width: 106px;
   z-index: 3;
   position: relative;
+  left: calc(50% - 106px / 2);
 }
 .title__button {
   color: var(--color-white);

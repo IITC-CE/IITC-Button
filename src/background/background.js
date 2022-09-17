@@ -34,22 +34,25 @@ browser.runtime.onMessage.addListener(async request => {
   }
 });
 
-browser.webRequest.onBeforeRequest.addListener(
-  onBeforeRequest,
-  {
-    urls: [
-      // 1. *:// comprises only http/https
-      // 2. the API ignores #hash part
-      // 3. Firefox: onBeforeRequest does not work with file:// or moz-extension://
-      "*://*/*.user.js",
-      "*://*/*.user.js?*",
-      "file://*/*.user.js",
-      "file://*/*.user.js?*"
-    ],
-    types: ["main_frame"]
-  },
-  ["blocking"]
-);
+// Seems unable to access browser.webRequest in Safari in non-persistent background
+if (browser.webRequest) {
+  browser.webRequest.onBeforeRequest.addListener(
+    onBeforeRequest,
+    {
+      urls: [
+        // 1. *:// comprises only http/https
+        // 2. the API ignores #hash part
+        // 3. Firefox: onBeforeRequest does not work with file:// or moz-extension://
+        "*://*/*.user.js",
+        "*://*/*.user.js?*",
+        "file://*/*.user.js",
+        "file://*/*.user.js?*"
+      ],
+      types: ["main_frame"]
+    },
+    ["blocking"]
+  );
+}
 
 browser.runtime.onMessage.addListener(function(request) {
   switch (request.type) {

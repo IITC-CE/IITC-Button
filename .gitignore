@@ -26,3 +26,10 @@ pnpm-debug.log*
 *.pub
 *.zip
 /artifacts
+
+# Xcode
+## User settings
+xcuserdata/
+
+## Info.plist Preprocessor
+info-plist-preprocessor.h

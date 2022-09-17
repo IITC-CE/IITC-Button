@@ -57,4 +57,15 @@ export default {
 .message.opened {
   bottom: 0;
 }
+
+#app.is_safari .message {
+  display: none;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#app.is_safari .message.opened {
+  display: block;
+}
 </style>
