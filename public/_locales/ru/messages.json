@@ -23,17 +23,8 @@
     "addExternalPlugin": {
         "message": "Добавить сторонний плагин"
     },
-    "iitcTelegram": {
-        "message": "Новости в Telegram"
-    },
-    "iitcReddit": {
-        "message": "Обсудить на r/IITC"
-    },
     "iitcHomePage": {
         "message": "Сайт проекта IITC-CE"
-    },
-    "iitcGithub": {
-        "message": "Репозиторий GitHub"
     },
     "iitcButtonOptions": {
         "message": "Настройки IITC Button"

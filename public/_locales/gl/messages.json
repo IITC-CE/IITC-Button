@@ -11,14 +11,8 @@
     "iitcButtonOptions": {
         "message": "Opcións do botón IITC-CE"
     },
-    "iitcGithub": {
-        "message": "Repositorio GitHub"
-    },
     "iitcHomePage": {
         "message": "Páxina de inicio"
-    },
-    "iitcTelegram": {
-        "message": "Novas en Telegram"
     },
     "addExternalPlugin": {
         "message": "Engade pluggin externo"
@@ -39,9 +33,6 @@
     "extDescription": {
         "message": "Inicia IITC para Ingress Intel con facilidade.",
         "description": "Description of the extension"
-    },
-    "iitcReddit": {
-        "message": "Discutir en r/IITC"
     },
     "updateInProgress": {
         "message": "Actualización en curso…"

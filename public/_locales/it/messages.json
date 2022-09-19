@@ -5,12 +5,6 @@
     "iitcButtonOptions": {
         "message": "Opzioni per IITC-CE Button"
     },
-    "iitcGithub": {
-        "message": "Repository su GitHub"
-    },
-    "iitcTelegram": {
-        "message": "Notizie su Telegram"
-    },
     "noData": {
         "message": "Nessun dato disponibile"
     },
@@ -62,9 +56,6 @@
     },
     "iitcHomePage": {
         "message": "Schermata principale"
-    },
-    "iitcReddit": {
-        "message": "Discussione su r/IITC"
     },
     "addExternalPlugin": {
         "message": "Aggiungi un plugin esterno"

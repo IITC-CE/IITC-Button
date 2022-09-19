@@ -101,17 +101,8 @@
     "iitcButtonOptions": {
         "message": "ตั้งค่า IITC-CE"
     },
-    "iitcGithub": {
-        "message": "GitHub repository"
-    },
     "iitcHomePage": {
         "message": "หน้าแรก"
-    },
-    "iitcReddit": {
-        "message": "ร่วมพูดคุยได้ที่ r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "ข่าวสารจาก Telegram"
     },
     "addExternalPlugin": {
         "message": "เพิ่มส่วนขยาย"

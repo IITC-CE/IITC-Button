@@ -89,17 +89,8 @@
     "iitcButtonOptions": {
         "message": "Pilihan tombol IITC-CE"
     },
-    "iitcGithub": {
-        "message": "Repositori GitHub"
-    },
     "iitcHomePage": {
         "message": "Halaman muka"
-    },
-    "iitcReddit": {
-        "message": "Diskusi di r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Berita di Telegram"
     },
     "addExternalPlugin": {
         "message": "Tambah plugin eksternal"

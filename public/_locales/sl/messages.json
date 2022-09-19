@@ -31,17 +31,8 @@
     "iitcButtonOptions": {
         "message": "Možnosti gumba IITC-CE"
     },
-    "iitcGithub": {
-        "message": "Skladišče GitHub"
-    },
     "iitcHomePage": {
         "message": "Domača stran"
-    },
-    "iitcReddit": {
-        "message": "Pogovor na r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Novice v Telegramu"
     },
     "addExternalPlugin": {
         "message": "Dodajte zunanji vtičnik"

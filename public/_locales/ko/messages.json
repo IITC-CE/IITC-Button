@@ -2,9 +2,6 @@
     "updateNow": {
         "message": "업데이트"
     },
-    "iitcGithub": {
-        "message": "GitHub repository"
-    },
     "noData": {
         "message": "데이터 없음"
     },
@@ -50,9 +47,6 @@
     "iitcButtonOptions": {
         "message": "IITC-CE 버튼 설정"
     },
-    "iitcTelegram": {
-        "message": "텔레그램 뉴스 보기"
-    },
     "addExternalPlugin": {
         "message": "외부 플러그인 추가"
     },
@@ -78,8 +72,5 @@
     },
     "beta": {
         "message": "베타"
-    },
-    "iitcReddit": {
-        "message": "r/IITC에서 토론"
     }
 }

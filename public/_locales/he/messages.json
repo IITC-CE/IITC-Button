@@ -26,17 +26,8 @@
     "iitcButtonOptions": {
         "message": "אפשרויות כפתור אייאייטיסי-סיאי"
     },
-    "iitcGithub": {
-        "message": "מאגר גיטהאב"
-    },
     "iitcHomePage": {
         "message": "דף הבית"
-    },
-    "iitcReddit": {
-        "message": "דון ב-r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "חדשות בטלגרם"
     },
     "addExternalPlugin": {
         "message": "הוסף תוסף חיצוני"

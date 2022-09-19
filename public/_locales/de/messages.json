@@ -16,9 +16,6 @@
     "lang": {
         "message": "de"
     },
-    "iitcReddit": {
-        "message": "Diskussionen auf r/IITC"
-    },
     "changesApplied": {
         "message": "Änderungen wurden angewendet"
     },
@@ -28,14 +25,8 @@
     "addExternalPlugin": {
         "message": "Externes Plugin hinzufügen"
     },
-    "iitcTelegram": {
-        "message": "Neuigkeiten in Telegram"
-    },
     "iitcHomePage": {
         "message": "Homepage"
-    },
-    "iitcGithub": {
-        "message": "GitHub Repository"
     },
     "iitcButtonOptions": {
         "message": "IITC-CE Button Optionen"

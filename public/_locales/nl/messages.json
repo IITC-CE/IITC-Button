@@ -73,17 +73,8 @@
     "choosingUpdateChannel": {
         "message": "Selecteer een IITC-CE update kanaal"
     },
-    "iitcGithub": {
-        "message": "GitHub archief"
-    },
     "iitcHomePage": {
         "message": "Homepagina"
-    },
-    "iitcReddit": {
-        "message": "Bespreek op r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Nieuws in Telegram"
     },
     "addExternalPlugin": {
         "message": "Externe plugin toevoegen"

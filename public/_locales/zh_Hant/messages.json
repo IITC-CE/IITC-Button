@@ -62,17 +62,8 @@
     "iitcButtonOptions": {
         "message": "IITC-CE 接鍵選項"
     },
-    "iitcGithub": {
-        "message": "GitHub 存庫"
-    },
     "iitcHomePage": {
         "message": "主頁面"
-    },
-    "iitcReddit": {
-        "message": "r/IITC 相關討論"
-    },
-    "iitcTelegram": {
-        "message": "Telegram 最新資訊"
     },
     "addExternalPlugin": {
         "message": "增設外部插件"

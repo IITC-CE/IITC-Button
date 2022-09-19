@@ -8,15 +8,6 @@
     "iitcButtonOptions": {
         "message": "IITC-CE Knap indstillinger"
     },
-    "iitcGithub": {
-        "message": "GitHub arkiv"
-    },
-    "iitcReddit": {
-        "message": "Diskuter på r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Nyt i Telegram"
-    },
     "addExternalPlugin": {
         "message": "Tilføj eksternt plugin"
     },

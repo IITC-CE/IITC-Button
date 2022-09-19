@@ -42,42 +42,18 @@
     <div class="item-wrapper">
       <Hr />
     </div>
-
-    <Element
-      v-bind:class="'list__item_add'"
-      v-bind:text="_('addExternalPlugin')"
-      v-bind:icon_name="'add'"
-      v-on:item_onclick="openLink('/choose_file.html')"
-    ></Element>
-    <div class="item-wrapper">
-      <Hr />
-    </div>
     <div class="links-grid">
       <Element
-        v-bind:class="'list__item_telegram'"
-        v-bind:text="_('iitcTelegram')"
-        v-bind:icon_name="'announcement'"
-        v-on:item_onclick="openLink('https://t.me/iitc_news')"
-      ></Element>
-      <Element
-        v-bind:class="'list__item_reddit'"
-        v-bind:text="_('iitcReddit')"
-        v-bind:icon_name="'forum'"
-        v-on:item_onclick="openLink('https://www.reddit.com/r/IITC/')"
+        v-bind:class="'list__item_add'"
+        v-bind:text="_('addExternalPlugin')"
+        v-bind:icon_name="'add'"
+        v-on:item_onclick="openLink('/choose_file.html')"
       ></Element>
       <Element
         v-bind:class="'list__item_homepage'"
         v-bind:text="_('iitcHomePage')"
         v-bind:icon_name="'link'"
         v-on:item_onclick="openLink('https://iitc.app')"
-      ></Element>
-      <Element
-        v-bind:class="'list__item_github'"
-        v-bind:text="_('iitcGithub')"
-        v-bind:icon_name="'developer_board'"
-        v-on:item_onclick="
-          openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')
-        "
       ></Element>
     </div>
   </div>
