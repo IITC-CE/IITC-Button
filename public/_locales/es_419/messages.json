@@ -70,17 +70,8 @@
     "addExternalPlugin": {
         "message": "Adicionar plugin externo"
     },
-    "iitcTelegram": {
-        "message": "Noticias en Telegram"
-    },
-    "iitcReddit": {
-        "message": "Discutir en r/IITC"
-    },
     "iitcHomePage": {
         "message": "Página de inicio"
-    },
-    "iitcGithub": {
-        "message": "Repositorio GitHub"
     },
     "iitcButtonOptions": {
         "message": "Opciones del botón IITC-CE"

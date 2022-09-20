@@ -8,9 +8,6 @@
     "iitcButtonOptions": {
         "message": "IITC-CE Knapp inställningar"
     },
-    "iitcReddit": {
-        "message": "Diskutera på r/IITC"
-    },
     "noData": {
         "message": "Inga data"
     },
@@ -35,9 +32,6 @@
     },
     "beta": {
         "message": "Beta"
-    },
-    "iitcGithub": {
-        "message": "GitHub repository"
     },
     "extDescription": {
         "message": "Starta IITC för Ingress Intel enkelt.",
@@ -139,9 +133,6 @@
     },
     "iitcHomePage": {
         "message": "Startsida"
-    },
-    "iitcTelegram": {
-        "message": "Nyheter i Telegram"
     },
     "choosingUpdateChannel": {
         "message": "Välj IITC-CE kanal för uppdateringar"

@@ -44,9 +44,6 @@
     "iitcHomePage": {
         "message": "Домашня сторінка"
     },
-    "iitcTelegram": {
-        "message": "Новини в Telegram"
-    },
     "noData": {
         "message": "Нема даних"
     },
@@ -95,9 +92,6 @@
     "addExternalPlugin": {
         "message": "Додати зовнішній плагін"
     },
-    "iitcReddit": {
-        "message": "Обговорити на r/IITC"
-    },
     "choosingUpdateChannel": {
         "message": "Канал оновлень IITC-CE"
     },
@@ -115,9 +109,6 @@
     },
     "localServer": {
         "message": "Локальний сервер"
-    },
-    "iitcGithub": {
-        "message": "Репозиторій GitHub"
     },
     "anyChannel": {
         "message": "Будь-який канал"

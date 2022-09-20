@@ -2,7 +2,20 @@
 <template>
   <div class="list">
     <Title></Title>
-    <div class="categories">
+    <SearchBar v-model="search_query"></SearchBar>
+    <div class="search-results" v-if="search_query">
+      <ElementPlugin
+        v-for="(plugin, index) in search_results"
+        v-bind:key="index"
+        v-bind:category_name="plugin['category']"
+        v-bind:plugin="plugin"
+      ></ElementPlugin>
+      <Element
+        v-if="objIsEmpty(search_results)"
+        v-bind:text="_('noData')"
+      ></Element>
+    </div>
+    <div class="categories" v-if="!search_query">
       <template
         v-for="(cat, index) in sortIITCObj(
           countPlugins(categories, plugins_flat)
@@ -29,28 +42,12 @@
     <div class="item-wrapper">
       <Hr />
     </div>
-
-    <Element
-      v-bind:class="'list__item_add'"
-      v-bind:text="_('addExternalPlugin')"
-      v-bind:icon_name="'add'"
-      v-on:item_onclick="openLink('/choose_file.html')"
-    ></Element>
-    <div class="item-wrapper">
-      <Hr />
-    </div>
     <div class="links-grid">
       <Element
-        v-bind:class="'list__item_telegram'"
-        v-bind:text="_('iitcTelegram')"
-        v-bind:icon_name="'announcement'"
-        v-on:item_onclick="openLink('https://t.me/iitc_news')"
-      ></Element>
-      <Element
-        v-bind:class="'list__item_reddit'"
-        v-bind:text="_('iitcReddit')"
-        v-bind:icon_name="'forum'"
-        v-on:item_onclick="openLink('https://www.reddit.com/r/IITC/')"
+        v-bind:class="'list__item_add'"
+        v-bind:text="_('addExternalPlugin')"
+        v-bind:icon_name="'add'"
+        v-on:item_onclick="openLink('/choose_file.html')"
       ></Element>
       <Element
         v-bind:class="'list__item_homepage'"
@@ -58,29 +55,30 @@
         v-bind:icon_name="'link'"
         v-on:item_onclick="openLink('https://iitc.app')"
       ></Element>
-      <Element
-        v-bind:class="'list__item_github'"
-        v-bind:text="_('iitcGithub')"
-        v-bind:icon_name="'developer_board'"
-        v-on:item_onclick="
-          openLink('https://github.com/IITC-CE/ingress-intel-total-conversion')
-        "
-      ></Element>
     </div>
   </div>
 </template>
 
 <script>
 import Title from "./Title";
+import SearchBar from "./SearchBar";
 import Hr from "./Hr.vue";
 import Element from "./Element";
+import ElementPlugin from "./ElementPlugin";
 import { mixin } from "./mixins.js";
+import { searchPlugins } from "@/popup/search";
 
 export default {
   name: "SectionMainMenu",
   props: {
     categories: Object,
     plugins_flat: Object
+  },
+  data() {
+    return {
+      search_query: "",
+      search_results: {}
+    };
   },
   mixins: [mixin],
   methods: {
@@ -125,7 +123,16 @@ export default {
       return categories;
     }
   },
-  components: { Title, Hr, Element }
+  watch: {
+    search_query: function(val) {
+      if (val === "*") {
+        this.search_results = this.sortIITCObj(this.plugins_flat);
+      } else {
+        this.search_results = searchPlugins(val, this.plugins_flat);
+      }
+    }
+  },
+  components: { Title, SearchBar, Hr, Element, ElementPlugin }
 };
 </script>
 
@@ -136,8 +143,9 @@ export default {
   font-size: 90%;
 }
 
-.categories {
-  height: 350px;
+.categories,
+.search-results {
+  height: 390px;
   overflow-y: auto;
 }
 </style>

@@ -33,9 +33,6 @@
     "testBuilds": {
         "message": "测试版"
     },
-    "iitcReddit": {
-        "message": "在r/IITC中讨论"
-    },
     "iitcButtonOptions": {
         "message": "IITC-CE 按钮选项"
     },
@@ -62,9 +59,6 @@
     },
     "iitcHomePage": {
         "message": "主页"
-    },
-    "iitcGithub": {
-        "message": "GitHub仓库"
     },
     "everyWeek": {
         "message": "每周"
@@ -131,9 +125,6 @@
     },
     "addressNotAvailable": {
         "message": "地址不可用"
-    },
-    "iitcTelegram": {
-        "message": "关注Telegram频道"
     },
     "dropJSHereOrClick": {
         "message": "将<i>.js</i>文件拖拽到这里或点按上传。"

@@ -22,17 +22,8 @@
         "message": "Inicio fácil de IITC Ingress Intel.",
         "description": "Description of the extension"
     },
-    "iitcTelegram": {
-        "message": "Noticias en Telegram"
-    },
-    "iitcReddit": {
-        "message": "Conversar en r/IITC"
-    },
     "iitcHomePage": {
         "message": "Página Principal"
-    },
-    "iitcGithub": {
-        "message": "Repositorio GitHub"
     },
     "iitcButtonOptions": {
         "message": "Opciones del Botón IITC-CE"

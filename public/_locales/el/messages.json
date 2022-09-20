@@ -104,17 +104,8 @@
     "iitcButtonOptions": {
         "message": "IITC-CE επιλογές"
     },
-    "iitcGithub": {
-        "message": "Αποθετήριο GitHub"
-    },
     "iitcHomePage": {
         "message": "Αρχική σελίδα"
-    },
-    "iitcReddit": {
-        "message": "Συζητήστε στο r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Νέα στο Telegram"
     },
     "addExternalPlugin": {
         "message": "Εισαγωγή εξωτερικού πρόσθετου"

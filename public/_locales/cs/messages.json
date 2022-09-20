@@ -108,17 +108,8 @@
     "iitcButtonOptions": {
         "message": "IITC-CE Button nastavení"
     },
-    "iitcGithub": {
-        "message": "GitHub repozitář"
-    },
     "iitcHomePage": {
         "message": "Domovská stránka"
-    },
-    "iitcReddit": {
-        "message": "Diskuze na r/IITC"
-    },
-    "iitcTelegram": {
-        "message": "Novinky v Telegramu"
     },
     "addExternalPlugin": {
         "message": "Přidat externí plugin"

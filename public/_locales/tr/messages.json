@@ -75,9 +75,6 @@
     "needRebootIntel": {
         "message": "Değişiklikler, Intel'i yeniden başlattıktan sonra uygulanacak"
     },
-    "iitcGithub": {
-        "message": "GitHub deposu"
-    },
     "anyChannel": {
         "message": "Herhangi bir kanal"
     },
@@ -102,12 +99,6 @@
     },
     "addExternalPlugin": {
         "message": "Harici eklenti ekle"
-    },
-    "iitcTelegram": {
-        "message": "Haberler Telegram'da"
-    },
-    "iitcReddit": {
-        "message": "r/IITC hakkında tartışın"
     },
     "changesApplied": {
         "message": "Değişiklikler uygulandı"

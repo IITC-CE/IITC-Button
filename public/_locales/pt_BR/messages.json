@@ -33,9 +33,6 @@
         "message": "Inicie o IITC para o mapa Intel do Ingress com facilidade.",
         "description": "Description of the extension"
     },
-    "iitcTelegram": {
-        "message": "Notícias no Telegram"
-    },
     "addExternalPlugin": {
         "message": "Adicionar plugin externo"
     },
@@ -58,14 +55,8 @@
     "noData": {
         "message": "Sem dados"
     },
-    "iitcReddit": {
-        "message": "Comente em r/IITC"
-    },
     "iitcHomePage": {
         "message": "Página Inicial"
-    },
-    "iitcGithub": {
-        "message": "Repositório do GitHub"
     },
     "iitcButtonOptions": {
         "message": "Opções do IITC-CE Button"

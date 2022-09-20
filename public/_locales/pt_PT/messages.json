@@ -15,14 +15,8 @@
     "noData": {
         "message": "Sem dados"
     },
-    "iitcTelegram": {
-        "message": "Novidades no Telegram"
-    },
     "iitcHomePage": {
         "message": "Página inicial"
-    },
-    "iitcGithub": {
-        "message": "Repositório GitHub"
     },
     "iitcButtonOptions": {
         "message": "Opções do Botão IITC-CE"
@@ -59,9 +53,6 @@
     },
     "lang": {
         "message": "pt_PT"
-    },
-    "iitcReddit": {
-        "message": "Discussão no r/IITC"
     },
     "localServerURL": {
         "message": "Endereço do servidor local"

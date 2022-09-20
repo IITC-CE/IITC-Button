@@ -25,17 +25,8 @@
     "addExternalPlugin": {
         "message": "Add external plugin"
     },
-    "iitcTelegram": {
-        "message": "News in Telegram"
-    },
-    "iitcReddit": {
-        "message": "Discuss on r/IITC"
-    },
     "iitcHomePage": {
         "message": "Home page"
-    },
-    "iitcGithub": {
-        "message": "GitHub repository"
     },
     "iitcButtonOptions": {
         "message": "IITC-CE Button options"
@@ -157,5 +148,8 @@
     },
     "external": {
         "message": "External"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Search…"
     }
 }

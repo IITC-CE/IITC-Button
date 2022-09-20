@@ -48,12 +48,6 @@
     "addExternalPlugin": {
         "message": "Дабавіць знешнюю ўбудову"
     },
-    "iitcTelegram": {
-        "message": "Навіны ў Тэлеграме"
-    },
-    "iitcReddit": {
-        "message": "Абмеркаванне ў r/IITC"
-    },
     "localServerURL": {
         "message": "Адрас лакальнага сервера"
     },
@@ -66,9 +60,6 @@
     "extDescription": {
         "message": "Лёгкі запуск IITC.",
         "description": "Description of the extension"
-    },
-    "iitcGithub": {
-        "message": "GitHub сховішча"
     },
     "choosingUpdateChannel": {
         "message": "Выбар канала абнаўлення IITC-CE"

@@ -120,15 +120,6 @@
     "iitcButtonOptions": {
         "message": "IITC-CEボタンオプション"
     },
-    "iitcGithub": {
-        "message": "GitHubリポジトリ"
-    },
-    "iitcReddit": {
-        "message": "r/IITC で話す"
-    },
-    "iitcTelegram": {
-        "message": "Telegramで最新情報"
-    },
     "addExternalPlugin": {
         "message": "外部プラグインを追加"
     },
