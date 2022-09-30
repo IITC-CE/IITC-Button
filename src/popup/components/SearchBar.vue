@@ -66,6 +66,7 @@ export default {
   opacity: 0.8;
 }
 .search_bar .search_input {
+  box-sizing: border-box;
   width: 100%;
   padding: 0 4px 0 32px;
   height: 32px;
