@@ -8,5 +8,5 @@
 }
 
 body, input, select {
-    font-family: system-ui, "Roboto";
+    font-family: "Roboto", system-ui;
 }

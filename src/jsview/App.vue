@@ -10,16 +10,19 @@
         <div id="install" class="btn">{{ _("install") }}</div>
       </div>
     </div>
-    <highlight-code lang="javascript" v-if="code">{{ code }}</highlight-code>
-    <div class="message" v-else>{{ status }}</div>
+    <Code :code="code" :status="status" />
   </div>
 </template>
 
 <script>
-import { _, parseMeta } from "../helpers";
+import Code from "./Code";
+import { _, parseMeta } from "@/helpers";
 
 export default {
   name: "App",
+  components: {
+    Code
+  },
   data() {
     return {
       plugin_name: "",
@@ -74,7 +77,9 @@ body {
   background: #f0f0f0;
   margin: 0;
 }
+</style>
 
+<style scoped>
 .row {
   display: flex;
   flex-direction: row;
@@ -92,7 +97,7 @@ h3 {
 .addUserScript-wrapper {
   background: #0e3d4e;
   color: #fff;
-  margin-top: 1em;
+  border-bottom: 3px solid #316577;
 }
 #addUserScript {
   padding: 1.8em;
