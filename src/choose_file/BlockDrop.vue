@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import { _, parseMeta } from "../helpers";
+import { parseMeta } from "lib-iitc-manager";
+import { _ } from "@/i18n";
 
 /*
  * Validation UserScript and adding to IITC Button

@@ -5,7 +5,7 @@ import {
   ajaxGet,
   getUniqId,
   check_meta_match_pattern
-} from "../helpers";
+} from "lib-iitc-manager";
 
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",

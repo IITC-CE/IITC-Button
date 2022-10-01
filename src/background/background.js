@@ -1,24 +1,49 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+import { Manager } from "lib-iitc-manager";
+import { _ } from "@/i18n";
 import {
   onUpdatedListener,
   onRemovedListener,
   onRequestOpenIntel,
   onToggleIITC
 } from "./intel";
-import {
-  addUserScripts,
-  checkExternalUpdates,
-  checkUpdates,
-  managePlugin,
-  runExtension
-} from "./manager";
+import { injectUserScript } from "./injector";
 import { onBeforeRequest } from "./requests";
 
 const { onUpdated, onRemoved } = browser.tabs;
 onUpdated.addListener(onUpdatedListener);
 onRemoved.addListener(onRemovedListener);
 
-runExtension().then();
+const manager = new Manager({
+  storage: browser.storage.local,
+  message: (message, args) => {
+    try {
+      browser.runtime
+        .sendMessage({
+          type: "showMessage",
+          message: _(message, args)
+        })
+        .then();
+    } catch {
+      // If popup is closed, message goes nowhere and an error occurs. Ignore.
+    }
+  },
+  progressbar: is_show => {
+    try {
+      browser.runtime
+        .sendMessage({
+          type: "showProgressbar",
+          value: is_show
+        })
+        .then();
+    } catch {
+      // If popup is closed, message goes nowhere and an error occurs. Ignore.
+    }
+  },
+  inject_user_script: code => injectUserScript(code).then()
+});
+
+manager.run().then();
 
 browser.runtime.onMessage.addListener(async request => {
   switch (request.type) {
@@ -57,18 +82,18 @@ if (browser.webRequest) {
 browser.runtime.onMessage.addListener(function(request) {
   switch (request.type) {
     case "managePlugin":
-      managePlugin(request.uid, request.category, request.action).then();
+      manager.managePlugin(request.uid, request.action).then();
       break;
     case "safeUpdate":
-      checkUpdates(false).then();
-      checkExternalUpdates(false).then();
+      manager.checkUpdates(false).then();
+      manager._checkExternalUpdates(false).then();
       break;
     case "forceFullUpdate":
-      checkUpdates(true).then();
-      checkExternalUpdates(true).then();
+      manager.checkUpdates(true).then();
+      manager._checkExternalUpdates(true).then();
       break;
     case "addUserScripts":
-      addUserScripts(request.scripts).then();
+      manager.addUserScripts(request.scripts).then();
       break;
   }
 });

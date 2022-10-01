@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import { _, ajaxGet, parseMeta } from "../helpers";
+import { ajaxGet, parseMeta } from "lib-iitc-manager";
+import { _ } from "@/i18n";
 
 export default {
   name: "BlockURL",

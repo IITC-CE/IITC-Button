@@ -16,7 +16,8 @@
 
 <script>
 import Code from "./Code";
-import { _, parseMeta } from "@/helpers";
+import { parseMeta } from "lib-iitc-manager";
+import { _ } from "@/i18n";
 
 export default {
   name: "App",

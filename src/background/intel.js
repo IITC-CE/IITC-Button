@@ -83,7 +83,6 @@ async function initialize() {
   const plugins_user = data[channel + "_plugins_user"];
 
   if (status !== false && iitc_code !== undefined) {
-    const tabs = await getTabsToInject();
     const userscripts = [];
 
     const plugins_flat = data[channel + "_plugins_flat"];
@@ -99,7 +98,7 @@ async function initialize() {
 
     userscripts.push(iitc_code);
 
-    await Promise.all(userscripts.map(code => injectUserScript(code, tabs)));
+    await Promise.all(userscripts.map(code => injectUserScript(code)));
   }
 }
 

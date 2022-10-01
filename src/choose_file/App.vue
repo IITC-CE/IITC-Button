@@ -15,7 +15,7 @@
 <script>
 import BlockURL from "./BlockURL";
 import BlockDrop from "./BlockDrop";
-import { _ } from "../helpers";
+import { _ } from "@/i18n";
 
 export default {
   name: "App",

@@ -5,7 +5,7 @@ import {
   getUniqId,
   parseMeta,
   check_meta_match_pattern
-} from "../helpers";
+} from "lib-iitc-manager";
 
 const LOADED_PLUGINS = [];
 

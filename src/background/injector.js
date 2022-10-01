@@ -28,7 +28,10 @@ export async function getTabsToInject() {
   });
   // Safari always returns all tabs for no reason, must filter manually.
   return allTabs.filter(function(tab) {
-    return tab.status === "complete" && tab.url
-      && /https:\/\/(intel|missions).ingress.com\/*/.test(tab.url);
+    return (
+      tab.status === "complete" &&
+      tab.url &&
+      /https:\/\/(intel|missions).ingress.com\/*/.test(tab.url)
+    );
   });
 }
