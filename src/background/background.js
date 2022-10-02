@@ -1,18 +1,14 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager } from "lib-iitc-manager";
 import { _ } from "@/i18n";
+import { injectUserScript } from "./injector";
+import { onBeforeRequest } from "./requests";
 import {
   onUpdatedListener,
   onRemovedListener,
   onRequestOpenIntel,
   onToggleIITC
 } from "./intel";
-import { injectUserScript } from "./injector";
-import { onBeforeRequest } from "./requests";
-
-const { onUpdated, onRemoved } = browser.tabs;
-onUpdated.addListener(onUpdatedListener);
-onRemoved.addListener(onRemovedListener);
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -44,6 +40,12 @@ const manager = new Manager({
 });
 
 manager.run().then();
+
+const { onUpdated, onRemoved } = browser.tabs;
+onUpdated.addListener((tabId, status, tab) =>
+  onUpdatedListener(tabId, status, tab, manager)
+);
+onRemoved.addListener(onRemovedListener);
 
 browser.runtime.onMessage.addListener(async request => {
   switch (request.type) {
@@ -86,11 +88,9 @@ browser.runtime.onMessage.addListener(function(request) {
       break;
     case "safeUpdate":
       manager.checkUpdates(false).then();
-      manager._checkExternalUpdates(false).then();
       break;
     case "forceFullUpdate":
       manager.checkUpdates(true).then();
-      manager._checkExternalUpdates(true).then();
       break;
     case "addUserScripts":
       manager.addUserScripts(request.scripts).then();
