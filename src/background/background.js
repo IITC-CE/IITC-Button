@@ -86,6 +86,9 @@ browser.runtime.onMessage.addListener(function(request) {
     case "managePlugin":
       manager.managePlugin(request.uid, request.action).then();
       break;
+    case "setChannel":
+      manager.setChannel(request.value).then();
+      break;
     case "safeUpdate":
       manager.checkUpdates(false).then();
       break;

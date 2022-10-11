@@ -19,6 +19,32 @@ export async function init(self) {
   appData.plugins_flat = data[channel + "_plugins_flat"];
 }
 
+function setCategories(appData, categories) {
+  appData.categories = {};
+  appData.categories = categories;
+}
+
+function setPlugins(appData, plugins_flat) {
+  appData.plugins_flat = plugins_flat;
+  const category_name = appData.category_name;
+  if (category_name !== "") {
+    if (appData.categories[category_name]) {
+      appData.plugins = Object.entries(plugins_flat).reduce(
+        (category_plugins, plugin_pair) => {
+          const [plugin_uid, plugin_obj] = plugin_pair;
+          if (plugin_obj.category === category_name) {
+            category_plugins[plugin_uid] = plugin_obj;
+          }
+          return category_plugins;
+        },
+        {}
+      );
+    } else {
+      appData.plugins = {};
+    }
+  }
+}
+
 export async function onChangedListener(self) {
   const appData = self.$data;
   browser.storage.onChanged.addListener(async function(changes) {
@@ -28,30 +54,21 @@ export async function onChangedListener(self) {
     for (let key in changes) {
       const new_value = changes[key].newValue;
 
+      if (key === "channel") {
+        const storage = await browser.storage.local.get([
+          channel + "_categories",
+          channel + "_plugins_flat"
+        ]);
+        setCategories(appData, storage[channel + "_categories"]);
+        setPlugins(appData, storage[channel + "_plugins_flat"]);
+      }
+
       if (key === channel + "_categories") {
-        appData.categories = {};
-        appData.categories = new_value;
+        setCategories(appData, new_value);
       }
 
       if (key === channel + "_plugins_flat") {
-        appData.plugins_flat = new_value;
-        const category_name = appData.category_name;
-        if (category_name !== "") {
-          if (appData.categories[category_name]) {
-            appData.plugins = Object.entries(new_value).reduce(
-              (category_plugins, plugin_pair) => {
-                const [plugin_uid, plugin_obj] = plugin_pair;
-                if (plugin_obj.category === category_name) {
-                  category_plugins[plugin_uid] = plugin_obj;
-                }
-                return category_plugins;
-              },
-              {}
-            );
-          } else {
-            appData.plugins = {};
-          }
-        }
+        setPlugins(appData, new_value);
       }
     }
   });
