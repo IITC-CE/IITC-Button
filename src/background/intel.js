@@ -1,5 +1,5 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-import { getTabsToInject, injectUserScript } from "./injector";
+import { getTabsToInject } from "./injector";
 
 let lastIITCTab = null;
 
@@ -34,12 +34,11 @@ export async function onToggleIITC(value) {
 }
 
 // tab listeners
-export async function onUpdatedListener(tabId, status) {
+export async function onUpdatedListener(tabId, status, tab, manager) {
   if (status.status === "complete") {
-    const tabInfo = await getTabInfo(tabId);
-    if (isIngressUrl(tabInfo.url)) {
-      await initialize();
-      if (isIngressIntelUrl(tabInfo.url)) {
+    if (isIngressUrl(tab.url)) {
+      await initialize(manager);
+      if (isIngressIntelUrl(tab.url)) {
         lastIITCTab = tabId;
       }
     }
@@ -52,54 +51,12 @@ export function onRemovedListener(tabId) {
   }
 }
 
-async function initialize() {
-  const data = await browser.storage.local.get([
-    "IITC_is_enabled",
-    "channel",
-    "release_iitc_code",
-    "beta_iitc_code",
-    "test_iitc_code",
-    "local_iitc_code",
-    "release_plugins_flat",
-    "beta_plugins_flat",
-    "test_plugins_flat",
-    "local_plugins_flat",
-    "release_plugins_local",
-    "beta_plugins_local",
-    "test_plugins_local",
-    "local_plugins_local",
-    "release_plugins_user",
-    "beta_plugins_user",
-    "test_plugins_user",
-    "local_plugins_user"
-  ]);
+async function initialize(manager) {
+  const storage = await browser.storage.local.get(["IITC_is_enabled"]);
+  const status = storage["IITC_is_enabled"];
 
-  const channel = data.channel ? data.channel : "release";
-
-  const status = data["IITC_is_enabled"];
-  const iitc_code = data[channel + "_iitc_code"];
-
-  const plugins_local = data[channel + "_plugins_local"];
-  const plugins_user = data[channel + "_plugins_user"];
-
-  if (status !== false && iitc_code !== undefined) {
-    const tabs = await getTabsToInject();
-    const userscripts = [];
-
-    const plugins_flat = data[channel + "_plugins_flat"];
-    for (const uid of Object.keys(plugins_flat)) {
-      if (plugins_flat[uid]["status"] === "on") {
-        userscripts.push(
-          plugins_flat[uid]["user"] === true
-            ? plugins_user[uid]["code"]
-            : plugins_local[uid]["code"]
-        );
-      }
-    }
-
-    userscripts.push(iitc_code);
-
-    await Promise.all(userscripts.map(code => injectUserScript(code, tabs)));
+  if (status !== false) {
+    await manager.inject();
   }
 }
 

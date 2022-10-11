@@ -93,31 +93,13 @@ export default {
       get: function() {
         return this.channel;
       },
-      set: async function(newValue) {
-        this.$emit("update:channel", newValue);
-        this.$root.channel = newValue;
-        await browser.storage.local.set({
-          channel: newValue
+      set: async function(channel) {
+        this.$emit("update:channel", channel);
+        this.$root.channel = channel;
+        await browser.runtime.sendMessage({
+          type: "setChannel",
+          value: channel
         });
-        this.showMessage(this._("updateInProgress"));
-        await this.forceUpdate();
-
-        const data = await browser.storage.local.get([
-          "release_categories",
-          "beta_categories",
-          "test_categories",
-          "local_categories",
-          "release_plugins_flat",
-          "beta_plugins_flat",
-          "test_plugins_flat",
-          "local_plugins_flat"
-        ]);
-
-        // reinitialize categories
-        this.$root.categories = data[newValue + "_categories"];
-
-        // reinitialize all plugins
-        this.$root.plugins_flat = data[newValue + "_plugins_flat"];
       }
     }
   },

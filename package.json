@@ -13,6 +13,7 @@
     "@highlightjs/vue-plugin": "^1.0.2",
     "core-js": "^3.6.5",
     "highlight.js": "^10.7.3",
+    "lib-iitc-manager": "^1.2.0",
     "scored-fuzzysearch": "^1.0.5",
     "vue": "^2.6.11"
   },
