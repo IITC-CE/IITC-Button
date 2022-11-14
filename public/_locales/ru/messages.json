@@ -146,5 +146,8 @@
     },
     "beta": {
         "message": "Бета"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Поиск…"
     }
 }
