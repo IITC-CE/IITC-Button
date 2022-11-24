@@ -58,6 +58,8 @@ browser.runtime.onMessage.addListener(async request => {
     case "xmlHttpRequestHandler":
       await xmlHttpRequestHandler(request.value);
       break;
+    case "setCustomChannelUrl":
+      await manager.setCustomChannelUrl(request.value);
   }
 });
 

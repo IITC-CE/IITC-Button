@@ -20,17 +20,8 @@
     "anyChannel": {
         "message": "Cualquier medio"
     },
-    "localServerURL": {
-        "message": "Dirección de servidor local"
-    },
     "pluginSave": {
         "message": "Guardar"
-    },
-    "testBuilds": {
-        "message": "Versiones de prueba"
-    },
-    "localServer": {
-        "message": "Servidor local"
     },
     "updateFrequency": {
         "message": "IITC-CE buscará actualizaciones"

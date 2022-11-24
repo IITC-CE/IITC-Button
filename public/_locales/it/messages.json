@@ -30,9 +30,6 @@
     "pluginSave": {
         "message": "Salva"
     },
-    "localServerURL": {
-        "message": "Indirizzo del server locale"
-    },
     "everyWeek": {
         "message": "Ogni settimana"
     },
@@ -120,12 +117,6 @@
     },
     "anyChannel": {
         "message": "Tutti i canali"
-    },
-    "localServer": {
-        "message": "Server locale"
-    },
-    "testBuilds": {
-        "message": "Versioni di prova"
     },
     "release": {
         "message": "Rilascio"

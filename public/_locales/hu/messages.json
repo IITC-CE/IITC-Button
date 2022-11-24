@@ -62,9 +62,6 @@
     "every6hours": {
         "message": "6 óránként"
     },
-    "localServer": {
-        "message": "Helyi szerver"
-    },
     "updateNow": {
         "message": "frissítés most"
     },

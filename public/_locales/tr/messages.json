@@ -2,12 +2,6 @@
     "lang": {
         "message": "tr"
     },
-    "testBuilds": {
-        "message": "Test derlemeleri"
-    },
-    "localServer": {
-        "message": "Yerel sunucu"
-    },
     "updateFrequency": {
         "message": "IITC-CE güncellemeleri kontrol et"
     },
@@ -25,9 +19,6 @@
     },
     "everyWeek": {
         "message": "Her Hafta"
-    },
-    "localServerURL": {
-        "message": "Yerel sunucu adresi"
     },
     "openSupport": {
         "message": "Destek sayfasını açın:"

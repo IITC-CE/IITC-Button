@@ -40,12 +40,6 @@
     "release": {
         "message": "Veröffentlichung"
     },
-    "testBuilds": {
-        "message": "Testversionen"
-    },
-    "localServer": {
-        "message": "Lokaler Server"
-    },
     "updateFrequency": {
         "message": "IITC-CE Updateprüfung"
     },
@@ -66,9 +60,6 @@
     },
     "anyChannel": {
         "message": "Jeder Kanal"
-    },
-    "localServerURL": {
-        "message": "Lokale Serveradresse"
     },
     "openSupport": {
         "message": "Supportseite öffnen:"

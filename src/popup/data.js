@@ -5,12 +5,10 @@ export async function init(self) {
     "channel",
     "release_categories",
     "beta_categories",
-    "test_categories",
-    "local_categories",
+    "custom_categories",
     "release_plugins_flat",
     "beta_plugins_flat",
-    "test_plugins_flat",
-    "local_plugins_flat"
+    "custom_plugins_flat"
   ]);
   const channel = data.channel ? data.channel : "release";
   // initialize categories

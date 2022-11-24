@@ -53,9 +53,6 @@
     "openSupport": {
         "message": "Buka halaman support:"
     },
-    "localServerURL": {
-        "message": "Alamat server lokal"
-    },
     "anyChannel": {
         "message": "Kanal manapun"
     },
@@ -76,9 +73,6 @@
     },
     "updateFrequency": {
         "message": "Periksa update untuk IITC-CE"
-    },
-    "localServer": {
-        "message": "Server lokal"
     },
     "choosingUpdateChannel": {
         "message": "Memilih kanal update IITC-CE"

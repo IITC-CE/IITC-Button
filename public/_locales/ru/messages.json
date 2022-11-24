@@ -38,12 +38,6 @@
     "release": {
         "message": "Релиз"
     },
-    "testBuilds": {
-        "message": "Тестовые сборки"
-    },
-    "localServer": {
-        "message": "Локальный сервер"
-    },
     "updateFrequency": {
         "message": "Проверка обновлений IITC-CE"
     },
@@ -64,9 +58,6 @@
     },
     "anyChannel": {
         "message": "Все каналы"
-    },
-    "localServerURL": {
-        "message": "Адрес локального сервера"
     },
     "openSupport": {
         "message": "Открыть страницу поддержки:"

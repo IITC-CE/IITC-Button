@@ -65,9 +65,6 @@
     "openSupport": {
         "message": "Άνοιγμα σελίδας υποστήριξης:"
     },
-    "localServerURL": {
-        "message": "Διεύθυνση τοπικού διακομιστή"
-    },
     "anyChannel": {
         "message": "Οποιοδήποτε κανάλι"
     },
@@ -88,12 +85,6 @@
     },
     "updateFrequency": {
         "message": "IITC-CE έλεγχος για ενημερώσεις"
-    },
-    "localServer": {
-        "message": "Τοπικός διακομιστής"
-    },
-    "testBuilds": {
-        "message": "Δοκιμαστικές εκδόσεις"
     },
     "choosingUpdateChannel": {
         "message": "Επιλογή καναλιού ενημέρωσης IITC-CE"

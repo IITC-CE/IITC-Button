@@ -56,12 +56,6 @@
     "everyWeek": {
         "message": "Toutes les semaines"
     },
-    "localServer": {
-        "message": "Serveur local"
-    },
-    "localServerURL": {
-        "message": "Adresse du serveur local"
-    },
     "extDescription": {
         "message": "Lancer facilement IITC pour Ingress.",
         "description": "Description of the extension"
@@ -117,9 +111,6 @@
     },
     "updateFrequency": {
         "message": "Mise à jour IITC-CE"
-    },
-    "testBuilds": {
-        "message": "Versions de test"
     },
     "updateNow": {
         "message": "Mettre à jour"

@@ -46,9 +46,6 @@
     "openSupport": {
         "message": "Hulppagina openen:"
     },
-    "localServerURL": {
-        "message": "Lokaal serveradres"
-    },
     "anyChannel": {
         "message": "Eender welk kanaal"
     },
@@ -57,12 +54,6 @@
     },
     "updateFrequency": {
         "message": "IITC-CE zoekt naar updates"
-    },
-    "localServer": {
-        "message": "Lokale server"
-    },
-    "testBuilds": {
-        "message": "Testversies"
     },
     "beta": {
         "message": "Beta"

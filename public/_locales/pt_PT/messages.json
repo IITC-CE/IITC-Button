@@ -27,12 +27,6 @@
     "release": {
         "message": "Lançamento"
     },
-    "testBuilds": {
-        "message": "Versões de Teste"
-    },
-    "localServer": {
-        "message": "Servidor Local"
-    },
     "updateFrequency": {
         "message": "Verificar atualizações do IITC-CE"
     },
@@ -53,9 +47,6 @@
     },
     "lang": {
         "message": "pt_PT"
-    },
-    "localServerURL": {
-        "message": "Endereço do servidor local"
     },
     "openSupport": {
         "message": "Abrir página de suporte:"

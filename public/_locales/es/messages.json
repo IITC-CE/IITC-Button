@@ -34,12 +34,6 @@
     "release": {
         "message": "Versión OK"
     },
-    "testBuilds": {
-        "message": "Versión Beta"
-    },
-    "localServer": {
-        "message": "Servidor local"
-    },
     "updateFrequency": {
         "message": "IITC-CE busca actualizaciones"
     },
@@ -60,9 +54,6 @@
     },
     "anyChannel": {
         "message": "Algún Canal"
-    },
-    "localServerURL": {
-        "message": "Dirección de servidor local"
     },
     "openSupport": {
         "message": "Abrir página de soporte:"

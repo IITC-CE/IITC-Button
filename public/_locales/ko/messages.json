@@ -8,14 +8,8 @@
     "iitcHomePage": {
         "message": "홈 페이지"
     },
-    "testBuilds": {
-        "message": "테스트 빌드"
-    },
     "release": {
         "message": "릴리즈"
-    },
-    "localServer": {
-        "message": "로컬 서버"
     },
     "every12hours": {
         "message": "매 12시간 마다"
@@ -25,9 +19,6 @@
     },
     "everyDay": {
         "message": "매일"
-    },
-    "localServerURL": {
-        "message": "로컬 서버 주소"
     },
     "pluginDelete": {
         "message": "삭제"

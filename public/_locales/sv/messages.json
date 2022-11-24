@@ -27,9 +27,6 @@
     "lang": {
         "message": "sv"
     },
-    "localServer": {
-        "message": "Lokal server"
-    },
     "beta": {
         "message": "Beta"
     },
@@ -63,9 +60,6 @@
     },
     "openSupport": {
         "message": "Öppna supportsida:"
-    },
-    "localServerURL": {
-        "message": "Lokal serveradress"
     },
     "anyChannel": {
         "message": "Alla kanaler"
@@ -139,9 +133,6 @@
     },
     "badgeOverride": {
         "message": "Åsidosätt"
-    },
-    "testBuilds": {
-        "message": "Testbyggen"
     },
     "release": {
         "message": "Stabil"

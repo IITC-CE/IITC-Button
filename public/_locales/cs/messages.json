@@ -66,9 +66,6 @@
     "openSupport": {
         "message": "Otevřít stránku s podporou:"
     },
-    "localServerURL": {
-        "message": "Adresa lokálního serveru"
-    },
     "anyChannel": {
         "message": "Jakýkoliv zdroj"
     },
@@ -89,12 +86,6 @@
     },
     "updateFrequency": {
         "message": "Kontrola aktualizací IITC-CE"
-    },
-    "localServer": {
-        "message": "Lokální server"
-    },
-    "testBuilds": {
-        "message": "Testovací verze"
     },
     "release": {
         "message": "Stabilní verze"
