@@ -77,9 +77,6 @@
     "openSupport": {
         "message": "Odpri stran za podporo:"
     },
-    "localServerURL": {
-        "message": "Naslov lokalnega strežnika"
-    },
     "badgeOverride": {
         "message": "zavrnitev"
     },
@@ -103,12 +100,6 @@
     },
     "updateFrequency": {
         "message": "IITC-CE preverja posodobitve"
-    },
-    "localServer": {
-        "message": "Lokalni strežnik"
-    },
-    "testBuilds": {
-        "message": "Testne gradnje"
     },
     "external": {
         "message": "Zunanji"

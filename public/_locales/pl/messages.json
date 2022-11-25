@@ -59,9 +59,6 @@
     "openSupport": {
         "message": "Otwórz stronę pomocy technicznej:"
     },
-    "localServerURL": {
-        "message": "Adres lokalnego serwera"
-    },
     "anyChannel": {
         "message": "Dowolne źródło"
     },
@@ -82,12 +79,6 @@
     },
     "updateFrequency": {
         "message": "Sprawdzanie dostępności aktualizacji IITC-CE"
-    },
-    "localServer": {
-        "message": "Serwer lokalny"
-    },
-    "testBuilds": {
-        "message": "Kompilacje testowe"
     },
     "release": {
         "message": "Stabilne wydanie"

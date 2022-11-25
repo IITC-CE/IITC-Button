@@ -23,9 +23,6 @@
     "openSupport": {
         "message": "Відкрити сторінку підтримки:"
     },
-    "localServerURL": {
-        "message": "Адреса локального сервера"
-    },
     "everyWeek": {
         "message": "Кожен тиждень"
     },
@@ -98,17 +95,11 @@
     "release": {
         "message": "Реліз"
     },
-    "testBuilds": {
-        "message": "Тестова версія"
-    },
     "updateFrequency": {
         "message": "IITC-CE перевіряє наявність оновлень"
     },
     "updateExternalFrequency": {
         "message": "Перевірка оновлень зовнішніх плагінів"
-    },
-    "localServer": {
-        "message": "Локальний сервер"
     },
     "anyChannel": {
         "message": "Будь-який канал"

@@ -59,9 +59,6 @@
     "openSupport": {
         "message": "เปิดหน้าสนับสนุน:"
     },
-    "localServerURL": {
-        "message": "Local server address"
-    },
     "anyChannel": {
         "message": "ช่องทางอื่นๆ"
     },
@@ -82,12 +79,6 @@
     },
     "updateFrequency": {
         "message": "ตรวจสอบการอัพเดท IITC-CE"
-    },
-    "localServer": {
-        "message": "เซิร์ฟเวอร์ภายใน"
-    },
-    "testBuilds": {
-        "message": "ทดสอบ"
     },
     "release": {
         "message": "สมบูรณ์"

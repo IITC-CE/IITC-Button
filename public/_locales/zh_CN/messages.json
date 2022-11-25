@@ -30,9 +30,6 @@
             }
         }
     },
-    "testBuilds": {
-        "message": "测试版"
-    },
     "iitcButtonOptions": {
         "message": "IITC-CE 按钮选项"
     },
@@ -41,9 +38,6 @@
     },
     "choosingUpdateChannel": {
         "message": "选择 IITC-CE 更新通道"
-    },
-    "localServer": {
-        "message": "本地服务器"
     },
     "updateFrequency": {
         "message": "IITC-CE检查更新"
@@ -62,9 +56,6 @@
     },
     "everyWeek": {
         "message": "每周"
-    },
-    "localServerURL": {
-        "message": "本地服务器地址"
     },
     "pluginSave": {
         "message": "保存"

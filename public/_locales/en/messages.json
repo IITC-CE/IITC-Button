@@ -43,11 +43,23 @@
     "beta": {
         "message": "Beta"
     },
-    "testBuilds": {
-        "message": "Test builds"
+    "custom": {
+        "message": "Custom"
     },
-    "localServer": {
-        "message": "Local server"
+    "customServerHint": {
+        "message": "For example:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Successful connection to the server"
+    },
+    "customServerTooltipError": {
+        "message": "Custom server is unavailable or does not contain $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
     },
     "updateFrequency": {
         "message": "IITC-CE checks for updates"
@@ -73,8 +85,8 @@
     "badgeOverride": {
         "message": "override"
     },
-    "localServerURL": {
-        "message": "Local server address"
+    "customServerURL": {
+        "message": "Custom server URL (for custom channel)"
     },
     "openSupport": {
         "message": "Open support page:"

@@ -125,8 +125,7 @@ export default {
         "channel",
         "release_plugins_user",
         "beta_plugins_user",
-        "test_plugins_user",
-        "local_plugins_user"
+        "custom_plugins_user"
       ]);
 
       const channel = data.channel ? data.channel : "release";

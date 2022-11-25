@@ -7,13 +7,12 @@ export const mixin = {
       updateChannels: {
         release: { name: _("release") },
         beta: { name: _("beta") },
-        test: { name: _("testBuilds") },
-        local: { name: _("localServer") }
+        custom: { name: _("custom") }
       },
       updateChannelsIntervals: {
         release: { name: _("release") },
         beta: { name: _("beta") },
-        test: { name: _("testBuilds") },
+        custom: { name: _("custom") },
         external: { name: _("anyChannel") }
       },
       updateIntervals: [

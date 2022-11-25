@@ -8,12 +8,6 @@
     "release": {
         "message": "Выпуск"
     },
-    "testBuilds": {
-        "message": "Тэставая зборка"
-    },
-    "localServer": {
-        "message": "Лакальны сервер"
-    },
     "updateFrequency": {
         "message": "Праверка абнаўленняў IITC-CE"
     },
@@ -47,9 +41,6 @@
     },
     "addExternalPlugin": {
         "message": "Дабавіць знешнюю ўбудову"
-    },
-    "localServerURL": {
-        "message": "Адрас лакальнага сервера"
     },
     "iitcHomePage": {
         "message": "Хатняя старонка"

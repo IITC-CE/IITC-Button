@@ -1,35 +1,35 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div>
+  <div class="window">
     <Header
       v-bind:header_text="_('iitcButtonOptions')"
       v-bind:button_text="_('updateNow')"
       v-on:button_onclick="forceUpdate"
     ></Header>
-    <div class="settings-section">
-      <h2>{{ _("choosingUpdateChannel") }}</h2>
-      <div class="channels-row">
-        <p
-          v-for="(item, index) in updateChannels"
-          v-bind:key="index"
-          class="input-field"
-        >
-          <input
-            type="radio"
-            v-bind:id="index"
-            name="update-channel"
-            v-bind:value="index"
-            v-model="channelSelect"
-          />
-          <label v-bind:for="index">{{ item.name }}</label>
-        </p>
+    <div class="settings">
+      <div class="settings__section">
+        <h2>{{ _("choosingUpdateChannel") }}</h2>
+        <div class="input-field channels">
+          <div
+            v-for="(item, index) in updateChannels"
+            v-bind:key="index"
+            class="channels__item"
+          >
+            <input
+              type="radio"
+              v-bind:id="index"
+              name="update-channel"
+              v-bind:value="index"
+              v-model="channelSelect"
+            />
+            <label v-bind:for="index">{{ item.name }}</label>
+          </div>
+        </div>
       </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("updateFrequency") }}</h2>
-      <div class="input-field update-check">
-        <div class="update-check__col">
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("updateFrequency") }}</h2>
+        <div class="input-field update-check">
           <UpdateCheckIntervalSelector
             v-bind:channel="'release'"
           ></UpdateCheckIntervalSelector>
@@ -37,30 +37,28 @@
             v-bind:channel="'beta'"
           ></UpdateCheckIntervalSelector>
           <UpdateCheckIntervalSelector
-            v-bind:channel="'test'"
+            v-bind:channel="'custom'"
           ></UpdateCheckIntervalSelector>
         </div>
       </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("updateExternalFrequency") }}</h2>
-      <div class="input-field update-check">
-        <div class="update-check__col">
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("updateExternalFrequency") }}</h2>
+        <div class="input-field update-check">
           <UpdateCheckIntervalSelector
             v-bind:channel="'external'"
           ></UpdateCheckIntervalSelector>
         </div>
       </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("localServerURL") }}</h2>
-      <div class="input-field local-server">
-        <InputLocalServerHost
-          v-bind:channel="channel"
-          v-on:requestUpdate="forceUpdate"
-        ></InputLocalServerHost>
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("customServerURL") }}</h2>
+        <div class="input-field">
+          <InputCustomServer
+            v-bind:channel="channel"
+            v-on:requestUpdate="forceUpdate"
+          ></InputCustomServer>
+        </div>
       </div>
     </div>
   </div>
@@ -70,12 +68,12 @@
 import Hr from "./Hr.vue";
 import Header from "./Header";
 import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector";
-import InputLocalServerHost from "./InputLocalServerHost";
+import InputCustomServer from "./InputCustomServer";
 
 import { mixin } from "./mixins.js";
 
 export default {
-  name: "SectionOptions",
+  name: "settings__sectionOptions",
   data() {
     return {
       channel: "release"
@@ -109,7 +107,7 @@ export default {
       this.channel = data.channel;
     }
   },
-  components: { Hr, Header, UpdateCheckIntervalSelector, InputLocalServerHost }
+  components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer }
 };
 </script>
 
@@ -126,8 +124,14 @@ h2:first-letter {
   text-transform: uppercase;
 }
 
-.settings-section {
-  padding: 15px 0;
+.window,
+.settings {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.settings {
+  justify-content: space-around;
 }
 
 /*
@@ -148,35 +152,55 @@ h2:first-letter {
    */
 .update-check {
   display: flex;
-}
-.update-check__col {
-  flex: auto;
   flex-direction: column;
-  padding-right: 8px;
 }
 
 /*
-   * local-server
+   * Channels selector
    */
-.local-server {
+.channels {
   display: flex;
+  flex-direction: row;
 }
-.local-server__input {
-  box-sizing: border-box;
-  width: 50%;
-  padding: 5px 3px;
-  flex: auto;
-  font-weight: 500;
-  transition: color 0.2s linear;
+.channels__item {
+  display: flex;
+  flex: 1;
+  height: 30px;
+  justify-content: center;
 }
-.local-server__input__ok {
-  color: var(--state-on);
-}
-.local-server__input__err {
-  color: var(--state-off);
+.channels__item input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  width: 0;
+  height: 0;
 }
 
-.channels-row {
-  column-count: 2;
+.channels__item label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 10px 1px 10px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-right: 0;
+  width: 100%;
+  margin: 0;
+  line-height: 12px;
+  text-align: center;
+  transition: color 0.1s ease, background 0.1s ease, border 0.1s ease;
+}
+.channels__item:first-child label {
+  border-radius: 4px 0 0 4px;
+}
+.channels__item:last-child label {
+  border-right: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+}
+.channels__item input:checked + label {
+  color: #fff;
+  background: #555555;
+  border-color: #555555;
 }
 </style>

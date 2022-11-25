@@ -97,9 +97,6 @@
     "openSupport": {
         "message": "Åbn supportsiden:"
     },
-    "localServerURL": {
-        "message": "Lokal serveradresse"
-    },
     "badgeOverride": {
         "message": "tilsidesætte"
     },
@@ -123,12 +120,6 @@
     },
     "updateFrequency": {
         "message": "IITC-CE kontrollerer for opdateringer"
-    },
-    "localServer": {
-        "message": "Lokal server"
-    },
-    "testBuilds": {
-        "message": "Test udgaver"
     },
     "release": {
         "message": "Udgivelses dato"

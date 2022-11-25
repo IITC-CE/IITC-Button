@@ -70,12 +70,6 @@
     "release": {
         "message": "Lançamento"
     },
-    "testBuilds": {
-        "message": "Builds de testes"
-    },
-    "localServer": {
-        "message": "Servidor local"
-    },
     "updateFrequency": {
         "message": "Verificar atualizações do IITC-CE"
     },
@@ -96,9 +90,6 @@
     },
     "anyChannel": {
         "message": "Qualquer canal"
-    },
-    "localServerURL": {
-        "message": "Endereço do servidor local"
     },
     "pluginSave": {
         "message": "Salvar"

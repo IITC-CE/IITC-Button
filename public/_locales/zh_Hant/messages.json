@@ -41,12 +41,6 @@
     "updateFrequency": {
         "message": "IITC-CE 檢查更新"
     },
-    "localServer": {
-        "message": "本地伺服器"
-    },
-    "testBuilds": {
-        "message": "測試版本"
-    },
     "beta": {
         "message": "Beta"
     },
@@ -142,9 +136,6 @@
     },
     "openSupport": {
         "message": "開啟說明頁面:"
-    },
-    "localServerURL": {
-        "message": "本地伺服器網址"
     },
     "badgeOverride": {
         "message": "覆蓋"

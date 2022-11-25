@@ -5,12 +5,6 @@
     "updateExternalFrequency": {
         "message": "בדיקת עדכונים של תוספים חיצוניים"
     },
-    "localServer": {
-        "message": "שרת מקומי"
-    },
-    "testBuilds": {
-        "message": "גרסאת בדיקה"
-    },
     "beta": {
         "message": "בטא"
     },
@@ -72,9 +66,6 @@
     },
     "openSupport": {
         "message": "פתח דף תמיכה:"
-    },
-    "localServerURL": {
-        "message": "כתובת שרת מקומי"
     },
     "badgeOverride": {
         "message": "לעקוף"

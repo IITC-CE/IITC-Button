@@ -72,9 +72,6 @@
     "openSupport": {
         "message": "Abrir página de suporte:"
     },
-    "localServerURL": {
-        "message": "Endereço do servidor local"
-    },
     "badgeOverride": {
         "message": "substituir"
     },
@@ -98,12 +95,6 @@
     },
     "updateFrequency": {
         "message": "Verificar atualizações do IITC-CE"
-    },
-    "localServer": {
-        "message": "Servidor Local"
-    },
-    "testBuilds": {
-        "message": "Versões de Teste"
     },
     "beta": {
         "message": "Beta"

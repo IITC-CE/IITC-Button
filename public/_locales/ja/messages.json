@@ -14,9 +14,6 @@
     "pluginDelete": {
         "message": "削除"
     },
-    "localServerURL": {
-        "message": "ローカルサーバーアドレス"
-    },
     "everyDay": {
         "message": "毎日"
     },
@@ -104,12 +101,6 @@
     },
     "updateFrequency": {
         "message": "IITC-CEの更新を確認"
-    },
-    "localServer": {
-        "message": "ローカルサーバ"
-    },
-    "testBuilds": {
-        "message": "テスト版"
     },
     "release": {
         "message": "リリース"

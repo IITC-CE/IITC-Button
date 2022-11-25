@@ -76,9 +76,6 @@
     "openSupport": {
         "message": "Obre la pàgina de suport:"
     },
-    "localServerURL": {
-        "message": "Adreça del servidor local"
-    },
     "anyChannel": {
         "message": "Qualsevol canal"
     },
@@ -99,12 +96,6 @@
     },
     "updateFrequency": {
         "message": "Comprova actualitzacions d'IITC-CE"
-    },
-    "localServer": {
-        "message": "Servidor local"
-    },
-    "testBuilds": {
-        "message": "Prova"
     },
     "release": {
         "message": "Estable"
