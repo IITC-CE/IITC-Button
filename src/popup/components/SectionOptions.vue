@@ -1,64 +1,64 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div>
+  <div class="window">
     <Header
       v-bind:header_text="_('iitcButtonOptions')"
       v-bind:button_text="_('updateNow')"
       v-on:button_onclick="forceUpdate"
     ></Header>
-    <div class="settings-section">
-      <h2>{{ _("choosingUpdateChannel") }}</h2>
-
-      <div class="input-field channels">
-        <div
-          v-for="(item, index) in updateChannels"
-          v-bind:key="index"
-          class="channels__item"
-        >
-          <input
-            type="radio"
-            v-bind:id="index"
-            name="update-channel"
-            v-bind:value="index"
-            v-model="channelSelect"
-          />
-          <label v-bind:for="index">{{ item.name }}</label>
+    <div class="settings">
+      <div class="settings__section">
+        <h2>{{ _("choosingUpdateChannel") }}</h2>
+        <div class="input-field channels">
+          <div
+            v-for="(item, index) in updateChannels"
+            v-bind:key="index"
+            class="channels__item"
+          >
+            <input
+              type="radio"
+              v-bind:id="index"
+              name="update-channel"
+              v-bind:value="index"
+              v-model="channelSelect"
+            />
+            <label v-bind:for="index">{{ item.name }}</label>
+          </div>
+        </div>
       </div>
-
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("updateFrequency") }}</h2>
+        <div class="input-field update-check">
+          <UpdateCheckIntervalSelector
+            v-bind:channel="'release'"
+          ></UpdateCheckIntervalSelector>
+          <UpdateCheckIntervalSelector
+            v-bind:channel="'beta'"
+          ></UpdateCheckIntervalSelector>
+          <UpdateCheckIntervalSelector
+            v-bind:channel="'custom'"
+          ></UpdateCheckIntervalSelector>
+        </div>
       </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("updateFrequency") }}</h2>
-      <div class="input-field update-check">
-        <UpdateCheckIntervalSelector
-          v-bind:channel="'release'"
-        ></UpdateCheckIntervalSelector>
-        <UpdateCheckIntervalSelector
-          v-bind:channel="'beta'"
-        ></UpdateCheckIntervalSelector>
-        <UpdateCheckIntervalSelector
-          v-bind:channel="'custom'"
-        ></UpdateCheckIntervalSelector>
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("updateExternalFrequency") }}</h2>
+        <div class="input-field update-check">
+          <UpdateCheckIntervalSelector
+            v-bind:channel="'external'"
+          ></UpdateCheckIntervalSelector>
+        </div>
       </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("updateExternalFrequency") }}</h2>
-      <div class="input-field update-check">
-        <UpdateCheckIntervalSelector
-          v-bind:channel="'external'"
-        ></UpdateCheckIntervalSelector>
-      </div>
-    </div>
-    <Hr />
-    <div class="settings-section">
-      <h2>{{ _("customServerURL") }}</h2>
-      <div class="input-field">
-        <InputCustomServer
-          v-bind:channel="channel"
-          v-on:requestUpdate="forceUpdate"
-        ></InputCustomServer>
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("customServerURL") }}</h2>
+        <div class="input-field">
+          <InputCustomServer
+            v-bind:channel="channel"
+            v-on:requestUpdate="forceUpdate"
+          ></InputCustomServer>
+        </div>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ import InputCustomServer from "./InputCustomServer";
 import { mixin } from "./mixins.js";
 
 export default {
-  name: "SectionOptions",
+  name: "settings__sectionOptions",
   data() {
     return {
       channel: "release"
@@ -124,8 +124,14 @@ h2:first-letter {
   text-transform: uppercase;
 }
 
-.settings-section {
-  padding: 14px 0;
+.window,
+.settings {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.settings {
+  justify-content: space-around;
 }
 
 /*

@@ -10,10 +10,7 @@
     />
     <i
       class="icon material-icons"
-      :class="{
-        ok: iconName === 'check',
-        error: iconName === 'error'
-      }"
+      :class="[iconName === 'check' ? 'ok' : 'error']"
       v-bind:title="
         iconName === 'check'
           ? _('customServerTooltipSuccess')
@@ -66,7 +63,7 @@ export default {
   },
   data() {
     return {
-      iconName: String,
+      iconName: "error",
       host: "http://localhost:8000"
     };
   },
@@ -112,9 +109,10 @@ export default {
   },
   async mounted() {
     const network_host = await browser.storage.local
-      .get("network_host")
-      .then(data => data.network_host);
-    if (network_host.custom) {
+      .get(["network_host"])
+      .then(({ network_host }) => network_host);
+
+    if (network_host && network_host.custom) {
       this.host = network_host.custom;
     }
     await this.setInputStatus(this.host);
@@ -150,7 +148,7 @@ export default {
 }
 
 .example {
-  margin-top: 4px;
+  margin: 4px 0;
 }
 .example__item {
   color: #000;
