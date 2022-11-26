@@ -107,11 +107,10 @@ export default {
         },
         0
       );
-
       if (count_plugins <= 0) {
         this.back();
-        this.categories[this.category_name].name = "";
       }
+
       this.showMessage(this._("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
