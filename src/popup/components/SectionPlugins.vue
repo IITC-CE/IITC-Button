@@ -1,17 +1,15 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div>
+  <div class="window">
     <Header v-bind:header_text="__('name', categories[category_name])"></Header>
-    <div class="list">
-      <div class="plugins-list">
-        <ElementPlugin
-          v-for="(plugin, index) in sortIITCObj(plugins)"
-          v-bind:key="index"
-          v-bind:category_name="category_name"
-          v-bind:plugin="plugin"
-        ></ElementPlugin>
-        <Element v-if="objIsEmpty(plugins)" v-bind:text="_('noData')"></Element>
-      </div>
+    <div class="plugins-list">
+      <ElementPlugin
+        v-for="(plugin, index) in sortIITCObj(plugins)"
+        v-bind:key="index"
+        v-bind:category_name="category_name"
+        v-bind:plugin="plugin"
+      ></ElementPlugin>
+      <Element v-if="objIsEmpty(plugins)" v-bind:text="_('noData')"></Element>
     </div>
   </div>
 </template>
@@ -36,8 +34,13 @@ export default {
 </script>
 
 <style scoped>
+.window {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .plugins-list {
-  max-height: 505px;
   overflow-y: auto;
 }
 .plugins-list .item-wrapper:last-child {
