@@ -140,5 +140,26 @@
     },
     "searchBoxPlaceholder": {
         "message": "Поиск…"
+    },
+    "custom": {
+        "message": "Пользовательский"
+    },
+    "customServerHint": {
+        "message": "Например:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Успешное подключение к серверу"
+    },
+    "customServerTooltipError": {
+        "message": "Пользовательский сервер недоступен или не содержит $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "URL кастомного сервера (для кастомного канала)"
     }
 }
