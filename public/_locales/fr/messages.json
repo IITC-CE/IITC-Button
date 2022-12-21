@@ -37,7 +37,7 @@
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
-                "example": "awesome-plugin.user.js"
+                "example": "Awesome plugin"
             }
         }
     },
@@ -93,7 +93,7 @@
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
-                "example": "awesome-plugin.user.js"
+                "example": "Awesome plugin"
             }
         }
     },
@@ -126,7 +126,7 @@
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
-                "example": "awesome-plugin.user.js"
+                "example": "Awesome plugin"
             },
             "plugin_category": {
                 "content": "$2",

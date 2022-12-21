@@ -58,27 +58,51 @@ browser.runtime.onMessage.addListener(async request => {
     case "xmlHttpRequestHandler":
       await xmlHttpRequestHandler(request.value);
       break;
-    case "setCustomChannelUrl":
-      await manager.setCustomChannelUrl(request.value);
   }
 });
 
-browser.runtime.onMessage.addListener(function(request) {
+browser.runtime.onMessage.addListener(async function(request) {
   switch (request.type) {
     case "managePlugin":
-      manager.managePlugin(request.uid, request.action).then();
+      await manager.managePlugin(request.uid, request.action);
       break;
     case "setChannel":
-      manager.setChannel(request.value).then();
+      await manager.setChannel(request.value);
       break;
     case "safeUpdate":
-      manager.checkUpdates(false).then();
+      await manager.checkUpdates(false);
       break;
     case "forceFullUpdate":
-      manager.checkUpdates(true).then();
+      await manager.checkUpdates(true);
       break;
     case "addUserScripts":
-      manager.addUserScripts(request.scripts).then();
+      // TODO: The onMessage method should be able to return a value, but does not do so because of a bug.
+      //  More info: https://github.com/mozilla/webextension-polyfill/issues/172
+      try {
+        browser.runtime
+          .sendMessage({
+            type: "resolveAddUserScripts",
+            scripts: await manager.addUserScripts(request.scripts)
+          })
+          .then();
+      } catch {
+        // If tab is closed, message goes nowhere and an error occurs. Ignore.
+      }
+      break;
+    case "getPluginInfo":
+      try {
+        browser.runtime
+          .sendMessage({
+            type: "resolveGetPluginInfo",
+            info: await manager.getPluginInfo(request.uid)
+          })
+          .then();
+      } catch {
+        // If tab is closed, message goes nowhere and an error occurs. Ignore.
+      }
+      break;
+    case "setCustomChannelUrl":
+      await manager.setCustomChannelUrl(request.value);
       break;
   }
 });
