@@ -10,6 +10,7 @@ on:
 jobs:
   artifacts-url-comments:
     name: add artifact links to pull request and related issues job
+    if: ${{ github.event.workflow_run.event == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - name: add artifact links to pull request and related issues step
