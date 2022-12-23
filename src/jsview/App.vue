@@ -7,7 +7,7 @@
           <h3>{{ plugin_name }}</h3>
           <span id="clickInstallPlugin">{{ _("clickInstallPlugin") }}</span>
         </div>
-        <div id="install" class="btn">{{ _("install") }}</div>
+        <div id="install" class="btn" @click="install">{{ button_name }}</div>
       </div>
     </div>
     <Code :code="code" :status="status" />
@@ -16,7 +16,7 @@
 
 <script>
 import Code from "./Code";
-import { parseMeta } from "lib-iitc-manager";
+import { getUID, parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
 
 export default {
@@ -26,14 +26,50 @@ export default {
   },
   data() {
     return {
+      button_name: _("install"),
       plugin_name: "",
+      meta: {},
       code: "",
+      filename: "",
       show_header: false,
       status: _("loading")
     };
   },
   methods: {
-    _: _
+    _: _,
+    install: async function() {
+      const script = [{ meta: this.meta, code: this.code }];
+      await browser.runtime.sendMessage({
+        type: "addUserScripts",
+        scripts: script
+      });
+      this.show_header = false;
+    },
+    checkIfInstalled: async function() {
+      await browser.runtime.sendMessage({
+        type: "getPluginInfo",
+        uid: getUID(this.meta)
+      });
+    },
+    setListeners: function() {
+      const self = this;
+      browser.runtime.onMessage.addListener(function(request) {
+        switch (request.type) {
+          case "resolveGetPluginInfo":
+            if (request.info) {
+              self.button_name = _("reinstall");
+            }
+            break;
+          case "resolveAddUserScripts":
+            Object.entries(request.scripts).map(([, script]) => {
+              const message =
+                _("addedUserScriptTo", [script["name"], script["category"]]) +
+                "\n";
+              alert(message);
+            });
+        }
+      });
+    }
   },
   async mounted() {
     const uniqId = new URL(window.location.href).searchParams.get("uniqId");
@@ -45,28 +81,14 @@ export default {
     this.show_header = true;
 
     const meta = parseMeta(code);
-    if (meta["name"] !== undefined) {
-      this.plugin_name = meta["name"];
-      const filename = url.substr(url.lastIndexOf("/") + 1);
-      const btn_install = document.getElementById("install");
-      btn_install.addEventListener(
-        "click",
-        async () => {
-          const message =
-            _("addedUserScriptTo", [filename, meta["category"]]) + "\n";
-          meta["filename"] = filename;
-          const script = [{ meta: meta, code: code }];
+    if (meta["name"] === undefined) return;
 
-          alert(message);
-          await browser.runtime.sendMessage({
-            type: "addUserScripts",
-            scripts: script
-          });
-          this.show_header = false;
-        },
-        false
-      );
-    }
+    meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
+    this.meta = meta;
+    this.plugin_name = meta["name"];
+
+    this.setListeners();
+    await this.checkIfInstalled();
   }
 };
 </script>
