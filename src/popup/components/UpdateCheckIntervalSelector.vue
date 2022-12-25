@@ -61,7 +61,7 @@ export default {
 
 <style scoped>
 .uc__input {
-  width: 70%;
+  width: 60%;
   height: 30px;
 }
 .uc__setting {
@@ -78,7 +78,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 30%;
+  width: 40%;
   float: left;
   height: 30px;
 }
