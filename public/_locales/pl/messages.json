@@ -139,5 +139,14 @@
     },
     "beta": {
         "message": "Beta"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Szukaj…"
+    },
+    "customServerHint": {
+        "message": "Na przykład:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Pomyślne połączenie z serwerem"
     }
 }
