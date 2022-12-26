@@ -1,6 +1,6 @@
 {
   "name": "iitc-button",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "repository": "https://github.com/IITC-CE/IITC-Button.git",
   "license": "GPLv3",
   "private": true,
@@ -30,6 +30,5 @@
     "vue-cli-plugin-browser-extension": "^0.25.1",
     "vue-template-compiler": "^2.6.11"
   },
-  "_id": "iitc-button@0.1.0",
   "readme": "README.md"
 }
