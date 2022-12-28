@@ -2,7 +2,7 @@
 <template>
   <div
     class="plugin item-wrapper"
-    v-bind:class="plugin.status || 'off'"
+    v-bind:class="plugin.status"
     v-bind:title="pluginDescription()"
     v-bind:data-category="category_name"
     v-bind:data-uid="plugin.uid"

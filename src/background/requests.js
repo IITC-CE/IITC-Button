@@ -69,6 +69,14 @@ async function bypass(tabId, url) {
  * @return {Promise<void>}
  */
 async function maybeInstallUserJs(tabId, url) {
+  const IITC_is_enabled = await browser.storage.local
+    .get(["IITC_is_enabled"])
+    .then(data => data.IITC_is_enabled);
+  if (IITC_is_enabled === false) {
+    await bypass(tabId, url);
+    return;
+  }
+
   let code = undefined;
   try {
     code = await ajaxGet(url);
