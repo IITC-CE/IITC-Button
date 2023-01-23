@@ -109,12 +109,14 @@ browser.runtime.onMessage.addListener(async function(request) {
 
 async function xmlHttpRequestHandler(data) {
   async function xmlResponse(tab_id, callback, response) {
+    const detail_stringify = JSON.stringify({
+      uuid: data.uuid,
+      response: JSON.stringify(response)
+    });
+
     const injectedCode = `
     document.dispatchEvent(new CustomEvent('onXmlHttpRequestHandler', {
-      detail: JSON.stringify({
-        callback: "${String(callback)}",
-        response: ${String(response)}
-      })
+      detail: "${btoa(String(detail_stringify))}"
     }));
   `;
 
@@ -136,8 +138,12 @@ async function xmlHttpRequestHandler(data) {
       status: this.status,
       statusText: this.statusText
     };
-    xmlResponse(data.tab_id, data.onload, JSON.stringify(response));
+    xmlResponse(data.tab_id, data.onload, response);
   };
   req.open(data.method, data.url, true, data.user, data.password);
-  req.send();
+  for (let [header_name, header_value] of Object.entries(data.headers)) {
+    req.setRequestHeader(header_name, header_value);
+  }
+
+  req.send(data.data);
 }

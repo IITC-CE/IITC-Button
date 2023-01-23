@@ -18,12 +18,16 @@ export function inject(code) {
   script.parentElement.removeChild(script);
 }
 
-export async function xmlHttpRequestBridge(e) {
+export function xmlHttpRequestBridge(e) {
   const data = e.detail;
-  await browser.runtime.sendMessage({
-    type: "xmlHttpRequestHandler",
-    value: data
-  });
+  browser.runtime
+    .sendMessage({
+      type: "xmlHttpRequestHandler",
+      value: data
+    })
+    .then(() => {
+      console.log("xmlHttpRequestHandler sent");
+    });
 }
 
 export async function IITCButtonInitJS(e) {
@@ -56,6 +60,7 @@ export async function IITCButtonInitJS(e) {
       "((GM)=>{",
       // an implementation of GM API v3 based on GM API v4
       "const GM_info = GM.info; const unsafeWindow = window;",
+      "const exportFunction = GM.exportFunction; const createObjectIn = GM.createObjectIn; const cloneInto = GM.cloneInto;",
       "const GM_getValue = (key, value) => GM._getValueSync(key, value);",
       "const GM_setValue = (key, value) => GM._setValueSync(key, value);",
       "const GM_xmlhttpRequest = (details) => GM.xmlHttpRequest(details);",
