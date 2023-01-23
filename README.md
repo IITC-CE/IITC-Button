@@ -1,6 +1,10 @@
 IITC Button WebExtension
 ========================
 
+[![Firefox Add-ons](https://img.shields.io/amo/v/iitc-button.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/iitc-button)[![Firefox Add-ons](https://img.shields.io/amo/users/iitc-button.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/iitc-button)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/violentmonkey/febaefghpimpenpigafpolgljcfkeakn)[![Chrome Web Store](https://img.shields.io/chrome-web-store/users/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/violentmonkey/febaefghpimpenpigafpolgljcfkeakn)
+[![Translations](https://weblate.iitc.app/widgets/iitc-ce/-/iitc-button/svg-badge.svg)](https://weblate.iitc.app/projects/iitc-ce/iitc-button/)
+
 Intel map of Ingress game with IITC-CE in your browser.
 
 Get it on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/iitc-button) and [Chrome Web Store](https://chrome.google.com/webstore/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn)
