@@ -1,5 +1,23 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 export const GM = function() {
+  const cache = {};
+  const defineProperty = Object.defineProperty;
+
+  function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
+  }
+
+  const makeFunc = (func, toString) => {
+    defineProperty(func, "toString", {
+      value: toString || "[Unknown property]"
+    });
+    return func;
+  };
   window.GM = function(dataKey, tab_id, meta) {
     return {
       info: {
@@ -15,6 +33,10 @@ export const GM = function() {
           return default_value;
         }
       },
+      _setValueSync: function(key, value) {
+        if (!this._access("setValue")) return undefined;
+        sessionStorage.setItem(dataKey + "_" + key, JSON.stringify(value));
+      },
       getValue: function(key, default_value) {
         return new Promise((resolve, reject) => {
           if (!this._access("getValue")) return reject;
@@ -24,9 +46,7 @@ export const GM = function() {
       setValue: function(key, value) {
         return new Promise((resolve, reject) => {
           if (!this._access("setValue")) return reject;
-
-          sessionStorage.setItem(dataKey + "_" + key, JSON.stringify(value));
-          resolve();
+          resolve(this._setValueSync(key, value));
         });
       },
       deleteValue: function(key) {
@@ -62,6 +82,7 @@ export const GM = function() {
       xmlHttpRequest: function(details) {
         let data = Object.assign(
           {
+            uuid: uuidv4(),
             binary: false,
             context: {},
             data: null,
@@ -90,6 +111,7 @@ export const GM = function() {
 
         data.tab_id = tab_id;
 
+        cache[data.uuid] = details.onload;
         document.dispatchEvent(
           new CustomEvent("xmlHttpRequestBridge", {
             detail: data
@@ -103,29 +125,27 @@ export const GM = function() {
             return permission.substr(3) === key;
           })
         );
-      }
+      },
+      exportFunction: makeFunc((func, targetScope, { defineAs } = {}) => {
+        if (defineAs && targetScope) targetScope[defineAs] = func;
+        return func;
+      }),
+      createObjectIn: makeFunc((targetScope, { defineAs } = {}) => {
+        const obj = {};
+        if (defineAs && targetScope) targetScope[defineAs] = obj;
+        return obj;
+      }),
+      cloneInto: makeFunc(obj => obj)
     };
   };
   document.addEventListener("onXmlHttpRequestHandler", function(e) {
-    function parseFunction(str) {
-      var fn_body_idx = str.indexOf("{"),
-        fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf("}")),
-        fn_declare = str.substring(0, fn_body_idx),
-        fn_params = fn_declare.substring(
-          fn_declare.indexOf("(") + 1,
-          fn_declare.lastIndexOf(")")
-        ),
-        args = fn_params.split(",");
-      args.push(fn_body);
-      function Fn() {
-        return Function.apply(this, args);
-      }
-      Fn.prototype = Function.prototype;
-      return new Fn();
-    }
+    const detail = JSON.parse(atob(e.detail));
+    const uuid = detail.uuid;
+    const response = JSON.parse(detail.response);
 
-    const detail = JSON.parse(e.detail);
-    const callback = parseFunction(detail.callback);
-    callback(detail.response);
+    if (cache[uuid] !== undefined) {
+      const callback = cache[uuid];
+      callback(response);
+    }
   });
 };
