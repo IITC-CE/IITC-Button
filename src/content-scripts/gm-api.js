@@ -29,7 +29,6 @@ export const GM = function() {
         value: value
       };
       sendToBridge(req);
-
       target[key] = value;
       return true;
     },
@@ -39,18 +38,15 @@ export const GM = function() {
         key: key
       };
       sendToBridge(req);
-
       delete target[key];
     }
   });
 
-  function initialSyncStorage(data_key) {
+  function initialSyncStorage() {
     const req = {
       task_uuid: uuidv4(),
-      task_type: "getStorage",
-      data_key: data_key
+      task_type: "getStorage"
     };
-    cache[req.task_uuid] = {};
     sendToBridge(req);
   }
 
@@ -61,7 +57,7 @@ export const GM = function() {
     return func;
   };
   window.GM = function(data_key, tab_id, meta) {
-    initialSyncStorage(data_key);
+    initialSyncStorage();
     return {
       info: {
         script: meta
@@ -179,21 +175,23 @@ export const GM = function() {
   document.addEventListener("bridgeResponse", function(e) {
     const detail = JSON.parse(atob(e.detail));
     const uuid = detail.task_uuid;
-    const task = cache[uuid];
-    if (task === undefined) return;
 
     const response = JSON.parse(detail.response);
     switch (detail.task_type) {
       case "xmlHttpRequest":
-        task.callback(response);
+        if (cache[uuid] === undefined) return;
+        cache[uuid].callback(response);
+        delete cache[uuid];
         break;
       case "getStorage":
         for (let key in response) {
-          storageObj[key] = response[key];
+          if (storageObj[key] === undefined) {
+            storageObj[key] = response[key];
+          }
         }
         break;
       default:
-        delete cache[uuid];
+        return;
     }
   });
 };

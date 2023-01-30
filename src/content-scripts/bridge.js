@@ -32,19 +32,18 @@ const xmlResponseBridge = async data => {
     .then();
 };
 
-// Sends the entire plugin scoped storage to the page context
+// Sends the entire plugins scoped storage to the page context
 const getStorageBridge = async req => {
   const all_storage = await browser.storage.local.get(null);
-  const plugin_storage = {};
+  const plugins_storage = {};
   for (const key in all_storage) {
-    if (key.startsWith(req.data_key)) {
-      plugin_storage[key] = all_storage[key];
+    if (key.startsWith("VMin")) {
+      plugins_storage[key] = all_storage[key];
     }
   }
   const detail_stringify = JSON.stringify({
-    task_uuid: req.task_uuid,
     task_type: req.task_type,
-    response: JSON.stringify(plugin_storage)
+    response: JSON.stringify(plugins_storage)
   });
 
   const injectedCode = `
