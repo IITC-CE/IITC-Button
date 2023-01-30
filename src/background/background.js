@@ -55,9 +55,6 @@ browser.runtime.onMessage.addListener(async request => {
     case "toggleIITC":
       await onToggleIITC(request.value);
       break;
-    case "xmlHttpRequestHandler":
-      await xmlHttpRequestHandler(request.value);
-      break;
   }
 });
 
@@ -106,44 +103,3 @@ browser.runtime.onMessage.addListener(async function(request) {
       break;
   }
 });
-
-async function xmlHttpRequestHandler(data) {
-  async function xmlResponse(tab_id, callback, response) {
-    const detail_stringify = JSON.stringify({
-      uuid: data.uuid,
-      response: JSON.stringify(response)
-    });
-
-    const injectedCode = `
-    document.dispatchEvent(new CustomEvent('onXmlHttpRequestHandler', {
-      detail: "${btoa(String(detail_stringify))}"
-    }));
-  `;
-
-    try {
-      await browser.tabs.executeScript(data.tab_id, {
-        code: injectedCode
-      });
-    } catch (error) {
-      console.error(`An error occurred while execute script: ${error.message}`);
-    }
-  }
-
-  const req = new XMLHttpRequest();
-  req.onload = function() {
-    const response = {
-      readyState: this.readyState,
-      responseHeaders: this.responseHeaders,
-      responseText: this.responseText,
-      status: this.status,
-      statusText: this.statusText
-    };
-    xmlResponse(data.tab_id, data.onload, response);
-  };
-  req.open(data.method, data.url, true, data.user, data.password);
-  for (let [header_name, header_value] of Object.entries(data.headers)) {
-    req.setRequestHeader(header_name, header_value);
-  }
-
-  req.send(data.data);
-}

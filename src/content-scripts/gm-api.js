@@ -82,7 +82,8 @@ export const GM = function() {
       xmlHttpRequest: function(details) {
         let data = Object.assign(
           {
-            uuid: uuidv4(),
+            task_uuid: uuidv4(),
+            task_type: "xmlHttpRequest",
             binary: false,
             context: {},
             data: null,
@@ -111,9 +112,11 @@ export const GM = function() {
 
         data.tab_id = tab_id;
 
-        cache[data.uuid] = details.onload;
+        cache[data.task_uuid] = {
+          callback: details.onload
+        };
         document.dispatchEvent(
-          new CustomEvent("xmlHttpRequestBridge", {
+          new CustomEvent("bridgeRequest", {
             detail: data
           })
         );
@@ -138,14 +141,19 @@ export const GM = function() {
       cloneInto: makeFunc(obj => obj)
     };
   };
-  document.addEventListener("onXmlHttpRequestHandler", function(e) {
+  document.addEventListener("bridgeResponse", function(e) {
     const detail = JSON.parse(atob(e.detail));
-    const uuid = detail.uuid;
-    const response = JSON.parse(detail.response);
+    const uuid = detail.task_uuid;
+    const task = cache[uuid];
+    if (task === undefined) return;
 
-    if (cache[uuid] !== undefined) {
-      const callback = cache[uuid];
-      callback(response);
+    const response = JSON.parse(detail.response);
+    switch (detail.task_type) {
+      case "xmlHttpRequest":
+        task.callback(response);
+        break;
+      default:
+        delete cache[uuid];
     }
   });
 };

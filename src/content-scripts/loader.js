@@ -1,6 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { GM } from "./gm-api";
-import { inject, xmlHttpRequestBridge, IITCButtonInitJS } from "./utils";
+import { inject, bridgeAction, IITCButtonInitJS } from "./utils";
 
 function preparePage() {
   document.addEventListener("DOMContentLoaded", function() {
@@ -15,7 +15,7 @@ function preparePage() {
       "js/GM_api.js"
     )}`
   );
-  document.addEventListener("xmlHttpRequestBridge", xmlHttpRequestBridge);
+  document.addEventListener("bridgeRequest", bridgeAction);
   document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
 }
 
