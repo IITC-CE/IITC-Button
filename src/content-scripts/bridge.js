@@ -3,8 +3,18 @@
 import { inject } from "@/content-scripts/utils";
 
 export async function bridgeAction(e) {
-  const data = e.detail;
+  const task = e.detail;
 
+  switch (task.task_type) {
+    case "xmlHttpRequest":
+      await xmlResponseBridge(task);
+      break;
+    default:
+      return;
+  }
+}
+
+const xmlResponseBridge = async data => {
   async function xmlResponse(tab_id, callback, response) {
     const detail_stringify = JSON.stringify({
       task_uuid: data.task_uuid,
@@ -38,4 +48,4 @@ export async function bridgeAction(e) {
   }
 
   req.send(data.data);
-}
+};
