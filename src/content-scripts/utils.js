@@ -1,11 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import {
-  getUID,
-  getUniqId,
-  parseMeta,
-  check_meta_match_pattern
-} from "lib-iitc-manager";
+import { getUID, parseMeta, check_meta_match_pattern } from "lib-iitc-manager";
 
 const LOADED_PLUGINS = [];
 
@@ -18,16 +13,8 @@ export function inject(code) {
   script.parentElement.removeChild(script);
 }
 
-export function xmlHttpRequestBridge(e) {
-  const data = e.detail;
-  browser.runtime
-    .sendMessage({
-      type: "xmlHttpRequestHandler",
-      value: data
-    })
-    .then(() => {
-      console.log("xmlHttpRequestHandler sent");
-    });
+function getPluginHash(uid) {
+  return "VMin" + btoa(uid);
 }
 
 export async function IITCButtonInitJS(e) {
@@ -38,12 +25,7 @@ export async function IITCButtonInitJS(e) {
   const uid = getUID(meta);
   meta["uid"] = uid;
 
-  let dataKey = sessionStorage.getItem(uid);
-  if (!dataKey) {
-    dataKey = getUniqId("VMin");
-    sessionStorage.setItem(uid, dataKey);
-  }
-
+  let data_key = getPluginHash(uid);
   if (LOADED_PLUGINS.includes(uid)) {
     console.debug(`Plugin ${uid} is already loaded. Skip`);
   } else {
@@ -68,7 +50,7 @@ export async function IITCButtonInitJS(e) {
       code,
       // adding a new line in case the code ends with a line comment
       code.endsWith("\n") ? "" : "\n",
-      `})(GM("${dataKey}", ${tab_id}, ${JSON.stringify(meta)}))`,
+      `})(GM("${data_key}", ${tab_id}, ${JSON.stringify(meta)}))`,
 
       // Firefox lists .user.js among our own content scripts so a space at start will group them
       `\n//# sourceURL=${browser.runtime.getURL(

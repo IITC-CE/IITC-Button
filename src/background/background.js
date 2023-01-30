@@ -107,18 +107,20 @@ browser.runtime.onMessage.addListener(async function(request) {
   }
 });
 
+// Execution in the context of an extension, to bypass CORS policy.
 async function xmlHttpRequestHandler(data) {
   async function xmlResponse(tab_id, callback, response) {
     const detail_stringify = JSON.stringify({
-      uuid: data.uuid,
+      task_uuid: data.task_uuid,
+      task_type: data.task_type,
       response: JSON.stringify(response)
     });
 
     const injectedCode = `
-    document.dispatchEvent(new CustomEvent('onXmlHttpRequestHandler', {
-      detail: "${btoa(String(detail_stringify))}"
-    }));
-  `;
+      document.dispatchEvent(new CustomEvent('bridgeResponse', {
+        detail: "${btoa(String(detail_stringify))}"
+      }));
+    `;
 
     try {
       await browser.tabs.executeScript(data.tab_id, {

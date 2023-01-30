@@ -12,13 +12,52 @@ export const GM = function() {
     );
   }
 
+  function sendToBridge(data) {
+    document.dispatchEvent(
+      new CustomEvent("bridgeRequest", {
+        detail: data
+      })
+    );
+  }
+
+  const storageObj = {};
+  const storage = new Proxy(storageObj, {
+    set: function(target, key, value) {
+      const req = {
+        task_type: "setValue",
+        key: key,
+        value: value
+      };
+      sendToBridge(req);
+      target[key] = value;
+      return true;
+    },
+    deleteProperty: function(target, key) {
+      const req = {
+        task_type: "delValue",
+        key: key
+      };
+      sendToBridge(req);
+      delete target[key];
+    }
+  });
+
+  function initialSyncStorage() {
+    const req = {
+      task_uuid: uuidv4(),
+      task_type: "getStorage"
+    };
+    sendToBridge(req);
+  }
+
   const makeFunc = (func, toString) => {
     defineProperty(func, "toString", {
       value: toString || "[Unknown property]"
     });
     return func;
   };
-  window.GM = function(dataKey, tab_id, meta) {
+  window.GM = function(data_key, tab_id, meta) {
+    initialSyncStorage();
     return {
       info: {
         script: meta
@@ -26,16 +65,12 @@ export const GM = function() {
       _getValueSync: function(key, default_value) {
         if (!this._access("getValue")) return undefined;
 
-        const items = sessionStorage.getItem(dataKey + "_" + key);
-        if (items !== null) {
-          return JSON.parse(items);
-        } else {
-          return default_value;
-        }
+        const items = storage[data_key + "_" + key];
+        return items !== undefined ? JSON.parse(items) : default_value;
       },
       _setValueSync: function(key, value) {
         if (!this._access("setValue")) return undefined;
-        sessionStorage.setItem(dataKey + "_" + key, JSON.stringify(value));
+        storage[data_key + "_" + key] = JSON.stringify(value);
       },
       getValue: function(key, default_value) {
         return new Promise((resolve, reject) => {
@@ -53,7 +88,7 @@ export const GM = function() {
         return new Promise((resolve, reject) => {
           if (!this._access("deleteValue")) return reject;
 
-          sessionStorage.removeItem(dataKey + key);
+          delete storage[data_key + "_" + key];
           resolve();
         });
       },
@@ -62,10 +97,10 @@ export const GM = function() {
           if (!this._access("listValues")) return reject;
 
           let keys = [];
-          let prelen = "Vm123".length;
-          for (let key of Object.keys(sessionStorage)) {
-            if (key.substr(0, prelen) === dataKey) {
-              keys.push(key.substr(prelen + 1));
+          let prelen = data_key.length;
+          for (let key of Object.keys(storage)) {
+            if (key.startsWith(data_key)) {
+              keys.push(key.substring(prelen + 1));
             }
           }
           resolve(keys);
@@ -82,7 +117,8 @@ export const GM = function() {
       xmlHttpRequest: function(details) {
         let data = Object.assign(
           {
-            uuid: uuidv4(),
+            task_uuid: uuidv4(),
+            task_type: "xmlHttpRequest",
             binary: false,
             context: {},
             data: null,
@@ -111,12 +147,10 @@ export const GM = function() {
 
         data.tab_id = tab_id;
 
-        cache[data.uuid] = details.onload;
-        document.dispatchEvent(
-          new CustomEvent("xmlHttpRequestBridge", {
-            detail: data
-          })
-        );
+        cache[data.task_uuid] = {
+          callback: details.onload
+        };
+        sendToBridge(data);
       },
       _access: function(key) {
         return (
@@ -138,14 +172,26 @@ export const GM = function() {
       cloneInto: makeFunc(obj => obj)
     };
   };
-  document.addEventListener("onXmlHttpRequestHandler", function(e) {
+  document.addEventListener("bridgeResponse", function(e) {
     const detail = JSON.parse(atob(e.detail));
-    const uuid = detail.uuid;
-    const response = JSON.parse(detail.response);
+    const uuid = detail.task_uuid;
 
-    if (cache[uuid] !== undefined) {
-      const callback = cache[uuid];
-      callback(response);
+    const response = JSON.parse(detail.response);
+    switch (detail.task_type) {
+      case "xmlHttpRequest":
+        if (cache[uuid] === undefined) return;
+        cache[uuid].callback(response);
+        delete cache[uuid];
+        break;
+      case "getStorage":
+        for (let key in response) {
+          if (storageObj[key] === undefined) {
+            storageObj[key] = response[key];
+          }
+        }
+        break;
+      default:
+        return;
     }
   });
 };
