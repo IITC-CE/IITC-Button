@@ -9,6 +9,15 @@ export async function bridgeAction(e) {
     case "xmlHttpRequest":
       await xmlResponseBridge(task);
       break;
+    case "getStorage":
+      await getStorageBridge(task);
+      break;
+    case "setValue":
+      await setValueBridge(task);
+      break;
+    case "delValue":
+      await delValueBridge(task);
+      break;
     default:
       return;
   }
@@ -23,10 +32,10 @@ const xmlResponseBridge = async data => {
     });
 
     const injectedCode = `
-  document.dispatchEvent(new CustomEvent('bridgeResponse', {
-    detail: "${btoa(String(detail_stringify))}"
-  }));
-`;
+      document.dispatchEvent(new CustomEvent('bridgeResponse', {
+        detail: "${btoa(String(detail_stringify))}"
+      }));
+    `;
 
     inject(injectedCode);
   }
@@ -48,4 +57,39 @@ const xmlResponseBridge = async data => {
   }
 
   req.send(data.data);
+};
+
+// Sends the entire plugin scoped storage to the page context
+const getStorageBridge = async req => {
+  const all_storage = await browser.storage.local.get(null);
+  const plugin_storage = {};
+  for (const key in all_storage) {
+    if (key.startsWith(req.data_key)) {
+      plugin_storage[key] = all_storage[key];
+    }
+  }
+  const detail_stringify = JSON.stringify({
+    task_uuid: req.task_uuid,
+    task_type: req.task_type,
+    response: JSON.stringify(plugin_storage)
+  });
+
+  const injectedCode = `
+    document.dispatchEvent(new CustomEvent('bridgeResponse', {
+      detail: "${btoa(String(detail_stringify))}"
+    }));
+  `;
+  inject(injectedCode);
+};
+
+// Saves the value in the persistent storage in order to synchronize the data with the storage in the page context
+const setValueBridge = async req => {
+  const set_data = {};
+  set_data[req.key] = req.value;
+  await browser.storage.local.set(set_data);
+};
+
+// Deletes the value in the persistent storage in order to synchronize the data with the storage in the page context
+const delValueBridge = async req => {
+  await browser.storage.local.remove(req.key);
 };

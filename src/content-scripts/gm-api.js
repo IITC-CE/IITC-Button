@@ -12,6 +12,52 @@ export const GM = function() {
     );
   }
 
+  const storageObj = {};
+  const storage = new Proxy(storageObj, {
+    set: function(target, key, value) {
+      const req = {
+        task_type: "setValue",
+        key: key,
+        value: value
+      };
+      document.dispatchEvent(
+        new CustomEvent("bridgeRequest", {
+          detail: req
+        })
+      );
+
+      target[key] = value;
+      return true;
+    },
+    deleteProperty: function(target, key) {
+      const req = {
+        task_type: "delValue",
+        key: key
+      };
+      document.dispatchEvent(
+        new CustomEvent("bridgeRequest", {
+          detail: req
+        })
+      );
+
+      delete target[key];
+    }
+  });
+
+  function initialSyncStorage(data_key) {
+    const req = {
+      task_uuid: uuidv4(),
+      task_type: "getStorage",
+      data_key: data_key
+    };
+    cache[req.task_uuid] = {};
+    document.dispatchEvent(
+      new CustomEvent("bridgeRequest", {
+        detail: req
+      })
+    );
+  }
+
   const makeFunc = (func, toString) => {
     defineProperty(func, "toString", {
       value: toString || "[Unknown property]"
@@ -19,6 +65,7 @@ export const GM = function() {
     return func;
   };
   window.GM = function(dataKey, tab_id, meta) {
+    initialSyncStorage(dataKey);
     return {
       info: {
         script: meta
@@ -26,16 +73,12 @@ export const GM = function() {
       _getValueSync: function(key, default_value) {
         if (!this._access("getValue")) return undefined;
 
-        const items = sessionStorage.getItem(dataKey + "_" + key);
-        if (items !== null) {
-          return JSON.parse(items);
-        } else {
-          return default_value;
-        }
+        const items = storage[dataKey + "_" + key];
+        return items !== undefined ? JSON.parse(items) : default_value;
       },
       _setValueSync: function(key, value) {
         if (!this._access("setValue")) return undefined;
-        sessionStorage.setItem(dataKey + "_" + key, JSON.stringify(value));
+        storage[dataKey + "_" + key] = JSON.stringify(value);
       },
       getValue: function(key, default_value) {
         return new Promise((resolve, reject) => {
@@ -53,7 +96,7 @@ export const GM = function() {
         return new Promise((resolve, reject) => {
           if (!this._access("deleteValue")) return reject;
 
-          sessionStorage.removeItem(dataKey + key);
+          delete storage[dataKey + "_" + key];
           resolve();
         });
       },
@@ -62,10 +105,10 @@ export const GM = function() {
           if (!this._access("listValues")) return reject;
 
           let keys = [];
-          let prelen = "Vm123".length;
-          for (let key of Object.keys(sessionStorage)) {
-            if (key.substr(0, prelen) === dataKey) {
-              keys.push(key.substr(prelen + 1));
+          let prelen = dataKey.length;
+          for (let key of Object.keys(storage)) {
+            if (key.startsWith(dataKey)) {
+              keys.push(key.substring(prelen + 1));
             }
           }
           resolve(keys);
@@ -151,6 +194,11 @@ export const GM = function() {
     switch (detail.task_type) {
       case "xmlHttpRequest":
         task.callback(response);
+        break;
+      case "getStorage":
+        for (let key in response) {
+          storageObj[key] = response[key];
+        }
         break;
       default:
         delete cache[uuid];
