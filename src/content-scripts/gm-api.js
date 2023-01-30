@@ -12,6 +12,14 @@ export const GM = function() {
     );
   }
 
+  function sendToBridge(data) {
+    document.dispatchEvent(
+      new CustomEvent("bridgeRequest", {
+        detail: data
+      })
+    );
+  }
+
   const storageObj = {};
   const storage = new Proxy(storageObj, {
     set: function(target, key, value) {
@@ -20,11 +28,7 @@ export const GM = function() {
         key: key,
         value: value
       };
-      document.dispatchEvent(
-        new CustomEvent("bridgeRequest", {
-          detail: req
-        })
-      );
+      sendToBridge(req);
 
       target[key] = value;
       return true;
@@ -34,11 +38,7 @@ export const GM = function() {
         task_type: "delValue",
         key: key
       };
-      document.dispatchEvent(
-        new CustomEvent("bridgeRequest", {
-          detail: req
-        })
-      );
+      sendToBridge(req);
 
       delete target[key];
     }
@@ -51,11 +51,7 @@ export const GM = function() {
       data_key: data_key
     };
     cache[req.task_uuid] = {};
-    document.dispatchEvent(
-      new CustomEvent("bridgeRequest", {
-        detail: req
-      })
-    );
+    sendToBridge(req);
   }
 
   const makeFunc = (func, toString) => {
@@ -64,8 +60,8 @@ export const GM = function() {
     });
     return func;
   };
-  window.GM = function(dataKey, tab_id, meta) {
-    initialSyncStorage(dataKey);
+  window.GM = function(data_key, tab_id, meta) {
+    initialSyncStorage(data_key);
     return {
       info: {
         script: meta
@@ -73,12 +69,12 @@ export const GM = function() {
       _getValueSync: function(key, default_value) {
         if (!this._access("getValue")) return undefined;
 
-        const items = storage[dataKey + "_" + key];
+        const items = storage[data_key + "_" + key];
         return items !== undefined ? JSON.parse(items) : default_value;
       },
       _setValueSync: function(key, value) {
         if (!this._access("setValue")) return undefined;
-        storage[dataKey + "_" + key] = JSON.stringify(value);
+        storage[data_key + "_" + key] = JSON.stringify(value);
       },
       getValue: function(key, default_value) {
         return new Promise((resolve, reject) => {
@@ -96,7 +92,7 @@ export const GM = function() {
         return new Promise((resolve, reject) => {
           if (!this._access("deleteValue")) return reject;
 
-          delete storage[dataKey + "_" + key];
+          delete storage[data_key + "_" + key];
           resolve();
         });
       },
@@ -105,9 +101,9 @@ export const GM = function() {
           if (!this._access("listValues")) return reject;
 
           let keys = [];
-          let prelen = dataKey.length;
+          let prelen = data_key.length;
           for (let key of Object.keys(storage)) {
-            if (key.startsWith(dataKey)) {
+            if (key.startsWith(data_key)) {
               keys.push(key.substring(prelen + 1));
             }
           }
@@ -158,11 +154,7 @@ export const GM = function() {
         cache[data.task_uuid] = {
           callback: details.onload
         };
-        document.dispatchEvent(
-          new CustomEvent("bridgeRequest", {
-            detail: data
-          })
-        );
+        sendToBridge(data);
       },
       _access: function(key) {
         return (
