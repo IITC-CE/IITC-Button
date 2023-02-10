@@ -1,7 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager } from "lib-iitc-manager";
 import { _ } from "@/i18n";
-import { injectUserScript } from "./injector";
+import { inject_plugin } from "./injector";
 import {
   onUpdatedListener,
   onRemovedListener,
@@ -36,7 +36,7 @@ const manager = new Manager({
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
   },
-  inject_user_script: code => injectUserScript(code).then()
+  inject_plugin: plugin => inject_plugin(plugin).then()
 });
 
 manager.run().then();

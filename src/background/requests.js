@@ -1,11 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import {
-  parseMeta,
-  ajaxGet,
-  getUniqId,
-  check_meta_match_pattern
-} from "lib-iitc-manager";
+import { parseMeta, ajaxGet, getUniqId } from "lib-iitc-manager";
 
 const IS_CHROME = !!global.chrome.app;
 const whitelist = [
@@ -87,7 +82,7 @@ async function maybeInstallUserJs(tabId, url) {
   if (!code) await bypass(tabId, url);
   const meta = parseMeta(code);
 
-  if (meta.name && check_meta_match_pattern(meta)) {
+  if (meta.name) {
     if (tabId in cache && cache[tabId] === "autoclose") {
       browser.tabs.remove(tabId).then();
     }

@@ -36,11 +36,9 @@ export async function onToggleIITC(value) {
 // tab listeners
 export async function onUpdatedListener(tabId, status, tab, manager) {
   if (status.status === "complete") {
-    if (isIngressUrl(tab.url)) {
-      await initialize(manager);
-      if (isIngressIntelUrl(tab.url)) {
-        lastIITCTab = tabId;
-      }
+    await initialize(manager);
+    if (isIngressIntelUrl(tab.url)) {
+      lastIITCTab = tabId;
     }
   }
 }
@@ -82,15 +80,4 @@ function isIngressIntelUrl(url) {
     return /^https:\/\/intel\.ingress\.com/.test(url);
   }
   return false;
-}
-
-function isIngressMissionsUrl(url) {
-  if (url) {
-    return /^https:\/\/missions\.ingress\.com/.test(url);
-  }
-  return false;
-}
-
-function isIngressUrl(url) {
-  return isIngressIntelUrl(url) || isIngressMissionsUrl(url);
 }
