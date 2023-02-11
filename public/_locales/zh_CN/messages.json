@@ -1,6 +1,6 @@
 {
     "extDescription": {
-        "message": "从Ingress Intel地图快速启动IITC。"
+        "message": "从 Ingress Intel 地图快速启动IITC。"
     },
     "lang": {
         "message": "zh_Hans"
@@ -135,5 +135,35 @@
                 "example": "Draw"
             }
         }
+    },
+    "beta": {
+        "message": "测试版"
+    },
+    "searchBoxPlaceholder": {
+        "message": "搜索…"
+    },
+    "customServerHint": {
+        "message": "例如："
+    },
+    "customServerTooltipError": {
+        "message": "自定义服务器不可用或没有 $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "custom": {
+        "message": "自定义"
+    },
+    "customServerTooltipSuccess": {
+        "message": "服务器连接成功"
+    },
+    "customServerURL": {
+        "message": "自定义服务器URL（自定义通道）"
+    },
+    "reinstall": {
+        "message": "重新安装"
     }
 }
