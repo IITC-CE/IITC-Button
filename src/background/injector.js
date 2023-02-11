@@ -1,11 +1,25 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-export async function injectUserScript(code, tabs) {
-  if (tabs === undefined) tabs = await getTabsToInject();
+
+import { check_matching } from "lib-iitc-manager";
+
+export async function inject_plugin(plugin) {
+  const tabs = await getTabsToInject();
+
+  const is_ingress_tab = url => {
+    return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
+  };
 
   for (let tab of Object.values(tabs)) {
+    if (
+      (!is_ingress_tab(tab.url) || !check_matching(plugin, "<all_ingress>")) &&
+      !check_matching(plugin, tab.url)
+    ) {
+      continue;
+    }
+
     const inject = `
     document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-      detail: ${JSON.stringify({ code: code, tab_id: tab.id })}
+      detail: ${JSON.stringify({ plugin: plugin, tab_id: tab.id })}
     }));
   `;
 
@@ -22,16 +36,9 @@ export async function injectUserScript(code, tabs) {
 
 // Fetch all completly loaded Ingress Intel tabs
 export async function getTabsToInject() {
-  let allTabs = await browser.tabs.query({
-    url: ["https://intel.ingress.com/*", "https://missions.ingress.com/*"],
-    status: "complete"
-  });
-  // Safari always returns all tabs for no reason, must filter manually.
+  let allTabs = await browser.tabs.query({ status: "complete" });
+
   return allTabs.filter(function(tab) {
-    return (
-      tab.status === "complete" &&
-      tab.url &&
-      /https:\/\/(intel|missions).ingress.com\/*/.test(tab.url)
-    );
+    return tab.status === "complete" && tab.url;
   });
 }
