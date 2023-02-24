@@ -55,7 +55,7 @@ export const plugin = result => {
       if (className !== undefined) {
         retString += `class="${className}"`;
       }
-      retString += `>${content}</div>`;
+      retString += `><div>${content}</div></div>`;
       return retString;
     })
     .join("");
