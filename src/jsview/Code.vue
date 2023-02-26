@@ -33,6 +33,8 @@ export default {
 <style>
 pre {
   margin: 0;
+  white-space: pre-wrap;
+  width: calc(100vw - 500px);
 }
 
 .hljs {
@@ -41,14 +43,29 @@ pre {
   font-size: 14px;
 }
 
+.hljs .line {
+  display: flex;
+}
+
 .hljs .line::before {
   content: attr(data-line-number);
   display: inline-block;
   width: 2.5rem;
+  min-width: 2.5rem;
   text-align: right;
   padding-right: 5px;
   color: #7f7f7f;
   border-right: 1px solid #555;
   margin-right: 20px;
+}
+
+.hljs .line div {
+  width: calc(100% - 2.5rem - 25px);
+}
+
+@media (max-width: 1600px) {
+  pre {
+    width: 100vw;
+  }
 }
 </style>
