@@ -1,12 +1,26 @@
 <template>
   <div class="addUserScript-wrapper">
     <div id="addUserScript" class="col" v-bind:class="{ hide: !show_header }">
-      <div class="col">
-        <h3>{{ meta.name }}</h3>
-        <span v-if="meta.version" class="version">v{{ meta.version }}</span>
-        <span class="description">{{ meta.description }}</span>
+      <h3>{{ meta.name }}</h3>
+      <span v-if="meta.version" class="version">v{{ meta.version }}</span>
+      <span class="description">{{ meta.description }}</span>
+
+      <div class="row simple-details">
+        <span class="label" v-if="domains === null">{{
+          _("jsViewDetailsNoDomains")
+        }}</span>
+        <span class="label" v-if="domains === '<all_domains>'">{{
+          _("jsViewDetailsAllDomains")
+        }}</span>
+        <template v-if="typeof domains === 'object'">
+          <span class="label">{{ _("jsViewDetailsDomainsLabel") }}</span>
+          <span class="value" v-for="(domain, i) in domains" v-bind:key="i">
+            {{ domain }}</span
+          >
+        </template>
       </div>
-      <div class="row info">
+
+      <div class="row details" :class="{ opened: show_details }">
         <div
           v-for="(key, ki) in [
             'match',
@@ -25,6 +39,14 @@
           </div>
         </div>
       </div>
+      <a href="#" class="btn-more" @click.prevent="on_show_details">
+        {{
+          show_details
+            ? _("jsViewDetailsHideDetails")
+            : _("jsViewDetailsShowDetails")
+        }}
+      </a>
+
       <div id="install" class="btn" @click="install">{{ button_name }}</div>
     </div>
   </div>
@@ -32,7 +54,7 @@
 
 <script>
 import { _ } from "@/i18n";
-import { getUID } from "lib-iitc-manager";
+import { getUID, humanize_match } from "lib-iitc-manager";
 
 export default {
   name: "Header",
@@ -43,7 +65,9 @@ export default {
   data() {
     return {
       show_header: false,
-      button_name: _("install")
+      button_name: _("install"),
+      domains: null,
+      show_details: false
     };
   },
   methods: {
@@ -56,7 +80,6 @@ export default {
       });
     },
     checkIfInstalled: async function() {
-      console.log("checkIfInstalled", this.meta);
       await browser.runtime.sendMessage({
         type: "getPluginInfo",
         uid: getUID(this.meta)
@@ -65,7 +88,6 @@ export default {
     setListeners: function() {
       const self = this;
       browser.runtime.onMessage.addListener(function(request) {
-        console.log("onMessage", request);
         switch (request.type) {
           case "resolveGetPluginInfo":
             if (request.info) {
@@ -82,14 +104,30 @@ export default {
             });
         }
       });
+    },
+    on_show_details: async function() {
+      this.show_details = !this.show_details;
+      await browser.storage.local.set({
+        js_view_show_details: this.show_details
+      });
     }
   },
   watch: {
+    meta: function() {
+      this.domains = humanize_match(this.meta);
+    },
     code: async function() {
       this.show_header = true;
       this.setListeners();
       await this.checkIfInstalled();
     }
+  },
+  async mounted() {
+    browser.storage.local.get(["js_view_show_details"]).then(data => {
+      if (data["js_view_show_details"] === true) {
+        this.show_details = true;
+      }
+    });
   }
 };
 </script>
@@ -156,23 +194,56 @@ h3 {
   margin-top: 5px;
 }
 
-.info {
+.details {
   font-size: 12px;
-  margin-top: 15px;
+  height: 0;
   flex-wrap: wrap;
+  overflow: hidden;
+  transition: margin 0.1s ease-in-out;
 }
 
-.info .item {
+.details.opened {
+  margin: 10px 0;
+  height: auto;
+}
+
+.details .item {
   margin-top: 5px;
 }
 
-.info .item span {
+.details .item span {
   margin-right: 20px;
 }
 
-.info .label {
+.details .label {
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.simple-details {
+  font-size: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.simple-details .label {
+  padding: 5px 15px 5px 0;
+  margin: 2px 0;
+}
+
+.simple-details .value {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 5px 8px;
+  border-radius: 3px;
+  color: inherit;
+  text-decoration: none;
+  margin: 2px 4px 2px 0;
+}
+
+.btn-more {
+  margin: 4px auto 0 0;
+  font-size: 13px;
+  color: #fff;
 }
 
 @media (max-width: 1600px) {

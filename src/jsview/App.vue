@@ -36,6 +36,7 @@ export default {
 
     const meta = parseMeta(code);
     if (meta["name"] === undefined) return;
+    document.title = `${meta["name"]} — ${_("jsViewTitle")} — IITC Button`;
 
     meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
     this.meta = meta;

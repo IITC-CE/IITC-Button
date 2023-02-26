@@ -166,5 +166,23 @@
     },
     "searchBoxPlaceholder": {
         "message": "Search…"
+    },
+    "jsViewTitle": {
+        "message": "Installing script"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "This script did not ask for access rights to the sites. It seems to be an invalid plugin."
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "This script requested access to all sites. Use it if you trust the author."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "The script will run on these sites:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Show details"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Hide details"
     }
 }
