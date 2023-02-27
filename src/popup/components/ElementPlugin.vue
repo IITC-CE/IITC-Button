@@ -139,7 +139,11 @@ export default {
   },
   computed: {
     getIcon: function() {
-      return this.plugin["icon"] || this.plugin["icon64"] || null;
+      return (
+        this.plugin["icon"] ||
+        this.plugin["icon64"] ||
+        "/assets/icons/24/userscript-no-icon.png"
+      );
     }
   }
 };
