@@ -1,8 +1,15 @@
 <template>
   <div class="addUserScript-wrapper">
     <div id="addUserScript" class="col" v-bind:class="{ hide: !show_header }">
-      <h3>{{ meta.name }}</h3>
-      <span v-if="meta.version" class="version">v{{ meta.version }}</span>
+      <div class="row">
+        <div class="col">
+          <img class="plugin__icon" :src="getIcon" v-if="getIcon" />
+        </div>
+        <div class="col">
+          <h3>{{ meta.name }}</h3>
+          <span v-if="meta.version" class="version">v{{ meta.version }}</span>
+        </div>
+      </div>
       <span class="description">{{ meta.description }}</span>
 
       <div class="row simple-details">
@@ -120,6 +127,11 @@ export default {
       this.show_header = true;
       this.setListeners();
       await this.checkIfInstalled();
+    }
+  },
+  computed: {
+    getIcon: function() {
+      return this.meta["icon64"] || this.meta["icon"] || null;
     }
   },
   async mounted() {
@@ -244,6 +256,11 @@ h3 {
   margin: 4px auto 0 0;
   font-size: 13px;
   color: #fff;
+}
+
+.plugin__icon {
+  height: 48px;
+  margin-right: 15px;
 }
 
 @media (max-width: 1600px) {

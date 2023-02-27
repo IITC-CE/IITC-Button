@@ -2,15 +2,21 @@
 <template>
   <div
     class="plugin item-wrapper"
-    v-bind:class="plugin.status"
-    v-bind:title="pluginDescription()"
-    v-bind:data-category="category_name"
-    v-bind:data-uid="plugin.uid"
+    :class="plugin.status"
+    :title="pluginDescription()"
+    :data-category="category_name"
+    :data-uid="plugin.uid"
   >
-    <i class="plugin__action material-icons" v-on:click="managePlugin">{{
-      pluginIcon()
+    <i class="plugin__action material-icons" @click="managePlugin">{{
+      toggleIcon()
     }}</i>
-    <span class="plugin__text" v-on:click="managePlugin">{{
+    <img
+      class="plugin__icon"
+      :src="getIcon"
+      @click="managePlugin"
+      v-if="getIcon"
+    />
+    <span class="plugin__text" @click="managePlugin">{{
       __("name", plugin)
     }}</span>
     <span v-if="plugin.override" class="plugin__user">{{
@@ -20,20 +26,20 @@
       <i
         v-if="plugin.supportURL"
         class="plugin__action___extra material-icons"
-        v-on:click="openLink(plugin.supportURL)"
-        v-bind:title="[_('openSupport'), plugin.supportURL].join(' ')"
+        @click="openLink(plugin.supportURL)"
+        :title="[_('openSupport'), plugin.supportURL].join(' ')"
         >home</i
       >
       <i
         class="plugin__action___extra material-icons"
-        v-on:click="savePlugin"
-        v-bind:title="_('pluginSave')"
+        @click="savePlugin"
+        :title="_('pluginSave')"
         >save</i
       >
       <i
         class="plugin__action___extra plugin__action___extra-delete material-icons"
-        v-on:click="deletePlugin"
-        v-bind:title="_('pluginDelete')"
+        @click="deletePlugin"
+        :title="_('pluginDelete')"
         >delete</i
       >
     </template>
@@ -71,7 +77,7 @@ export default {
         this.__("description", this.plugin)
       );
     },
-    pluginIcon: function() {
+    toggleIcon: function() {
       return `toggle_${this.plugin["status"]}`;
     },
     managePlugin: async function() {
@@ -79,11 +85,9 @@ export default {
       if (this.plugin.status === "user") {
         action = "delete";
         this.plugin.status = "off";
-        this.plugin.icon = "toggle_off";
       } else {
         action = this.plugin.status === "on" ? "off" : "on";
         this.plugin.status = action;
-        this.plugin.icon = "toggle_" + action;
       }
       this.showMessage(this._("needRebootIntel"));
       await browser.runtime.sendMessage({
@@ -132,6 +136,11 @@ export default {
       const plugin = data[`${channel}_plugins_user`][uid];
       saveJS(plugin["code"], plugin["filename"]);
     }
+  },
+  computed: {
+    getIcon: function() {
+      return this.plugin["icon"] || this.plugin["icon64"] || null;
+    }
   }
 };
 </script>
@@ -149,6 +158,11 @@ export default {
 .plugin:active,
 .plugin:focus {
   background: var(--color-silver);
+}
+.plugin__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 .plugin__text {
   flex: auto;
