@@ -165,5 +165,17 @@
     },
     "reinstall": {
         "message": "重新安装"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "隐藏更多"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "显示更多"
+    },
+    "jsViewTitle": {
+        "message": "正在安装脚本"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "此脚本不要求访问站点的权限，它似乎是一个无效的插件。"
     }
 }
