@@ -136,5 +136,47 @@
     },
     "badgeOverride": {
         "message": "uberschreiben"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "custom": {
+        "message": "Angepasst"
+    },
+    "customServerHint": {
+        "message": "Beispielsweise:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Erfolgreiche Serververbindung"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Suche…"
+    },
+    "customServerTooltipError": {
+        "message": "Angepasster Server ist nicht erreichbar oder enthält nicht $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "Angepasste Server Adresse (für angepassten Kanal)"
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Dieses Skript wird auf den folgenden Seiten ausgeführt:"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Verstecke Details"
+    },
+    "jsViewTitle": {
+        "message": "Installiere Skript"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Zeige Details"
+    },
+    "reinstall": {
+        "message": "Neuinstallation"
     }
 }
