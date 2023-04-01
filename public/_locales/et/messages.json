@@ -1,1 +1,25 @@
-{}
+{
+    "noData": {
+        "message": "Andmed puuduvad"
+    },
+    "changesApplied": {
+        "message": "Muutused on jõustunud"
+    },
+    "updateInProgress": {
+        "message": "Uuendus on tegemisel …"
+    },
+    "needRebootIntel": {
+        "message": "Muutused jõustuvad peale Inteli restarti"
+    },
+    "titleDefault": {
+        "message": "Ava Intel",
+        "description": "Title for the button at the application panel"
+    },
+    "lang": {
+        "message": "et"
+    },
+    "extDescription": {
+        "message": "Käivita IITC Ingressi jaoks lihtsalt.",
+        "description": "Description of the extension"
+    }
+}
