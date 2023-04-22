@@ -39,30 +39,12 @@
         v-bind:text="_('noData')"
       ></Element>
     </div>
-    <div class="item-wrapper">
-      <Hr />
-    </div>
-    <div class="links-grid">
-      <Element
-        v-bind:class="'list__item_add'"
-        v-bind:text="_('addExternalPlugin')"
-        v-bind:icon_name="'add'"
-        v-on:item_onclick="openLink('/choose_file.html')"
-      ></Element>
-      <Element
-        v-bind:class="'list__item_homepage'"
-        v-bind:text="_('iitcHomePage')"
-        v-bind:icon_name="'link'"
-        v-on:item_onclick="openLink('https://iitc.app')"
-      ></Element>
-    </div>
   </div>
 </template>
 
 <script>
 import Title from "./Title";
 import SearchBar from "./SearchBar";
-import Hr from "./Hr.vue";
 import Element from "./Element";
 import ElementPlugin from "./ElementPlugin";
 import { mixin } from "./mixins.js";
@@ -132,15 +114,15 @@ export default {
       }
     }
   },
-  components: { Title, SearchBar, Hr, Element, ElementPlugin }
+  components: { Title, SearchBar, Element, ElementPlugin }
 };
 </script>
 
 <style scoped>
-.links-grid {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  font-size: 90%;
+.list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .categories,

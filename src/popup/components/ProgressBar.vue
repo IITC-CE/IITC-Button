@@ -32,7 +32,7 @@ export default {
   top: 0;
   left: 0;
   padding-top: 50px;
-  width: calc(100% - 98px);
+  width: calc(100% - 147px);
   background-color: #222;
   animation: preloader-background ease-in-out 2s infinite;
 }
