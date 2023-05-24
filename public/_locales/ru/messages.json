@@ -164,5 +164,23 @@
     },
     "reinstall": {
         "message": "Переустановить"
+    },
+    "jsViewTitle": {
+        "message": "Установка скрипта"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Этот скрипт не требует прав доступа к сайтам. Кажется, это неверный плагин."
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Этот скрипт запрашивает доступ ко всем сайтам. Используйте его, если вы доверяете автору."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Скрипт будет запущен на этих сайтах:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Показать детали"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Скрыть детали"
     }
 }
