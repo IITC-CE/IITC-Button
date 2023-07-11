@@ -33,17 +33,17 @@ jobs:
 
       - name: Get version from package.json
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: polyseam/get-version-from-package-json@1.0.0
-        id: get-version-from-package-json
+        uses: polyseam/get-version-key-from-json@v1.0.0
+        id: get-version-key-from-json
         with:
-          path-to-package-json: './package.json'
+          path-to-json: './package.json'
 
       - name: Save metadata
         run: |
           mkdir -p ./build/.metadata
           if [ "$GITHUB_EVENT_NAME" = "push" ]; then
             if [[ "$GITHUB_REF" =~ ^refs/tags/ ]]; then
-              mv artifacts/*.zip ./build/iitc-button-${{steps.get-version-from-package-json.outputs.version}}.zip
+              mv artifacts/*.zip ./build/iitc-button-${{steps.get-version-key-from-json.outputs.version}}.zip
               echo "release" > ./build/.metadata/build_type
             else
               # Beta build from master branch
@@ -64,7 +64,7 @@ jobs:
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "./build/iitc-button-${{ steps.get-version-from-package-json.outputs.version }}.zip"
+          artifacts: "./build/iitc-button-${{ steps.get-version-key-from-json.outputs.version }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v2
