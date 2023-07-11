@@ -36,13 +36,13 @@ export default {
   position: absolute;
   bottom: -35px;
   width: 100%;
-  height: 35px;
+  height: 0;
   line-height: 35px;
   padding: 0 10px 0 10px;
   color: var(--color-white);
   font-weight: 400;
   white-space: nowrap;
-  transition: bottom 0.3s ease-in-out;
+  transition: bottom 0.3s ease-in-out, height 0.3s ease-in-out;
   z-index: 10;
 }
 #message::after {
@@ -56,6 +56,7 @@ export default {
 }
 .message.opened {
   bottom: 0;
+  height: 35px;
 }
 
 #app.is_safari .message {
