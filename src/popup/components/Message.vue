@@ -32,6 +32,7 @@ export default {
 
 <style scoped>
 .message {
+  box-sizing: border-box;
   background: #333;
   position: absolute;
   bottom: -35px;
@@ -61,9 +62,6 @@ export default {
 
 #app.is_safari .message {
   display: none;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
 #app.is_safari .message.opened {
