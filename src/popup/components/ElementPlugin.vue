@@ -6,6 +6,7 @@
     :title="pluginDescription()"
     :data-category="category_name"
     :data-uid="plugin.uid"
+    v-if="plugin.uid"
   >
     <i class="plugin__action material-icons" @click="managePlugin">{{
       toggleIcon()
