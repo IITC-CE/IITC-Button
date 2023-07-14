@@ -11,19 +11,28 @@
       />
       <ProgressBar></ProgressBar>
     </div>
+    <div
+      class="title__button"
+      :title="_('addExternalPlugin')"
+      v-on:click="openLink('/choose_file.html')"
+    >
+      <i class="title__icon material-icons">add</i>
+    </div>
     <div class="title__button" v-on:click="openOptions">
-      <i class="title__settings material-icons">settings</i>
+      <i class="title__icon material-icons">settings</i>
     </div>
     <ToggleIITC></ToggleIITC>
   </div>
 </template>
 
 <script>
+import { mixin } from "./mixins.js";
 import ProgressBar from "./ProgressBar";
 import ToggleIITC from "./ToggleIITC";
 
 export default {
   name: "Title",
+  mixins: [mixin],
   methods: {
     openIITC: async function() {
       await browser.runtime.sendMessage({ type: "requestOpenIntel" });
@@ -64,7 +73,7 @@ export default {
 .title__button:hover {
   background: #333;
 }
-.title__settings {
+.title__icon {
   font-size: 24px;
   padding: 12px;
 }
