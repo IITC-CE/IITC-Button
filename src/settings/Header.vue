@@ -1,8 +1,24 @@
+<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
   <div class="header-wrapper">
     <div id="header" class="col">
       <div class="tabs">
-        <div id="add" class="btn">{{ _("addExternalPlugin") }}</div>
+        <div
+          id="add"
+          class="btn"
+          :class="{ active: tab === 'add' }"
+          @click="$emit('setTab', 'add')"
+        >
+          {{ _("addExternalPlugin") }}
+        </div>
+        <div
+          id="backup"
+          class="btn"
+          :class="{ active: tab === 'backup' }"
+          @click="$emit('setTab', 'backup')"
+        >
+          {{ _("backup") }}
+        </div>
       </div>
     </div>
   </div>
@@ -15,14 +31,6 @@ export default {
   name: "Header",
   props: {
     tab: String
-  },
-  data() {
-    return {
-      show_header: false,
-      button_name: _("install"),
-      domains: null,
-      show_details: false
-    };
   },
   methods: {
     _: _
@@ -60,7 +68,7 @@ h3 {
 .btn {
   cursor: pointer;
   padding: 10px 22px;
-  background: #fff;
+  background: #aaa;
   color: #222;
   border-radius: 3px;
   display: inline-block;
@@ -68,6 +76,10 @@ h3 {
   width: 100%;
   box-sizing: border-box;
   height: 42px;
+}
+
+.btn.active {
+  background: #fff;
 }
 
 .btn:hover {

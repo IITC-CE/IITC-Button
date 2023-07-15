@@ -1,8 +1,9 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div class="page">
-    <Header ref="header"></Header>
-    <PageAddPlugin></PageAddPlugin>
+  <div class="app">
+    <Header :tab="tab" @setTab="setTab"></Header>
+    <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
+    <PageBackup v-if="tab === 'backup'"></PageBackup>
   </div>
 </template>
 
@@ -10,24 +11,36 @@
 import { _ } from "@/i18n";
 import Header from "./Header";
 import PageAddPlugin from "./add/Main";
+import PageBackup from "./backup/Main";
 
 export default {
   name: "App",
   components: {
     Header,
-    PageAddPlugin
+    PageAddPlugin,
+    PageBackup
   },
   data() {
     return {
-
+      tab: "add"
     };
   },
   methods: {
-    _: _
+    _: _,
+    setTab(tab) {
+      if (history.pushState) {
+        history.pushState(null, null, "#" + tab);
+      } else {
+        location.hash = "#" + tab;
+      }
+      this.tab = tab;
+    }
   },
   async mounted() {
     const tab = new URL(window.location.href).hash;
-    console.log(tab);
+    if (tab.length > 0) {
+      this.tab = tab.substring(1);
+    }
   }
 };
 </script>
@@ -39,15 +52,35 @@ body {
 }
 </style>
 
-<style scoped>
-.page {
+<style>
+.app {
   display: flex;
   flex-direction: row;
   height: 100vh;
 }
 
+.page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #e8e9ec;
+  color: #222;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #2b2b2b;
+  height: 100vh;
+  width: 100%;
+}
+
 @media (max-width: 1600px) {
-  .page {
+  .app {
     flex-direction: column;
   }
 }

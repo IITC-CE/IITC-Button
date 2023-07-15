@@ -78,7 +78,8 @@ export default {
 
 <style scoped>
 .url_zone {
-  width: 50%;
+  width: 90%;
+  max-width: 800px;
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -104,7 +105,7 @@ export default {
   border-left: 0;
   border-radius: 0 2px 2px 0;
   font-size: 1.2em;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   background: #000000b3;
   transition: background 0.1s linear;
@@ -117,5 +118,11 @@ export default {
 
 .url_button.active:hover {
   background: #000c;
+}
+
+@media (max-width: 900px) {
+  .url_zone {
+    width: 90%;
+  }
 }
 </style>

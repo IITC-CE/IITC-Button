@@ -237,6 +237,4 @@ h2:first-letter {
   color: #fff;
   border: 1px solid #555;
 }
-
-
 </style>

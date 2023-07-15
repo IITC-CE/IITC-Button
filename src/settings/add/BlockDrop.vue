@@ -138,7 +138,9 @@ export default {
   border: 2px dashed #0087f7;
   border-radius: 5px;
   padding: 40px;
-  width: 50%;
+  width: 90%;
+  max-width: 800px;
+  box-sizing: border-box;
 }
 
 #drop_zone {
@@ -165,5 +167,11 @@ export default {
   font-size: 14px;
   font-weight: 300;
   margin-top: 30px;
+}
+
+@media (max-width: 900px) {
+  .zone {
+    width: 90%;
+  }
 }
 </style>
