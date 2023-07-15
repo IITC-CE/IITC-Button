@@ -1,7 +1,6 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div>
-    <div class="bg"></div>
+  <div class="page">
     <div class="parent">
       <BlockURL></BlockURL>
       <h3 class="or">
@@ -18,7 +17,7 @@ import BlockDrop from "./BlockDrop";
 import { _ } from "@/i18n";
 
 export default {
-  name: "App",
+  name: "PageAddPlugin",
   methods: {
     _: _
   },
@@ -26,10 +25,10 @@ export default {
 };
 </script>
 
-<style src="../../public/assets/roboto/roboto-font.css"></style>
+<style src="../../../public/assets/roboto/roboto-font.css"></style>
 
 <style>
-body {
+.page {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -39,25 +38,14 @@ body {
   overflow: hidden;
 }
 
-.bg {
-  background: #0e3d4e url("/assets/images/background.webp");
-  background-size: cover;
-  transform: scale(1.1);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  filter: blur(8px);
-}
-
 .parent {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #2B2B2B;
   height: 100vh;
+  width: 100%;
 }
 
 .or {

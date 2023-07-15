@@ -149,6 +149,24 @@ body#plugins #app.is_safari .section.plugins {
   display: block;
 }
 
+/*
+ * button
+ */
+.button {
+  cursor: pointer;
+  line-height: 28px;
+  padding: 0 10px;
+  background: #eee;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  transition: background 0.1s linear;
+}
+.button:hover,
+.button:active,
+.button:focus {
+  background: #f2f2f2;
+}
+
 :root {
   --color-white: #fff;
   --color-blue: #0074d9;

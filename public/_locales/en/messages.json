@@ -184,5 +184,14 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "Hide details"
+    },
+    "other": {
+        "message": "Other"
+    },
+    "donate": {
+        "message": "Donate"
+    },
+    "backup": {
+        "message": "Backup"
     }
 }

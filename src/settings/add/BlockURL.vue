@@ -84,8 +84,9 @@ export default {
 
 #url_input {
   width: 100%;
-  height: 35px;
+  height: 45px;
   box-sizing: border-box;
+  padding: 15px;
 }
 
 .url_wrapper {
@@ -98,12 +99,12 @@ export default {
   bottom: 0;
   right: 0;
   line-height: 26px;
-  padding: 2px 15px;
-  border: 1px solid #cdc7c2;
+  padding: 7px 20px;
+  border: 1px solid #717171;
   border-left: 0;
   border-radius: 0 2px 2px 0;
   font-size: 1.2em;
-  color: #00000000;
+  color: #FFFFFF;
   cursor: pointer;
   background: #000000b3;
   transition: background 0.1s linear;

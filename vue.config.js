@@ -18,11 +18,11 @@ module.exports = {
       title: "IITC Button view",
       filename: "jsview.html"
     },
-    choose_file: {
+    settings: {
       template: "public/browser-extension.html",
-      entry: "./src/choose_file/main.js",
+      entry: "./src/settings/main.js",
       title: "IITC Button choose file",
-      filename: "choose_file.html"
+      filename: "settings.html"
     }
   },
   pluginOptions: {

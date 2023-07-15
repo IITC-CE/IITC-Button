@@ -7,7 +7,7 @@
       class="toggle"
       v-model="iitc_is_enabled_toggle"
     />
-    <div class="button">
+    <div class="toggle_button">
       <div class="toggle">
         <label for="toggleIITC" class="toggle"></label>
       </div>
@@ -47,11 +47,11 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.toggle_button {
   color: var(--color-white);
   border-left: 1px solid #333;
 }
-.button:hover {
+.toggle_button:hover {
   background: #333;
 }
 .toggle {
@@ -74,7 +74,7 @@ input[type="checkbox"].toggle + div label.toggle:before {
   display: inline-block;
   content: "\e9f5";
 } /* unchecked icon */
-input[type="checkbox"].toggle + .button {
+input[type="checkbox"].toggle + .toggle_button {
   background: var(--state-off);
   transition: background 0.1s ease-in-out;
 }
@@ -82,7 +82,7 @@ input[type="checkbox"].toggle + .button {
 input[type="checkbox"].toggle:checked + div label.toggle:before {
   content: "\e9f6";
 } /* checked icon */
-input[type="checkbox"].toggle:checked + .button {
+input[type="checkbox"].toggle:checked + .toggle_button {
   background: var(--state-on);
 }
 </style>
