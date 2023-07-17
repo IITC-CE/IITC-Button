@@ -200,11 +200,20 @@
     "export": {
         "message": "Export"
     },
+    "import_settings": {
+        "message": "Import IITC settings"
+    },
+    "import_data": {
+        "message": "Import plugins data"
+    },
+    "import_external": {
+        "message": "Import of external plugins"
+    },
+    "importFromZip": {
+        "message": "Import from zip"
+    },
     "export_settings": {
         "message": "Export IITC settings"
-    },
-    "export_status": {
-        "message": "Export the enabled/disabled status of IITC plugins"
     },
     "export_data": {
         "message": "Export plugins data"
@@ -214,5 +223,11 @@
     },
     "exportToZip": {
         "message": "Export to zip"
+    },
+    "pleaseWait": {
+        "message": "Please wait"
+    },
+    "backupRestored": {
+        "message": "Backup restored"
     }
 }

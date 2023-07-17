@@ -4,17 +4,36 @@
     <div class="parent">
       <h1>{{ _("import") }}</h1>
       <div class="card">
-        TODO
+        <label class="setting-check">
+          <input type="checkbox" v-model="import_settings" />
+          <span>{{ _("import_settings") }}</span>
+        </label>
+        <label class="setting-check">
+          <input type="checkbox" v-model="import_data" />
+          <span>{{ _("import_data") }}</span>
+        </label>
+        <label class="setting-check">
+          <input type="checkbox" v-model="import_external" />
+          <span>{{ _("import_external") }}</span>
+        </label>
+        <div class="btn disabled" v-if="is_wait">{{ _("pleaseWait") }}</div>
+        <form v-on:click="$refs.input.click()" v-if="!is_wait">
+          <div class="btn">{{ _("importFromZip") }}</div>
+          <input
+            type="file"
+            ref="input"
+            accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+            id="input"
+            style="display: none"
+            v-on:change="handleImport"
+          />
+        </form>
       </div>
       <h1>{{ _("export") }}</h1>
       <div class="card">
         <label class="setting-check">
           <input type="checkbox" v-model="export_settings" />
           <span>{{ _("export_settings") }}</span>
-        </label>
-        <label class="setting-check">
-          <input type="checkbox" v-model="export_status" />
-          <span>{{ _("export_status") }}</span>
         </label>
         <label class="setting-check">
           <input type="checkbox" v-model="export_data" />
@@ -24,7 +43,7 @@
           <input type="checkbox" v-model="export_external" />
           <span>{{ _("export_external") }}</span>
         </label>
-        <div class="btn" @click="goExport">{{ _("exportToZip") }}</div>
+        <div class="btn" @click="handleExport">{{ _("exportToZip") }}</div>
       </div>
     </div>
   </div>
@@ -33,66 +52,70 @@
 <script>
 import { _ } from "@/i18n";
 import {
+  createBackupZip,
   filterExternalPlugins,
   filterStorageIitcSettings,
-  filterStoragePluginsSettings,
-  filterStoragePluginsStatus,
-  formatDate
-} from "./utils";
-
-const JSZip = require("jszip");
-
-const saveAs = (blob, fileName) => {
-  const link = document.createElement("a");
-  // create a blobURI pointing to our Blob
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  // some browser needs the anchor to be in the doc
-  document.body.append(link);
-  link.click();
-  link.remove();
-  // in case the Blob uses a lot of memory
-  setTimeout(() => URL.revokeObjectURL(link.href), 7000);
-};
+  filterStoragePluginsSettings
+} from "./export";
+import {
+  getBackupDataFromZip,
+  importBackupExternalPlugins,
+  importBackupIitcSettings,
+  importBackupPluginsSettings
+} from "@/settings/backup/import";
 
 export default {
   name: "PageBackup",
   data() {
     return {
+      is_wait: false,
+      import_settings: true,
+      import_status: true,
+      import_data: true,
+      import_external: true,
       export_settings: true,
-      export_status: true,
       export_data: true,
       export_external: true
     };
   },
   methods: {
     _: _,
-    async goExport() {
-      const zip = new JSZip();
+    async handleImport(e) {
+      const target = e.target;
+      const files = target.files;
+      if (files.length === 0) return;
+
+      this.is_wait = true;
+      const backup = await getBackupDataFromZip(files[0]);
+      const default_channel = await browser.storage.local
+        .get(["channel"])
+        .then(data => data.channel);
+
+      if (this.import_settings)
+        await importBackupIitcSettings(
+          backup.data.iitc_settings,
+          default_channel
+        );
+      if (this.import_data)
+        await importBackupPluginsSettings(backup.data.plugins_data);
+      if (this.import_external)
+        await importBackupExternalPlugins(
+          backup.external_plugins,
+          default_channel
+        );
+      const message = _("backupRestored");
+      alert(message);
+      this.is_wait = false;
+    },
+    async handleExport() {
       const backup = await this.getBackupData();
-
-      zip.file("iitc-button.json", JSON.stringify(backup.data));
-
-      for (const channel in backup.external_plugins) {
-        for (const external_plugin_name in backup.external_plugins[channel]) {
-          zip.file(
-            `${channel}/${external_plugin_name}`,
-            backup.external_plugins[channel][external_plugin_name]
-          );
-        }
-      }
-
-      const filename = "iitc-backup_" + formatDate(new Date()) + ".zip";
-      zip.generateAsync({ type: "blob" }).then(function(content) {
-        saveAs(content, filename);
-      });
+      await createBackupZip(backup);
     },
     async getBackupData() {
       const backup = {
         external_plugins: {},
         data: {
           iitc_settings: {},
-          plugins_status: {},
           plugins_data: {},
           app: "IITC Button"
         }
@@ -101,8 +124,6 @@ export default {
 
       if (this.export_settings)
         backup.data.iitc_settings = filterStorageIitcSettings(all_storage);
-      if (this.export_status)
-        backup.data.plugins_status = filterStoragePluginsStatus(all_storage);
       if (this.export_data)
         backup.data.plugins_data = filterStoragePluginsSettings(all_storage);
       if (this.export_external)
@@ -153,5 +174,9 @@ h1 {
 
 .btn:hover {
   background: #094559;
+}
+
+.btn.disabled {
+  background: #484848;
 }
 </style>

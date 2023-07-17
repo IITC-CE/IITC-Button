@@ -10,7 +10,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@bundled-es-modules/deepmerge": "^4.3.1",
     "@highlightjs/vue-plugin": "^1.0.2",
+    "await-timeout": "^1.1.1",
     "core-js": "^3.6.5",
     "highlight.js": "^10.7.3",
     "jszip": "^3.10.1",

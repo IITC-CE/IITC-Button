@@ -75,7 +75,7 @@ body {
   align-items: center;
   flex-direction: column;
   background: #2b2b2b;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
