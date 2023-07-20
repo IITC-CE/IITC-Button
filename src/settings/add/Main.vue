@@ -29,6 +29,7 @@ export default {
 
 <style scoped>
 .or {
+  text-align: center;
   color: #fff;
 }
 </style>

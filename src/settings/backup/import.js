@@ -40,10 +40,15 @@ export const getBackupDataFromZip = async file => {
   return backup;
 };
 
-export const importBackupIitcSettings = async (backup, default_channel) => {
-  await browser.storage.local.set(backup);
+export const importBackupIitcSettings = async backup => {
+  const backup_obj = Object.assign({}, backup);
+  const default_channel = await browser.storage.local
+    .get(["channel"])
+    .then(data => data.channel);
 
-  const set_channel = backup.channel;
+  await browser.storage.local.set(backup_obj);
+
+  const set_channel = backup_obj.channel;
   if (set_channel !== default_channel) {
     await browser.runtime.sendMessage({
       type: "setChannel",
@@ -67,8 +72,11 @@ export const importBackupPluginsSettings = async backup => {
   await browser.storage.local.set(new_storage);
 };
 
-export const importBackupExternalPlugins = async (backup, default_channel) => {
+export const importBackupExternalPlugins = async backup => {
   const scripts = [];
+  const default_channel = await browser.storage.local
+    .get(["channel"])
+    .then(data => data.channel);
   let current_channel = null;
 
   for (const channel of Object.keys(backup)) {

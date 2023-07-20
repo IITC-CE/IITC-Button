@@ -78,8 +78,7 @@ export default {
 
 <style scoped>
 .url_zone {
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
   background: rgba(255, 255, 255, 0.1);
 }
 

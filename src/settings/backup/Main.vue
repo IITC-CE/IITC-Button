@@ -4,19 +4,7 @@
     <div class="parent">
       <h1>{{ _("import") }}</h1>
       <div class="card">
-        <label class="setting-check">
-          <input type="checkbox" v-model="import_settings" />
-          <span>{{ _("import_settings") }}</span>
-        </label>
-        <label class="setting-check">
-          <input type="checkbox" v-model="import_data" />
-          <span>{{ _("import_data") }}</span>
-        </label>
-        <label class="setting-check">
-          <input type="checkbox" v-model="import_external" />
-          <span>{{ _("import_external") }}</span>
-        </label>
-        <div class="btn disabled" v-if="is_wait">{{ _("pleaseWait") }}</div>
+        <p class="message">{{ _("import_message") }}</p>
         <form v-on:click="$refs.input.click()" v-if="!is_wait">
           <div class="btn">{{ _("importFromZip") }}</div>
           <input
@@ -28,6 +16,24 @@
             v-on:change="handleImport"
           />
         </form>
+        <div class="hr" v-if="show_restore || is_invalid_backup"></div>
+        <label class="setting-check" v-if="show_import_settings">
+          <input type="checkbox" v-model="import_settings" />
+          <span>{{ _("import_settings") }}</span>
+        </label>
+        <label class="setting-check" v-if="show_import_data">
+          <input type="checkbox" v-model="import_data" />
+          <span>{{ _("import_data") }}</span>
+        </label>
+        <label class="setting-check" v-if="show_import_external">
+          <input type="checkbox" v-model="import_external" />
+          <span>{{ _("import_external") }}</span>
+        </label>
+        <div class="btn disabled" v-if="is_wait">{{ _("pleaseWait") }}</div>
+        <div class="btn" v-if="show_restore" @click="handleRestore">
+          {{ _("restoreBackup") }}
+        </div>
+        <p class="message" v-if="is_invalid_backup">{{ _("invalidBackup") }}</p>
       </div>
       <h1>{{ _("export") }}</h1>
       <div class="card">
@@ -69,8 +75,13 @@ export default {
   data() {
     return {
       is_wait: false,
+      is_invalid_backup: false,
+      backup_data: {},
+      show_import_settings: false,
+      show_import_data: false,
+      show_import_external: false,
+      show_restore: false,
       import_settings: true,
-      import_status: true,
       import_data: true,
       import_external: true,
       export_settings: true,
@@ -85,26 +96,40 @@ export default {
       const files = target.files;
       if (files.length === 0) return;
 
+      this.backup_data = await getBackupDataFromZip(files[0]);
+
+      this.show_import_settings =
+        typeof this.backup_data.data.iitc_settings === "object" &&
+        Object.keys(this.backup_data.data.iitc_settings).length !== 0;
+      this.show_import_data =
+        typeof this.backup_data.data.plugins_data === "object" &&
+        Object.keys(this.backup_data.data.plugins_data).length !== 0;
+      this.show_import_external =
+        Object.keys(this.backup_data.external_plugins).length !== 0;
+
+      const any_data =
+        this.show_import_settings ||
+        this.show_import_data ||
+        this.show_import_external;
+      this.show_restore = any_data;
+      this.is_invalid_backup = !any_data;
+    },
+    async handleRestore() {
       this.is_wait = true;
-      const backup = await getBackupDataFromZip(files[0]);
-      const default_channel = await browser.storage.local
-        .get(["channel"])
-        .then(data => data.channel);
+      this.show_restore = false;
+      this.show_import_settings = false;
+      this.show_import_data = false;
+      this.show_import_external = false;
 
       if (this.import_settings)
-        await importBackupIitcSettings(
-          backup.data.iitc_settings,
-          default_channel
-        );
+        await importBackupIitcSettings(this.backup_data.data.iitc_settings);
       if (this.import_data)
-        await importBackupPluginsSettings(backup.data.plugins_data);
+        await importBackupPluginsSettings(this.backup_data.data.plugins_data);
       if (this.import_external)
-        await importBackupExternalPlugins(
-          backup.external_plugins,
-          default_channel
-        );
+        await importBackupExternalPlugins(this.backup_data.external_plugins);
       const message = _("backupRestored");
       alert(message);
+      this.backup_data = {};
       this.is_wait = false;
     },
     async handleExport() {
@@ -150,8 +175,7 @@ h1 {
   border-radius: 3px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
   padding: 30px;
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -178,5 +202,15 @@ h1 {
 
 .btn.disabled {
   background: #484848;
+}
+
+.message {
+  margin: 5px 0;
+}
+
+.hr {
+  background: #eee;
+  height: 3px;
+  margin: 20px 0;
 }
 </style>

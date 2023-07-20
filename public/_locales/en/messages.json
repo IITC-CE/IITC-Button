@@ -200,6 +200,9 @@
     "export": {
         "message": "Export"
     },
+    "import_message": {
+        "message": "Select the .zip file with the IITC Button backup and then select what to import"
+    },
     "import_settings": {
         "message": "Import IITC settings"
     },
@@ -227,7 +230,13 @@
     "pleaseWait": {
         "message": "Please wait"
     },
+    "restoreBackup": {
+        "message": "Restore backup"
+    },
     "backupRestored": {
         "message": "Backup restored"
+    },
+    "invalidBackup": {
+        "message": "The file is corrupted or is not a backup of IITC Button"
     }
 }

@@ -60,23 +60,21 @@ body {
 }
 
 .page {
+  display: flex;
   width: 100%;
   height: 100%;
   margin: 0;
-  background: #e8e9ec;
+  background: #2b2b2b;
   color: #222;
   font-size: 18px;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .parent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: #2b2b2b;
-  height: 100%;
-  width: 100%;
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  padding: 50px 0;
 }
 
 @media (max-width: 1600px) {
