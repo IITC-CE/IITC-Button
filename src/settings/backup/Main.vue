@@ -57,18 +57,7 @@
 
 <script>
 import { _ } from "@/i18n";
-import {
-  createBackupZip,
-  filterExternalPlugins,
-  filterStorageIitcSettings,
-  filterStoragePluginsSettings
-} from "./export";
-import {
-  getBackupDataFromZip,
-  importBackupExternalPlugins,
-  importBackupIitcSettings,
-  importBackupPluginsSettings
-} from "@/settings/backup/import";
+import { getBackupDataFromZip, createBackupZip } from "./utils";
 
 export default {
   name: "PageBackup",
@@ -91,6 +80,16 @@ export default {
   },
   methods: {
     _: _,
+    async handleExport() {
+      await browser.runtime.sendMessage({
+        type: "getBackupData",
+        params: {
+          settings: this.export_settings,
+          data: this.export_data,
+          external: this.export_external
+        }
+      });
+    },
     async handleImport(e) {
       const target = e.target;
       const files = target.files;
@@ -121,41 +120,32 @@ export default {
       this.show_import_data = false;
       this.show_import_external = false;
 
-      if (this.import_settings)
-        await importBackupIitcSettings(this.backup_data.data.iitc_settings);
-      if (this.import_data)
-        await importBackupPluginsSettings(this.backup_data.data.plugins_data);
-      if (this.import_external)
-        await importBackupExternalPlugins(this.backup_data.external_plugins);
-      const message = _("backupRestored");
-      alert(message);
-      this.backup_data = {};
-      this.is_wait = false;
+      await browser.runtime.sendMessage({
+        type: "setBackupData",
+        params: {
+          settings: this.import_settings,
+          data: this.import_data,
+          external: this.import_external
+        },
+        backup_data: this.backup_data
+      });
     },
-    async handleExport() {
-      const backup = await this.getBackupData();
-      await createBackupZip(backup);
-    },
-    async getBackupData() {
-      const backup = {
-        external_plugins: {},
-        data: {
-          iitc_settings: {},
-          plugins_data: {},
-          app: "IITC Button"
+    setListeners: function() {
+      browser.runtime.onMessage.addListener(function(request) {
+        switch (request.type) {
+          case "resolveGetBackupData":
+            createBackupZip(request.data).then();
+            break;
+          case "resolveSetBackupData":
+            alert(_("backupRestored"));
+            this.backup_data = {};
+            this.is_wait = false;
         }
-      };
-      const all_storage = await browser.storage.local.get(null);
-
-      if (this.export_settings)
-        backup.data.iitc_settings = filterStorageIitcSettings(all_storage);
-      if (this.export_data)
-        backup.data.plugins_data = filterStoragePluginsSettings(all_storage);
-      if (this.export_external)
-        backup.external_plugins = filterExternalPlugins(all_storage);
-
-      return backup;
+      });
     }
+  },
+  async mounted() {
+    this.setListeners();
   }
 };
 </script>

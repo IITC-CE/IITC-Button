@@ -101,6 +101,33 @@ browser.runtime.onMessage.addListener(async function(request) {
         // If tab is closed, message goes nowhere and an error occurs. Ignore.
       }
       break;
+    case "getBackupData":
+      try {
+        browser.runtime
+          .sendMessage({
+            type: "resolveGetBackupData",
+            data: await manager.getBackupData(request.params)
+          })
+          .then();
+      } catch {
+        // If tab is closed, message goes nowhere and an error occurs. Ignore.
+      }
+      break;
+    case "setBackupData":
+      try {
+        browser.runtime
+          .sendMessage({
+            type: "resolveSetBackupData",
+            data: await manager.setBackupData(
+              request.params,
+              request.backup_data
+            )
+          })
+          .then();
+      } catch {
+        // If tab is closed, message goes nowhere and an error occurs. Ignore.
+      }
+      break;
     case "setCustomChannelUrl":
       await manager.setCustomChannelUrl(request.value);
       break;
