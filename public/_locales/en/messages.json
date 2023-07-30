@@ -184,5 +184,59 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "Hide details"
+    },
+    "other": {
+        "message": "Other"
+    },
+    "donate": {
+        "message": "Donate"
+    },
+    "backup": {
+        "message": "Backup"
+    },
+    "import": {
+        "message": "Import"
+    },
+    "export": {
+        "message": "Export"
+    },
+    "import_message": {
+        "message": "Select the .zip file with the IITC Button backup and then select what to import"
+    },
+    "import_settings": {
+        "message": "Import IITC settings"
+    },
+    "import_data": {
+        "message": "Import plugins data"
+    },
+    "import_external": {
+        "message": "Import of external plugins"
+    },
+    "importFromZip": {
+        "message": "Import from zip"
+    },
+    "export_settings": {
+        "message": "Export IITC settings"
+    },
+    "export_data": {
+        "message": "Export plugins data"
+    },
+    "export_external": {
+        "message": "Export of external plugins"
+    },
+    "exportToZip": {
+        "message": "Export to zip"
+    },
+    "pleaseWait": {
+        "message": "Please wait"
+    },
+    "restoreBackup": {
+        "message": "Restore backup"
+    },
+    "backupRestored": {
+        "message": "Backup restored"
+    },
+    "invalidBackup": {
+        "message": "The file is corrupted or is not a backup of IITC Button"
     }
 }

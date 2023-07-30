@@ -14,7 +14,7 @@
     <div
       class="title__button"
       :title="_('addExternalPlugin')"
-      v-on:click="openLink('/choose_file.html')"
+      v-on:click="openLink('/settings.html#add')"
     >
       <i class="title__icon material-icons">add</i>
     </div>

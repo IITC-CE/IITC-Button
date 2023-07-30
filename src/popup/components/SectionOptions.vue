@@ -32,16 +32,18 @@
         <div class="input-field update-check">
           <UpdateCheckIntervalSelector
             v-bind:channel="'release'"
+            v-show="channel === 'release'"
           ></UpdateCheckIntervalSelector>
           <UpdateCheckIntervalSelector
             v-bind:channel="'beta'"
+            v-show="channel === 'beta'"
           ></UpdateCheckIntervalSelector>
           <UpdateCheckIntervalSelector
             v-bind:channel="'custom'"
+            v-show="channel === 'custom'"
           ></UpdateCheckIntervalSelector>
         </div>
       </div>
-      <Hr />
       <div class="settings__section">
         <h2>{{ _("updateExternalFrequency") }}</h2>
         <div class="input-field update-check">
@@ -58,6 +60,23 @@
             v-bind:channel="channel"
             v-on:requestUpdate="forceUpdate"
           ></InputCustomServer>
+        </div>
+      </div>
+      <Hr />
+      <div class="settings__section">
+        <h2>{{ _("other") }}</h2>
+        <div class="input-field">
+          <div class="button" @click="openLink('/settings.html#backup')">
+            {{ _("backup") }}
+          </div>
+        </div>
+        <div class="input-field external-links">
+          <div class="button" @click="openLink('https://iitc.app')">
+            {{ _("iitcHomePage") }}
+          </div>
+          <div class="button" @click="openLink('https://iitc.app/donate')">
+            {{ _("donate") }}
+          </div>
         </div>
       </div>
     </div>
@@ -93,6 +112,7 @@ export default {
       },
       set: async function(channel) {
         this.$emit("update:channel", channel);
+        this.channel = channel;
         this.$root.channel = channel;
         await browser.runtime.sendMessage({
           type: "setChannel",
@@ -202,5 +222,19 @@ h2:first-letter {
   color: #fff;
   background: #555555;
   border-color: #555555;
+}
+
+.external-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.external-links .button {
+  width: calc(50% - 5px);
+  box-sizing: border-box;
+  background: #555555;
+  color: #fff;
+  border: 1px solid #555;
 }
 </style>

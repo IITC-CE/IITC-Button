@@ -51,19 +51,4 @@ export default {
   text-overflow: ellipsis;
   line-height: 32px;
 }
-
-.button {
-  cursor: pointer;
-  line-height: 28px;
-  padding: 0 10px;
-  background: #eee;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-  transition: background 0.1s linear;
-}
-.button:hover,
-.button:active,
-.button:focus {
-  background: #f2f2f2;
-}
 </style>

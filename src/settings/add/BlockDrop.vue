@@ -138,7 +138,8 @@ export default {
   border: 2px dashed #0087f7;
   border-radius: 5px;
   padding: 40px;
-  width: 50%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #drop_zone {

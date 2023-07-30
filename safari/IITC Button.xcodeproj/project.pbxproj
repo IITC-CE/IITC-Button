@@ -37,8 +37,8 @@
 		841A89B1270C6EFA0064B01F /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 841A899F270C6EFA0064B01F /* manifest.json */; };
 		841A89B2270C6EFA0064B01F /* css in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A0270C6EFA0064B01F /* css */; };
 		841A89B3270C6EFA0064B01F /* css in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A0270C6EFA0064B01F /* css */; };
-		841A89B4270C6EFA0064B01F /* choose_file.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A1270C6EFA0064B01F /* choose_file.html */; };
-		841A89B5270C6EFA0064B01F /* choose_file.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A1270C6EFA0064B01F /* choose_file.html */; };
+		841A89B4270C6EFA0064B01F /* settings.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A1270C6EFA0064B01F /* settings.html */; };
+		841A89B5270C6EFA0064B01F /* settings.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A1270C6EFA0064B01F /* settings.html */; };
 		841A89B6270C6EFA0064B01F /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A2270C6EFA0064B01F /* assets */; };
 		841A89B7270C6EFA0064B01F /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A2270C6EFA0064B01F /* assets */; };
 		841A89B8270C6EFA0064B01F /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 841A89A3270C6EFA0064B01F /* _locales */; };
@@ -138,7 +138,7 @@
 		841A899E270C6EFA0064B01F /* jsview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = jsview.html; path = ../../../dist/jsview.html; sourceTree = "<group>"; };
 		841A899F270C6EFA0064B01F /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../../dist/manifest.json; sourceTree = "<group>"; };
 		841A89A0270C6EFA0064B01F /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; name = css; path = ../../../dist/css; sourceTree = "<group>"; };
-		841A89A1270C6EFA0064B01F /* choose_file.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = choose_file.html; path = ../../../dist/choose_file.html; sourceTree = "<group>"; };
+		841A89A1270C6EFA0064B01F /* settings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = settings.html; path = ../../../dist/settings.html; sourceTree = "<group>"; };
 		841A89A2270C6EFA0064B01F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../../dist/assets; sourceTree = "<group>"; };
 		841A89A3270C6EFA0064B01F /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../../dist/_locales; sourceTree = "<group>"; };
 		84DAA697270D549A0086E511 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 				841A899C270C6EFA0064B01F /* fonts */,
 				841A899D270C6EFA0064B01F /* js */,
 				841A8999270C6EFA0064B01F /* background.html */,
-				841A89A1270C6EFA0064B01F /* choose_file.html */,
+				841A89A1270C6EFA0064B01F /* settings.html */,
 				841A899B270C6EFA0064B01F /* index.html */,
 				841A899E270C6EFA0064B01F /* jsview.html */,
 				841A899A270C6EFA0064B01F /* popup.html */,
@@ -474,7 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				841A89AE270C6EFA0064B01F /* jsview.html in Resources */,
-				841A89B4270C6EFA0064B01F /* choose_file.html in Resources */,
+				841A89B4270C6EFA0064B01F /* settings.html in Resources */,
 				841A89B0270C6EFA0064B01F /* manifest.json in Resources */,
 				841A89AC270C6EFA0064B01F /* js in Resources */,
 				841A89A8270C6EFA0064B01F /* index.html in Resources */,
@@ -493,7 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				841A89AF270C6EFA0064B01F /* jsview.html in Resources */,
-				841A89B5270C6EFA0064B01F /* choose_file.html in Resources */,
+				841A89B5270C6EFA0064B01F /* settings.html in Resources */,
 				841A89B1270C6EFA0064B01F /* manifest.json in Resources */,
 				841A89AD270C6EFA0064B01F /* js in Resources */,
 				841A89A9270C6EFA0064B01F /* index.html in Resources */,
