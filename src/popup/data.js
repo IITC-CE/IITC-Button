@@ -8,13 +8,25 @@ export async function init(self) {
     "custom_categories",
     "release_plugins_flat",
     "beta_plugins_flat",
-    "custom_plugins_flat"
+    "custom_plugins_flat",
+    "release_iitc_core",
+    "beta_iitc_core",
+    "custom_iitc_core",
+    "release_iitc_core_user",
+    "beta_iitc_core_user",
+    "custom_iitc_core_user"
   ]);
   const channel = data.channel ? data.channel : "release";
   // initialize categories
   appData.categories = data[channel + "_categories"];
   // initialize all plugins
   appData.plugins_flat = data[channel + "_plugins_flat"];
+  // initialize iitc core
+  setIitcCore(
+    appData,
+    data[channel + "_iitc_core"],
+    data[channel + "_iitc_core_user"]
+  );
 }
 
 function setCategories(appData, categories) {
@@ -43,6 +55,16 @@ function setPlugins(appData, plugins_flat) {
   }
 }
 
+function setIitcCore(appData, iitc_core, iitc_core_user) {
+  let core = iitc_core;
+  if (iitc_core_user && iitc_core_user.code) {
+    core = iitc_core_user;
+    core.override = true;
+    core.user = true;
+  }
+  appData.iitc_core = core;
+}
+
 export async function onChangedListener(self) {
   const appData = self.$data;
   browser.storage.onChanged.addListener(async function(changes) {
@@ -55,10 +77,17 @@ export async function onChangedListener(self) {
       if (key === "channel") {
         const storage = await browser.storage.local.get([
           channel + "_categories",
-          channel + "_plugins_flat"
+          channel + "_plugins_flat",
+          channel + "_iitc_core",
+          channel + "_iitc_core_user"
         ]);
         setCategories(appData, storage[channel + "_categories"]);
         setPlugins(appData, storage[channel + "_plugins_flat"]);
+        setIitcCore(
+          appData,
+          storage[channel + "_iitc_core"],
+          storage[channel + "_iitc_core_user"]
+        );
       }
 
       if (key === channel + "_categories") {
@@ -67,6 +96,13 @@ export async function onChangedListener(self) {
 
       if (key === channel + "_plugins_flat") {
         setPlugins(appData, new_value);
+      }
+
+      if (key === channel + "_iitc_core_user") {
+        const storage = await browser.storage.local.get([
+          channel + "_iitc_core"
+        ]);
+        setIitcCore(appData, storage[channel + "_iitc_core"], new_value);
       }
     }
   });

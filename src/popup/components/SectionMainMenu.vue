@@ -15,6 +15,10 @@
         v-bind:text="_('noData')"
       ></Element>
     </div>
+    <ElementPlugin
+      v-bind:plugin="iitc_core"
+      v-if="!search_query"
+    ></ElementPlugin>
     <div class="categories" v-if="!search_query">
       <template
         v-for="(cat, index) in sortIITCObj(
@@ -54,7 +58,8 @@ export default {
   name: "SectionMainMenu",
   props: {
     categories: Object,
-    plugins_flat: Object
+    plugins_flat: Object,
+    iitc_core: Object
   },
   data() {
     return {

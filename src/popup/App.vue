@@ -5,6 +5,7 @@
       <SectionMainMenu
         v-bind:categories="categories"
         v-bind:plugins_flat="plugins_flat"
+        v-bind:iitc_core="iitc_core"
       >
       </SectionMainMenu>
     </section>
@@ -40,6 +41,7 @@ export default {
       plugins: {},
       plugins_flat: {},
       category_name: "",
+      iitc_core: {},
       is_safari: this.detect_safari()
     };
   },
