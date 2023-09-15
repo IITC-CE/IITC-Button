@@ -119,6 +119,15 @@
             }
         }
     },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ now replaces the built-in version of IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
     "addressNotAvailable": {
         "message": "Address is not available"
     },
