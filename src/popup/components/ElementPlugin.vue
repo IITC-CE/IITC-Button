@@ -8,9 +8,12 @@
     :data-uid="plugin.uid"
     v-if="plugin.uid"
   >
-    <i class="plugin__action material-icons" @click="managePlugin">{{
-      toggleIcon()
-    }}</i>
+    <i
+      class="plugin__action material-icons"
+      @click="managePlugin"
+      v-if="plugin.status"
+      >{{ toggleIcon() }}
+    </i>
     <img
       class="plugin__icon"
       :src="getIcon"
@@ -82,19 +85,18 @@ export default {
       return `toggle_${this.plugin["status"]}`;
     },
     managePlugin: async function() {
-      let action = "";
-      if (this.plugin.status === "user") {
-        action = "delete";
-        this.plugin.status = "off";
-      } else {
-        action = this.plugin.status === "on" ? "off" : "on";
-        this.plugin.status = action;
+      if (this.plugin.status === undefined) {
+        this.showMessage(this.plugin.version);
+        return;
       }
+
+      const action = this.plugin.status === "on" ? "off" : "on";
+      this.plugin.status = action;
+
       this.showMessage(this._("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: this.plugin.uid,
-        category: this.category_name,
         action: action
       });
     },
@@ -102,40 +104,31 @@ export default {
       const uid = this.plugin.uid;
       const cat = this.category_name;
       const plugins = this.$parent.$props.plugins;
-      if (!plugins[uid]["override"]) delete plugins[uid];
 
-      const count_plugins = Object.entries(plugins).reduce(
-        (total, plugin_pair) => {
-          const [, plugin_obj] = plugin_pair;
-          if (plugin_obj["category"] === cat) total += 1;
-          return total;
-        },
-        0
-      );
-      if (count_plugins <= 0) {
-        this.back();
+      if (cat) {
+        if (!plugins[uid]["override"]) delete plugins[uid];
+        const count_plugins = Object.entries(plugins).reduce(
+          (total, plugin_pair) => {
+            const [, plugin_obj] = plugin_pair;
+            if (plugin_obj["category"] === cat) total += 1;
+            return total;
+          },
+          0
+        );
+        if (count_plugins <= 0) {
+          this.back();
+        }
       }
 
       this.showMessage(this._("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: uid,
-        category: this.category_name,
         action: "delete"
       });
     },
     savePlugin: async function() {
-      const data = await browser.storage.local.get([
-        "channel",
-        "release_plugins_user",
-        "beta_plugins_user",
-        "custom_plugins_user"
-      ]);
-
-      const channel = data.channel ? data.channel : "release";
-      const uid = this.plugin.uid;
-      const plugin = data[`${channel}_plugins_user`][uid];
-      saveJS(plugin["code"], plugin["filename"]);
+      saveJS(this.plugin.code, this.plugin.filename);
     }
   },
   computed: {

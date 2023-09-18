@@ -62,6 +62,8 @@
 <script>
 import { _ } from "@/i18n";
 import { getUID, humanize_match } from "lib-iitc-manager";
+const iitc_core_uid =
+  "IITC: Ingress intel map total conversion+https://github.com/IITC-CE/ingress-intel-total-conversion";
 
 export default {
   name: "Header",
@@ -87,9 +89,13 @@ export default {
       });
     },
     checkIfInstalled: async function() {
+      const uid = getUID(this.meta);
+      if (uid === iitc_core_uid) {
+        this.button_name = _("reinstall");
+      }
       await browser.runtime.sendMessage({
         type: "getPluginInfo",
-        uid: getUID(this.meta)
+        uid: uid
       });
     },
     setListeners: function() {
@@ -103,9 +109,14 @@ export default {
             break;
           case "resolveAddUserScripts":
             Object.entries(request.scripts).map(([, script]) => {
-              const message =
-                _("addedUserScriptTo", [script["name"], script["category"]]) +
-                "\n";
+              let message = "";
+              if (script["uid"] === iitc_core_uid) {
+                message = _("addedCustomIITCCore", [script["name"]]) + "\n";
+              } else {
+                message =
+                  _("addedUserScriptTo", [script["name"], script["category"]]) +
+                  "\n";
+              }
               alert(message);
               self.button_name = _("reinstall");
             });
