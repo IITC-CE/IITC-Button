@@ -29,7 +29,9 @@ export async function onToggleIITC(value) {
   const tabs = await getTabsToInject();
 
   for (let tab of Object.values(tabs)) {
-    await browser.tabs.reload(tab.id);
+    if (isIngressIntelUrl(tab.url)) {
+      await browser.tabs.reload(tab.id);
+    }
   }
 }
 
