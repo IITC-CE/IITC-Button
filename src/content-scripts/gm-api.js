@@ -3,6 +3,12 @@ export const GM = function() {
   const cache = {};
   const defineProperty = Object.defineProperty;
 
+  function base64ToStr(base64) {
+    const binString = atob(base64);
+    const bytes = Uint8Array.from(binString, m => m.codePointAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
   function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
       (
@@ -173,7 +179,7 @@ export const GM = function() {
     };
   };
   document.addEventListener("bridgeResponse", function(e) {
-    const detail = JSON.parse(atob(e.detail));
+    const detail = JSON.parse(base64ToStr(e.detail));
     const uuid = detail.task_uuid;
 
     const response = JSON.parse(detail.response);

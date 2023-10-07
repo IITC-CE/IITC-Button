@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import { getUID } from "lib-iitc-manager";
+import { strToBase64 } from "@/strToBase64";
 
 const LOADED_PLUGINS = [];
 
@@ -14,7 +15,7 @@ export function inject(code) {
 }
 
 function getPluginHash(uid) {
-  return "VMin" + btoa(uid);
+  return "VMin" + strToBase64(uid);
 }
 
 export async function IITCButtonInitJS(e) {
