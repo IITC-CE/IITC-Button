@@ -9,6 +9,7 @@ import {
   onToggleIITC
 } from "./intel";
 import "./requests";
+import { strToBase64 } from "@/strToBase64";
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -145,7 +146,7 @@ async function xmlHttpRequestHandler(data) {
 
     const injectedCode = `
       document.dispatchEvent(new CustomEvent('bridgeResponse', {
-        detail: "${btoa(String(detail_stringify))}"
+        detail: "${strToBase64(String(detail_stringify))}"
       }));
     `;
 

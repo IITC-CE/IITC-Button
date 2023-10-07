@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import { inject } from "@/content-scripts/utils";
+import { strToBase64 } from "@/strToBase64";
 
 export async function bridgeAction(e) {
   const task = e.detail;
@@ -48,7 +49,7 @@ const getStorageBridge = async req => {
 
   const injectedCode = `
     document.dispatchEvent(new CustomEvent('bridgeResponse', {
-      detail: "${btoa(String(detail_stringify))}"
+      detail: "${strToBase64(String(detail_stringify))}"
     }));
   `;
   inject(injectedCode);
