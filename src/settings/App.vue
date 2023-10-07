@@ -4,6 +4,7 @@
     <Header :tab="tab" @setTab="setTab"></Header>
     <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
     <PageBackup v-if="tab === 'backup'"></PageBackup>
+    <PageDebug v-if="tab === 'debug'"></PageDebug>
   </div>
 </template>
 
@@ -12,13 +13,15 @@ import { _ } from "@/i18n";
 import Header from "./Header";
 import PageAddPlugin from "./add/Main";
 import PageBackup from "./backup/Main";
+import PageDebug from "./debug/Main";
 
 export default {
   name: "App",
   components: {
     Header,
     PageAddPlugin,
-    PageBackup
+    PageBackup,
+    PageDebug
   },
   data() {
     return {

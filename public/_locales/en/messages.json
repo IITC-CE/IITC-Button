@@ -203,6 +203,9 @@
     "backup": {
         "message": "Backup"
     },
+    "debug": {
+        "message": "Debug"
+    },
     "import": {
         "message": "Import"
     },
@@ -247,5 +250,14 @@
     },
     "invalidBackup": {
         "message": "The file is corrupted or is not a backup of IITC Button"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "Note that localStorage contains all the data available to the IITC Button. For example, including a list of your plugins and their source code, may include settings of some plugins (depends on their implementation)."
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "Do not expose this data publicly if you use faction plugins!"
+    },
+    "saveToJson": {
+        "message": "Save to json"
     }
 }

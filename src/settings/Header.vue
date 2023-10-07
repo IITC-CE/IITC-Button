@@ -19,6 +19,14 @@
         >
           {{ _("backup") }}
         </div>
+        <div
+          id="debug"
+          class="btn"
+          :class="{ active: tab === 'debug' }"
+          @click="$emit('setTab', 'debug')"
+        >
+          {{ _("debug") }}
+        </div>
       </div>
     </div>
   </div>
