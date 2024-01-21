@@ -35,10 +35,10 @@
         "message": "Versión OK"
     },
     "updateFrequency": {
-        "message": "IITC-CE busca actualizaciones"
+        "message": "IITC-CE buscar actualizaciones"
     },
     "updateExternalFrequency": {
-        "message": "Plugins externos buscan actualizaciones"
+        "message": "Plugins externos buscar actualizaciones"
     },
     "every6hours": {
         "message": "Cada 6 horas"
@@ -53,7 +53,7 @@
         "message": "Cada semana"
     },
     "anyChannel": {
-        "message": "Algún Canal"
+        "message": "Todos los canales"
     },
     "openSupport": {
         "message": "Abrir página de soporte:"
@@ -83,7 +83,7 @@
         "message": "Suelta los archivos <i>.js</i> aquí o haz click para cargarlos."
     },
     "willBeOverwrittenByNewPlugin": {
-        "message": "Un plugin con la misma ID será sobrescrito por el plugin nuevo."
+        "message": "Un plugin con la misma ID será sobrescrito por el nuevo plugin."
     },
     "errorReadingFile": {
         "message": "Un error ha ocurrido al intentar leer el archivo $PLUGIN_NAME$.",
@@ -122,7 +122,7 @@
         }
     },
     "addedUserScriptTo": {
-        "message": "$PLUGIN_NAME$ ha sido añadido a la categoría de \"$PLUGIN_CATEGORY$\".",
+        "message": "$PLUGIN_NAME$ ha sido añadido a la categoría \"$PLUGIN_CATEGORY$\".",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -139,5 +139,50 @@
     },
     "beta": {
         "message": "Beta"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Este script solicito acceso a todos los sitios. Utilizar si el autor es de confianza."
+    },
+    "customServerHint": {
+        "message": "Ejemplo:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Conexión con el servidor exitosa"
+    },
+    "customServerTooltipError": {
+        "message": "El servidor no esta disponible o no contiene $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "URL de servidor personalizado ( para canal personalizado)"
+    },
+    "custom": {
+        "message": "Personalizado"
+    },
+    "reinstall": {
+        "message": "Reinstalar"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Buscar…"
+    },
+    "jsViewTitle": {
+        "message": "Instalando script"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Este script no solicito permisos de acceso al sitio. Parece ser un plugin invalido."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Este script sera utilizado en los siguientes sitios:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Mostrar detalles"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Ocultar detalles"
     }
 }
