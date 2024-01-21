@@ -139,5 +139,47 @@
     },
     "beta": {
         "message": "Beta"
+    },
+    "customServerHint": {
+        "message": "Ad esempio:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Connessione con il server riuscita"
+    },
+    "customServerURL": {
+        "message": "URL Server personalizzato (per canali personalizzati)"
+    },
+    "reinstall": {
+        "message": "Reinstalla"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Cerca…"
+    },
+    "jsViewTitle": {
+        "message": "Installazione script"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Questo script non richiede diritti di accesso ai siti. Sembra eseere un plugin non valido."
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Questo script ha richiesto access a tutti i siti. Usalo se ti fidi dell'autore."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Lo script verrà eseguito su questi siti:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Mostra dettagli"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Nascondi dettagli"
+    },
+    "customServerTooltipError": {
+        "message": "Il server personalizzato non è dispobilibe oppure non contiene $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
     }
 }
