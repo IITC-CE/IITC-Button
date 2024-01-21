@@ -167,15 +167,21 @@
         "message": "重新安装"
     },
     "jsViewDetailsHideDetails": {
-        "message": "隐藏更多"
+        "message": "隐藏详细信息"
     },
     "jsViewDetailsShowDetails": {
-        "message": "显示更多"
+        "message": "显示详细信息"
     },
     "jsViewTitle": {
         "message": "正在安装脚本"
     },
     "jsViewDetailsNoDomains": {
         "message": "此脚本不要求访问站点的权限，它似乎是一个无效的插件。"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "此脚本要求访问所有网站。如果您信任作者，那么可以使用它。"
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "脚本将会在这些网站上运行："
     }
 }
