@@ -63,5 +63,126 @@
     },
     "beta": {
         "message": "베타"
+    },
+    "updateExternalFrequency": {
+        "message": "외부 플러그인의 업데이트 확인"
+    },
+    "everyWeek": {
+        "message": "매 주"
+    },
+    "anyChannel": {
+        "message": "모든 채널"
+    },
+    "openSupport": {
+        "message": "지원 페이지 열기:"
+    },
+    "or": {
+        "message": "혹은"
+    },
+    "custom": {
+        "message": "사용자 지정"
+    },
+    "customServerHint": {
+        "message": "예시:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "서버 연결에 성공"
+    },
+    "customServerTooltipError": {
+        "message": "사용자 지정 서버를 사용할 수 없거나 $FILE$이 포함되어 있지 않습니다",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "사용자 지정 서버 URL(사용자 지정 채널용)"
+    },
+    "addressNotAvailable": {
+        "message": "주소를 사용할 수 없음"
+    },
+    "errorReadingFile": {
+        "message": "$PLUGIN_NAME$ 파일을 읽는 동안 오류가 발생했습니다.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "external": {
+        "message": "외부"
+    },
+    "dropJSHereOrClick": {
+        "message": "<i>.js</i> 파일을 여기에 놓거나 클릭하여 업로드하세요."
+    },
+    "willBeOverwrittenByNewPlugin": {
+        "message": "동일한 ID를 가진 플러그인은 새 플러그인으로 덮어씁니다."
+    },
+    "reinstall": {
+        "message": "재설치"
+    },
+    "searchBoxPlaceholder": {
+        "message": "검색…"
+    },
+    "updateFrequency": {
+        "message": "IITC-CE 업데이트 확인"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ 이(가) 유효한 사용자 스크립트가 아닙니다.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ 이 \"$PLUGIN_CATEGORY$\" 카테고리에 추가되었습니다.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "serverNotAvailableRetry": {
+        "message": "서버를 사용할 수 없습니다. $NUM$초 후에 다시 시도하세요.",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "이 스크립트는 모든 사이트에 대한 액세스를 요청합니다. 작성자를 신뢰하는 경우에만 사용하세요."
+    },
+    "jsViewTitle": {
+        "message": "스크립트 설치"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "이 스크립트는 사이트에 대한 액세스 권한을 요청하지 않았습니다. 잘못된 플러그인인 것 같습니다."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "스크립트가 실행되는 사이트:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "세부 정보 보기"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "세부 정보 숨기기"
+    },
+    "badgeOverride": {
+        "message": "재정의"
+    },
+    "choosingUpdateChannel": {
+        "message": "IITC-CE 업데이트 채널 선택"
     }
 }
