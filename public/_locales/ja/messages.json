@@ -51,7 +51,7 @@
         "message": "インストール"
     },
     "serverNotAvailableRetry": {
-        "message": "現在サーバーは利用できません。$NUM$秒後に再試行してください。",
+        "message": "現在サーバーは利用できません。$NUM$秒後に再試行してください",
         "placeholders": {
             "num": {
                 "content": "$1",
@@ -115,7 +115,7 @@
         "message": "外部プラグインを追加"
     },
     "extDescription": {
-        "message": "Ingressインテルマップ用IITCを簡単に起動します",
+        "message": "Ingressインテルマップ用IITCを簡単に起動します。",
         "description": "Description of the extension"
     },
     "anyChannel": {
@@ -139,5 +139,50 @@
     },
     "beta": {
         "message": "ベータ"
+    },
+    "customServerHint": {
+        "message": "例:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "サーバーへの接続に成功しました"
+    },
+    "customServerURL": {
+        "message": "カスタムサーバーURL (カスタムチャネル用)"
+    },
+    "custom": {
+        "message": "カスタム"
+    },
+    "customServerTooltipError": {
+        "message": "カスタムサーバーは利用できないか、$FILE$がありません",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "このスクリプトは全てのサイトへのアクセスを要求します。作者を信頼する場合にのみ使ってください。"
+    },
+    "reinstall": {
+        "message": "再インストール"
+    },
+    "searchBoxPlaceholder": {
+        "message": "検索…"
+    },
+    "jsViewTitle": {
+        "message": "スクリプトのインストール"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "このスクリプトはサイトへのアクセス権限を要求しません。正しくないプラグインのようです。"
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "このスクリプトは以下のサイトで動作します:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "詳細を表示"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "詳細を隠す"
     }
 }
