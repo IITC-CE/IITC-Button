@@ -136,5 +136,17 @@
     },
     "badgeOverride": {
         "message": "passer outre"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Recherche…"
+    },
+    "customServerHint": {
+        "message": "Par exemple :"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Connexion au serveur réussie"
+    },
+    "reinstall": {
+        "message": "Réinstaller"
     }
 }
