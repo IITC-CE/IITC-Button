@@ -139,5 +139,50 @@
     },
     "beta": {
         "message": "Beta"
+    },
+    "custom": {
+        "message": "Personalizado"
+    },
+    "customServerHint": {
+        "message": "Por exemplo:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Conexão bem-sucedida ao servidor"
+    },
+    "customServerTooltipError": {
+        "message": "O servidor personalizado não está disponível ou não contém $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "URL do servidor personalizado (para canal personalizado)"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Procurar…"
+    },
+    "reinstall": {
+        "message": "Reinstalar"
+    },
+    "jsViewTitle": {
+        "message": "Instalando o script"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Este script não solicitou direitos de acesso aos sites. Parece ser um plugin inválido."
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Este script solicitou acesso a todos os sites. Use-o se você confia no autor."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "O script será executado nestes sites:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Mostrar detalhes"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Ocultar detalhes"
     }
 }
