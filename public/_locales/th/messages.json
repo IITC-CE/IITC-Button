@@ -136,5 +136,53 @@
     },
     "badgeOverride": {
         "message": "แทนที่"
+    },
+    "beta": {
+        "message": "เบต้า"
+    },
+    "searchBoxPlaceholder": {
+        "message": "ค้นหา…"
+    },
+    "custom": {
+        "message": "กำหนดเอง"
+    },
+    "customServerHint": {
+        "message": "ตัวอย่างเช่น:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "เชื่อมต่อกับเซิร์ฟเวอร์สำเร็จ"
+    },
+    "customServerTooltipError": {
+        "message": "เซิร์ฟเวอร์แบบกำหนดเอง ไม่พร้อมใช้งานหรือไม่มี $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "reinstall": {
+        "message": "ติดตั้งใหม่"
+    },
+    "customServerURL": {
+        "message": "ลิงค์ URL เซิร์ฟเวอร์ที่กำหนดเอง (สำหรับช่องทางที่กำหนดเอง)"
+    },
+    "jsViewTitle": {
+        "message": "กำลังติดตั้งสคริปต์"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "สคริปต์นี้ไม่ได้ขอสิทธิ์การเข้าถึงไซต์ และดูเหมือนว่าจะเป็นปลั๊กอินที่ไม่ถูกต้อง"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "สคริปต์นี้ร้องขอการเข้าถึงเว็บไซต์ทั้งหมด ใช้มันหากคุณเชื่อถือผู้สร้างสคริปต์นี้"
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "สคริปต์จะทำงานบนไซต์เหล่านี้:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "แสดงรายละเอียด"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "ซ่อนรายละเอียด"
     }
 }
