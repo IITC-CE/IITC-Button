@@ -67,6 +67,9 @@
     "updateExternalFrequency": {
         "message": "External plugins checks for updates"
     },
+    "every5seconds": {
+        "message": "Every 5 Seconds"
+    },
     "every6hours": {
         "message": "Every 6 Hours"
     },

@@ -16,10 +16,11 @@ export const mixin = {
         external: { name: _("anyChannel") }
       },
       updateIntervals: [
-        { name: _("every6hours"), value: "6" },
-        { name: _("every12hours"), value: "12" },
-        { name: _("everyDay"), value: "24" },
-        { name: _("everyWeek"), value: "168" }
+        { name: _("every5seconds"), value: "5" },
+        { name: _("every6hours"), value: "21600" },
+        { name: _("every12hours"), value: "43200" },
+        { name: _("everyDay"), value: "86400" },
+        { name: _("everyWeek"), value: "604800" }
       ]
     };
   },

@@ -12,12 +12,14 @@
       v-model="interval"
       v-on:change="saveUpdateInterval"
     >
-      <option
-        v-for="(item, index) in updateIntervals"
-        v-bind:key="index"
-        v-bind:value="item.value"
-        >{{ item.name }}</option
-      >
+      <template v-for="(item, index) in updateIntervals">
+        <option
+          v-if="channel === 'custom' || index !== 0"
+          v-bind:key="index"
+          v-bind:value="item.value"
+          >{{ item.name }}</option
+        >
+      </template>
     </select>
   </div>
 </template>
@@ -33,7 +35,7 @@ export default {
   },
   data() {
     return {
-      interval: 24
+      interval: 24 * 60 * 60
     };
   },
   mixins: [mixin],
