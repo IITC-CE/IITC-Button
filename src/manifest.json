@@ -6,7 +6,8 @@
     "gecko": {
       "id": "iitc@modos189.ru",
       "strict_min_version": "57.0"
-    }
+    },
+    "gecko_android": {}
   },
   "permissions": [
     "tabs",
