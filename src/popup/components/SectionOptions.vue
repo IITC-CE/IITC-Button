@@ -149,6 +149,7 @@ h2:first-letter {
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 520px;
 }
 .settings {
   justify-content: space-around;
