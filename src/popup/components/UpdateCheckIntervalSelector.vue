@@ -41,12 +41,11 @@ export default {
   mixins: [mixin],
   methods: {
     async saveUpdateInterval() {
-      const key = this.channel + "_update_check_interval";
-      const setData = {};
-      setData[key] = this.interval;
-
-      await browser.storage.local.set(setData);
-      await browser.runtime.sendMessage({ type: "safeUpdate" });
+      await browser.runtime.sendMessage({
+        type: "setUpdateCheckInterval",
+        interval: this.interval,
+        channel: this.channel
+      });
       this.showMessage(this._("changesApplied"));
     }
   },
