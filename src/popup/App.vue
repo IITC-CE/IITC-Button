@@ -72,8 +72,8 @@ export default {
 <style>
 body {
   cursor: default;
-  min-width: 325px;
-  min-height: 513px;
+  min-width: 350px;
+  min-height: 520px;
   overflow: hidden;
   margin: 0;
   color: #222;
@@ -85,8 +85,8 @@ body {
 }
 
 #app {
-  width: 315px;
-  height: 513px;
+  width: 350px;
+  height: 520px;
   overflow: hidden;
   /*transform: translateZ(0); * hack of popup size in safari *!*/
 }
