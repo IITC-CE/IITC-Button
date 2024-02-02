@@ -14,7 +14,7 @@ export async function onRequestOpenIntel() {
   try {
     const tab = await browser.tabs.create({
       url: "https://intel.ingress.com/",
-      pinned: true
+      pinned: true,
     });
     lastIITCTab = tab.id;
   } catch (error) {
@@ -62,7 +62,7 @@ async function initialize(manager) {
 
 async function setTabActive(tabId) {
   const tab = await browser.tabs.update(tabId, {
-    active: true
+    active: true,
   });
 
   try {

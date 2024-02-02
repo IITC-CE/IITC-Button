@@ -53,11 +53,11 @@
 <script>
 import { mixin } from "./mixins.js";
 
-const saveJS = (function() {
+const saveJS = (function () {
   const a = document.createElement("a");
   document.body.appendChild(a);
   a.style = "display: none";
-  return function(data, fileName) {
+  return function (data, fileName) {
     const blob = new Blob([data], { type: "application/x-javascript" }),
       url = window.URL.createObjectURL(blob);
     a.href = url;
@@ -71,36 +71,37 @@ export default {
   name: "ElementPlugin",
   props: {
     category_name: String,
-    plugin: Object
+    plugin: Object,
   },
   mixins: [mixin],
   methods: {
-    pluginDescription: function() {
+    pluginDescription: function () {
       return (
         (this.plugin["user"] ? `[v${this.plugin["version"]}] ` : "") +
         this.__("description", this.plugin)
       );
     },
-    toggleIcon: function() {
+    toggleIcon: function () {
       return `toggle_${this.plugin["status"]}`;
     },
-    managePlugin: async function() {
+    managePlugin: async function () {
       if (this.plugin.status === undefined) {
         this.showMessage(this.plugin.version);
         return;
       }
 
       const action = this.plugin.status === "on" ? "off" : "on";
+      // eslint-disable-next-line vue/no-mutating-props
       this.plugin.status = action;
 
       this.showMessage(this._("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: this.plugin.uid,
-        action: action
+        action: action,
       });
     },
-    deletePlugin: async function() {
+    deletePlugin: async function () {
       const uid = this.plugin.uid;
       const cat = this.category_name;
       const plugins = this.$parent.$props.plugins;
@@ -124,22 +125,22 @@ export default {
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: uid,
-        action: "delete"
+        action: "delete",
       });
     },
-    savePlugin: async function() {
+    savePlugin: async function () {
       saveJS(this.plugin.code, this.plugin.filename);
-    }
+    },
   },
   computed: {
-    getIcon: function() {
+    getIcon: function () {
       return (
         this.plugin["icon"] ||
         this.plugin["icon64"] ||
         "/assets/icons/24/userscript-no-icon.png"
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -38,7 +38,7 @@ import { _ } from "@/i18n";
 /*
  * Validation UserScript and adding to IITC Button
  */
-const processingFile = async fileList => {
+const processingFile = async (fileList) => {
   const scripts = [];
   let message = "";
   for (let i = 0; i < fileList.length; i++) {
@@ -63,11 +63,11 @@ const processingFile = async fileList => {
   alert(message);
   await browser.runtime.sendMessage({
     type: "addUserScripts",
-    scripts: scripts
+    scripts: scripts,
   });
 };
 
-const readUploadedFileAsText = inputFile => {
+const readUploadedFileAsText = (inputFile) => {
   const temporaryFileReader = new FileReader();
 
   return new Promise((resolve, reject) => {
@@ -87,18 +87,18 @@ export default {
   name: "BlockDrop",
   data() {
     return {
-      files: []
+      files: [],
     };
   },
   methods: {
     _: _,
-    on_drop: e => {
+    on_drop: (e) => {
       processingFile(e.dataTransfer.files).then();
     },
-    handlePicked: e => {
+    handlePicked: (e) => {
       const target = e.target;
       processingFile(target.files).then();
-    }
+    },
   },
   mounted() {
     [
@@ -108,12 +108,12 @@ export default {
       "dragover",
       "dragenter",
       "dragleave",
-      "drop"
+      "drop",
     ].forEach(
-      function(evt) {
+      function (evt) {
         this.$refs.fileform.addEventListener(
           evt,
-          function(e) {
+          function (e) {
             e.preventDefault();
             e.stopPropagation();
           }.bind(this),
@@ -123,13 +123,13 @@ export default {
     );
     this.$refs.fileform.addEventListener(
       "drop",
-      function(e) {
+      function (e) {
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
           this.files.push(e.dataTransfer.files[i]);
         }
       }.bind(this)
     );
-  }
+  },
 };
 </script>
 

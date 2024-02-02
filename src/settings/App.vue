@@ -21,11 +21,11 @@ export default {
     Header,
     PageAddPlugin,
     PageBackup,
-    PageDebug
+    PageDebug,
   },
   data() {
     return {
-      tab: "add"
+      tab: "add",
     };
   },
   methods: {
@@ -37,14 +37,14 @@ export default {
         location.hash = "#" + tab;
       }
       this.tab = tab;
-    }
+    },
   },
   async mounted() {
     const tab = new URL(window.location.href).hash;
     if (tab.length > 0) {
       this.tab = tab.substring(1);
     }
-  }
+  },
 };
 </script>
 

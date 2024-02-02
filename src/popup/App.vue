@@ -42,7 +42,7 @@ export default {
       plugins_flat: {},
       category_name: "",
       iitc_core: {},
-      is_safari: this.detect_safari()
+      is_safari: this.detect_safari(),
     };
   },
   components: { SectionMainMenu, SectionOptions, SectionPlugins, Message },
@@ -55,14 +55,14 @@ export default {
     await data.onMessageListener(this);
   },
   methods: {
-    detect_safari: function() {
+    detect_safari: function () {
       let userAgentString = navigator.userAgent;
       let chromeAgent = userAgentString.indexOf("Chrome") > -1;
       let safariAgent = userAgentString.indexOf("Safari") > -1;
 
       return safariAgent && !chromeAgent;
-    }
-  }
+    },
+  },
 };
 </script>
 

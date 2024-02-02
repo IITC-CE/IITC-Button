@@ -4,7 +4,7 @@
  *
  * https://github.com/deleterium/highlightjs-lineToDiv
  */
-export const plugin = result => {
+export const plugin = (result) => {
   let className, idName;
   /* Configuration */
   className = "line";
@@ -43,9 +43,7 @@ export const plugin = result => {
         // eslint-disable-next-line no-constant-condition
       } while (true);
       if (spanStack.length > 0) {
-        content += Array(spanStack.length)
-          .fill("</span>")
-          .join("");
+        content += Array(spanStack.length).fill("</span>").join("");
       }
       let retString = "<div ";
       retString += 'data-line-number="' + (index + 1) + '" ';

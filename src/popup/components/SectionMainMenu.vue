@@ -59,17 +59,17 @@ export default {
   props: {
     categories: Object,
     plugins_flat: Object,
-    iitc_core: Object
+    iitc_core: Object,
   },
   data() {
     return {
       search_query: "",
-      search_results: {}
+      search_results: {},
     };
   },
   mixins: [mixin],
   methods: {
-    openCategory: function(category_name) {
+    openCategory: function (category_name) {
       document.body.id = "plugins";
       this.$parent.$data.category_name = category_name;
 
@@ -83,10 +83,10 @@ export default {
         return category_plugins;
       }, {});
     },
-    countPlugins: function(categories, plugins) {
+    countPlugins: function (categories, plugins) {
       if (categories === undefined) return {};
 
-      Object.keys(categories).forEach(cat => {
+      Object.keys(categories).forEach((cat) => {
         const [count_plugins, count_plugins_active] = Object.entries(
           plugins
         ).reduce(
@@ -108,18 +108,18 @@ export default {
         categories[cat]["count_plugins_active"] = count_plugins_active;
       });
       return categories;
-    }
+    },
   },
   watch: {
-    search_query: function(val) {
+    search_query: function (val) {
       if (val === "*") {
         this.search_results = this.sortIITCObj(this.plugins_flat);
       } else {
         this.search_results = searchPlugins(val, this.plugins_flat);
       }
-    }
+    },
   },
-  components: { Title, SearchBar, Element, ElementPlugin }
+  components: { Title, SearchBar, Element, ElementPlugin },
 };
 </script>
 

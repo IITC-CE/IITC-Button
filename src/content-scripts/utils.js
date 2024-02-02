@@ -51,7 +51,7 @@ export async function IITCButtonInitJS(e) {
       // Firefox lists .user.js among our own content scripts so a space at start will group them
       `\n//# sourceURL=${browser.runtime.getURL(
         "plugins/%20" + name + ".user.js"
-      )}`
+      )}`,
     ].join("");
 
     inject(injectedCode);

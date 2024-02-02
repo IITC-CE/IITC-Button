@@ -14,7 +14,7 @@ export async function init(self) {
     "custom_iitc_core",
     "release_iitc_core_user",
     "beta_iitc_core_user",
-    "custom_iitc_core_user"
+    "custom_iitc_core_user",
   ]);
   const channel = data.channel ? data.channel : "release";
   // initialize categories
@@ -67,7 +67,7 @@ function setIitcCore(appData, iitc_core, iitc_core_user) {
 
 export async function onChangedListener(self) {
   const appData = self.$data;
-  browser.storage.onChanged.addListener(async function(changes) {
+  browser.storage.onChanged.addListener(async function (changes) {
     const data = await browser.storage.local.get("channel");
     const channel = data.channel ? data.channel : "release";
 
@@ -79,7 +79,7 @@ export async function onChangedListener(self) {
           channel + "_categories",
           channel + "_plugins_flat",
           channel + "_iitc_core",
-          channel + "_iitc_core_user"
+          channel + "_iitc_core_user",
         ]);
         setCategories(appData, storage[channel + "_categories"]);
         setPlugins(appData, storage[channel + "_plugins_flat"]);
@@ -100,7 +100,7 @@ export async function onChangedListener(self) {
 
       if (key === channel + "_iitc_core_user") {
         const storage = await browser.storage.local.get([
-          channel + "_iitc_core"
+          channel + "_iitc_core",
         ]);
         setIitcCore(appData, storage[channel + "_iitc_core"], new_value);
       }
@@ -109,7 +109,7 @@ export async function onChangedListener(self) {
 }
 
 export async function onMessageListener(self) {
-  browser.runtime.onMessage.addListener(function(request) {
+  browser.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
       case "showProgressbar":
         self.$root.$emit("showProgressbar", request.value);
@@ -118,7 +118,7 @@ export async function onMessageListener(self) {
         self.showMessage(request.message);
         break;
     }
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
       }, 1);

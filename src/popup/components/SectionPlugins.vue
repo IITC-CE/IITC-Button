@@ -26,10 +26,10 @@ export default {
   props: {
     category_name: String,
     categories: Object,
-    plugins: Object
+    plugins: Object,
   },
   mixins: [mixin],
-  components: { Header, Element, ElementPlugin }
+  components: { Header, Element, ElementPlugin },
 };
 </script>
 

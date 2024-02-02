@@ -5,7 +5,7 @@ import { check_matching } from "lib-iitc-manager";
 export async function inject_plugin(plugin) {
   const tabs = await getTabsToInject();
 
-  const is_ingress_tab = url => {
+  const is_ingress_tab = (url) => {
     return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
   };
 
@@ -26,7 +26,7 @@ export async function inject_plugin(plugin) {
     try {
       await browser.tabs.executeScript(tab.id, {
         code: inject,
-        runAt: "document_end"
+        runAt: "document_end",
       });
     } catch (error) {
       console.error(`An error occurred while reloading tabs: ${error.message}`);
@@ -38,7 +38,7 @@ export async function inject_plugin(plugin) {
 export async function getTabsToInject() {
   let allTabs = await browser.tabs.query({ status: "complete" });
 
-  return allTabs.filter(function(tab) {
+  return allTabs.filter(function (tab) {
     return tab.status === "complete" && tab.url;
   });
 }

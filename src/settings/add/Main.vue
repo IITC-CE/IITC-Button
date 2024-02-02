@@ -19,9 +19,9 @@ import { _ } from "@/i18n";
 export default {
   name: "PageAddPlugin",
   methods: {
-    _: _
+    _: _,
   },
-  components: { BlockURL, BlockDrop }
+  components: { BlockURL, BlockDrop },
 };
 </script>
 

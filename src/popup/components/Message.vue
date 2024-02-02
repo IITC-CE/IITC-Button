@@ -12,21 +12,21 @@ export default {
   name: "Message",
   data() {
     return {
-      message: { opened: false, text: "" }
+      message: { opened: false, text: "" },
     };
   },
   mounted() {
-    this.$root.$on("message", msg => {
+    this.$root.$on("message", (msg) => {
       const self = this;
       self.$data.message.text = msg;
       self.$data.message.opened = true;
 
       clearTimeout(message_timeout_id);
-      message_timeout_id = setTimeout(function() {
+      message_timeout_id = setTimeout(function () {
         self.$data.message.opened = false;
       }, 3000);
     });
-  }
+  },
 };
 </script>
 

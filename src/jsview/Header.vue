@@ -34,7 +34,7 @@
             'include',
             'exclude-match',
             'exclude',
-            'grant'
+            'grant',
           ]"
           v-bind:key="ki"
         >
@@ -69,38 +69,38 @@ export default {
   name: "Header",
   props: {
     meta: Object,
-    code: String
+    code: String,
   },
   data() {
     return {
       show_header: false,
       button_name: _("install"),
       domains: null,
-      show_details: false
+      show_details: false,
     };
   },
   methods: {
     _: _,
-    install: async function() {
+    install: async function () {
       const script = [{ meta: this.meta, code: this.code }];
       await browser.runtime.sendMessage({
         type: "addUserScripts",
-        scripts: script
+        scripts: script,
       });
     },
-    checkIfInstalled: async function() {
+    checkIfInstalled: async function () {
       const uid = getUID(this.meta);
       if (uid === iitc_core_uid) {
         this.button_name = _("reinstall");
       }
       await browser.runtime.sendMessage({
         type: "getPluginInfo",
-        uid: uid
+        uid: uid,
       });
     },
-    setListeners: function() {
+    setListeners: function () {
       const self = this;
-      browser.runtime.onMessage.addListener(function(request) {
+      browser.runtime.onMessage.addListener(function (request) {
         switch (request.type) {
           case "resolveGetPluginInfo":
             if (request.info) {
@@ -123,35 +123,35 @@ export default {
         }
       });
     },
-    on_show_details: async function() {
+    on_show_details: async function () {
       this.show_details = !this.show_details;
       await browser.storage.local.set({
-        js_view_show_details: this.show_details
+        js_view_show_details: this.show_details,
       });
-    }
+    },
   },
   watch: {
-    meta: function() {
+    meta: function () {
       this.domains = humanize_match(this.meta);
     },
-    code: async function() {
+    code: async function () {
       this.show_header = true;
       this.setListeners();
       await this.checkIfInstalled();
-    }
+    },
   },
   computed: {
-    getIcon: function() {
+    getIcon: function () {
       return this.meta["icon64"] || this.meta["icon"] || null;
-    }
+    },
   },
   async mounted() {
-    browser.storage.local.get(["js_view_show_details"]).then(data => {
+    browser.storage.local.get(["js_view_show_details"]).then((data) => {
       if (data["js_view_show_details"] === true) {
         this.show_details = true;
       }
     });
-  }
+  },
 };
 </script>
 

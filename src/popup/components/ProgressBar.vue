@@ -12,14 +12,14 @@ export default {
   name: "ProgressBar",
   data() {
     return {
-      showProgressbar: false
+      showProgressbar: false,
     };
   },
   mounted() {
-    this.$root.$on("showProgressbar", status => {
+    this.$root.$on("showProgressbar", (status) => {
       this.$data.showProgressbar = status;
     });
-  }
+  },
 };
 </script>
 

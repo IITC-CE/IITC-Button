@@ -95,31 +95,31 @@ export default {
   name: "settings__sectionOptions",
   data() {
     return {
-      channel: "release"
+      channel: "release",
     };
   },
   mixins: [mixin],
   methods: {
-    forceUpdate: async function() {
+    forceUpdate: async function () {
       await browser.runtime.sendMessage({ type: "forceFullUpdate" });
       this.showMessage(this._("updateInProgress"));
-    }
+    },
   },
   computed: {
     channelSelect: {
-      get: function() {
+      get: function () {
         return this.channel;
       },
-      set: async function(channel) {
+      set: async function (channel) {
         this.$emit("update:channel", channel);
         this.channel = channel;
         this.$root.channel = channel;
         await browser.runtime.sendMessage({
           type: "setChannel",
-          value: channel
+          value: channel,
         });
-      }
-    }
+      },
+    },
   },
   async mounted() {
     const data = await browser.storage.local.get("channel");
@@ -127,7 +127,7 @@ export default {
       this.channel = data.channel;
     }
   },
-  components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer }
+  components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer },
 };
 </script>
 

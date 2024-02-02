@@ -7,46 +7,46 @@ export const mixin = {
       updateChannels: {
         release: { name: _("release") },
         beta: { name: _("beta") },
-        custom: { name: _("custom") }
+        custom: { name: _("custom") },
       },
       updateChannelsIntervals: {
         release: { name: _("release") },
         beta: { name: _("beta") },
         custom: { name: _("custom") },
-        external: { name: _("anyChannel") }
+        external: { name: _("anyChannel") },
       },
       updateIntervals: [
         { name: _("every5seconds"), value: "5" },
         { name: _("every6hours"), value: "21600" },
         { name: _("every12hours"), value: "43200" },
         { name: _("everyDay"), value: "86400" },
-        { name: _("everyWeek"), value: "604800" }
-      ]
+        { name: _("everyWeek"), value: "604800" },
+      ],
     };
   },
   methods: {
     _: _,
-    __: function(key, item) {
+    __: function (key, item) {
       if (item === undefined || !(key in item)) return "";
       const lang = browser.i18n.getUILanguage();
       return key + ":" + lang in item ? item[key + ":" + lang] : item[key];
     },
-    objIsEmpty: function(obj) {
+    objIsEmpty: function (obj) {
       return typeof obj !== "object" || Object.keys(obj).length === 0;
     },
-    openLink: async function(url) {
+    openLink: async function (url) {
       await browser.tabs.create({ url: url });
       window.close();
     },
-    back: function() {
+    back: function () {
       document.body.id = "main-menu";
     },
-    sortIITCObj: function(obj) {
+    sortIITCObj: function (obj) {
       if (obj === undefined) {
         return {};
       }
 
-      const arr = Object.keys(obj).map(key => obj[key]);
+      const arr = Object.keys(obj).map((key) => obj[key]);
 
       for (let i = 0; i < arr.length; i++) {
         for (let j = i + 1; j < arr.length; j++) {
@@ -63,8 +63,8 @@ export const mixin = {
 
       return arr;
     },
-    showMessage: function(msg) {
+    showMessage: function (msg) {
       this.$root.$emit("message", msg);
-    }
-  }
+    },
+  },
 };

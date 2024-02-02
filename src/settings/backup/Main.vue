@@ -75,7 +75,7 @@ export default {
       import_external: true,
       export_settings: true,
       export_data: true,
-      export_external: true
+      export_external: true,
     };
   },
   methods: {
@@ -86,8 +86,8 @@ export default {
         params: {
           settings: this.export_settings,
           data: this.export_data,
-          external: this.export_external
-        }
+          external: this.export_external,
+        },
       });
     },
     async handleImport(e) {
@@ -125,13 +125,13 @@ export default {
         params: {
           settings: this.import_settings,
           data: this.import_data,
-          external: this.import_external
+          external: this.import_external,
         },
-        backup_data: this.backup_data
+        backup_data: this.backup_data,
       });
     },
-    setListeners: function() {
-      browser.runtime.onMessage.addListener(function(request) {
+    setListeners: function () {
+      browser.runtime.onMessage.addListener(function (request) {
         switch (request.type) {
           case "resolveGetBackupData":
             createBackupZip(request.data).then();
@@ -142,11 +142,11 @@ export default {
             this.is_wait = false;
         }
       });
-    }
+    },
   },
   async mounted() {
     this.setListeners();
-  }
+  },
 };
 </script>
 

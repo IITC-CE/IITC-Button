@@ -16,17 +16,17 @@ export default {
   name: "App",
   components: {
     Header,
-    Code
+    Code,
   },
   data() {
     return {
       meta: {},
       code: "",
-      status: _("loading")
+      status: _("loading"),
     };
   },
   methods: {
-    _: _
+    _: _,
   },
   async mounted() {
     const uniqId = new URL(window.location.href).searchParams.get("uniqId");
@@ -41,7 +41,7 @@ export default {
     meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
     this.meta = meta;
     this.code = code;
-  }
+  },
 };
 </script>
 

@@ -38,11 +38,11 @@ import { _ } from "@/i18n";
 export default {
   name: "Header",
   props: {
-    tab: String
+    tab: String,
   },
   methods: {
-    _: _
-  }
+    _: _,
+  },
 };
 </script>
 

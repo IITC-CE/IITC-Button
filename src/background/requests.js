@@ -6,10 +6,10 @@ const IS_CHROME = !!global.chrome.app;
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
   "^https://gist.github.com/.*?/[^/]*?.user.js([?#]|$)",
-  "^https://gitlab.com/[^/]*/[^/]*/(|-/)raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)"
-].map(re => new RegExp(re));
+  "^https://gitlab.com/[^/]*/[^/]*/(|-/)raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
+].map((re) => new RegExp(re));
 const blacklist = ["//(?:(?:gist.|)github.com|gitlab.com)/"].map(
-  re => new RegExp(re)
+  (re) => new RegExp(re)
 );
 
 const cache = {};
@@ -66,7 +66,7 @@ async function bypass(tabId, url) {
 async function maybeInstallUserJs(tabId, url) {
   const IITC_is_enabled = await browser.storage.local
     .get(["IITC_is_enabled"])
-    .then(data => data.IITC_is_enabled);
+    .then((data) => data.IITC_is_enabled);
   if (IITC_is_enabled === false) {
     await bypass(tabId, url);
     return;
@@ -107,7 +107,7 @@ async function confirmInstall(url, code) {
   await browser.storage.local.set(cache);
 
   await browser.tabs.create({
-    url: await browser.runtime.getURL(`/jsview.html?uniqId=${uniqId}`)
+    url: await browser.runtime.getURL(`/jsview.html?uniqId=${uniqId}`),
   });
 }
 
@@ -119,7 +119,7 @@ function matches(re) {
 /**
  * Set autoclose if userscript was opened in a new tab
  */
-browser.tabs.onCreated.addListener(tab => {
+browser.tabs.onCreated.addListener((tab) => {
   const url =
     tab.url === "about:blank" ? tab.title : tab.url || tab.pendingUrl || "";
   if (
@@ -133,7 +133,7 @@ browser.tabs.onCreated.addListener(tab => {
 /**
  * Deleting status when closing a tab
  */
-browser.tabs.onRemoved.addListener(tabId => {
+browser.tabs.onRemoved.addListener((tabId) => {
   delete cache[tabId];
 });
 
@@ -149,9 +149,9 @@ if (browser.webRequest) {
         "*://*/*.user.js",
         "*://*/*.user.js?*",
         "file://*/*.user.js",
-        "file://*/*.user.js?*"
+        "file://*/*.user.js?*",
       ],
-      types: ["main_frame"]
+      types: ["main_frame"],
     },
     ["blocking"]
   );

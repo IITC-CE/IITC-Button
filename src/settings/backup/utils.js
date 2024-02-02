@@ -36,10 +36,10 @@ export const saveAs = (blob, fileName) => {
   setTimeout(() => URL.revokeObjectURL(link.href), 7000);
 };
 
-export const getBackupDataFromZip = async file => {
+export const getBackupDataFromZip = async (file) => {
   const backup = {
     external_plugins: {},
-    data: {}
+    data: {},
   };
   const zip = await JSZip.loadAsync(file);
 
@@ -71,7 +71,7 @@ export const getBackupDataFromZip = async file => {
   return backup;
 };
 
-export const createBackupZip = async backup => {
+export const createBackupZip = async (backup) => {
   const zip = new JSZip();
 
   zip.file(backup_json_name, JSON.stringify(backup.data));
@@ -86,7 +86,7 @@ export const createBackupZip = async backup => {
   }
 
   const filename = "iitc-backup_" + formatDate(new Date()) + ".zip";
-  zip.generateAsync({ type: "blob" }).then(function(content) {
+  zip.generateAsync({ type: "blob" }).then(function (content) {
     saveAs(content, filename);
   });
 };

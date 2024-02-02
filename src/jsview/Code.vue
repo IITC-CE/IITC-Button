@@ -13,18 +13,18 @@ import "highlight.js/styles/darcula.css";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.addPlugin({
-  "after:highlight": plugin
+  "after:highlight": plugin,
 });
 
 export default {
   name: "Code",
   components: {
-    highlightjs: hljsVuePlugin.component
+    highlightjs: hljsVuePlugin.component,
   },
   props: {
     code: String,
-    status: String
-  }
+    status: String,
+  },
 };
 </script>
 
