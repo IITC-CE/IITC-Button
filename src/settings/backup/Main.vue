@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
 import { getBackupDataFromZip, createBackupZip } from "./utils";
 

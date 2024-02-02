@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill";
+
 import { fuzzysearch } from "scored-fuzzysearch";
 
 const score = (query, text) => {

@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
 import { getUID, humanize_match } from "lib-iitc-manager";
 const iitc_core_uid =

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { ajaxGet, parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
 

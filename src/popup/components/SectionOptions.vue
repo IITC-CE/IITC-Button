@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import Hr from "./Hr.vue";
 import Header from "./Header";
 import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector";

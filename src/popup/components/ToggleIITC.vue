@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
+
 export default {
   name: "ToggleIITC",
   data() {

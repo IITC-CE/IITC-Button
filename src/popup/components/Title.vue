@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
 import ProgressBar from "./ProgressBar";
 import ToggleIITC from "./ToggleIITC";

@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
 
 const saveJS = (function () {

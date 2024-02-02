@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
 
