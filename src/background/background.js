@@ -132,6 +132,9 @@ browser.runtime.onMessage.addListener(async function(request) {
     case "setCustomChannelUrl":
       await manager.setCustomChannelUrl(request.value);
       break;
+    case "setUpdateCheckInterval":
+      await manager.setUpdateCheckInterval(request.interval, request.channel);
+      break;
   }
 });
 

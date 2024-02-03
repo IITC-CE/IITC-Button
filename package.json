@@ -14,7 +14,7 @@
     "core-js": "^3.6.5",
     "highlight.js": "^10.7.3",
     "jszip": "^3.10.1",
-    "lib-iitc-manager": "^1.8.3",
+    "lib-iitc-manager": "^1.8.4",
     "scored-fuzzysearch": "^1.0.5",
     "vue": "^2.6.11"
   },
