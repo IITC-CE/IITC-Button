@@ -184,5 +184,80 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "Ocultar detalhes"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ agora substitui a versão integrada do IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "other": {
+        "message": "Outros"
+    },
+    "donate": {
+        "message": "Doe"
+    },
+    "backup": {
+        "message": "Backup"
+    },
+    "debug": {
+        "message": "Depurar"
+    },
+    "import": {
+        "message": "Importar"
+    },
+    "export": {
+        "message": "Exportar"
+    },
+    "import_settings": {
+        "message": "Importar configurações do IITC"
+    },
+    "import_data": {
+        "message": "Importar dados de plugins"
+    },
+    "import_external": {
+        "message": "Importar plugins externos"
+    },
+    "importFromZip": {
+        "message": "Importar de um zip"
+    },
+    "export_settings": {
+        "message": "Exportar configurações do IITC"
+    },
+    "export_data": {
+        "message": "Exportar dados de plugins"
+    },
+    "export_external": {
+        "message": "Exportar plugins externos"
+    },
+    "exportToZip": {
+        "message": "Exportar como zip"
+    },
+    "pleaseWait": {
+        "message": "Por favor espere"
+    },
+    "restoreBackup": {
+        "message": "Restaurar o backup"
+    },
+    "backupRestored": {
+        "message": "Backup restaurado"
+    },
+    "invalidBackup": {
+        "message": "O arquivo está corrompido ou não é um backup do IITC Button"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "Observe que localStorage contém todos os dados disponíveis para o IITC Button. Por exemplo, incluir uma lista dos seus plugins e seu código fonte, pode incluir configurações de alguns plugins (dependendo de sua implementação)."
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "Não exponha esses dados publicamente se você usar plugins de facção!"
+    },
+    "saveToJson": {
+        "message": "Salvar como Json"
+    },
+    "import_message": {
+        "message": "Selecione o arquivo .zip com o backup do IITC Button e selecione o que importar"
     }
 }
