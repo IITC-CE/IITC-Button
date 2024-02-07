@@ -17,25 +17,27 @@
           v-if="channel === 'custom' || index !== 0"
           v-bind:key="index"
           v-bind:value="item.value"
-          >{{ item.name }}</option
         >
+          {{ item.name }}
+        </option>
       </template>
     </select>
   </div>
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
 
 export default {
   name: "UpdateCheckIntervalSelector",
   props: {
     title: String,
-    channel: String
+    channel: String,
   },
   data() {
     return {
-      interval: 24 * 60 * 60
+      interval: 24 * 60 * 60,
     };
   },
   mixins: [mixin],
@@ -44,10 +46,10 @@ export default {
       await browser.runtime.sendMessage({
         type: "setUpdateCheckInterval",
         interval: this.interval,
-        channel: this.channel
+        channel: this.channel,
       });
       this.showMessage(this._("changesApplied"));
-    }
+    },
   },
   async mounted() {
     const key = this.channel + "_update_check_interval";
@@ -56,7 +58,7 @@ export default {
     if (data[key]) {
       this.interval = parseInt(data[key]);
     }
-  }
+  },
 };
 </script>
 

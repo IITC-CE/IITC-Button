@@ -18,14 +18,14 @@ export default {
   name: "Header",
   props: {
     header_text: String,
-    button_text: String
+    button_text: String,
   },
   methods: {
     button_onclick() {
       this.$emit("button_onclick");
-    }
+    },
   },
-  mixins: [mixin]
+  mixins: [mixin],
 };
 </script>
 

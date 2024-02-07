@@ -20,23 +20,24 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
 
 export default {
   name: "PageDebug",
   data() {
     return {
-      local_storage_data: ""
+      local_storage_data: "",
     };
   },
   methods: {
     _: _,
     async handleExport() {
-      const saveJson = (function() {
+      const saveJson = (function () {
         const a = document.createElement("a");
         document.body.appendChild(a);
         a.style = "display: none";
-        return function(data, fileName) {
+        return function (data, fileName) {
           const blob = new Blob([data], { type: "application/x-javascript" }),
             url = window.URL.createObjectURL(blob);
           a.href = url;
@@ -47,11 +48,11 @@ export default {
       })();
 
       saveJson(this.local_storage_data, "iitc-localstorage.json");
-    }
+    },
   },
   async mounted() {
     this.local_storage_data = JSON.stringify(await browser.storage.local.get());
-  }
+  },
 };
 </script>
 

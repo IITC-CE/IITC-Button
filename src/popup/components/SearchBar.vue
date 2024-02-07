@@ -27,15 +27,15 @@ export default {
   props: {
     value: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     cancel() {
       this.$emit("input", "");
-    }
+    },
   },
-  mixins: [mixin]
+  mixins: [mixin],
 };
 </script>
 

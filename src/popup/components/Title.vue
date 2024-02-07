@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
 import ProgressBar from "./ProgressBar";
 import ToggleIITC from "./ToggleIITC";
@@ -34,15 +35,15 @@ export default {
   name: "Title",
   mixins: [mixin],
   methods: {
-    openIITC: async function() {
+    openIITC: async function () {
       await browser.runtime.sendMessage({ type: "requestOpenIntel" });
       window.close();
     },
-    openOptions: function() {
+    openOptions: function () {
       document.body.id = "options";
-    }
+    },
   },
-  components: { ProgressBar, ToggleIITC }
+  components: { ProgressBar, ToggleIITC },
 };
 </script>
 

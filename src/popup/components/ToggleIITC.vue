@@ -16,33 +16,35 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
+
 export default {
   name: "ToggleIITC",
   data() {
     return {
-      iitc_is_enabled: true
+      iitc_is_enabled: true,
     };
   },
   computed: {
     iitc_is_enabled_toggle: {
-      get: function() {
+      get: function () {
         return this.iitc_is_enabled;
       },
-      set: async function(newValue) {
+      set: async function (newValue) {
         this.$emit("update:iitc_is_enabled", newValue);
         await browser.runtime.sendMessage({
           type: "toggleIITC",
-          value: newValue
+          value: newValue,
         });
-      }
-    }
+      },
+    },
   },
   async mounted() {
     const data = await browser.storage.local.get("IITC_is_enabled");
     if (data.IITC_is_enabled === false) {
       this.iitc_is_enabled = false;
     }
-  }
+  },
 };
 </script>
 

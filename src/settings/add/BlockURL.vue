@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { ajaxGet, parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
 
@@ -29,17 +30,17 @@ export default {
   name: "BlockURL",
   data() {
     return {
-      url: ""
+      url: "",
     };
   },
   methods: {
     _: _,
-    url_input_keyup: async event => {
+    url_input_keyup: async (event) => {
       if (event.key === "Enter") {
         await this.loadByUrl();
       }
     },
-    loadByUrl: async function() {
+    loadByUrl: async function () {
       const url = this.url;
       this.url = "";
 
@@ -68,11 +69,11 @@ export default {
         alert(message);
         await browser.runtime.sendMessage({
           type: "addUserScripts",
-          scripts: scripts
+          scripts: scripts,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

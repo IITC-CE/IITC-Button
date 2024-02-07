@@ -25,13 +25,13 @@ export default {
     description: String,
     counter: String,
     icon_name: String,
-    icon_position_is_right: Boolean
+    icon_position_is_right: Boolean,
   },
   methods: {
     item_onclick() {
       this.$emit("item_onclick");
-    }
-  }
+    },
+  },
 };
 </script>
 

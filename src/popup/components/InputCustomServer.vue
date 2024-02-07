@@ -37,14 +37,15 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
 
-const checkStatusCustomServer = host =>
-  new Promise(resolve => {
+const checkStatusCustomServer = (host) =>
+  new Promise((resolve) => {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `${host}/meta.json?${Date.now()}`, true);
     xhr.timeout = 1000;
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           resolve(true);
@@ -59,17 +60,17 @@ const checkStatusCustomServer = host =>
 export default {
   name: "InputCustomServer",
   props: {
-    channel: String
+    channel: String,
   },
   data() {
     return {
       iconName: "error",
-      host: "http://localhost:8000"
+      host: "http://localhost:8000",
     };
   },
   mixins: [mixin],
   methods: {
-    setInputStatus: async function(host) {
+    setInputStatus: async function (host) {
       this.iconName = "error";
       let status;
       try {
@@ -82,7 +83,7 @@ export default {
       }
       return status;
     },
-    changeCustomServer: async function() {
+    changeCustomServer: async function () {
       let connected = await this.setInputStatus(this.host);
 
       const http_host = "http://" + this.host;
@@ -98,14 +99,14 @@ export default {
       if (connected) {
         await browser.runtime.sendMessage({
           type: "setCustomChannelUrl",
-          value: this.host
+          value: this.host,
         });
       }
     },
-    setExample: function(host) {
+    setExample: function (host) {
       this.host = host;
       this.changeCustomServer();
-    }
+    },
   },
   async mounted() {
     const network_host = await browser.storage.local
@@ -116,7 +117,7 @@ export default {
       this.host = network_host.custom;
     }
     await this.setInputStatus(this.host);
-  }
+  },
 };
 </script>
 

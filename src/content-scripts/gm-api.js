@@ -1,16 +1,16 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-export const GM = function() {
+export const GM = function () {
   const cache = {};
   const defineProperty = Object.defineProperty;
 
   function base64ToStr(base64) {
     const binString = atob(base64);
-    const bytes = Uint8Array.from(binString, m => m.codePointAt(0));
+    const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
     return new TextDecoder().decode(bytes);
   }
 
   function uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
       (
         c ^
         (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
@@ -21,76 +21,76 @@ export const GM = function() {
   function sendToBridge(data) {
     document.dispatchEvent(
       new CustomEvent("bridgeRequest", {
-        detail: data
+        detail: data,
       })
     );
   }
 
   const storageObj = {};
   const storage = new Proxy(storageObj, {
-    set: function(target, key, value) {
+    set: function (target, key, value) {
       const req = {
         task_type: "setValue",
         key: key,
-        value: value
+        value: value,
       };
       sendToBridge(req);
       target[key] = value;
       return true;
     },
-    deleteProperty: function(target, key) {
+    deleteProperty: function (target, key) {
       const req = {
         task_type: "delValue",
-        key: key
+        key: key,
       };
       sendToBridge(req);
       delete target[key];
-    }
+    },
   });
 
   function initialSyncStorage() {
     const req = {
       task_uuid: uuidv4(),
-      task_type: "getStorage"
+      task_type: "getStorage",
     };
     sendToBridge(req);
   }
 
   const makeFunc = (func, toString) => {
     defineProperty(func, "toString", {
-      value: toString || "[Unknown property]"
+      value: toString || "[Unknown property]",
     });
     return func;
   };
-  window.GM = function(data_key, tab_id, meta) {
+  window.GM = function (data_key, tab_id, meta) {
     initialSyncStorage();
     return {
       info: {
-        script: meta
+        script: meta,
       },
-      _getValueSync: function(key, default_value) {
+      _getValueSync: function (key, default_value) {
         if (!this._access("getValue")) return undefined;
 
         const items = storage[data_key + "_" + key];
         return items !== undefined ? JSON.parse(items) : default_value;
       },
-      _setValueSync: function(key, value) {
+      _setValueSync: function (key, value) {
         if (!this._access("setValue")) return undefined;
         storage[data_key + "_" + key] = JSON.stringify(value);
       },
-      getValue: function(key, default_value) {
+      getValue: function (key, default_value) {
         return new Promise((resolve, reject) => {
           if (!this._access("getValue")) return reject;
           resolve(this._getValueSync(key, default_value));
         });
       },
-      setValue: function(key, value) {
+      setValue: function (key, value) {
         return new Promise((resolve, reject) => {
           if (!this._access("setValue")) return reject;
           resolve(this._setValueSync(key, value));
         });
       },
-      deleteValue: function(key) {
+      deleteValue: function (key) {
         return new Promise((resolve, reject) => {
           if (!this._access("deleteValue")) return reject;
 
@@ -98,7 +98,7 @@ export const GM = function() {
           resolve();
         });
       },
-      listValues: function() {
+      listValues: function () {
         return new Promise((resolve, reject) => {
           if (!this._access("listValues")) return reject;
 
@@ -112,15 +112,15 @@ export const GM = function() {
           resolve(keys);
         });
       },
-      getResourceUrl: function() {
+      getResourceUrl: function () {
         return new Promise((resolve, reject) => {
           if (!this._access("getResourceUrl")) return reject;
         });
       },
-      openInTab: function() {},
-      notification: function() {},
-      setClipboard: function() {},
-      xmlHttpRequest: function(details) {
+      openInTab: function () {},
+      notification: function () {},
+      setClipboard: function () {},
+      xmlHttpRequest: function (details) {
         let data = Object.assign(
           {
             task_uuid: uuidv4(),
@@ -140,7 +140,7 @@ export const GM = function() {
             onload: null,
             onprogress: null,
             onreadystatechange: null,
-            ontimeout: null
+            ontimeout: null,
           },
           details
         );
@@ -154,14 +154,14 @@ export const GM = function() {
         data.tab_id = tab_id;
 
         cache[data.task_uuid] = {
-          callback: details.onload
+          callback: details.onload,
         };
         sendToBridge(data);
       },
-      _access: function(key) {
+      _access: function (key) {
         return (
           meta.grant !== undefined &&
-          meta.grant.some(permission => {
+          meta.grant.some((permission) => {
             return permission.substr(3) === key;
           })
         );
@@ -175,10 +175,10 @@ export const GM = function() {
         if (defineAs && targetScope) targetScope[defineAs] = obj;
         return obj;
       }),
-      cloneInto: makeFunc(obj => obj)
+      cloneInto: makeFunc((obj) => obj),
     };
   };
-  document.addEventListener("bridgeResponse", function(e) {
+  document.addEventListener("bridgeResponse", function (e) {
     const detail = JSON.parse(base64ToStr(e.detail));
     const uuid = detail.task_uuid;
 

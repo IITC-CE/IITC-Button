@@ -1,12 +1,13 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager } from "lib-iitc-manager";
+import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
 import { inject_plugin } from "./injector";
 import {
   onUpdatedListener,
   onRemovedListener,
   onRequestOpenIntel,
-  onToggleIITC
+  onToggleIITC,
 } from "./intel";
 import "./requests";
 import { strToBase64 } from "@/strToBase64";
@@ -18,26 +19,26 @@ const manager = new Manager({
       browser.runtime
         .sendMessage({
           type: "showMessage",
-          message: _(message, args)
+          message: _(message, args),
         })
         .then();
     } catch {
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
   },
-  progressbar: is_show => {
+  progressbar: (is_show) => {
     try {
       browser.runtime
         .sendMessage({
           type: "showProgressbar",
-          value: is_show
+          value: is_show,
         })
         .then();
     } catch {
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
   },
-  inject_plugin: plugin => inject_plugin(plugin).then()
+  inject_plugin: (plugin) => inject_plugin(plugin).then(),
 });
 
 manager.run().then();
@@ -48,7 +49,7 @@ onUpdated.addListener((tabId, status, tab) =>
 );
 onRemoved.addListener(onRemovedListener);
 
-browser.runtime.onMessage.addListener(async request => {
+browser.runtime.onMessage.addListener(async (request) => {
   switch (request.type) {
     case "requestOpenIntel":
       await onRequestOpenIntel();
@@ -62,7 +63,7 @@ browser.runtime.onMessage.addListener(async request => {
   }
 });
 
-browser.runtime.onMessage.addListener(async function(request) {
+browser.runtime.onMessage.addListener(async function (request) {
   switch (request.type) {
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
@@ -83,7 +84,7 @@ browser.runtime.onMessage.addListener(async function(request) {
         browser.runtime
           .sendMessage({
             type: "resolveAddUserScripts",
-            scripts: await manager.addUserScripts(request.scripts)
+            scripts: await manager.addUserScripts(request.scripts),
           })
           .then();
       } catch {
@@ -95,7 +96,7 @@ browser.runtime.onMessage.addListener(async function(request) {
         browser.runtime
           .sendMessage({
             type: "resolveGetPluginInfo",
-            info: await manager.getPluginInfo(request.uid)
+            info: await manager.getPluginInfo(request.uid),
           })
           .then();
       } catch {
@@ -107,7 +108,7 @@ browser.runtime.onMessage.addListener(async function(request) {
         browser.runtime
           .sendMessage({
             type: "resolveGetBackupData",
-            data: await manager.getBackupData(request.params)
+            data: await manager.getBackupData(request.params),
           })
           .then();
       } catch {
@@ -122,7 +123,7 @@ browser.runtime.onMessage.addListener(async function(request) {
             data: await manager.setBackupData(
               request.params,
               request.backup_data
-            )
+            ),
           })
           .then();
       } catch {
@@ -144,7 +145,7 @@ async function xmlHttpRequestHandler(data) {
     const detail_stringify = JSON.stringify({
       task_uuid: data.task_uuid,
       task_type: data.task_type,
-      response: JSON.stringify(response)
+      response: JSON.stringify(response),
     });
 
     const injectedCode = `
@@ -155,7 +156,7 @@ async function xmlHttpRequestHandler(data) {
 
     try {
       await browser.tabs.executeScript(data.tab_id, {
-        code: injectedCode
+        code: injectedCode,
       });
     } catch (error) {
       console.error(`An error occurred while execute script: ${error.message}`);
@@ -163,13 +164,13 @@ async function xmlHttpRequestHandler(data) {
   }
 
   const req = new XMLHttpRequest();
-  req.onload = function() {
+  req.onload = function () {
     const response = {
       readyState: this.readyState,
       responseHeaders: this.responseHeaders,
       responseText: this.responseText,
       status: this.status,
-      statusText: this.statusText
+      statusText: this.statusText,
     };
     xmlResponse(data.tab_id, data.onload, response);
   };
