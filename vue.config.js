@@ -38,7 +38,25 @@ module.exports = {
         if (process.env.BROWSER === "safari-ios") {
           manifest.background.persistent = false;
         }
+        if (process.env.BROWSER === "firefox") {
+          manifest.permissions.append("webRequestBlocking");
+          manifest.background.page = "background.html";
+        }
         return manifest;
+      },
+    },
+  },
+  chainWebpack: (config) => {
+    config.optimization.delete("splitChunks");
+  },
+  configureWebpack: {
+    devtool: "cheap-module-source-map",
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          vendors: false,
+        },
       },
     },
   },

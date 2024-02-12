@@ -3,6 +3,9 @@
 import browser from "webextension-polyfill";
 import { check_matching } from "lib-iitc-manager";
 
+// TODO
+// https://developer.chrome.com/docs/extensions/reference/api/userScripts#developer_mode_for_extension_users
+
 export async function inject_plugin(plugin) {
   const tabs = await getTabsToInject();
 
@@ -10,6 +13,22 @@ export async function inject_plugin(plugin) {
     return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
   };
 
+  chrome.userScripts.configureWorld({
+    csp: "script-src 'self' 'unsafe-inline'",
+  });
+
+  try {
+    chrome.userScripts.unregister(["iitc"]);
+  } catch (error) {
+    console.log(error);
+  }
+  chrome.userScripts.register([
+    {
+      id: "iitc",
+      matches: ["https://intel.ingress.com/*"],
+      js: [{ code: plugin.code }],
+    },
+  ]);
   for (let tab of Object.values(tabs)) {
     if (
       (!is_ingress_tab(tab.url) || !check_matching(plugin, "<all_ingress>")) &&
@@ -18,19 +37,23 @@ export async function inject_plugin(plugin) {
       continue;
     }
 
-    const inject = `
-    document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-      detail: ${JSON.stringify({ plugin: plugin, tab_id: tab.id })}
-    }));
-  `;
-
     try {
-      await browser.tabs.executeScript(tab.id, {
-        code: inject,
-        runAt: "document_end",
+      await browser.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: (pluginDetail) => {
+          document.dispatchEvent(
+            new CustomEvent("IITCButtonInitJS", {
+              detail: pluginDetail,
+            })
+          );
+        },
+        args: [{ plugin: plugin, tab_id: tab.id }],
+        injectImmediately: true,
       });
     } catch (error) {
-      console.error(`An error occurred while reloading tabs: ${error.message}`);
+      console.error(
+        `An error occurred while injecting script: ${error.message}`
+      );
     }
   }
 }

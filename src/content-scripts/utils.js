@@ -7,12 +7,13 @@ import { strToBase64 } from "@/strToBase64";
 const LOADED_PLUGINS = [];
 
 export function inject(code) {
-  const script = document.createElement("script");
-  script.appendChild(document.createTextNode(code));
-  (document.body || document.head || document.documentElement).appendChild(
-    script
-  );
-  script.parentElement.removeChild(script);
+  // const script = document.createElement("script");
+  // script.appendChild(document.createTextNode(code));
+  // (document.body || document.head || document.documentElement).appendChild(
+  //   script
+  // );
+  // script.parentElement.removeChild(script);
+  console.log(code[0]);
 }
 
 function getPluginHash(uid) {
