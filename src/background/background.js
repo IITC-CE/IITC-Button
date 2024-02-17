@@ -1,8 +1,13 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
+import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { _ } from "@/i18n";
-import { inject_plugin } from "./injector";
+import {
+  inject_gm_api,
+  inject_plugin,
+  is_userscripts_api_available,
+} from "@/userscripts/wrapper";
 import {
   onUpdatedListener,
   onRemovedListener,
@@ -11,6 +16,7 @@ import {
 } from "./intel";
 import "./requests";
 import { strToBase64 } from "@/strToBase64";
+import { isIITCEnabled } from "@/userscripts/utils";
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -37,17 +43,30 @@ const manager = new Manager({
     } catch {
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
+    if (IS_USERSCRIPTS_API) {
+      isIITCEnabled().then((status) => {
+        if (status) {
+          init_userscripts_api();
+          manager.inject().then();
+        }
+      });
+    }
   },
-  inject_plugin: (plugin) => inject_plugin(plugin).then(),
+  inject_plugin: async (plugin) => {
+    await inject_plugin(plugin);
+  },
+  is_daemon: IS_USERSCRIPTS_API,
 });
 
 manager.run().then();
 
-const { onUpdated, onRemoved } = browser.tabs;
-onUpdated.addListener((tabId, status, tab) =>
-  onUpdatedListener(tabId, status, tab, manager)
-);
-onRemoved.addListener(onRemovedListener);
+if (IS_SCRIPTING_API) {
+  const { onUpdated, onRemoved } = browser.tabs;
+  onUpdated.addListener((tabId, status, tab) =>
+    onUpdatedListener(tabId, status, tab, manager)
+  );
+  onRemoved.addListener(onRemovedListener);
+}
 
 browser.runtime.onMessage.addListener(async (request) => {
   switch (request.type) {
@@ -55,6 +74,9 @@ browser.runtime.onMessage.addListener(async (request) => {
       await onRequestOpenIntel();
       break;
     case "toggleIITC":
+      if (IS_USERSCRIPTS_API) {
+        await manage_user_scripts_status(request.value);
+      }
       await onToggleIITC(request.value);
       break;
     case "xmlHttpRequestHandler":
@@ -148,38 +170,84 @@ async function xmlHttpRequestHandler(data) {
       response: JSON.stringify(response),
     });
 
-    const injectedCode = `
+    const bridge_data = strToBase64(String(detail_stringify));
+    if (IS_USERSCRIPTS_API) {
+      let allTabs = await browser.tabs.query({ status: "complete" });
+
+      allTabs = allTabs.filter(function (tab) {
+        return tab.status === "complete" && tab.url;
+      });
+
+      for (const tab of allTabs) {
+        await browser.tabs.sendMessage(tab.id, {
+          type: "xmlHttpRequestToCS",
+          value: bridge_data,
+        });
+      }
+    } else {
+      const injectedCode = `
       document.dispatchEvent(new CustomEvent('bridgeResponse', {
-        detail: "${strToBase64(String(detail_stringify))}"
+        detail: "${bridge_data}"
       }));
     `;
 
-    try {
-      await browser.tabs.executeScript(data.tab_id, {
-        code: injectedCode,
-      });
-    } catch (error) {
-      console.error(`An error occurred while execute script: ${error.message}`);
+      try {
+        await browser.tabs.executeScript(data.tab_id, {
+          code: injectedCode,
+        });
+      } catch (error) {
+        console.error(
+          `An error occurred while execute script: ${error.message}`
+        );
+      }
     }
   }
 
-  const req = new XMLHttpRequest();
-  req.onload = function () {
-    const response = {
-      readyState: this.readyState,
-      responseHeaders: this.responseHeaders,
-      responseText: this.responseText,
-      status: this.status,
-      statusText: this.statusText,
-    };
-    xmlResponse(data.tab_id, data.onload, response);
-  };
-  req.open(data.method, data.url, true, data.user, data.password);
-  for (let [header_name, header_value] of Object.entries(data.headers)) {
-    req.setRequestHeader(header_name, header_value);
-  }
+  try {
+    const response = await fetch(data.url, {
+      method: data.method,
+      headers: data.headers,
+      body: data.method !== "GET" ? data.data : undefined,
+      credentials: data.user && data.password ? "include" : "same-origin",
+    });
 
-  req.send(data.data);
+    const text = await response.text();
+
+    // Create a response object similar to the one in XMLHttpRequest
+    const responseObject = {
+      readyState: 4,
+      responseHeaders: "Not directly accessible with fetch",
+      responseText: text,
+      status: response.status,
+      statusText: response.statusText,
+    };
+
+    await xmlResponse(data.tab_id, data.onload, responseObject);
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+}
+
+const init_userscripts_api = () => {
+  if (!is_userscripts_api_available) return;
+  chrome.userScripts.configureWorld({
+    csp: "script-src 'self' 'unsafe-inline'",
+    messaging: true,
+  });
+  inject_gm_api();
+};
+
+async function manage_user_scripts_status(status) {
+  if (status === true) {
+    init_userscripts_api();
+    manager.inject().then();
+  } else {
+    try {
+      await chrome.userScripts.unregister();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 self.addEventListener("install", () => {

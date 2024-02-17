@@ -2,6 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { parseMeta, ajaxGet, getUniqId } from "lib-iitc-manager";
+import { isIITCEnabled } from "@/userscripts/utils";
 
 const IS_CHROME = !!global.chrome.app;
 const whitelist = [
@@ -65,10 +66,8 @@ async function bypass(tabId, url) {
  * @return {Promise<void>}
  */
 async function maybeInstallUserJs(tabId, url) {
-  const IITC_is_enabled = await browser.storage.local
-    .get(["IITC_is_enabled"])
-    .then((data) => data.IITC_is_enabled);
-  if (IITC_is_enabled === false) {
+  const status = await isIITCEnabled();
+  if (status === false) {
     await bypass(tabId, url);
     return;
   }

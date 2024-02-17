@@ -1,7 +1,7 @@
 {
   "name": "IITC Button",
   "description": "__MSG_extDescription__",
-  "minimum_chrome_version": "120",
+  "minimum_chrome_version": "61",
   "browser_specific_settings": {
     "gecko": {
       "id": "iitc@modos189.ru",
@@ -14,31 +14,11 @@
   "permissions": [
     "tabs",
     "storage",
-    "scripting",
-    "webRequest",
-    "userScripts",
     "unlimitedStorage"
   ],
-  "host_permissions": [
-    "https://intel.ingress.com/*"
-  ],
-  "optional_host_permissions":[
-    "https://*/*",
-    "http://*/*"
-  ],
-
   "default_locale": "en",
-  "background": {
-    "service_worker": "js/background.js"
-  },
-  "content_scripts": [
-    {
-      "matches" : ["<all_urls>"],
-      "run_at": "document_start",
-      "js": ["js/content-script.js"]
-    }
-  ],
-  "action": {
+  "background": {},
+  "browser_action": {
     "default_popup": "popup.html",
     "default_title": "__MSG_titleDefault__",
     "default_icon": {
@@ -49,9 +29,5 @@
   "icons": {
     "48": "assets/icons/48/icon.png",
     "128": "assets/icons/128/icon.png"
-  },
-  "content_security_policy": {
-    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' ws://localhost:9090 http://localhost:8000 https://github.com https://iitc.app; img-src 'self' https://iitc.app"
-  },
-  "manifest_version": 3
+  }
 }

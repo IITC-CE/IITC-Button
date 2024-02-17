@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import browser from "webextension-polyfill";
-import { getTabsToInject } from "./injector";
+import { getTabsToInject } from "@/background/utils";
+import { isIITCEnabled } from "@/userscripts/utils";
 
 let lastIITCTab = null;
 
@@ -53,10 +54,8 @@ export function onRemovedListener(tabId) {
 }
 
 async function initialize(manager) {
-  const storage = await browser.storage.local.get(["IITC_is_enabled"]);
-  const status = storage["IITC_is_enabled"];
-
-  if (status !== false) {
+  const status = await isIITCEnabled();
+  if (status) {
     await manager.inject();
   }
 }
