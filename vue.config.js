@@ -30,12 +30,7 @@ const manifest_v2_transformer = (manifest, browser) => {
 };
 
 const manifest_v3_transformer = (manifest, browser) => {
-  manifest.host_permissions = [
-    "https://intel.ingress.com/*",
-    "https://missions.ingress.com/*",
-    "https://v.enl.one/",
-  ];
-  manifest.optional_host_permissions = ["https://*/*", "http://*/*"];
+  manifest.host_permissions = ["http://*/*", "https://*/*"];
   manifest.content_security_policy = {
     extension_pages:
       "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' ws://localhost:9090 http://localhost:8000 https://*; img-src 'self' https://iitc.app",
@@ -47,6 +42,8 @@ const manifest_v3_transformer = (manifest, browser) => {
       js: ["js/content-script.js"],
     },
   ];
+  manifest.permissions.push("webRequest");
+  manifest.permissions.push("declarativeNetRequest");
 
   manifest.action = manifest.browser_action;
   delete manifest.browser_action;
@@ -55,10 +52,15 @@ const manifest_v3_transformer = (manifest, browser) => {
     manifest.minimum_chrome_version = "120";
     manifest.permissions.push("userScripts");
     manifest.background.service_worker = "js/background.js";
+
+    manifest.web_accessible_resources = [
+      {
+        resources: ["jsview.html"],
+        matches: ["<all_urls>"],
+      },
+    ];
   } else {
     manifest.permissions.push("scripting");
-    manifest.permissions.push("webRequest");
-    manifest.permissions.push("webRequestBlocking");
     manifest.background.page = "background.html";
   }
 };
