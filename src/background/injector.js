@@ -1,14 +1,9 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import {
-  gm_api_for_plugin,
-  is_userscripts_api_available,
-} from "@/userscripts/wrapper";
+import { gm_api_for_plugin } from "@/userscripts/wrapper";
 import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
-
-// TODO
-// https://developer.chrome.com/docs/extensions/reference/api/userScripts#developer_mode_for_extension_users
+import { is_userscripts_api_available } from "@/userscripts/utils";
 
 export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
   const tabs = await getNiaTabsToInject(plugin);

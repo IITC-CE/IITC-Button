@@ -4,7 +4,7 @@ import { IITCButtonInitJS } from "./utils";
 import { bridgeAction } from "@/content-scripts/bridge";
 import { inject_gm_api } from "@/userscripts/wrapper";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
-import { isIITCEnabled } from "@/userscripts/utils";
+import { is_iitc_enabled } from "@/userscripts/utils";
 
 function preparePage() {
   document.addEventListener("bridgeRequest", bridgeAction);
@@ -14,7 +14,7 @@ function preparePage() {
   document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
 }
 
-isIITCEnabled().then((status) => {
+is_iitc_enabled().then((status) => {
   if (status) {
     preparePage();
   }

@@ -10,7 +10,7 @@ import { strToBase64 } from "@/strToBase64";
 import { getUID } from "lib-iitc-manager";
 import { inject } from "@/content-scripts/utils";
 import { GM } from "@/userscripts/gm-api";
-import { isIITCEnabled } from "@/userscripts/utils";
+import { is_iitc_enabled } from "@/userscripts/utils";
 
 function getPluginHash(uid) {
   return "VMin" + strToBase64(uid);
@@ -19,7 +19,7 @@ function getPluginHash(uid) {
 export async function inject_plugin(plugin, use_gm_api) {
   if (use_gm_api === undefined) use_gm_api = true;
 
-  const iitc_status = await isIITCEnabled();
+  const iitc_status = await is_iitc_enabled();
   if (iitc_status === false) return;
 
   if (IS_USERSCRIPTS_API) {
@@ -73,15 +73,4 @@ export async function gm_api_for_plugin(plugin, tab_id) {
       "plugins/%20" + name + ".user.js"
     )}`,
   ].join("");
-}
-
-export function is_userscripts_api_available() {
-  try {
-    // Property access which throws if developer mode is not enabled.
-    chrome.userScripts;
-    return true;
-  } catch {
-    // Not available.
-    return false;
-  }
 }

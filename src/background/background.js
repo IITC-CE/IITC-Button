@@ -3,11 +3,7 @@ import { Manager } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
 import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { _ } from "@/i18n";
-import {
-  inject_gm_api,
-  inject_plugin,
-  is_userscripts_api_available,
-} from "@/userscripts/wrapper";
+import { inject_gm_api, inject_plugin } from "@/userscripts/wrapper";
 import {
   onUpdatedListener,
   onRemovedListener,
@@ -16,7 +12,10 @@ import {
 } from "./intel";
 import "./requests";
 import { strToBase64 } from "@/strToBase64";
-import { isIITCEnabled } from "@/userscripts/utils";
+import {
+  is_userscripts_api_available,
+  is_iitc_enabled,
+} from "@/userscripts/utils";
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -44,7 +43,7 @@ const manager = new Manager({
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
     if (IS_USERSCRIPTS_API) {
-      isIITCEnabled().then((status) => {
+      is_iitc_enabled().then((status) => {
         if (status) {
           init_userscripts_api();
           manager.inject().then();
@@ -146,6 +145,18 @@ browser.runtime.onMessage.addListener(async function (request) {
               request.params,
               request.backup_data
             ),
+          })
+          .then();
+      } catch {
+        // If tab is closed, message goes nowhere and an error occurs. Ignore.
+      }
+      break;
+    case "checkUserScriptsApiAvailable":
+      try {
+        browser.runtime
+          .sendMessage({
+            type: "resolveCheckUserScriptsApiAvailable",
+            data: is_userscripts_api_available(),
           })
           .then();
       } catch {
