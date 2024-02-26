@@ -139,5 +139,56 @@
     },
     "badgeOverride": {
         "message": "覆蓋"
+    },
+    "customServerTooltipError": {
+        "message": "自訂伺服器無法使用或不包含$FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerHint": {
+        "message": "舉例:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "成功連接至伺服器"
+    },
+    "custom": {
+        "message": "自訂"
+    },
+    "customServerURL": {
+        "message": "自訂伺服器網址 (用於自訂頻道)"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ 現在取代了IITC的內建版本",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "debug": {
+        "message": "除錯"
+    },
+    "import": {
+        "message": "匯入"
+    },
+    "export": {
+        "message": "匯出"
+    },
+    "every5seconds": {
+        "message": "每5秒"
+    },
+    "reinstall": {
+        "message": "重新安裝"
+    },
+    "donate": {
+        "message": "贊助"
+    },
+    "backup": {
+        "message": "備份"
     }
 }
