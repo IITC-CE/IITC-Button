@@ -259,5 +259,8 @@
     },
     "import_message": {
         "message": "Selecione o arquivo .zip com o backup do IITC Button e selecione o que importar"
+    },
+    "every5seconds": {
+        "message": "A cada 5 segundos"
     }
 }
