@@ -178,5 +178,56 @@
     },
     "reinstall": {
         "message": "Neuinstallation"
+    },
+    "every5seconds": {
+        "message": "Alle 5 Sekunden"
+    },
+    "import_message": {
+        "message": "Wähle die .zip-Datei mit der IITC-Button-Sicherung aus und wähle dann aus, was importiert werden soll"
+    },
+    "import_external": {
+        "message": "Import von externen Plugins"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Dieses Script hat Zugriff auf alle Seiten angefragt. Benutze es, wenn du dem Autor vertraust."
+    },
+    "other": {
+        "message": "Andere"
+    },
+    "donate": {
+        "message": "Spenden"
+    },
+    "backup": {
+        "message": "Sicherung"
+    },
+    "debug": {
+        "message": "Debug"
+    },
+    "import": {
+        "message": "Importieren"
+    },
+    "export": {
+        "message": "Exportieren"
+    },
+    "import_settings": {
+        "message": "IITC-Einstellungen importieren"
+    },
+    "import_data": {
+        "message": "Plugin-Daten importieren"
+    },
+    "importFromZip": {
+        "message": "Importieren von .zip"
+    },
+    "export_settings": {
+        "message": "IITC-Einstellungen exportieren"
+    },
+    "export_data": {
+        "message": "Plugin-Daten exportieren"
+    },
+    "export_external": {
+        "message": "Export von externen Plugins"
+    },
+    "saveToJson": {
+        "message": "Als json speichern"
     }
 }
