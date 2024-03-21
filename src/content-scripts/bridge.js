@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
+import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { inject } from "@/content-scripts/utils";
 import { strToBase64 } from "@/strToBase64";
 
@@ -34,6 +35,14 @@ const xmlResponseBridge = async (data) => {
     .then();
 };
 
+browser.runtime.onMessage.addListener(async (request) => {
+  switch (request.type) {
+    case "xmlHttpRequestToCS":
+      bridgeResponse(request.value);
+      break;
+  }
+});
+
 // Sends the entire plugins scoped storage to the page context
 const getStorageBridge = async (req) => {
   const all_storage = await browser.storage.local.get(null);
@@ -48,12 +57,8 @@ const getStorageBridge = async (req) => {
     response: JSON.stringify(plugins_storage),
   });
 
-  const injectedCode = `
-    document.dispatchEvent(new CustomEvent('bridgeResponse', {
-      detail: "${strToBase64(String(detail_stringify))}"
-    }));
-  `;
-  inject(injectedCode);
+  const bridge_base64_data = strToBase64(String(detail_stringify));
+  bridgeResponse(bridge_base64_data);
 };
 
 // Saves the value in the persistent storage in order to synchronize the data with the storage in the page context
@@ -66,4 +71,21 @@ const setValueBridge = async (req) => {
 // Deletes the value in the persistent storage in order to synchronize the data with the storage in the page context
 const delValueBridge = async (req) => {
   await browser.storage.local.remove(req.key);
+};
+
+const bridgeResponse = (bridge_base64_data) => {
+  if (IS_USERSCRIPTS_API) {
+    dispatchEvent(
+      new CustomEvent("bridgeResponse", {
+        detail: bridge_base64_data,
+      })
+    );
+  } else {
+    const injectedCode = `
+    document.dispatchEvent(new CustomEvent('bridgeResponse', {
+      detail: "${bridge_base64_data}"
+    }));
+  `;
+    inject(injectedCode);
+  }
 };

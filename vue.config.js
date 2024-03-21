@@ -1,3 +1,70 @@
+const manifest_transformer = (manifest) => {
+  const browser = process.env.BROWSER;
+  const manifest_version = process.env.MANIFEST_VERSION;
+
+  if (manifest_version === "2") {
+    manifest_v2_transformer(manifest, browser);
+  } else if (manifest_version === "3") {
+    manifest_v3_transformer(manifest, browser);
+  }
+  manifest.manifest_version = parseInt(manifest_version);
+};
+
+const manifest_v2_transformer = (manifest, browser) => {
+  manifest.content_scripts = [
+    {
+      matches: ["<all_urls>"],
+      run_at: "document_start",
+      js: ["js/content-script.js"],
+    },
+  ];
+  manifest.permissions.push("<all_urls>");
+  manifest.permissions.push("scripting");
+  manifest.permissions.push("webRequest");
+  manifest.permissions.push("webRequestBlocking");
+  manifest.background.page = "background.html";
+
+  if (browser === "safari-ios") {
+    manifest.background.persistent = false;
+  }
+};
+
+const manifest_v3_transformer = (manifest, browser) => {
+  manifest.host_permissions = ["http://*/*", "https://*/*"];
+  manifest.content_security_policy = {
+    extension_pages:
+      "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' ws://localhost:9090 http://localhost:8000 https://*; img-src 'self' https://iitc.app",
+  };
+  manifest.content_scripts = [
+    {
+      matches: ["<all_urls>"],
+      run_at: "document_start",
+      js: ["js/content-script.js"],
+    },
+  ];
+  manifest.permissions.push("webRequest");
+  manifest.permissions.push("declarativeNetRequest");
+
+  manifest.action = manifest.browser_action;
+  delete manifest.browser_action;
+
+  if (browser === "chrome") {
+    manifest.minimum_chrome_version = "120";
+    manifest.permissions.push("userScripts");
+    manifest.background.service_worker = "js/background.js";
+
+    manifest.web_accessible_resources = [
+      {
+        resources: ["jsview.html"],
+        matches: ["<all_urls>"],
+      },
+    ];
+  } else {
+    manifest.permissions.push("scripting");
+    manifest.background.page = "background.html";
+  }
+};
+
 module.exports = {
   filenameHashing: false,
   productionSourceMap: false,
@@ -35,10 +102,22 @@ module.exports = {
         },
       },
       manifestTransformer: (manifest) => {
-        if (process.env.BROWSER === "safari-ios") {
-          manifest.background.persistent = false;
-        }
+        manifest_transformer(manifest);
         return manifest;
+      },
+    },
+  },
+  chainWebpack: (config) => {
+    config.optimization.delete("splitChunks");
+  },
+  configureWebpack: {
+    devtool: "cheap-module-source-map",
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          vendors: false,
+        },
       },
     },
   },

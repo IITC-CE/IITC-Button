@@ -1,45 +1,71 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import { check_matching } from "lib-iitc-manager";
+import { gm_api_for_plugin } from "@/userscripts/wrapper";
+import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
+import { is_userscripts_api_available } from "@/userscripts/utils";
 
-export async function inject_plugin(plugin) {
-  const tabs = await getTabsToInject();
-
-  const is_ingress_tab = (url) => {
-    return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
-  };
-
+export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
+  const tabs = await getNiaTabsToInject(plugin);
   for (let tab of Object.values(tabs)) {
-    if (
-      (!is_ingress_tab(tab.url) || !check_matching(plugin, "<all_ingress>")) &&
-      !check_matching(plugin, tab.url)
-    ) {
-      continue;
+    if (use_gm_api) {
+      plugin.code = await gm_api_for_plugin(plugin, tab.id);
     }
 
-    const inject = `
-    document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-      detail: ${JSON.stringify({ plugin: plugin, tab_id: tab.id })}
-    }));
-  `;
-
     try {
-      await browser.tabs.executeScript(tab.id, {
-        code: inject,
-        runAt: "document_end",
+      await browser.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: (pluginDetail) => {
+          document.dispatchEvent(
+            new CustomEvent("IITCButtonInitJS", {
+              detail: pluginDetail,
+            })
+          );
+        },
+        args: [{ plugin: plugin, tab_id: tab.id }],
+        injectImmediately: true,
       });
     } catch (error) {
-      console.error(`An error occurred while reloading tabs: ${error.message}`);
+      console.error(
+        `An error occurred while injecting script: ${error.message}`
+      );
     }
   }
 }
 
-// Fetch all completly loaded Ingress Intel tabs
-export async function getTabsToInject() {
-  let allTabs = await browser.tabs.query({ status: "complete" });
+export async function inject_plugin_via_userscripts_api(plugin, use_gm_api) {
+  if (!is_userscripts_api_available) return;
 
-  return allTabs.filter(function (tab) {
-    return tab.status === "complete" && tab.url;
-  });
+  if (use_gm_api) {
+    plugin.code = await gm_api_for_plugin(plugin, 0);
+  }
+
+  let scripts = [];
+  try {
+    scripts = await chrome.userScripts.getScripts();
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+  const plugin_obj = [
+    {
+      id: plugin.uid,
+      matches:
+        plugin.uid === "gm_api" ? ["https://*/*"] : getPluginMatches(plugin),
+      js: [{ code: plugin.code }],
+      runAt: plugin.uid === "gm_api" ? "document_start" : "document_end",
+      world: "MAIN",
+    },
+  ];
+
+  const is_exist = scripts.some((script) => script.id === plugin.uid);
+  if (!is_exist) {
+    await chrome.userScripts.register(plugin_obj);
+    return;
+  }
+
+  const exist_script = scripts.find((script) => script.id === plugin.uid);
+  if (exist_script.js[0].code !== plugin_obj[0].js[0].code) {
+    await chrome.userScripts.update(plugin_obj);
+  }
 }
