@@ -2,6 +2,7 @@
 import browser from "webextension-polyfill";
 import { getTabsToInject } from "@/background/utils";
 import { is_iitc_enabled } from "@/userscripts/utils";
+import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 
 let lastIITCTab = null;
 
@@ -24,15 +25,24 @@ export async function onRequestOpenIntel() {
   }
 }
 
-export async function onToggleIITC(value) {
-  await browser.storage.local.set({ IITC_is_enabled: value });
+export async function onToggleIITC(status) {
+  await browser.storage.local.set({ IITC_is_enabled: status });
 
-  // Fetch all completly loaded Ingress Intel tabs
-  const tabs = await getTabsToInject();
+  if (IS_USERSCRIPTS_API) {
+    if (status === false) {
+      try {
+        await browser.userScripts.unregister();
+        // eslint-disable-next-line no-empty
+      } catch {}
+    }
+  } else {
+    // Fetch all completly loaded Ingress Intel tabs
+    const tabs = await getTabsToInject();
 
-  for (let tab of Object.values(tabs)) {
-    if (isIngressIntelUrl(tab.url)) {
-      await browser.tabs.reload(tab.id);
+    for (let tab of Object.values(tabs)) {
+      if (isIngressIntelUrl(tab.url)) {
+        await browser.tabs.reload(tab.id);
+      }
     }
   }
 }

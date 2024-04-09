@@ -3,7 +3,6 @@ import { Manager } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
 import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { _ } from "@/i18n";
-import { inject_gm_api, inject_plugin } from "@/userscripts/wrapper";
 import {
   onUpdatedListener,
   onRemovedListener,
@@ -13,9 +12,14 @@ import {
 import "./requests";
 import { strToBase64 } from "@/strToBase64";
 import {
-  is_userscripts_api_available,
+  init_userscripts_api,
   is_iitc_enabled,
+  is_userscripts_api_available,
 } from "@/userscripts/utils";
+import {
+  inject_plugin_via_content_scripts,
+  manage_userscripts_api,
+} from "@/background/injector";
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -42,19 +46,17 @@ const manager = new Manager({
     } catch {
       // If popup is closed, message goes nowhere and an error occurs. Ignore.
     }
-    if (IS_USERSCRIPTS_API) {
-      is_iitc_enabled().then((status) => {
-        if (status) {
-          init_userscripts_api();
-          manager.inject().then();
-        }
-      });
-    }
   },
   inject_plugin: async (plugin) => {
-    await inject_plugin(plugin);
+    if (IS_USERSCRIPTS_API) return;
+
+    const iitc_status = await is_iitc_enabled();
+    if (iitc_status === false) return;
+
+    await inject_plugin_via_content_scripts(plugin, true);
   },
-  is_daemon: IS_USERSCRIPTS_API,
+  plugin_event: async (data) => await manage_userscripts_api(data),
+  is_daemon: true,
 });
 
 manager.run().then();
@@ -73,19 +75,19 @@ browser.runtime.onMessage.addListener(async (request) => {
       await onRequestOpenIntel();
       break;
     case "toggleIITC":
-      if (IS_USERSCRIPTS_API) {
-        await manage_user_scripts_status(request.value);
-      }
       await onToggleIITC(request.value);
+      if (IS_USERSCRIPTS_API && request.value === true) {
+        await initUserscriptsApi();
+      }
+      break;
+    case "popupWasOpened":
+      if (IS_USERSCRIPTS_API) {
+        await initUserscriptsApi();
+      }
       break;
     case "xmlHttpRequestHandler":
       await xmlHttpRequestHandler(request.value);
       break;
-  }
-});
-
-browser.runtime.onMessage.addListener(async function (request) {
-  switch (request.type) {
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
       break;
@@ -239,24 +241,28 @@ async function xmlHttpRequestHandler(data) {
   }
 }
 
-const init_userscripts_api = () => {
-  if (!is_userscripts_api_available) return;
-  chrome.userScripts.configureWorld({
-    csp: "script-src 'self' 'unsafe-inline'",
-    messaging: true,
-  });
-  inject_gm_api();
-};
+async function initUserscriptsApi() {
+  if (IS_SCRIPTING_API) return;
 
-async function manage_user_scripts_status(status) {
-  if (status === true) {
-    init_userscripts_api();
-    manager.inject().then();
-  } else {
-    try {
-      await chrome.userScripts.unregister();
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  let scripts = [];
+  try {
+    scripts = await chrome.userScripts.getScripts();
+    // eslint-disable-next-line no-empty
+  } catch {}
+
+  const is_gm_api_plugin_exist = scripts.some(
+    (script) => script.id === "gm_api"
+  );
+  if (is_gm_api_plugin_exist) return;
+
+  init_userscripts_api();
+  const plugins_event = {
+    event: "add",
+    plugins: await manager.getEnabledPlugins(),
+  };
+  await manage_userscripts_api(plugins_event);
 }
+
+self.addEventListener("activate", () => {
+  initUserscriptsApi().then();
+});

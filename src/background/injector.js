@@ -33,39 +33,48 @@ export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
   }
 }
 
-export async function inject_plugin_via_userscripts_api(plugin, use_gm_api) {
+export async function manage_userscripts_api(plugins_event) {
   if (!is_userscripts_api_available) return;
 
-  if (use_gm_api) {
-    plugin.code = await gm_api_for_plugin(plugin, 0);
+  const event = plugins_event.event;
+  const plugins = plugins_event.plugins;
+  const use_gm_api = plugins_event.use_gm_api === true;
+
+  if (event === "remove") {
+    const remove_ids = Object.keys(plugins);
+    try {
+      await browser.userScripts.unregister({ ids: remove_ids });
+    } catch (e) {
+      console.log("an error occurred while unregistering the plugin", e);
+    }
   }
 
-  let scripts = [];
-  try {
-    scripts = await chrome.userScripts.getScripts();
-  } catch (e) {
-    console.log(e);
-    return;
-  }
-  const plugin_obj = [
-    {
+  let plugins_obj = [];
+  for (let plugin of Object.values(plugins)) {
+    if (use_gm_api) {
+      plugin.code = await gm_api_for_plugin(plugin, 0);
+    }
+    plugins_obj.push({
       id: plugin.uid,
       matches:
         plugin.uid === "gm_api" ? ["https://*/*"] : getPluginMatches(plugin),
       js: [{ code: plugin.code }],
       runAt: plugin.uid === "gm_api" ? "document_start" : "document_end",
       world: "MAIN",
-    },
-  ];
-
-  const is_exist = scripts.some((script) => script.id === plugin.uid);
-  if (!is_exist) {
-    await chrome.userScripts.register(plugin_obj);
-    return;
+    });
   }
 
-  const exist_script = scripts.find((script) => script.id === plugin.uid);
-  if (exist_script.js[0].code !== plugin_obj[0].js[0].code) {
-    await chrome.userScripts.update(plugin_obj);
+  if (event === "add") {
+    try {
+      await browser.userScripts.register(plugins_obj);
+    } catch (e) {
+      console.log("an error occurred while registering the plugin", e);
+    }
+  } else if (event === "update") {
+    try {
+      await browser.userScripts.update(plugins_obj);
+    } catch (e) {
+      console.log("an error occurred while updating the plugin", e);
+    }
   }
 }

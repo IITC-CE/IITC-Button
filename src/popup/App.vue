@@ -34,6 +34,7 @@ import Message from "./components/Message";
 import Alert from "./components/Alert";
 
 import * as data from "./data.js";
+import browser from "webextension-polyfill";
 
 export default {
   name: "App",
@@ -61,6 +62,7 @@ export default {
     await data.init(this);
     await data.onChangedListener(this);
     await data.onMessageListener(this);
+    await browser.runtime.sendMessage({ type: "popupWasOpened" });
   },
   methods: {
     detect_safari: function () {

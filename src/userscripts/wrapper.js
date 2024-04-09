@@ -2,33 +2,14 @@
 
 import browser from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
-import {
-  inject_plugin_via_content_scripts,
-  inject_plugin_via_userscripts_api,
-} from "@/background/injector";
+import { manage_userscripts_api } from "@/background/injector";
 import { strToBase64 } from "@/strToBase64";
 import { getUID } from "lib-iitc-manager";
 import { inject } from "@/content-scripts/utils";
 import { GM } from "@/userscripts/gm-api";
-import { is_iitc_enabled } from "@/userscripts/utils";
 
 function getPluginHash(uid) {
   return "VMin" + strToBase64(uid);
-}
-
-export async function inject_plugin(plugin, use_gm_api) {
-  if (use_gm_api === undefined) use_gm_api = true;
-
-  const iitc_status = await is_iitc_enabled();
-  if (iitc_status === false) return;
-
-  if (IS_USERSCRIPTS_API) {
-    console.log("INJECT LIKE IS CHROME MV3");
-    await inject_plugin_via_userscripts_api(plugin, use_gm_api);
-  } else {
-    console.log("INJECT LIKE OTHER BROWSER");
-    await inject_plugin_via_content_scripts(plugin, use_gm_api);
-  }
 }
 
 export function inject_gm_api() {
@@ -40,7 +21,12 @@ export function inject_gm_api() {
   };
 
   if (IS_USERSCRIPTS_API) {
-    inject_plugin_via_userscripts_api(plugin, false).then();
+    const plugins_event = {
+      event: "add",
+      use_gm_api: false,
+      plugins: [plugin],
+    };
+    manage_userscripts_api(plugins_event).then();
   } else {
     inject(plugin.code);
   }
