@@ -183,5 +183,83 @@
     },
     "jsViewDetailsDomainsLabel": {
         "message": "脚本将会在这些网站上运行："
+    },
+    "every5seconds": {
+        "message": "每5秒"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ 現在取代了IITC的内置版本",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "export": {
+        "message": "导出"
+    },
+    "import_message": {
+        "message": "选择含有 IITC Button 备份的 .zip 文件，然后选择要导入哪些信息"
+    },
+    "invalidBackup": {
+        "message": "文件损坏，或者文件不是 IITC 按钮的备份"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "localStorage（浏览器本地存储）包含 IITC 按钮所能获取的所有信息，包括你的插件的列表及这些插件的源代码；也可能包括一些插件的设置（取决于具体实现）。"
+    },
+    "other": {
+        "message": "其它"
+    },
+    "donate": {
+        "message": "捐款"
+    },
+    "backup": {
+        "message": "备份"
+    },
+    "debug": {
+        "message": "调试"
+    },
+    "import": {
+        "message": "导入"
+    },
+    "import_settings": {
+        "message": "导入 IITC 设置"
+    },
+    "import_data": {
+        "message": "导入插件数据"
+    },
+    "import_external": {
+        "message": "导入外部插件"
+    },
+    "importFromZip": {
+        "message": "从 zip 导入"
+    },
+    "export_settings": {
+        "message": "导出 IITC 设置"
+    },
+    "export_data": {
+        "message": "导出插件数据"
+    },
+    "export_external": {
+        "message": "导出外部插件"
+    },
+    "exportToZip": {
+        "message": "导出到 zip"
+    },
+    "pleaseWait": {
+        "message": "请稍等"
+    },
+    "restoreBackup": {
+        "message": "从备份恢复"
+    },
+    "backupRestored": {
+        "message": "已从备份恢复"
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "如果你使用阵营的私有插件，千万不要随意公开这些数据！"
+    },
+    "saveToJson": {
+        "message": "保存到 json"
     }
 }
