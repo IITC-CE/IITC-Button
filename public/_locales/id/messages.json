@@ -63,10 +63,10 @@
         "message": "Setiap Hari"
     },
     "every12hours": {
-        "message": "Setiap 12 jam"
+        "message": "Setiap 12 Jam"
     },
     "every6hours": {
-        "message": "Setiap 6 jam"
+        "message": "Setiap 6 Jam"
     },
     "updateExternalFrequency": {
         "message": "Periksa update untuk plugin eksternal"
@@ -111,5 +111,156 @@
     "extDescription": {
         "message": "Luncurkan IITC untuk Ingress Intel dengan mudah.",
         "description": "Description of the extension"
+    },
+    "every5seconds": {
+        "message": "Setiap 5 Detik"
+    },
+    "badgeOverride": {
+        "message": "menimpa"
+    },
+    "jsViewTitle": {
+        "message": "Memasang skrip"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ sekarang menggantikan versi built-in IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Skrip ini tidak meminta hak akses ke situs tersebut. Tampaknya ini adalah plugin yang tidak valid."
+    },
+    "import_message": {
+        "message": "Pilih file .zip dengan IITC Button cadangkan lalu pilih apa yang akan diimpor"
+    },
+    "invalidBackup": {
+        "message": "File rusak atau bukan cadangan dari IITC Button"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "Perhatikan bahwa localStorage berisi semua data yang tersedia untuk IITC Button. Misalnya, menyertakan daftar plugin Anda dan kode sumbernya, mungkin menyertakan pengaturan beberapa plugin (tergantung implementasinya)."
+    },
+    "custom": {
+        "message": "Kustom"
+    },
+    "customServerHint": {
+        "message": "Sebagai contoh:"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Koneksi berhasil ke server"
+    },
+    "customServerTooltipError": {
+        "message": "Server kustom tidak tersedia atau tidak berisi $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "URL server kustom (untuk saluran kustom)"
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ telah ditambahkan ke kategori \"$PLUGIN_CATEGORY$\".",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "reinstall": {
+        "message": "Pasang ulang"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Skrip ini meminta akses ke semua situs. Gunakan jika Anda memercayai pembuatnya."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Skrip ini akan berjalan di situs berikut:"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Tampilkan detail"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Sembunyikan detail"
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "release": {
+        "message": "Rilis"
+    },
+    "loading": {
+        "message": "Memuat…"
+    },
+    "searchBoxPlaceholder": {
+        "message": "Mencari…"
+    },
+    "donate": {
+        "message": "Donasi"
+    },
+    "other": {
+        "message": "Lainnya"
+    },
+    "backup": {
+        "message": "Cadangkan"
+    },
+    "debug": {
+        "message": "Debug"
+    },
+    "import": {
+        "message": "Impor"
+    },
+    "export": {
+        "message": "Ekspor"
+    },
+    "import_settings": {
+        "message": "Impor pengaturan IITC"
+    },
+    "import_data": {
+        "message": "Impor data plugin"
+    },
+    "import_external": {
+        "message": "Impor plugin dari luar"
+    },
+    "importFromZip": {
+        "message": "Impor dari zip"
+    },
+    "export_settings": {
+        "message": "Ekspor pengaturan IITC"
+    },
+    "export_data": {
+        "message": "Ekspor data plugin"
+    },
+    "export_external": {
+        "message": "Ekspor plugin dari luar"
+    },
+    "exportToZip": {
+        "message": "Ekspor ke zip"
+    },
+    "external": {
+        "message": "Eksternal"
+    },
+    "pleaseWait": {
+        "message": "Harap tunggu"
+    },
+    "restoreBackup": {
+        "message": "Pulihkan cadangan"
+    },
+    "backupRestored": {
+        "message": "Cadangan telah dipulihkan"
+    },
+    "saveToJson": {
+        "message": "Simpan ke json"
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "Jangan memaparkan data ini secara publik jika Anda menggunakan plugin faksi!"
     }
 }
