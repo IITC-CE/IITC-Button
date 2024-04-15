@@ -190,5 +190,77 @@
     },
     "backup": {
         "message": "備份"
+    },
+    "invalidBackup": {
+        "message": "檔案損壞，或者檔案不是 IITC 按鈕的備份"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "localStorage（瀏覽器本地儲存）包含 IITC 按鍵所能獲取的所有資料，包括你的插件的列表及這些插件的原始碼；也可能包括一些插件的設定（取決於具體實現）。"
+    },
+    "searchBoxPlaceholder": {
+        "message": "搜尋…"
+    },
+    "jsViewTitle": {
+        "message": "正在安裝腳本"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "此腳本不要求訪問站點的許可權，似乎是一個無效的插件。"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "此腳本要求訪問所有站點的許可權。請只在你信任作者的前提下安裝。"
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "脚本将会在这些站點上运行："
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "顯示詳情"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "藏起詳情"
+    },
+    "other": {
+        "message": "其他"
+    },
+    "import_message": {
+        "message": "選擇含有 IITC 接鍵備份的 .zip 檔案，然後選擇要匯入哪些資訊"
+    },
+    "import_settings": {
+        "message": "匯入 IITC 設定"
+    },
+    "import_data": {
+        "message": "匯入插件資料"
+    },
+    "import_external": {
+        "message": "匯入外部插件"
+    },
+    "importFromZip": {
+        "message": "從 zip 匯入"
+    },
+    "export_settings": {
+        "message": "匯出 IITC 設定"
+    },
+    "export_data": {
+        "message": "匯出插件資料"
+    },
+    "export_external": {
+        "message": "匯出外部插件"
+    },
+    "exportToZip": {
+        "message": "匯出到 zip"
+    },
+    "pleaseWait": {
+        "message": "請稍等"
+    },
+    "restoreBackup": {
+        "message": "從備份恢復"
+    },
+    "backupRestored": {
+        "message": "已從備份恢復"
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "如果你有使用陣營的私有插件，千萬不要隨意公開這些資料！"
+    },
+    "saveToJson": {
+        "message": "儲存到 json"
     }
 }
