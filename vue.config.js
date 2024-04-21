@@ -51,6 +51,7 @@ const manifest_v3_transformer = (manifest, browser) => {
   if (browser === "chrome") {
     manifest.minimum_chrome_version = "120";
     manifest.permissions.push("userScripts");
+    manifest.permissions.push("alarms");
     manifest.background.service_worker = "js/background.js";
 
     manifest.web_accessible_resources = [

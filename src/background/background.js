@@ -170,6 +170,9 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
     case "setUpdateCheckInterval":
       await manager.setUpdateCheckInterval(request.interval, request.channel);
+      if (IS_USERSCRIPTS_API) {
+        await createCheckUpdateAlarm();
+      }
       break;
   }
 });
@@ -263,6 +266,34 @@ async function initUserscriptsApi() {
   await manage_userscripts_api(plugins_event);
 }
 
+async function createCheckUpdateAlarm() {
+  const storage_intervals = await browser.storage.local.get([
+    "channel",
+    "release_update_check_interval",
+    "beta_update_check_interval",
+    "custom_update_check_interval",
+    "external_update_check_interval",
+  ]);
+  const channel_interval =
+    storage_intervals[storage_intervals["channel"]] | 604800;
+  const external_interval = storage_intervals["external"] | 604800;
+
+  let interval_seconds = Math.min(channel_interval, external_interval);
+  if (interval_seconds < 30) {
+    interval_seconds = 30;
+  }
+  console.log("set alarm");
+  await chrome.alarms.create("check-update-alarm", {
+    periodInMinutes: interval_seconds / 60,
+  });
+}
+
+browser.alarms.onAlarm.addListener(async () => {
+  console.log("alarm");
+  await manager.checkUpdates(false);
+});
+
 self.addEventListener("activate", () => {
   initUserscriptsApi().then();
+  createCheckUpdateAlarm().then();
 });
