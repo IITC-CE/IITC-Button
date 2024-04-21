@@ -19,7 +19,6 @@ const manifest_v2_transformer = (manifest, browser) => {
     },
   ];
   manifest.permissions.push("<all_urls>");
-  manifest.permissions.push("scripting");
   manifest.permissions.push("webRequest");
   manifest.permissions.push("webRequestBlocking");
   manifest.background.page = "background.html";

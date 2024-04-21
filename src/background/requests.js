@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
+import { IS_SCRIPTING_API } from "@/userscripts/env";
 
 /**
  * If the URL looks like an IITC plugin, saving the URL to the cache
@@ -35,6 +36,8 @@ if (browser.webRequest) {
 }
 
 browser.runtime.onInstalled.addListener(async function () {
+  if (IS_SCRIPTING_API) return;
+
   // restore the default rule if the extension is installed or updated
   const existingRules = await browser.declarativeNetRequest.getDynamicRules();
 

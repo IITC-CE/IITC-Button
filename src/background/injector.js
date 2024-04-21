@@ -3,28 +3,44 @@
 import browser from "webextension-polyfill";
 import { gm_api_for_plugin } from "@/userscripts/wrapper";
 import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
-import { is_userscripts_api_available } from "@/userscripts/utils";
+import {
+  is_scripting_api_available,
+  is_userscripts_api_available,
+} from "@/userscripts/utils";
 
 export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
   const tabs = await getNiaTabsToInject(plugin);
   for (let tab of Object.values(tabs)) {
+    const pluginTab = { ...plugin };
     if (use_gm_api) {
-      plugin.code = await gm_api_for_plugin(plugin, tab.id);
+      pluginTab.code = await gm_api_for_plugin(pluginTab, tab.id);
     }
 
     try {
-      await browser.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: (pluginDetail) => {
-          document.dispatchEvent(
-            new CustomEvent("IITCButtonInitJS", {
-              detail: pluginDetail,
-            })
-          );
-        },
-        args: [{ plugin: plugin, tab_id: tab.id }],
-        injectImmediately: true,
-      });
+      if (is_scripting_api_available()) {
+        await browser.scripting.executeScript({
+          target: { tabId: tab.id },
+          func: (pluginDetail) => {
+            document.dispatchEvent(
+              new CustomEvent("IITCButtonInitJS", {
+                detail: pluginDetail,
+              })
+            );
+          },
+          args: [{ plugin: pluginTab }],
+          injectImmediately: true,
+        });
+      } else {
+        const inject = `
+          document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
+            detail: ${JSON.stringify({ plugin: pluginTab })}
+          }));
+        `;
+        await browser.tabs.executeScript(tab.id, {
+          code: inject,
+          runAt: "document_end",
+        });
+      }
     } catch (error) {
       console.error(
         `An error occurred while injecting script: ${error.message}`
@@ -34,11 +50,11 @@ export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
 }
 
 export async function manage_userscripts_api(plugins_event) {
-  if (!is_userscripts_api_available) return;
+  if (!is_userscripts_api_available()) return;
 
   const event = plugins_event.event;
   const plugins = plugins_event.plugins;
-  const use_gm_api = plugins_event.use_gm_api === true;
+  const use_gm_api = plugins_event.use_gm_api !== false;
 
   if (event === "remove") {
     const remove_ids = Object.keys(plugins);

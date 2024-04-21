@@ -21,8 +21,18 @@ export function is_userscripts_api_available() {
   }
 }
 
+export function is_scripting_api_available() {
+  try {
+    browser.scripting.executeScript().then();
+    return true;
+  } catch {
+    // Not available.
+    return false;
+  }
+}
+
 export const init_userscripts_api = () => {
-  if (!is_userscripts_api_available) return;
+  if (!is_userscripts_api_available()) return;
   try {
     browser.userScripts.configureWorld({
       csp: "script-src 'self' 'unsafe-inline'",

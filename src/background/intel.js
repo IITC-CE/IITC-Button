@@ -9,7 +9,7 @@ let lastIITCTab = null;
 export async function onRequestOpenIntel() {
   if (lastIITCTab) {
     const tabInfo = await getTabInfo(lastIITCTab);
-    if (isIngressIntelUrl(tabInfo.url)) {
+    if (tabInfo && isIngressIntelUrl(tabInfo.url)) {
       return await setTabActive(lastIITCTab);
     }
   }
@@ -84,7 +84,11 @@ async function setTabActive(tabId) {
 }
 
 async function getTabInfo(tabId) {
-  return await browser.tabs.get(tabId);
+  try {
+    return await browser.tabs.get(tabId);
+  } catch {
+    return null;
+  }
 }
 
 function isIngressIntelUrl(url) {

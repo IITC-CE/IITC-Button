@@ -1,8 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import { IS_USERSCRIPTS_API } from "@/userscripts/env";
-import { inject } from "@/content-scripts/utils";
 import { strToBase64 } from "@/strToBase64";
 
 export async function bridgeAction(e) {
@@ -74,18 +72,9 @@ const delValueBridge = async (req) => {
 };
 
 const bridgeResponse = (bridge_base64_data) => {
-  if (IS_USERSCRIPTS_API) {
-    dispatchEvent(
-      new CustomEvent("bridgeResponse", {
-        detail: bridge_base64_data,
-      })
-    );
-  } else {
-    const injectedCode = `
-    document.dispatchEvent(new CustomEvent('bridgeResponse', {
-      detail: "${bridge_base64_data}"
-    }));
-  `;
-    inject(injectedCode);
-  }
+  dispatchEvent(
+    new CustomEvent("bridgeResponse", {
+      detail: bridge_base64_data,
+    })
+  );
 };

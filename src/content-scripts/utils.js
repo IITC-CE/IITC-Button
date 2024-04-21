@@ -1,7 +1,6 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import { getUID } from "lib-iitc-manager";
-import { gm_api_for_plugin } from "@/userscripts/wrapper";
 
 const LOADED_PLUGINS = [];
 
@@ -15,7 +14,6 @@ export function inject(code) {
 }
 
 export async function IITCButtonInitJS(e) {
-  const tab_id = e.detail.tab_id;
   const plugin = e.detail.plugin;
 
   const uid = plugin.uid ? plugin.uid : getUID(plugin);
@@ -24,8 +22,6 @@ export async function IITCButtonInitJS(e) {
   } else {
     LOADED_PLUGINS.push(uid);
     console.debug(`Plugin ${uid} loaded`);
-
-    const code = gm_api_for_plugin(plugin, tab_id);
-    inject(code);
+    inject(plugin.code);
   }
 }

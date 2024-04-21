@@ -49,7 +49,10 @@ const manager = new Manager({
 
     await inject_plugin_via_content_scripts(plugin, true);
   },
-  plugin_event: async (data) => await manage_userscripts_api(data),
+  plugin_event: async (data) => {
+    if (IS_SCRIPTING_API) return;
+    await manage_userscripts_api(data);
+  },
   is_daemon: true,
 });
 
@@ -166,35 +169,21 @@ async function xmlHttpRequestHandler(data) {
     });
 
     const bridge_data = strToBase64(String(detail_stringify));
+
+    let allTabs = [
+      {
+        id: data.tab_id,
+      },
+    ];
     if (IS_USERSCRIPTS_API) {
-      let allTabs = await browser.tabs.query({ status: "complete" });
+      allTabs = await browser.tabs.query({ active: true });
+    }
 
-      allTabs = allTabs.filter(function (tab) {
-        return tab.status === "complete" && tab.url;
+    for (const tab of allTabs) {
+      await browser.tabs.sendMessage(tab.id, {
+        type: "xmlHttpRequestToCS",
+        value: bridge_data,
       });
-
-      for (const tab of allTabs) {
-        await browser.tabs.sendMessage(tab.id, {
-          type: "xmlHttpRequestToCS",
-          value: bridge_data,
-        });
-      }
-    } else {
-      const injectedCode = `
-      document.dispatchEvent(new CustomEvent('bridgeResponse', {
-        detail: "${bridge_data}"
-      }));
-    `;
-
-      try {
-        await browser.tabs.executeScript(data.tab_id, {
-          code: injectedCode,
-        });
-      } catch (error) {
-        console.error(
-          `An error occurred while execute script: ${error.message}`
-        );
-      }
     }
   }
 
@@ -246,6 +235,8 @@ async function initUserscriptsApi() {
 }
 
 async function createCheckUpdateAlarm() {
+  if (IS_SCRIPTING_API) return;
+
   const storage_intervals = await browser.storage.local.get([
     "channel",
     "release_update_check_interval",
@@ -261,16 +252,16 @@ async function createCheckUpdateAlarm() {
   if (interval_seconds < 30) {
     interval_seconds = 30;
   }
-  console.log("set alarm");
   await chrome.alarms.create("check-update-alarm", {
     periodInMinutes: interval_seconds / 60,
   });
 }
 
-browser.alarms.onAlarm.addListener(async () => {
-  console.log("alarm");
-  await manager.checkUpdates(false);
-});
+if (IS_USERSCRIPTS_API) {
+  browser.alarms.onAlarm.addListener(async () => {
+    await manager.checkUpdates(false);
+  });
+}
 
 self.addEventListener("activate", () => {
   initUserscriptsApi().then();
