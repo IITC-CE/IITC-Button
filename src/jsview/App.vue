@@ -37,21 +37,35 @@ export default {
     },
   },
   async mounted() {
-    const last_userscript_request = await browser.storage.local
-      .get("last_userscript_request")
-      .then((d) => d.last_userscript_request);
-    const tabId = last_userscript_request["tabId"];
-    const url = last_userscript_request["url"];
-
+    let url = "";
     let code = undefined;
-    try {
-      code = await ajaxGet(url);
-    } catch {
-      return await this.bypass(tabId, url);
+    let tabId = undefined;
+
+    const uniqId = new URL(window.location.href).searchParams.get("uniqId");
+    if (uniqId) {
+      const data = await browser.storage.local.get(uniqId);
+      url = data[uniqId]["url"];
+      code = data[uniqId]["code"];
+      await browser.storage.local.remove(uniqId);
+    } else {
+      const last_userscript_request = await browser.storage.local
+        .get("last_userscript_request")
+        .then((d) => d.last_userscript_request);
+      tabId = last_userscript_request["tabId"];
+      const url = last_userscript_request["url"];
+
+      try {
+        code = await ajaxGet(url);
+      } catch {
+        return await this.bypass(tabId, url);
+      }
     }
 
     const meta = parseMeta(code);
-    if (meta === null || !("name" in meta) || meta.name === undefined) {
+    if (
+      !uniqId &&
+      (meta === null || !("name" in meta) || meta.name === undefined)
+    ) {
       return await this.bypass(tabId, url);
     }
 

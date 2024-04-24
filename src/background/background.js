@@ -189,6 +189,7 @@ async function xmlHttpRequestHandler(data) {
 
   try {
     const response = await fetch(data.url, {
+      mode: "no-cors",
       method: data.method,
       headers: data.headers,
       body: data.method !== "GET" ? data.data : undefined,

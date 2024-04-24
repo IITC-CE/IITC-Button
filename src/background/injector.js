@@ -3,10 +3,8 @@
 import browser from "webextension-polyfill";
 import { gm_api_for_plugin } from "@/userscripts/wrapper";
 import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
-import {
-  is_scripting_api_available,
-  is_userscripts_api_available,
-} from "@/userscripts/utils";
+import { is_userscripts_api_available } from "@/userscripts/utils";
+import { IS_LEGACY_API } from "@/userscripts/env";
 
 export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
   const tabs = await getNiaTabsToInject(plugin);
@@ -17,7 +15,17 @@ export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
     }
 
     try {
-      if (is_scripting_api_available()) {
+      if (IS_LEGACY_API) {
+        const inject = `
+          document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
+            detail: ${JSON.stringify({ plugin: pluginTab })}
+          }));
+        `;
+        await browser.tabs.executeScript(tab.id, {
+          code: inject,
+          runAt: "document_end",
+        });
+      } else {
         await browser.scripting.executeScript({
           target: { tabId: tab.id },
           func: (pluginDetail) => {
@@ -29,16 +37,6 @@ export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
           },
           args: [{ plugin: pluginTab }],
           injectImmediately: true,
-        });
-      } else {
-        const inject = `
-          document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-            detail: ${JSON.stringify({ plugin: pluginTab })}
-          }));
-        `;
-        await browser.tabs.executeScript(tab.id, {
-          code: inject,
-          runAt: "document_end",
         });
       }
     } catch (error) {

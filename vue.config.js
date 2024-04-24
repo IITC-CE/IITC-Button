@@ -60,6 +60,7 @@ const manifest_v3_transformer = (manifest, browser) => {
       },
     ];
   } else {
+    manifest.permissions.push("webRequestBlocking");
     manifest.permissions.push("scripting");
     manifest.background.page = "background.html";
   }
