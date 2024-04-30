@@ -31,13 +31,13 @@ export function onBeforeRequest(req) {
   const { method, tabId, url } = req;
 
   if (IS_USERSCRIPTS_API) {
-    const cache = {
+    const local_cache = {
       last_userscript_request: {
         tabId: tabId,
         url: url,
       },
     };
-    browser.storage.local.set(cache).then();
+    browser.storage.local.set(local_cache).then();
   } else {
     if (tabId in cache && cache[tabId] === "bypass") {
       delete cache[tabId];
