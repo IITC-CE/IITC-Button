@@ -76,75 +76,75 @@ if (browser.webRequest) {
   );
 }
 
-browser.runtime.onInstalled.addListener(async function () {
-  if (!IS_USERSCRIPTS_API) return;
+if (browser.declarativeNetRequest) {
+  browser.runtime.onInstalled.addListener(async function () {
+    // restore the default rule if the extension is installed or updated
+    const existingRules = await browser.declarativeNetRequest.getDynamicRules();
 
-  // restore the default rule if the extension is installed or updated
-  const existingRules = await browser.declarativeNetRequest.getDynamicRules();
-
-  const jsview_url = await browser.runtime.getURL(`/jsview.html`);
-  browser.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: existingRules.map((rule) => rule.id),
-    addRules: [
-      {
-        id: 1,
-        priority: 10,
-        action: {
-          type: "allow",
-        },
-        condition: {
-          urlFilter: "|*.user.js*#pass|",
-          resourceTypes: ["main_frame"],
-        },
-      },
-      {
-        id: 2,
-        priority: 2,
-        action: {
-          type: "redirect",
-          redirect: {
-            url: jsview_url,
+    const jsview_url = await browser.runtime.getURL(`/jsview.html`);
+    browser.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: existingRules.map((rule) => rule.id),
+      addRules: [
+        {
+          id: 1,
+          priority: 10,
+          action: {
+            type: "allow",
+          },
+          condition: {
+            urlFilter: "|*.user.js*#pass|",
+            resourceTypes: ["main_frame"],
           },
         },
-        condition: {
-          urlFilter: "||github.com/*/*/raw/*/*.user.js",
-          requestDomains: ["github.com"],
-          resourceTypes: ["main_frame"],
-        },
-      },
-      {
-        id: 3,
-        priority: 2,
-        action: {
-          type: "redirect",
-          redirect: {
-            url: jsview_url,
+        {
+          id: 2,
+          priority: 2,
+          action: {
+            type: "redirect",
+            redirect: {
+              url: jsview_url,
+            },
+          },
+          condition: {
+            urlFilter: "||github.com/*/*/raw/*/*.user.js",
+            requestDomains: ["github.com"],
+            resourceTypes: ["main_frame"],
           },
         },
-        condition: {
-          urlFilter: "||gitlab.com/*/*/-/raw/*/*.user.js",
-          requestDomains: ["gitlab.com"],
-          resourceTypes: ["main_frame"],
-        },
-      },
-      {
-        id: 4,
-        priority: 1,
-        action: {
-          type: "redirect",
-          redirect: {
-            url: jsview_url,
+        {
+          id: 3,
+          priority: 2,
+          action: {
+            type: "redirect",
+            redirect: {
+              url: jsview_url,
+            },
+          },
+          condition: {
+            urlFilter: "||gitlab.com/*/*/-/raw/*/*.user.js",
+            requestDomains: ["gitlab.com"],
+            resourceTypes: ["main_frame"],
           },
         },
-        condition: {
-          urlFilter: "|*.user.js^",
-          excludedRequestDomains: ["github.com", "gitlab.com"],
-          resourceTypes: ["main_frame"],
+        {
+          id: 4,
+          priority: 1,
+          action: {
+            type: "redirect",
+            redirect: {
+              url: jsview_url,
+            },
+          },
+          condition: {
+            urlFilter: "|*.user.js^",
+            excludedRequestDomains: ["github.com", "gitlab.com"],
+            resourceTypes: ["main_frame"],
+          },
         },
-      },
-    ],
+      ],
+    });
   });
-});
+}
 
 /**
  * Writes the tab ID into the cache so that it does not interact with the tab later on and restarts the request.

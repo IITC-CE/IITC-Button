@@ -5,11 +5,19 @@ import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { manage_userscripts_api } from "@/background/injector";
 import { strToBase64 } from "@/strToBase64";
 import { getUID } from "lib-iitc-manager";
-import { inject } from "@/content-scripts/utils";
 import { GM } from "@/userscripts/gm-api";
 
 function getPluginHash(uid) {
   return "VMin" + strToBase64(uid);
+}
+
+function inject(code) {
+  const script = document.createElement("script");
+  script.appendChild(document.createTextNode(code));
+  (document.body || document.head || document.documentElement).appendChild(
+    script
+  );
+  script.parentElement.removeChild(script);
 }
 
 export function inject_gm_api() {

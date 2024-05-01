@@ -13,8 +13,7 @@ export async function is_iitc_enabled() {
 export function is_userscripts_api_available() {
   try {
     // Property access which throws if developer mode is not enabled.
-    browser.userScripts;
-    return true;
+    return browser.userScripts !== undefined;
   } catch {
     // Not available.
     return false;

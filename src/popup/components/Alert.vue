@@ -21,7 +21,7 @@
       ></div>
       <div
         v-on:click="onClickButton('hostPermissionAllUrls')"
-        class="button"
+        class="button hostPermissionAllUrls"
         v-html="_('alertHostPermissionsRequiredButtonAllUrls')"
       ></div>
     </div>
@@ -30,7 +30,7 @@
 
 <script>
 import { mixin } from "./mixins.js";
-import { IS_LEGACY_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
+import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import browser from "webextension-polyfill";
 
 const intelOrigins = {
@@ -104,7 +104,7 @@ export default {
       }
     });
 
-    if (!IS_LEGACY_API && !(await this.checkHostPermissions())) {
+    if (!(await this.checkHostPermissions())) {
       this.showHostPermissions = true;
     }
   },
@@ -160,5 +160,9 @@ p {
 .button:active,
 .button:focus {
   background: #546e7a;
+}
+
+#app.is_safari .hostPermissionAllUrls {
+  display: none;
 }
 </style>

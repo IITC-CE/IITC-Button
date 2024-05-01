@@ -2,6 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { strToBase64 } from "@/strToBase64";
+import { isRunContentScript } from "@/content-scripts/utils";
 
 export async function bridgeAction(e) {
   const task = e.detail;
@@ -33,13 +34,15 @@ const xmlResponseBridge = async (data) => {
     .then();
 };
 
-browser.runtime.onMessage.addListener(async (request) => {
-  switch (request.type) {
-    case "xmlHttpRequestToCS":
-      bridgeResponse(request.value);
-      break;
-  }
-});
+if (isRunContentScript) {
+  browser.runtime.onMessage.addListener(async (request) => {
+    switch (request.type) {
+      case "xmlHttpRequestToCS":
+        bridgeResponse(request.value);
+        break;
+    }
+  });
+}
 
 // Sends the entire plugins scoped storage to the page context
 const getStorageBridge = async (req) => {

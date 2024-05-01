@@ -63,10 +63,14 @@ const manifest_v3_transformer = (manifest, browser) => {
         matches: ["<all_urls>"],
       },
     ];
-  } else {
+  }
+  if (browser === "firefox" || browser === "safari") {
     manifest.permissions.push("webRequestBlocking");
     manifest.permissions.push("scripting");
     manifest.background.page = "background.html";
+  }
+  if (browser === "safari") {
+    delete manifest.content_security_policy;
   }
 };
 

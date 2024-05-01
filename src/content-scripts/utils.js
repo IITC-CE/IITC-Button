@@ -4,6 +4,8 @@ import { getUID } from "lib-iitc-manager";
 
 const LOADED_PLUGINS = [];
 
+export const isRunContentScript = !window.iitcbutton;
+
 export function inject(code) {
   const script = document.createElement("script");
   script.appendChild(document.createTextNode(code));

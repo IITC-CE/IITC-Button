@@ -1,7 +1,11 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
-import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
+import {
+  IS_LEGACY_API,
+  IS_SCRIPTING_API,
+  IS_USERSCRIPTS_API,
+} from "@/userscripts/env";
 import { _ } from "@/i18n";
 import {
   onUpdatedListener,
@@ -58,7 +62,7 @@ const manager = new Manager({
 
 manager.run().then();
 
-if (IS_SCRIPTING_API) {
+if (IS_LEGACY_API || IS_SCRIPTING_API) {
   const { onUpdated, onRemoved } = browser.tabs;
   onUpdated.addListener((tabId, status, tab) =>
     onUpdatedListener(tabId, status, tab, manager)
