@@ -5,7 +5,12 @@ const manifest_transformer = (manifest) => {
   if (manifest_version === "2") {
     manifest_v2_transformer(manifest, browser);
   } else if (manifest_version === "3") {
+    if (browser === undefined) {
+      throw Error("BROWSER environment variable is not set");
+    }
     manifest_v3_transformer(manifest, browser);
+  } else {
+    throw Error("MANIFEST_VERSION environment variable is not set");
   }
   manifest.manifest_version = parseInt(manifest_version);
 };
@@ -113,6 +118,14 @@ module.exports = {
       manifestTransformer: (manifest) => {
         manifest_transformer(manifest);
         return manifest;
+      },
+      artifactFilename: ({ name, version, mode }) => {
+        const browser =
+          process.env.MANIFEST_VERSION === "3" ? process.env.BROWSER : "all";
+        if (mode === "production") {
+          return `${name}-v${version}-${browser}-MV${process.env.MANIFEST_VERSION}.zip`;
+        }
+        return `${name}-v${version}-${browser}-MV${process.env.MANIFEST_VERSION}-${mode}.zip`;
       },
     },
   },

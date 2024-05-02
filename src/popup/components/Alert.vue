@@ -78,10 +78,7 @@ export default {
     requestPermissions: async function requestPermissions(permissions) {
       function onResponse(response) {
         if (response) {
-          console.log("Permission was granted");
           window.close();
-        } else {
-          console.log("Permission was refused");
         }
       }
       const response = await browser.permissions.request(permissions);

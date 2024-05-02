@@ -5,8 +5,10 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service build --mode development --watch",
-    "build": "vue-cli-service build",
+    "build_mv2": "export MANIFEST_VERSION=2 && vue-cli-service build",
+    "build_mv3_firefox": "export MANIFEST_VERSION=3 && export BROWSER=firefox && vue-cli-service build",
+    "build_mv3_chrome": "export MANIFEST_VERSION=3 && export BROWSER=chrome && vue-cli-service build",
+    "build_mv3_safari": "export MANIFEST_VERSION=3 && export BROWSER=safari && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
