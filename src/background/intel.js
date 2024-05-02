@@ -1,13 +1,15 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import browser from "webextension-polyfill";
-import { getTabsToInject } from "./injector";
+import { getTabsToInject } from "@/background/utils";
+import { is_iitc_enabled } from "@/userscripts/utils";
+import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 
 let lastIITCTab = null;
 
 export async function onRequestOpenIntel() {
   if (lastIITCTab) {
     const tabInfo = await getTabInfo(lastIITCTab);
-    if (isIngressIntelUrl(tabInfo.url)) {
+    if (tabInfo && isIngressIntelUrl(tabInfo.url)) {
       return await setTabActive(lastIITCTab);
     }
   }
@@ -23,15 +25,24 @@ export async function onRequestOpenIntel() {
   }
 }
 
-export async function onToggleIITC(value) {
-  await browser.storage.local.set({ IITC_is_enabled: value });
+export async function onToggleIITC(status) {
+  await browser.storage.local.set({ IITC_is_enabled: status });
 
-  // Fetch all completly loaded Ingress Intel tabs
-  const tabs = await getTabsToInject();
+  if (IS_USERSCRIPTS_API) {
+    if (status === false) {
+      try {
+        await browser.userScripts.unregister();
+        // eslint-disable-next-line no-empty
+      } catch {}
+    }
+  } else {
+    // Fetch all completly loaded Ingress Intel tabs
+    const tabs = await getTabsToInject();
 
-  for (let tab of Object.values(tabs)) {
-    if (isIngressIntelUrl(tab.url)) {
-      await browser.tabs.reload(tab.id);
+    for (let tab of Object.values(tabs)) {
+      if (isIngressIntelUrl(tab.url)) {
+        await browser.tabs.reload(tab.id);
+      }
     }
   }
 }
@@ -53,10 +64,8 @@ export function onRemovedListener(tabId) {
 }
 
 async function initialize(manager) {
-  const storage = await browser.storage.local.get(["IITC_is_enabled"]);
-  const status = storage["IITC_is_enabled"];
-
-  if (status !== false) {
+  const status = await is_iitc_enabled();
+  if (status) {
     await manager.inject();
   }
 }
@@ -75,7 +84,11 @@ async function setTabActive(tabId) {
 }
 
 async function getTabInfo(tabId) {
-  return await browser.tabs.get(tabId);
+  try {
+    return await browser.tabs.get(tabId);
+  } catch {
+    return null;
+  }
 }
 
 function isIngressIntelUrl(url) {

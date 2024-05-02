@@ -36,14 +36,18 @@ Theoretically, you violates ToS, but as you totally relies on intel.ingress.com 
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and minifies for production with Manifest V2
 ```
-npm run serve
+npm run build_mv2
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production with Manifest V3
 ```
-npm run build
+npm run build_mv3_firefox
+# or
+npm run build_mv3_chrome
+# or
+npm run build_mv3_safari
 ```
 
 ### Lints and fixes files
@@ -59,7 +63,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Build for Safari (MacOS and iOS)
 
 1. Follow the [general build instructions](#project-setup).
-To build for iOS, set the _BROWSER="safari-ios"_ environment variable (example: `BROWSER="safari-ios" npm run build`)
+To build for iOS, set the _BROWSER="safari-ios"_ environment variable (example: `BROWSER="safari-ios" npm run build`). Tested only on Manifest V2.
 
 2. Open the Xcode project in the `safari` folder
 
@@ -76,5 +80,4 @@ To develop without a certificate, tell Safari to load unsigned extensions using 
    * Choose Safari > Preferences.
    * Select the Extensions tab. This tab shows the localized description, display name, and version number for the selected Safari App Extension. It also provides more information about the permissions claimed by the extension.
    * Find your new extension in the list on the left, and enable it by selecting the checkbox.
-
 

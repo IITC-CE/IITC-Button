@@ -21,6 +21,7 @@
       </SectionPlugins>
     </section>
     <Message></Message>
+    <Alert></Alert>
   </div>
 </template>
 
@@ -30,8 +31,10 @@ import SectionOptions from "./components/SectionOptions.vue";
 import SectionPlugins from "./components/SectionPlugins.vue";
 
 import Message from "./components/Message";
+import Alert from "./components/Alert";
 
 import * as data from "./data.js";
+import browser from "webextension-polyfill";
 
 export default {
   name: "App",
@@ -45,7 +48,13 @@ export default {
       is_safari: this.detect_safari(),
     };
   },
-  components: { SectionMainMenu, SectionOptions, SectionPlugins, Message },
+  components: {
+    SectionMainMenu,
+    SectionOptions,
+    SectionPlugins,
+    Message,
+    Alert,
+  },
   beforeCreate() {
     document.body.id = "main-menu";
   },
@@ -53,6 +62,7 @@ export default {
     await data.init(this);
     await data.onChangedListener(this);
     await data.onMessageListener(this);
+    await browser.runtime.sendMessage({ type: "popupWasOpened" });
   },
   methods: {
     detect_safari: function () {

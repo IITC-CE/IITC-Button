@@ -7,9 +7,11 @@
 </template>
 
 <script>
+import browser from "webextension-polyfill";
 import Code from "./Code";
 import { _ } from "@/i18n";
 import Header from "./Header";
+import { ajaxGet } from "lib-iitc-manager";
 import { parseMeta } from "lib-iitc-manager";
 
 export default {
@@ -27,17 +29,47 @@ export default {
   },
   methods: {
     _: _,
+    bypass: async function (tabId, url) {
+      await browser.tabs.create({
+        url: `${url}#pass`,
+      });
+      await browser.tabs.remove(tabId);
+    },
   },
   async mounted() {
+    let url = "";
+    let code = undefined;
+    let tabId = undefined;
+
     const uniqId = new URL(window.location.href).searchParams.get("uniqId");
-    const data = await browser.storage.local.get(uniqId);
-    const { url, code } = data[uniqId];
-    await browser.storage.local.remove(uniqId);
+    if (uniqId) {
+      const data = await browser.storage.local.get(uniqId);
+      url = data[uniqId]["url"];
+      code = data[uniqId]["code"];
+      await browser.storage.local.remove(uniqId);
+    } else {
+      const last_userscript_request = await browser.storage.local
+        .get("last_userscript_request")
+        .then((d) => d.last_userscript_request);
+      tabId = last_userscript_request["tabId"];
+      const url = last_userscript_request["url"];
+
+      try {
+        code = await ajaxGet(url);
+      } catch {
+        return await this.bypass(tabId, url);
+      }
+    }
 
     const meta = parseMeta(code);
-    if (meta["name"] === undefined) return;
-    document.title = `${meta["name"]} — ${_("jsViewTitle")} — IITC Button`;
+    if (
+      !uniqId &&
+      (meta === null || !("name" in meta) || meta.name === undefined)
+    ) {
+      return await this.bypass(tabId, url);
+    }
 
+    document.title = `${meta["name"]} — ${_("jsViewTitle")} — IITC Button`;
     meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
     this.meta = meta;
     this.code = code;

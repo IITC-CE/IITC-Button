@@ -262,5 +262,20 @@
     },
     "saveToJson": {
         "message": "Save to json"
+    },
+    "alertChromeRequiresDevModeTitle": {
+        "message": "Our extension requires Developer&nbsp;Mode to be enabled to manage UserScripts, due to Manifest&nbsp;V3 limitations in Chrome. It's easy to enable!"
+    },
+    "alertChromeRequiresDevModeButton": {
+        "message": "Please follow this guide"
+    },
+    "alertHostPermissionsRequiredTitle": {
+        "message": "Provide access to URLs for userscripts to work. You will be able to change your choice in your browser settings."
+    },
+    "alertHostPermissionsRequiredButtonIntel": {
+        "message": "Ingress Intel only"
+    },
+    "alertHostPermissionsRequiredButtonAllUrls": {
+        "message": "All URLs to ensure full support"
     }
 }

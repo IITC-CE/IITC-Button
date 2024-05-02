@@ -1,29 +1,24 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import browser from "webextension-polyfill";
-import { GM } from "./gm-api";
-import { inject, IITCButtonInitJS } from "./utils";
+import { IITCButtonInitJS, isRunContentScript } from "./utils";
 import { bridgeAction } from "@/content-scripts/bridge";
+import { inject_gm_api } from "@/userscripts/wrapper";
+import { IS_USERSCRIPTS_API } from "@/userscripts/env";
+import { is_iitc_enabled } from "@/userscripts/utils";
 
 function preparePage() {
-  document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.hostname === "intel.ingress.com") {
-      window.onload = function () {};
-      document.body.onload = function () {};
-    }
-  });
-
-  inject(
-    `((${GM.toString()}))()\n//# sourceURL=${browser.runtime.getURL(
-      "js/GM_api.js"
-    )}`
-  );
   document.addEventListener("bridgeRequest", bridgeAction);
+  if (IS_USERSCRIPTS_API) return;
+
+  inject_gm_api();
   document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
 }
 
-browser.storage.local.get(["IITC_is_enabled"]).then((data) => {
-  if (data["IITC_is_enabled"] !== false) {
-    preparePage();
-  }
-});
+if (isRunContentScript) {
+  window.iitcbutton = true;
+  is_iitc_enabled().then((status) => {
+    if (status) {
+      preparePage();
+    }
+  });
+}

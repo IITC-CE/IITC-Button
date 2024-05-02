@@ -1,5 +1,12 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 export const GM = function () {
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.hostname === "intel.ingress.com") {
+      window.onload = function () {};
+      document.body.onload = function () {};
+    }
+  });
+
   const cache = {};
   const defineProperty = Object.defineProperty;
 
@@ -178,7 +185,7 @@ export const GM = function () {
       cloneInto: makeFunc((obj) => obj),
     };
   };
-  document.addEventListener("bridgeResponse", function (e) {
+  addEventListener("bridgeResponse", function (e) {
     const detail = JSON.parse(base64ToStr(e.detail));
     const uuid = detail.task_uuid;
 

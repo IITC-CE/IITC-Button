@@ -15,12 +15,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - build_script: build_mv2
+          - build_script: build_mv3_firefox
+          - build_script: build_mv3_chrome
+          - build_script: build_mv3_safari
     steps:
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
@@ -29,7 +36,7 @@ jobs:
         run: npm run lint
 
       - name: Build
-        run: npm run build
+        run: npm run ${{ matrix.build_script }}
 
       - name: Get version from package.json
         if: startsWith(github.ref, 'refs/tags/v')
@@ -41,34 +48,72 @@ jobs:
       - name: Save metadata
         run: |
           mkdir -p ./build/.metadata
+          ORIGINAL_FILE_NAME=$(ls artifacts/*.zip)
+          FILE_NAME="${ORIGINAL_FILE_NAME##*/}"
+          FILE_NAME="${FILE_NAME%.zip}"
+
           if [ "$GITHUB_EVENT_NAME" = "push" ]; then
             if [[ "$GITHUB_REF" =~ ^refs/tags/ ]]; then
-              mv artifacts/*.zip ./build/iitc-button-${{steps.get-version-key-from-json.outputs.version}}.zip
+              # Release build
               echo "release" > ./build/.metadata/build_type
             else
               # Beta build from master branch
-              mv artifacts/*.zip ./build/iitc-button-${{github.sha}}.zip
+              FILE_NAME="${FILE_NAME}-$(echo ${{ github.sha }} | cut -c 1-6)"
               echo "beta" > ./build/.metadata/build_type
             fi
             echo ${{ github.sha }} > ./build/.metadata/commit
           elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            mv artifacts/*.zip ./build/iitc-button-${{github.event.pull_request.head.sha}}.zip
+            # Build artifacts for PR
+            FILE_NAME="${FILE_NAME}-$(echo ${{ github.event.pull_request.head.sha }} | cut -c 1-6)"
             echo "PR" > ./build/.metadata/build_type
             echo ${{ github.event.pull_request.head.sha }} > ./build/.metadata/commit
           fi
-          echo $( ls ./build/ | grep '.zip' ) > ./build/.metadata/zip_filename
+
+          mv $ORIGINAL_FILE_NAME "./build/$FILE_NAME".zip
           echo "GITHUB_SHA_SHORT=$(cat ./build/.metadata/commit | cut -c 1-6)" >> $GITHUB_ENV
+          echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
 
       - uses: ncipollo/release-action@v1
         if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          FILE_PATH: ./build/${{ env.FILE_NAME }}
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "./build/iitc-button-${{ steps.get-version-key-from-json.outputs.version }}.zip"
+          artifacts: ${{ env.FILE_PATH }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
-          name: iitc-button-${{ env.GITHUB_SHA_SHORT }}-artifact
+          name: ${{ env.FILE_NAME }}
           path: |
             ./build/
+
+  collect:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: collected_artifacts
+
+      - name: Move artifacts to final directory
+        run: |
+          mkdir -p final_artifacts
+          echo "Moving contents from artifact directories to final_artifacts directory:"
+          for dir in collected_artifacts/*; do
+            if [ -d "$dir" ]; then
+              cp -rf "$dir"/* "$dir"/.metadata final_artifacts/
+            fi
+          done
+          echo "Contents of final_artifacts directory:"
+          ls -la final_artifacts/
+
+      - name: Get metadata
+        run: echo "GITHUB_SHA_SHORT=$(cat ./final_artifacts/.metadata/commit | cut -c 1-6)" >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iitc-button-${{ env.GITHUB_SHA_SHORT }}-artifacts
+          path: final_artifacts/*

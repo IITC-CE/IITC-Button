@@ -1,23 +1,49 @@
 name: Add artifact links to pull request
+
 on:
   workflow_run:
-    workflows: ['Build IITC Button']
+    workflows: ["Build IITC Button"]
     types: [completed]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  artifacts-url-comments:
-    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+  comment-links:
     runs-on: ubuntu-latest
     steps:
-      - name: add artifact links to pull request and related issues step
-        uses: tonyhallett/artifacts-url-comments@v1.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get artifact list from API
+        id: get-artifacts
+        uses: actions/github-script@v7
         with:
-          prefix: Here are the build results
-          suffix: Artifacts will only be retained for 90 days.
-          format: url
-          addTo: pull
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const runId = ${{ github.event.workflow_run.id }};
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: runId
+            });
+            artifacts.data.artifacts.forEach((artifact, index) => {
+              const nameVar = `artifact${index + 1}`;
+              const urlVar = `url${index + 1}`;
+              let displayName = artifact.name.endsWith('-artifacts') ? `**${artifact.name}**` : artifact.name;
+              core.exportVariable(nameVar, displayName);
+              core.exportVariable(urlVar, `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}/artifacts/${artifact.id}`);
+            });
+
+      - name: Comment with artifact links for PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr_artifacts
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          message: |
+            Build completed successfully. Below are the download links for the build artifacts:
+            
+            | Artifact Name | Download Link |
+            | ------------- | ------------- |
+            | ${{ env.artifact1 }} | [Download](${{ env.url1 }}) |
+            | ${{ env.artifact2 }} | [Download](${{ env.url2 }}) |
+            | ${{ env.artifact3 }} | [Download](${{ env.url3 }}) |
+            | ${{ env.artifact4 }} | [Download](${{ env.url4 }}) |
+            | ${{ env.artifact5 }} | [Download](${{ env.url5 }}) |
+            
+            Artifacts will only be retained for 90 days.
