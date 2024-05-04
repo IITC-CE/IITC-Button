@@ -53,7 +53,7 @@ export default {
   methods: {
     onClickButton: async function (action) {
       switch (action) {
-        case "chromeRequiresDevMode":
+        case "chromeDevMode":
           await this.openLink(
             "https://developer.chrome.com/docs/extensions/reference/api/userScripts#developer_mode_for_extension_users"
           );
