@@ -35,6 +35,10 @@ jobs:
       - name: Linter
         run: npm run lint
 
+      - name: Set BETA environment variable
+        if: github.ref != 'refs/tags/v*'
+        run: echo "BETA=true" >> $GITHUB_ENV
+
       - name: Build
         run: npm run ${{ matrix.build_script }}
 

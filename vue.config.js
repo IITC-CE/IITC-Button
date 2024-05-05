@@ -1,6 +1,17 @@
 const manifest_transformer = (manifest) => {
   const browser = process.env.BROWSER;
   const manifest_version = process.env.MANIFEST_VERSION;
+  const is_beta = !!process.env.BETA;
+
+  if (is_beta) {
+    manifest.name = `${manifest.name} Beta`;
+    manifest.browser_action.default_icon["48"] =
+      "assets/icons/48/icon-beta.png";
+    manifest.browser_action.default_icon["96"] =
+      "assets/icons/96/icon-beta.png";
+    manifest.icons["48"] = "assets/icons/48/icon-beta.png";
+    manifest.icons["128"] = "assets/icons/128/icon-beta.png";
+  }
 
   if (manifest_version === "2") {
     manifest_v2_transformer(manifest, browser);
