@@ -67,6 +67,7 @@ jobs:
             FILE_NAME="${FILE_NAME}-$(echo ${{ github.event.pull_request.head.sha }} | cut -c 1-6)"
             echo "PR" > ./build/.metadata/build_type
             echo ${{ github.event.pull_request.head.sha }} > ./build/.metadata/commit
+            echo ${{ github.event.number }} > ./build/.metadata/pr_number
           fi
 
           mv $ORIGINAL_FILE_NAME "./build/$FILE_NAME".zip
@@ -76,7 +77,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         if: startsWith(github.ref, 'refs/tags/v')
         env:
-          FILE_PATH: ./build/${{ env.FILE_NAME }}
+          FILE_PATH: ./build/${{ env.FILE_NAME }}.zip
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
