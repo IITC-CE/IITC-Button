@@ -67,6 +67,7 @@ const manifest_v3_transformer = (manifest, browser) => {
   delete manifest.browser_action;
 
   if (browser === "chrome") {
+    delete manifest.browser_specific_settings;
     manifest.minimum_chrome_version = "120";
     manifest.permissions.push("userScripts");
     manifest.permissions.push("alarms");
@@ -81,6 +82,7 @@ const manifest_v3_transformer = (manifest, browser) => {
     ];
   }
   if (browser === "firefox" || browser === "safari") {
+    manifest.browser_specific_settings.gecko.strict_min_version = "102.0";
     manifest.permissions.push("webRequestBlocking");
     manifest.permissions.push("scripting");
     manifest.background.page = "background.html";
