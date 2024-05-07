@@ -77,14 +77,12 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
     case "toggleIITC":
       await onToggleIITC(request.value);
-      if (IS_USERSCRIPTS_API && request.value === true) {
+      if (request.value === true) {
         await initUserscriptsApi();
       }
       break;
     case "popupWasOpened":
-      if (IS_USERSCRIPTS_API) {
-        await initUserscriptsApi();
-      }
+      await initUserscriptsApi();
       break;
     case "xmlHttpRequestHandler":
       await xmlHttpRequestHandler(request.value);
@@ -156,8 +154,8 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
     case "setUpdateCheckInterval":
       await manager.setUpdateCheckInterval(request.interval, request.channel);
-      if (IS_USERSCRIPTS_API) {
-        await createCheckUpdateAlarm();
+      if (!IS_LEGACY_API) {
+        await createCheckUpdateAlarm(true);
       }
       break;
   }
@@ -218,11 +216,11 @@ async function xmlHttpRequestHandler(data) {
 }
 
 async function initUserscriptsApi() {
-  if (IS_SCRIPTING_API) return;
+  if (!IS_USERSCRIPTS_API) return;
 
   let scripts = [];
   try {
-    scripts = await chrome.userScripts.getScripts();
+    scripts = await browser.userScripts.getScripts();
     // eslint-disable-next-line no-empty
   } catch {}
 
@@ -239,8 +237,16 @@ async function initUserscriptsApi() {
   await manage_userscripts_api(plugins_event);
 }
 
-async function createCheckUpdateAlarm() {
-  if (IS_SCRIPTING_API) return;
+async function createCheckUpdateAlarm(need_to_update = false) {
+  if (IS_LEGACY_API) return;
+
+  const alarm_name = "check-update-alarm";
+  if (!need_to_update) {
+    const alarm = await browser.alarms.get(alarm_name);
+    if (alarm) {
+      return;
+    }
+  }
 
   const storage_intervals = await browser.storage.local.get([
     "channel",
@@ -249,20 +255,21 @@ async function createCheckUpdateAlarm() {
     "custom_update_check_interval",
     "external_update_check_interval",
   ]);
-  const channel_interval =
-    storage_intervals[storage_intervals["channel"]] | 604800;
-  const external_interval = storage_intervals["external"] | 604800;
+  const channel_interval_key = `${storage_intervals["channel"]}_update_check_interval`;
+  const channel_interval = storage_intervals[channel_interval_key] || 604800;
+  const external_interval =
+    storage_intervals["external_update_check_interval"] || 604800;
 
   let interval_seconds = Math.min(channel_interval, external_interval);
   if (interval_seconds < 30) {
     interval_seconds = 30;
   }
-  await chrome.alarms.create("check-update-alarm", {
+  await browser.alarms.create(alarm_name, {
     periodInMinutes: interval_seconds / 60,
   });
 }
 
-if (IS_USERSCRIPTS_API) {
+if (!IS_LEGACY_API) {
   browser.alarms.onAlarm.addListener(async () => {
     await manager.checkUpdates(false);
   });
@@ -270,5 +277,6 @@ if (IS_USERSCRIPTS_API) {
 
 self.addEventListener("activate", () => {
   initUserscriptsApi().then();
-  createCheckUpdateAlarm().then();
 });
+
+createCheckUpdateAlarm().then();

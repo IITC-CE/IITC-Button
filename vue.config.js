@@ -62,6 +62,7 @@ const manifest_v3_transformer = (manifest, browser) => {
     },
   ];
   manifest.permissions.push("webRequest");
+  manifest.permissions.push("alarms");
 
   manifest.action = manifest.browser_action;
   delete manifest.browser_action;
@@ -70,7 +71,6 @@ const manifest_v3_transformer = (manifest, browser) => {
     delete manifest.browser_specific_settings;
     manifest.minimum_chrome_version = "120";
     manifest.permissions.push("userScripts");
-    manifest.permissions.push("alarms");
     manifest.permissions.push("declarativeNetRequest");
     manifest.background.service_worker = "js/background.js";
 
