@@ -184,5 +184,83 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "詳細を隠す"
+    },
+    "other": {
+        "message": "他"
+    },
+    "backup": {
+        "message": "バックアップ"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ はIITCの組み込み版を置き換えています",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "import_message": {
+        "message": "IITC Buttonのバックアップを含む.zipファイルを選択しインポートするものを選択してください"
+    },
+    "export_data": {
+        "message": "プラグインデータをエクスポート"
+    },
+    "backupRestored": {
+        "message": "バックアップを復元しました"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "注: ローカルストレージにはIITC Buttonが利用できるすべてのデータが含まれています. 例えばあなたのプラグインやそのソースコード、プラグインによってはその設定が含まれることもあります(プラグインの実装によります)."
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "ファクションプラグインをお使いの場合はこのデータを一般に公開しないでください!"
+    },
+    "every5seconds": {
+        "message": "5秒おき"
+    },
+    "donate": {
+        "message": "寄付"
+    },
+    "debug": {
+        "message": "デバッグ"
+    },
+    "import": {
+        "message": "インポート"
+    },
+    "export": {
+        "message": "エクスポート"
+    },
+    "import_settings": {
+        "message": "IITC設定をインポート"
+    },
+    "import_data": {
+        "message": "プラグインデータをインポート"
+    },
+    "import_external": {
+        "message": "外部プラグインのインポート"
+    },
+    "importFromZip": {
+        "message": "zipファイルからインポート"
+    },
+    "export_settings": {
+        "message": "IITC設定をエクスポート"
+    },
+    "export_external": {
+        "message": "外部プラグインのエクスポート"
+    },
+    "exportToZip": {
+        "message": "zipファイルにエクスポート"
+    },
+    "pleaseWait": {
+        "message": "しばらくお待ちください"
+    },
+    "restoreBackup": {
+        "message": "バックアップを復元する"
+    },
+    "invalidBackup": {
+        "message": "ファイルが破損しているかIITC Buttonのバックアップではありません"
+    },
+    "saveToJson": {
+        "message": "JSONに保存"
     }
 }
