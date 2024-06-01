@@ -78,17 +78,29 @@ export async function manage_userscripts_api(plugins_event) {
     });
   }
 
-  if (event === "add") {
+  try {
+    const registeredScripts = await browser.userScripts.getScripts();
+    const registeredIds = registeredScripts.map((script) => script.id);
+
+    const pluginsToAdd = plugins_obj.filter(
+      (plugin) => !registeredIds.includes(plugin.id)
+    );
+    const pluginsToUpdate = plugins_obj.filter((plugin) =>
+      registeredIds.includes(plugin.id)
+    );
+
     try {
-      await browser.userScripts.register(plugins_obj);
+      await browser.userScripts.register(pluginsToAdd);
     } catch (e) {
       console.log("an error occurred while registering the plugin", e);
     }
-  } else if (event === "update") {
+
     try {
-      await browser.userScripts.update(plugins_obj);
+      await browser.userScripts.update(pluginsToUpdate);
     } catch (e) {
       console.log("an error occurred while updating the plugin", e);
     }
+  } catch (e) {
+    console.log("an error occurred while handling the plugin event", e);
   }
 }
