@@ -36,7 +36,7 @@ jobs:
         run: npm run lint
 
       - name: Set BETA environment variable
-        if: github.ref != 'refs/tags/v*'
+        if: startsWith(github.ref, 'refs/tags/v') != true
         run: echo "BETA=true" >> $GITHUB_ENV
 
       - name: Build
