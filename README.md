@@ -1,13 +1,17 @@
 IITC Button WebExtension
 ========================
 
-[![Firefox Add-ons](https://img.shields.io/amo/v/iitc-button.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/iitc-button)[![Firefox Add-ons](https://img.shields.io/amo/users/iitc-button.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/iitc-button)
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/violentmonkey/febaefghpimpenpigafpolgljcfkeakn)[![Chrome Web Store](https://img.shields.io/chrome-web-store/users/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/violentmonkey/febaefghpimpenpigafpolgljcfkeakn)
+[![Firefox Add-ons](https://img.shields.io/amo/v/iitc-button.svg?style=flat-square&label=firefox%20release)](https://addons.mozilla.org/firefox/addon/iitc-button)[![Firefox Add-ons](https://img.shields.io/amo/users/iitc-button.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/iitc-button)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square&label=chrome%20release)](https://chromewebstore.google.com/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn)[![Chrome Web Store](https://img.shields.io/chrome-web-store/users/febaefghpimpenpigafpolgljcfkeakn.svg?style=flat-square)](https://chromewebstore.google.com/detail/violentmonkey/febaefghpimpenpigafpolgljcfkeakn)
+
+[![Firefox Add-ons](https://img.shields.io/amo/v/iitc-button-beta.svg?style=flat-square&label=firefox%20beta)](https://addons.mozilla.org/firefox/addon/iitc-button-beta)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ocooefombdlaamigiljldgceboohcnai.svg?style=flat-square&label=chrome%20beta)](https://chromewebstore.google.com/detail/iitc-button-beta/ocooefombdlaamigiljldgceboohcnai)
+
 [![Translations](https://weblate.iitc.app/widgets/iitc-ce/-/iitc-button/svg-badge.svg)](https://weblate.iitc.app/projects/iitc-ce/iitc-button/)
 
 Intel map of Ingress game with IITC-CE in your browser.
 
-Get it on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/iitc-button) and [Chrome Web Store](https://chrome.google.com/webstore/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn)
+Get it on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/iitc-button) (or [beta](https://addons.mozilla.org/firefox/addon/iitc-button-beta)) and [Chrome Web Store](https://chromewebstore.google.com/detail/iitc-button/febaefghpimpenpigafpolgljcfkeakn) (or [beta](https://chromewebstore.google.com/detail/iitc-button-beta/ocooefombdlaamigiljldgceboohcnai))
 
 ---
 
