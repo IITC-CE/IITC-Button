@@ -23,11 +23,14 @@ jobs:
           - build_script: build_mv3_chrome
           - build_script: build_mv3_safari
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -35,9 +38,11 @@ jobs:
       - name: Linter
         run: npm run lint
 
-      - name: Set BETA environment variable
+      - name: Set BETA environment variables
         if: startsWith(github.ref, 'refs/tags/v') != true
-        run: echo "BETA=true" >> $GITHUB_ENV
+        run: |
+          echo "BETA=true" >> $GITHUB_ENV
+          echo "GIT_REV_COUNT=`git rev-list --all --count`" >> $GITHUB_ENV
 
       - name: Build
         run: npm run ${{ matrix.build_script }}

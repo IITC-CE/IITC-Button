@@ -12,14 +12,8 @@ const manifest_transformer = (manifest) => {
     manifest.icons["48"] = "assets/icons/48/icon-beta.png";
     manifest.icons["128"] = "assets/icons/128/icon-beta.png";
 
-    let currentDate = new Date();
-    let year = String(currentDate.getFullYear()).slice(-2);
-    let month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    let day = String(currentDate.getDate()).padStart(2, "0");
-    let hours = String(currentDate.getHours()).padStart(2, "0");
-
-    let formattedDate = `${year}${month}${day}${hours}`;
-    manifest.version = `${manifest.version}.${formattedDate}`;
+    const git_rev_count = parseInt(process.env.GIT_REV_COUNT) % 65535;
+    manifest.version = `${manifest.version}.${git_rev_count}`;
   }
 
   if (manifest_version === "2") {
