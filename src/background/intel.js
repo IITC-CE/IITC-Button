@@ -4,6 +4,7 @@ import { getTabsToInject } from "@/background/utils";
 import { is_iitc_enabled } from "@/userscripts/utils";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 
+const activeTabs = [];
 let lastIITCTab = null;
 
 export async function onRequestOpenIntel() {
@@ -47,9 +48,21 @@ export async function onToggleIITC(status) {
   }
 }
 
+function removeTabFromActiveTabs(tabId) {
+  const index = activeTabs.indexOf(tabId);
+  if (index !== -1) {
+    activeTabs.splice(index, 1);
+  }
+}
+
 // tab listeners
 export async function onUpdatedListener(tabId, status, tab, manager) {
-  if (status.status === "complete") {
+  if (status.status !== "complete" && activeTabs.includes(tabId)) {
+    removeTabFromActiveTabs(tabId);
+  }
+  // Prevent reinitialization on the same page
+  if (status.status === "complete" && !activeTabs.includes(tabId)) {
+    activeTabs.push(tabId);
     await initialize(manager);
     if (isIngressIntelUrl(tab.url)) {
       lastIITCTab = tabId;
@@ -58,6 +71,7 @@ export async function onUpdatedListener(tabId, status, tab, manager) {
 }
 
 export function onRemovedListener(tabId) {
+  removeTabFromActiveTabs(tabId);
   if (lastIITCTab === tabId) {
     lastIITCTab = null;
   }
