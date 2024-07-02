@@ -5,11 +5,25 @@ on:
     - cron:  '0 3 2 * *' # At 03:00 on day-of-month 2
 
 jobs:
+  check-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      secrets: ${{ steps.key-check.outputs.defined }}
+    steps:
+      - name: Check for Secret availability
+        id: key-check
+        shell: bash
+        run: |
+          if [ "${{ secrets.CHROME_CLIENT_ID }}" != '' ]; then
+            echo "defined=true" >> $GITHUB_OUTPUT;
+          else
+            echo "defined=false" >> $GITHUB_OUTPUT;
+          fi
+
   fetchToken:
     runs-on: ubuntu-latest
-    env:
-      CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-    if: ${{ env.CHROME_CLIENT_ID }}
+    needs: [check-secret]
+    if: needs.check-secret.outputs.secrets == 'true'
 
     steps:
       - uses: cardinalby/google-api-fetch-token-action@v1
