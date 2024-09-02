@@ -93,9 +93,11 @@ jobs:
           artifacts: ${{ env.FILE_PATH }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.FILE_NAME }}
+          include-hidden-files: true
           path: |
             ./build/
 
@@ -123,7 +125,9 @@ jobs:
       - name: Get metadata
         run: echo "GITHUB_SHA_SHORT=$(cat ./final_artifacts/.metadata/commit | cut -c 1-6)" >> $GITHUB_ENV
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload general artifact
+        uses: actions/upload-artifact@v4
         with:
           name: iitc-button-${{ env.GITHUB_SHA_SHORT }}-artifacts
+          include-hidden-files: true
           path: final_artifacts/*
