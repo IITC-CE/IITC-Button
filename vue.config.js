@@ -5,6 +5,7 @@ const manifest_transformer = (manifest) => {
 
   if (is_beta) {
     manifest.name = `${manifest.name} Beta`;
+    manifest.browser_specific_settings.gecko.id = "iitc-beta@modos189.ru";
     manifest.browser_action.default_icon["48"] =
       "assets/icons/48/icon-beta.png";
     manifest.browser_action.default_icon["96"] =
@@ -85,7 +86,6 @@ const manifest_v3_transformer = (manifest, browser) => {
     ];
   }
   if (browser === "firefox" || browser === "safari") {
-    manifest.browser_specific_settings.gecko.id = "iitc-beta@modos189.ru";
     manifest.browser_specific_settings.gecko.strict_min_version = "109.0";
     manifest.permissions.push("webRequestBlocking");
     manifest.permissions.push("scripting");
