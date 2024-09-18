@@ -58,6 +58,7 @@ export async function manage_userscripts_api(plugins_event) {
     const remove_ids = Object.keys(plugins);
     try {
       await browser.userScripts.unregister({ ids: remove_ids });
+      return;
     } catch (e) {
       console.log("an error occurred while unregistering the plugin", e);
     }
