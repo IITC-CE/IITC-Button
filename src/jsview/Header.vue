@@ -63,6 +63,7 @@
 import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
 import { getUID, humanize_match } from "lib-iitc-manager";
+import { uuidv4 } from "@/uuid";
 const iitc_core_uid =
   "IITC: Ingress intel map total conversion+https://github.com/IITC-CE/ingress-intel-total-conversion";
 
@@ -78,6 +79,7 @@ export default {
       button_name: _("install"),
       domains: null,
       show_details: false,
+      page_uuid: uuidv4(),
     };
   },
   methods: {
@@ -86,6 +88,7 @@ export default {
       const script = [{ meta: this.meta, code: this.code }];
       await browser.runtime.sendMessage({
         type: "addUserScripts",
+        id: this.page_uuid,
         scripts: script,
       });
     },
@@ -109,6 +112,7 @@ export default {
             }
             break;
           case "resolveAddUserScripts":
+            if (request.id !== self.page_uuid) return;
             Object.entries(request.scripts).map(([, script]) => {
               let message = "";
               if (script["uid"] === iitc_core_uid) {

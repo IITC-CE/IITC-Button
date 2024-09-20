@@ -105,6 +105,7 @@ browser.runtime.onMessage.addListener(async (request) => {
       browser.runtime
         .sendMessage({
           type: "resolveAddUserScripts",
+          id: request.id,
           scripts: await manager.addUserScripts(request.scripts),
         })
         .then()

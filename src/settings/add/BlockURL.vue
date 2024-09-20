@@ -57,7 +57,11 @@ export default {
         const meta = parseMeta(code);
         const filename = url.substr(url.lastIndexOf("/") + 1);
 
-        if (meta === {} || meta["name"] === undefined) {
+        if (
+          meta === null ||
+          Object.keys(meta).length === 0 ||
+          meta["name"] === undefined
+        ) {
           message += _("notValidUserScript", filename) + "\n";
         } else {
           message +=
