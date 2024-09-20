@@ -53,6 +53,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { mixin } from "./mixins.js";
+import { sanitizeFileName } from "lib-iitc-manager/src/helpers";
 
 const saveJS = (function () {
   const a = document.createElement("a");
@@ -141,7 +142,10 @@ export default {
       });
     },
     savePlugin: async function () {
-      saveJS(this.plugin.code, this.plugin.filename);
+      saveJS(
+        this.plugin.code,
+        this.plugin.filename || `${sanitizeFileName(this.plugin.name)}.user.js`
+      );
     },
   },
   computed: {
