@@ -15,6 +15,23 @@
         ></textarea>
         <div class="btn" @click="handleExport">{{ _("saveToJson") }}</div>
       </div>
+
+      <h1>{{ _("importLocalStorage") }}</h1>
+      <div class="card">
+        <p class="message">
+          <strong>{{ _("warningAboutImportLocalStorage") }}</strong>
+        </p>
+        <form v-on:click="$refs.input.click()">
+          <div class="btn">{{ _("importFromJson") }}</div>
+          <input
+            type="file"
+            ref="input"
+            id="input"
+            style="display: none"
+            v-on:change="handleImport"
+          />
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +39,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
+import { readUploadedFileAsText } from "@/settings/utils";
 
 export default {
   name: "PageDebug",
@@ -48,6 +66,17 @@ export default {
       })();
 
       saveJson(this.local_storage_data, "iitc-localstorage.json");
+    },
+    async handleImport(e) {
+      const target = e.target;
+      const files = target.files;
+      if (files.length === 0) return;
+
+      const json_data = await readUploadedFileAsText(files[0]);
+      const data = JSON.parse(json_data);
+      await browser.storage.local.clear();
+      await browser.storage.local.set(data);
+      alert(_("backupRestored"));
     },
   },
   async mounted() {

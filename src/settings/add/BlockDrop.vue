@@ -35,6 +35,7 @@
 import browser from "webextension-polyfill";
 import { parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
+import { readUploadedFileAsText } from "@/settings/utils";
 
 /*
  * Validation UserScript and adding to IITC Button
@@ -49,7 +50,11 @@ const processingFile = async (fileList) => {
       const code = await readUploadedFileAsText(file);
       const meta = parseMeta(code);
 
-      if (meta === {} || meta["name"] === undefined) {
+      if (
+        meta === null ||
+        Object.keys(meta).length === 0 ||
+        meta["name"] === undefined
+      ) {
         message += _("notValidUserScript", file["name"]) + "\n";
       } else {
         message +=
@@ -65,22 +70,6 @@ const processingFile = async (fileList) => {
   await browser.runtime.sendMessage({
     type: "addUserScripts",
     scripts: scripts,
-  });
-};
-
-const readUploadedFileAsText = (inputFile) => {
-  const temporaryFileReader = new FileReader();
-
-  return new Promise((resolve, reject) => {
-    temporaryFileReader.onerror = () => {
-      temporaryFileReader.abort();
-      reject(new DOMException("Problem parsing input file."));
-    };
-
-    temporaryFileReader.onload = () => {
-      resolve(temporaryFileReader.result);
-    };
-    temporaryFileReader.readAsText(inputFile);
   });
 };
 

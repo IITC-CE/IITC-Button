@@ -230,6 +230,9 @@
     "importFromZip": {
         "message": "Import from zip"
     },
+    "importFromJson": {
+        "message": "Import from json"
+    },
     "export_settings": {
         "message": "Export IITC settings"
     },
@@ -250,6 +253,12 @@
     },
     "backupRestored": {
         "message": "Backup restored"
+    },
+    "importLocalStorage": {
+        "message": "Import LocalStorage"
+    },
+    "warningAboutImportLocalStorage": {
+        "message": "Clears and replaces all data of this extension with data from the selected json."
     },
     "invalidBackup": {
         "message": "The file is corrupted or is not a backup of IITC Button"
