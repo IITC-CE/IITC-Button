@@ -73,6 +73,8 @@ export default {
   props: {
     category_name: String,
     plugin: Object,
+    search_result_id: Number,
+    search_results: Object,
   },
   mixins: [mixin],
   methods: {
@@ -105,11 +107,11 @@ export default {
     deletePlugin: async function () {
       const uid = this.plugin.uid;
       const cat = this.category_name;
-      const plugins = this.$parent.$props.plugins;
+      const category_plugins = this.$parent.$props.plugins;
 
-      if (cat) {
-        if (!plugins[uid]["override"]) delete plugins[uid];
-        const count_plugins = Object.entries(plugins).reduce(
+      if (cat && category_plugins) {
+        if (!category_plugins[uid]["override"]) delete category_plugins[uid];
+        const count_plugins = Object.entries(category_plugins).reduce(
           (total, plugin_pair) => {
             const [, plugin_obj] = plugin_pair;
             if (plugin_obj["category"] === cat) total += 1;
@@ -120,6 +122,15 @@ export default {
         if (count_plugins <= 0) {
           this.back();
         }
+      } else if (this.search_result_id !== undefined) {
+        const updatedResults = { ...this.search_results };
+        if (updatedResults[this.search_result_id]["override"] === true) {
+          updatedResults[this.search_result_id]["override"] = false;
+          updatedResults[this.search_result_id]["user"] = false;
+        } else {
+          delete updatedResults[this.search_result_id];
+        }
+        this.$emit("update-results", updatedResults);
       }
 
       this.showMessage(this._("needRebootIntel"));

@@ -9,6 +9,9 @@
         v-bind:key="index"
         v-bind:category_name="plugin['category']"
         v-bind:plugin="plugin"
+        v-bind:search_result_id="index"
+        v-bind:search_results="search_results"
+        @update-results="updateSearchResults"
       ></ElementPlugin>
       <Element
         v-if="objIsEmpty(search_results)"
@@ -108,6 +111,9 @@ export default {
         categories[cat]["count_plugins_active"] = count_plugins_active;
       });
       return categories;
+    },
+    updateSearchResults(updatedResults) {
+      this.search_results = updatedResults;
     },
   },
   watch: {
