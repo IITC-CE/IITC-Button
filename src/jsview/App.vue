@@ -52,7 +52,7 @@ export default {
         .get("last_userscript_request")
         .then((d) => d.last_userscript_request);
       tabId = last_userscript_request["tabId"];
-      const url = last_userscript_request["url"];
+      url = last_userscript_request["url"];
 
       try {
         code = await ajaxGet(url);
