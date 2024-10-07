@@ -286,5 +286,11 @@
     },
     "alertHostPermissionsRequiredButtonAllUrls": {
         "message": "All URLs to ensure full support"
+    },
+    "pluginListEnabledPlugins": {
+        "message": "Enabled plugins"
+    },
+    "pluginListDisabledPlugins": {
+        "message": "Disabled plugins"
     }
 }

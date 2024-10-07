@@ -30,7 +30,7 @@ export const mixin = {
     __: function (key, item) {
       if (item === undefined || !(key in item)) return "";
       const lang = browser.i18n.getUILanguage();
-      return key + ":" + lang in item ? item[key + ":" + lang] : item[key];
+      return `${key}:${lang}` in item ? item[`${key}:${lang}`] : item[key];
     },
     objIsEmpty: function (obj) {
       return typeof obj !== "object" || Object.keys(obj).length === 0;
@@ -47,22 +47,14 @@ export const mixin = {
         return {};
       }
 
-      const arr = Object.keys(obj).map((key) => obj[key]);
+      const arr = Object.entries(obj);
+      arr.sort((a, b) => {
+        const nameA = this.__("name", a[1]).toLowerCase();
+        const nameB = this.__("name", b[1]).toLowerCase();
+        return nameA > nameB ? 1 : -1;
+      });
 
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = i + 1; j < arr.length; j++) {
-          if (
-            this.__("name", arr[i]).toLowerCase() >
-            this.__("name", arr[j]).toLowerCase()
-          ) {
-            let swap = arr[i];
-            arr[i] = arr[j];
-            arr[j] = swap;
-          }
-        }
-      }
-
-      return arr;
+      return Object.fromEntries(arr);
     },
     showMessage: function (msg) {
       this.$root.$emit("message", msg);

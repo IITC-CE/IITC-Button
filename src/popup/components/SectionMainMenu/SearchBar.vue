@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mixin } from "./mixins.js";
+import { mixin } from "../mixins.js";
 
 export default {
   name: "SearchBar",
