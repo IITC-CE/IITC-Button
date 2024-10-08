@@ -27,9 +27,9 @@
 
 <script>
 import browser from "webextension-polyfill";
-import { mixin } from "./mixins.js";
-import ProgressBar from "./ProgressBar";
-import ToggleIITC from "./ToggleIITC";
+import { mixin } from "../mixins.js";
+import ProgressBar from "./ProgressBar.vue";
+import ToggleIITC from "./ToggleIITC.vue";
 
 export default {
   name: "Title",

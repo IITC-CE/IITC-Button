@@ -56,7 +56,7 @@ const manifest_v3_transformer = (manifest, browser) => {
   ];
   manifest.content_security_policy = {
     extension_pages:
-      "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://iitc.app",
+      "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
   };
   manifest.content_scripts = [
     {

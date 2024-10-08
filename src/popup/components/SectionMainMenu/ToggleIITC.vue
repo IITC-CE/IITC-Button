@@ -31,7 +31,6 @@ export default {
         return this.iitc_is_enabled;
       },
       set: async function (newValue) {
-        this.$emit("update:iitc_is_enabled", newValue);
         await browser.runtime.sendMessage({
           type: "toggleIITC",
           value: newValue,

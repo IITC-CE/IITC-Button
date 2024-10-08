@@ -112,7 +112,6 @@ export default {
         return this.channel;
       },
       set: async function (channel) {
-        this.$emit("update:channel", channel);
         this.channel = channel;
         this.$root.channel = channel;
         await browser.runtime.sendMessage({
