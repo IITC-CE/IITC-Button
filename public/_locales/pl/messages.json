@@ -148,5 +148,134 @@
     },
     "customServerTooltipSuccess": {
         "message": "Pomyślne połączenie z serwerem"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ zastępuje teraz wbudowaną wersję IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "pleaseWait": {
+        "message": "Proszę czekać"
+    },
+    "restoreBackup": {
+        "message": "Przywróć kopię zapasową"
+    },
+    "backupRestored": {
+        "message": "Przywrócono kopię zapasową"
+    },
+    "invalidBackup": {
+        "message": "Plik jest uszkodzony lub nie jest kopią zapasową przycisku IITC"
+    },
+    "custom": {
+        "message": "Personalizacja"
+    },
+    "customServerTooltipError": {
+        "message": "Serwer niestandardowy jest niedostępny lub nie zawiera $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "reinstall": {
+        "message": "Zainstaluj ponownie"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Skrypt ten nie wymagał praw dostępu do witryn. Wygląda na to, że jest to nieprawidłowa wtyczka."
+    },
+    "jsViewTitle": {
+        "message": "Instalowanie skryptu"
+    },
+    "jsViewDetailsShowDetails": {
+        "message": "Pokaż szczegóły"
+    },
+    "jsViewDetailsHideDetails": {
+        "message": "Ukryj szczegóły"
+    },
+    "alertChromeRequiresDevModeButton": {
+        "message": "Postępuj zgodnie z tym przewodnikiem"
+    },
+    "alertHostPermissionsRequiredTitle": {
+        "message": "Zapewnij dostęp do adresów URL, aby skrypty użytkownika mogły działać. Swój wybór będziesz mógł zmienić w ustawieniach swojej przeglądarki."
+    },
+    "alertHostPermissionsRequiredButtonIntel": {
+        "message": "Tylko Ingress Intel"
+    },
+    "alertHostPermissionsRequiredButtonAllUrls": {
+        "message": "Wszystkie adresy URL, aby zapewnić pełną obsługę"
+    },
+    "every5seconds": {
+        "message": "Co 5 sekund"
+    },
+    "customServerURL": {
+        "message": "Niestandardowy adres URL serwera (dla kanału niestandardowego)"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Ten skrypt zażądał dostępu do wszystkich witryn. Użyj go, jeśli ufasz autorowi."
+    },
+    "jsViewDetailsDomainsLabel": {
+        "message": "Skrypt będzie działał na następujących stronach:"
+    },
+    "import_message": {
+        "message": "Wybierz plik .zip z kopią zapasową przycisku IITC, a następnie wybierz, co chcesz zaimportować"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "Należy pamiętać, że localStorage zawiera wszystkie dane dostępne dla przycisku IITC. Przykładowo, załączenie listy Twoich wtyczek i ich kodu źródłowego może obejmować ustawienia niektórych wtyczek (w zależności od ich implementacji)."
+    },
+    "alertChromeRequiresDevModeTitle": {
+        "message": "Nasze rozszerzenie wymaga włączenia trybu programisty w celu zarządzania skryptami użytkownika ze względu na ograniczenia Manifest&nbsp;V3 w przeglądarce Chrome. Włączenie jest łatwe!"
+    },
+    "other": {
+        "message": "Pozostałe"
+    },
+    "donate": {
+        "message": "Przekaż darowiznę"
+    },
+    "backup": {
+        "message": "Kopia zapasowa"
+    },
+    "debug": {
+        "message": "Debugowanie"
+    },
+    "import": {
+        "message": "Importuj"
+    },
+    "export": {
+        "message": "Exportuj"
+    },
+    "import_settings": {
+        "message": "Importuj ustawienia IITC"
+    },
+    "import_data": {
+        "message": "Importuj dane wtyczek"
+    },
+    "import_external": {
+        "message": "Import wtyczek zewnętrznych"
+    },
+    "importFromZip": {
+        "message": "Importuj z pliku zip"
+    },
+    "export_settings": {
+        "message": "Eksportuj ustawienia IITC"
+    },
+    "export_data": {
+        "message": "Eksportuj dane wtyczek"
+    },
+    "export_external": {
+        "message": "Eksport wtyczek zewnętrznych"
+    },
+    "exportToZip": {
+        "message": "Eksportuj do pliku zip"
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "Nie ujawniaj tych danych publicznie, jeśli używasz wtyczek frakcji!"
+    },
+    "saveToJson": {
+        "message": "Zapisz w pliku json"
     }
 }
