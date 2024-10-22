@@ -105,5 +105,84 @@
     },
     "customServerTooltipSuccess": {
         "message": "Sunucuya başarılı bir şekilde bağlanıldı"
+    },
+    "notValidUserScript": {
+        "message": "$PLUGIN_NAME$ geçerli bir UserScript değil.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "serverNotAvailableRetry": {
+        "message": "Sunucu mevcut değil. $NUM$ saniye sonra tekrar deneyin",
+        "placeholders": {
+            "num": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "beta": {
+        "message": "Beta"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Bu betik sitelere erişim izni istemedi. Geçersiz bir eklenti gibi görünüyor."
+    },
+    "addedUserScriptTo": {
+        "message": "$PLUGIN_NAME$ eklentisi \"$PLUGIN_CATEGORY$\" kategorisine eklendi.",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            },
+            "plugin_category": {
+                "content": "$2",
+                "example": "Draw"
+            }
+        }
+    },
+    "searchBoxPlaceholder": {
+        "message": "Ara…"
+    },
+    "custom": {
+        "message": "Özel"
+    },
+    "customServerTooltipError": {
+        "message": "Özel sunucu şu anda mevcut değil veya $FILE$ dosyasını içermiyor",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "Özel sunucu URL'si (özel sürüm için)"
+    },
+    "release": {
+        "message": "değişme yok"
+    },
+    "reinstall": {
+        "message": "Yeniden kur"
+    },
+    "jsViewTitle": {
+        "message": "Betik yükleniyor"
+    },
+    "jsViewDetailsAllDomains": {
+        "message": "Bu betik tüm sitelere erişim izni istedi. Yazara güveniyorsanız kullanın."
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$, artık IITC'nin yerleşik sürümünün yerini alıyor.\"",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "every5seconds": {
+        "message": "Her 5 saniyede"
     }
 }
