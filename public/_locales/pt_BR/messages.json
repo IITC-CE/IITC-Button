@@ -262,5 +262,20 @@
     },
     "every5seconds": {
         "message": "A cada 5 segundos"
+    },
+    "alertChromeRequiresDevModeButton": {
+        "message": "Por favor, siga este guia"
+    },
+    "alertHostPermissionsRequiredButtonIntel": {
+        "message": "Apenas no ingress Intel"
+    },
+    "alertHostPermissionsRequiredButtonAllUrls": {
+        "message": "Todos os URLs para garantir suporte total"
+    },
+    "alertChromeRequiresDevModeTitle": {
+        "message": "Nossa extensão requer que o Modo Desenvolvedor esteja habilitado para gerenciar UserScripts, devido às limitações do Manifest V3 no Chrome. É fácil ativar!"
+    },
+    "alertHostPermissionsRequiredTitle": {
+        "message": "Forneça acesso a URLs para que os scripts de usuário funcionem. Você poderá alterar sua escolha nas configurações do seu navegador."
     }
 }
