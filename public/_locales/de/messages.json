@@ -229,5 +229,53 @@
     },
     "saveToJson": {
         "message": "Als json speichern"
+    },
+    "alertChromeRequiresDevModeTitle": {
+        "message": "Für unsere Erweiterung muss der Entwicklermodus aktiviert sein, um UserScripts zu verwalten, da Manifest&nbsp;V3 Einschränkungen in Chrome hat. Es ist einfach zu aktivieren!"
+    },
+    "jsViewDetailsNoDomains": {
+        "message": "Dieses Skript hat nicht nach den Zugriffsrechten für die Websites gefragt. Es scheint ein ungültiges Plugin zu sein."
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ ersetzt jetzt die integrierte Version von IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "alertChromeRequiresDevModeButton": {
+        "message": "Bitte folge dieser Anleitung"
+    },
+    "alertHostPermissionsRequiredTitle": {
+        "message": "Ermögliche den Zugriff auf URLs, damit die Benutzerskripte funktionieren. Du kannst deine Wahl in den Einstellungen deines Browsers ändern."
+    },
+    "alertHostPermissionsRequiredButtonIntel": {
+        "message": "Nur Ingress Intel"
+    },
+    "alertHostPermissionsRequiredButtonAllUrls": {
+        "message": "Alle URLs, um vollen Support zu gewährleisten"
+    },
+    "exportToZip": {
+        "message": "Als .zip exportieren"
+    },
+    "pleaseWait": {
+        "message": "Bitte warten"
+    },
+    "restoreBackup": {
+        "message": "Backup wiederherstellen"
+    },
+    "backupRestored": {
+        "message": "Backup wiederhergestellt"
+    },
+    "invalidBackup": {
+        "message": "Die Datei ist beschädigt oder es handelt sich nicht um ein IITC-Button-Backup"
+    },
+    "warningAboutLocalStoragePart1": {
+        "message": "Beachte, dass localStorage alle Daten enthält, die für den IITC-Button verfügbar sind. Dazu gehören z. B. eine Liste deiner Plugins und deren Quellcode, möglicherweise auch die Einstellungen einiger Plugins (abhängig von ihrer Implementierung)."
+    },
+    "warningAboutLocalStoragePart2": {
+        "message": "Stelle diese Daten nicht öffentlich zur Verfügung, wenn du Fraktions-Plugins verwendest!"
     }
 }
