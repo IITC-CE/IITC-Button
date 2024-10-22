@@ -184,5 +184,53 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "Ocultar detalles"
+    },
+    "import_settings": {
+        "message": "Importar configuraciones de IITC"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ reemplaza ahora a la versión incorporada de IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "import_external": {
+        "message": "Importar de plugins externos"
+    },
+    "export_settings": {
+        "message": "Exportar configuraciones de IITC"
+    },
+    "import_data": {
+        "message": "Importar datos de plugins"
+    },
+    "every5seconds": {
+        "message": "Cada 5 Segundos"
+    },
+    "other": {
+        "message": "Otros"
+    },
+    "donate": {
+        "message": "Donar"
+    },
+    "backup": {
+        "message": "Copia de Seguridad"
+    },
+    "debug": {
+        "message": "Depurar"
+    },
+    "import": {
+        "message": "Importar"
+    },
+    "export": {
+        "message": "Exportar"
+    },
+    "import_message": {
+        "message": "Seleccione el archivo .zip com el Botón copia de seguridad de IITC y, a continuación, seleccione qué importar"
+    },
+    "importFromZip": {
+        "message": "Importar desde zip"
     }
 }
