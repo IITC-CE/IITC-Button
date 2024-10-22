@@ -261,5 +261,20 @@
     },
     "saveToJson": {
         "message": "保存到 json"
+    },
+    "alertHostPermissionsRequiredButtonIntel": {
+        "message": "只用于Ingress Intel"
+    },
+    "alertChromeRequiresDevModeButton": {
+        "message": "请遵循本指南"
+    },
+    "alertHostPermissionsRequiredTitle": {
+        "message": "提供对 URL 的访问，以便用户脚本正常工作。您将能够在浏览器设置中更改您的选择。"
+    },
+    "alertHostPermissionsRequiredButtonAllUrls": {
+        "message": "以确保所有 URL能得到完整的支持"
+    },
+    "alertChromeRequiresDevModeTitle": {
+        "message": "由于Chrome使用了Manifest&nbsp;V3，因此本插件需要开启“开发者模式”来管理用户脚本，请在设置--扩展程序，开启“开发者模式”按钮！"
     }
 }
