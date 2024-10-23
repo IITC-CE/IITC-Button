@@ -12,23 +12,14 @@
     <section class="section options">
       <SectionOptions> </SectionOptions>
     </section>
-    <section class="section plugins">
-      <SectionPlugins
-        v-bind:category_name="category_name"
-        v-bind:plugins="plugins"
-        v-bind:categories="categories"
-      >
-      </SectionPlugins>
-    </section>
     <Message></Message>
     <Alert></Alert>
   </div>
 </template>
 
 <script>
-import SectionMainMenu from "./components/SectionMainMenu.vue";
+import SectionMainMenu from "./components/SectionMainMenu/SectionMainMenu.vue";
 import SectionOptions from "./components/SectionOptions.vue";
-import SectionPlugins from "./components/SectionPlugins.vue";
 
 import Message from "./components/Message";
 import Alert from "./components/Alert";
@@ -51,7 +42,6 @@ export default {
   components: {
     SectionMainMenu,
     SectionOptions,
-    SectionPlugins,
     Message,
     Alert,
   },
@@ -106,19 +96,6 @@ object {
 }
 
 /*
- * item-wrapper
- */
-.item-wrapper {
-  border-bottom: 1px solid var(--color-white);
-}
-.item-wrapper:last-child {
-  border-bottom: 0;
-}
-.categories .item-wrapper:last-child {
-  border-bottom: 1px solid var(--color-white);
-}
-
-/*
  * section
  */
 .section {
@@ -138,8 +115,7 @@ body#main-menu .section.main-menu {
   margin-left: 0;
   z-index: 1;
 }
-body#options .section.options,
-body#plugins .section.plugins {
+body#options .section.options {
   margin-left: 0;
 }
 
@@ -156,8 +132,7 @@ body#main-menu #app.is_safari .section.main-menu {
   display: block;
 }
 
-body#options #app.is_safari .section.options,
-body#plugins #app.is_safari .section.plugins {
+body#options #app.is_safari .section.options {
   display: block;
 }
 
@@ -190,7 +165,7 @@ body#plugins #app.is_safari .section.plugins {
   --color-red: #ff4136;
   --color-black: #111;
   --color-gray: #aaa;
-  --color-silver: #eee;
+  --color-silver: #f4f4f4;
   --state-on: #43a047;
   --state-off: #e53935;
   --state-off2: #6c3939;
