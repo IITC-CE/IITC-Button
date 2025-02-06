@@ -277,5 +277,20 @@
     },
     "alertHostPermissionsRequiredTitle": {
         "message": "Forneça acesso a URLs para que os scripts de usuário funcionem. Você poderá alterar sua escolha nas configurações do seu navegador."
+    },
+    "importLocalStorage": {
+        "message": "Importar do armazenamento local"
+    },
+    "warningAboutImportLocalStorage": {
+        "message": "Limpa e substitui todos os dados desta extensão pelos dados do json selecionado."
+    },
+    "pluginListEnabledPlugins": {
+        "message": "Plugins habilitados"
+    },
+    "pluginListDisabledPlugins": {
+        "message": "Plugins desabilitados"
+    },
+    "importFromJson": {
+        "message": "Importar de json"
     }
 }
