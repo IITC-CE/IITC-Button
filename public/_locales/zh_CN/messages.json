@@ -276,5 +276,20 @@
     },
     "alertChromeRequiresDevModeTitle": {
         "message": "由于Chrome使用了Manifest&nbsp;V3，因此本插件需要开启“开发者模式”来管理用户脚本，请在设置--扩展程序，开启“开发者模式”按钮！"
+    },
+    "importFromJson": {
+        "message": "从 json 导入"
+    },
+    "importLocalStorage": {
+        "message": "从本地导入"
+    },
+    "pluginListDisabledPlugins": {
+        "message": "关闭的插件"
+    },
+    "pluginListEnabledPlugins": {
+        "message": "启用的插件"
+    },
+    "warningAboutImportLocalStorage": {
+        "message": "选中的 json 数据将覆盖本插件当前的数据。"
     }
 }
