@@ -2,7 +2,7 @@
 <template>
   <div
     class="tag"
-    :class="{ active: isActive }"
+    :class="{ active: isActive, 'has-new-plugins': isNew }"
     :style="{ '--tag-color': getTagColor(tag.name) }"
     @click="handleClick"
   >
@@ -16,6 +16,10 @@ export default {
   props: {
     tag: Object,
     isActive: Boolean,
+    isNew: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
@@ -43,6 +47,7 @@ export default {
 <style scoped>
 .tag {
   --tag-color: #eee;
+  position: relative;
   display: flex;
   cursor: pointer;
   padding: 4px 10px;
@@ -55,11 +60,24 @@ export default {
   box-shadow: none;
   transition: border 0.1s ease, background-color 0.1s ease, box-shadow 0.1s ease;
 }
+
 .tag.active,
 .tag:hover {
   border-color: oklch(from var(--tag-color) calc(l - 0.2) calc(c + 0.05) h);
   background-color: oklch(from var(--tag-color) l calc(c + 0.2) h);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
+}
+
+.tag.has-new-plugins::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-yellow);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
