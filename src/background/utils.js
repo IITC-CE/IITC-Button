@@ -33,6 +33,8 @@ export function getPluginMatches(plugin) {
   }
   if (plugin.match) {
     matches = matches.concat(plugin.match);
+  } else if (plugin.include) {
+    matches = matches.concat(plugin.include);
   }
   return matches;
 }
