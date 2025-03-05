@@ -3,7 +3,13 @@
   <div class="element">
     <div
       class="plugin item-wrapper"
-      :class="plugin.status"
+      :class="[
+        plugin.status,
+        {
+          'recently-changed': hasRecentStatusChange && !isRecentlyAdded,
+          'recently-added': isRecentlyAdded,
+        },
+      ]"
       :title="pluginDescription()"
       :data-uid="plugin.uid"
       v-if="plugin.uid"
@@ -84,7 +90,41 @@ export default {
     search_result_id: Number,
     search_results: Object,
   },
+  data() {
+    return {
+      hasRecentStatusChange: false,
+      statusChangeTimer: null,
+    };
+  },
   mixins: [mixin],
+  watch: {
+    "plugin.statusChangedAt": {
+      immediate: true,
+      handler() {
+        // Clear any existing timer
+        if (this.statusChangeTimer) {
+          clearTimeout(this.statusChangeTimer);
+          this.statusChangeTimer = null;
+        }
+
+        if (this.wasStatusChangedWithinLastMinute) {
+          // Apply highlight
+          this.hasRecentStatusChange = true;
+
+          // Set timer to remove highlight after one minute
+          const timeLeft =
+            60000 - (Date.now() / 1000 - this.plugin.statusChangedAt) * 1000;
+          const timeout = Math.max(0, Math.min(timeLeft, 60000));
+
+          this.statusChangeTimer = setTimeout(() => {
+            this.hasRecentStatusChange = false;
+          }, timeout);
+        } else {
+          this.hasRecentStatusChange = false;
+        }
+      },
+    },
+  },
   methods: {
     pluginDescription: function () {
       return (
@@ -143,6 +183,31 @@ export default {
         "/assets/icons/24/userscript-no-icon.png"
       );
     },
+    // Check if the plugin status was changed within the last minute
+    wasStatusChangedWithinLastMinute: function () {
+      if (!this.plugin.statusChangedAt) return false;
+
+      const oneMinuteInSeconds = 60;
+      const currentTime = Date.now() / 1000;
+      const timeSinceChange = currentTime - this.plugin.statusChangedAt;
+
+      return timeSinceChange <= oneMinuteInSeconds;
+    },
+    // Check if the plugin was added within the last hour
+    isRecentlyAdded: function () {
+      if (!this.plugin.addedAt) return false;
+
+      const oneHourInSeconds = 60 * 60;
+      const currentTime = Date.now() / 1000;
+      const timeSinceAdded = currentTime - this.plugin.addedAt;
+
+      return timeSinceAdded <= oneHourInSeconds;
+    },
+  },
+  beforeDestroy() {
+    if (this.statusChangeTimer) {
+      clearTimeout(this.statusChangeTimer);
+    }
   },
 };
 </script>
@@ -164,11 +229,33 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   background: transparent;
+  position: relative;
 }
 .plugin:hover,
 .plugin:active,
 .plugin:focus {
   background: var(--color-silver);
+}
+/* Base pseudo-element for all plugins */
+.plugin::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  opacity: 0;
+  background-color: var(--color-gray);
+  transition: opacity 0.3s ease;
+}
+/* Active state for the status change indicator */
+.plugin.recently-changed::before {
+  opacity: 1;
+}
+/* Active state for the newly added indicator (green) */
+.plugin.recently-added::before {
+  opacity: 1;
+  background-color: var(--color-yellow);
 }
 .plugin__icon {
   width: 24px;
