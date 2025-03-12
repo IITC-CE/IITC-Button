@@ -3,34 +3,13 @@
 import browser from "webextension-polyfill";
 import { strToBase64 } from "@/strToBase64";
 
-// Global iframe and initialization state
 let xhrIframe = null;
-let isInitialized = false;
 let pendingRequests = [];
 let messageListener = null;
 
 // Retry tracking
 let retryCount = 0;
 const MAX_RETRIES = 3;
-
-// Setup XHR bridge
-export function setupXhrBridge() {
-  // Prevent double initialization
-  if (isInitialized) return;
-  isInitialized = true;
-
-  try {
-    // Create and add iframe after DOM is ready
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", createIframe);
-    } else {
-      createIframe();
-    }
-  } catch (error) {
-    console.error("IITC Button XHR Bridge: initialization failed", error);
-    isInitialized = false;
-  }
-}
 
 // Create sandbox iframe
 function createIframe() {
