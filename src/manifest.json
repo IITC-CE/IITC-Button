@@ -29,5 +29,15 @@
   "icons": {
     "48": "assets/icons/48/icon.png",
     "128": "assets/icons/128/icon.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "xhr-sandbox.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }

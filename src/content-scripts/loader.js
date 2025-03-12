@@ -5,6 +5,7 @@ import { bridgeAction } from "@/content-scripts/bridge";
 import { inject_gm_api } from "@/userscripts/wrapper";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { is_iitc_enabled } from "@/userscripts/utils";
+import { setupXhrBridge } from "@/content-scripts/xhr-bridge";
 
 function preparePage() {
   document.addEventListener("bridgeRequest", bridgeAction);
@@ -12,6 +13,8 @@ function preparePage() {
 
   inject_gm_api();
   document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
+
+  setupXhrBridge();
 }
 
 if (isRunContentScript) {

@@ -77,13 +77,7 @@ const manifest_v3_transformer = (manifest, browser) => {
     manifest.permissions.push("userScripts");
     manifest.permissions.push("declarativeNetRequest");
     manifest.background.service_worker = "js/background.js";
-
-    manifest.web_accessible_resources = [
-      {
-        resources: ["jsview.html"],
-        matches: ["<all_urls>"],
-      },
-    ];
+    manifest.web_accessible_resources[0].resources.push("jsview.html");
   }
   if (browser === "firefox" || browser === "safari") {
     manifest.browser_specific_settings.gecko.strict_min_version = "109.0";
@@ -104,6 +98,12 @@ module.exports = {
       template: "public/browser-extension.html",
       entry: "src/background/background.js",
       title: "background",
+    },
+    xhr_sandbox: {
+      template: "public/browser-extension.html",
+      entry: "./src/xhr-sandbox.js",
+      title: "IITC XHR Sandbox",
+      filename: "xhr-sandbox.html",
     },
     popup: {
       template: "public/browser-extension.html",

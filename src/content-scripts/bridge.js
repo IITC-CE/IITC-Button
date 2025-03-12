@@ -3,13 +3,14 @@
 import browser from "webextension-polyfill";
 import { strToBase64 } from "@/strToBase64";
 import { isRunContentScript } from "@/content-scripts/utils";
+import { sendXhrRequest } from "@/content-scripts/xhr-bridge";
 
 export async function bridgeAction(e) {
   const task = e.detail;
 
   switch (task.task_type) {
     case "xmlHttpRequest":
-      await xmlResponseBridge(task);
+      sendXhrRequest(task);
       break;
     case "getStorage":
       await getStorageBridge(task);
@@ -24,15 +25,6 @@ export async function bridgeAction(e) {
       return;
   }
 }
-
-const xmlResponseBridge = async (data) => {
-  browser.runtime
-    .sendMessage({
-      type: "xmlHttpRequestHandler",
-      value: data,
-    })
-    .then();
-};
 
 if (isRunContentScript) {
   browser.runtime.onMessage.addListener(async (request) => {

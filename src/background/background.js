@@ -14,7 +14,6 @@ import {
   onToggleIITC,
 } from "./intel";
 import "./requests";
-import { strToBase64 } from "@/strToBase64";
 import {
   init_userscripts_api,
   is_iitc_enabled,
@@ -83,9 +82,6 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
     case "popupWasOpened":
       await initUserscriptsApi();
-      break;
-    case "xmlHttpRequestHandler":
-      await xmlHttpRequestHandler(request.value);
       break;
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
@@ -161,60 +157,6 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
   }
 });
-
-// Execution in the context of an extension, to bypass CORS policy.
-async function xmlHttpRequestHandler(data) {
-  async function xmlResponse(tab_id, callback, response) {
-    const detail_stringify = JSON.stringify({
-      task_uuid: data.task_uuid,
-      task_type: data.task_type,
-      response: JSON.stringify(response),
-    });
-
-    const bridge_data = strToBase64(String(detail_stringify));
-
-    let allTabs = [
-      {
-        id: data.tab_id,
-      },
-    ];
-    if (IS_USERSCRIPTS_API) {
-      allTabs = await browser.tabs.query({ active: true });
-    }
-
-    for (const tab of allTabs) {
-      await browser.tabs.sendMessage(tab.id, {
-        type: "xmlHttpRequestToCS",
-        value: bridge_data,
-      });
-    }
-  }
-
-  try {
-    const response = await fetch(data.url, {
-      mode: "no-cors",
-      method: data.method,
-      headers: data.headers,
-      body: data.method !== "GET" ? data.data : undefined,
-      credentials: data.user && data.password ? "include" : "same-origin",
-    });
-
-    const text = await response.text();
-
-    // Create a response object similar to the one in XMLHttpRequest
-    const responseObject = {
-      readyState: 4,
-      responseHeaders: "Not directly accessible with fetch",
-      responseText: text,
-      status: response.status,
-      statusText: response.statusText,
-    };
-
-    await xmlResponse(data.tab_id, data.onload, responseObject);
-  } catch (error) {
-    console.error("Fetch error:", error);
-  }
-}
 
 async function initUserscriptsApi() {
   if (!IS_USERSCRIPTS_API) return;
