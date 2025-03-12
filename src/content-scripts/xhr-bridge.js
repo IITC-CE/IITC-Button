@@ -2,6 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { strToBase64 } from "@/strToBase64";
+import { IS_SAFARI } from "@/userscripts/env";
 
 let xhrIframe = null;
 let pendingRequests = [];
@@ -75,8 +76,20 @@ function handleXhrResponseData(data) {
   }
 }
 
-// Send XHR request through iframe
+// Send XHR request
 export function sendXhrRequest(data) {
+  // For Safari, use fetch fallback
+  if (IS_SAFARI) {
+    browser.runtime
+      .sendMessage({
+        type: "XHRFallbackRequest",
+        value: data,
+      })
+      .then();
+    return;
+  }
+
+  // For other browsers, use iframe
   // Queue request if iframe not ready
   if (!xhrIframe || !xhrIframe.contentWindow) {
     pendingRequests.push(data);

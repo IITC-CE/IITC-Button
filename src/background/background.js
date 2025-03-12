@@ -23,6 +23,7 @@ import {
   inject_plugin_via_content_scripts,
   manage_userscripts_api,
 } from "@/background/injector";
+import { xmlHttpRequestFallbackHandler } from "@/background/xhr-fallback";
 
 const manager = new Manager({
   storage: browser.storage.local,
@@ -82,6 +83,9 @@ browser.runtime.onMessage.addListener(async (request) => {
       break;
     case "popupWasOpened":
       await initUserscriptsApi();
+      break;
+    case "XHRFallbackRequest":
+      await xmlHttpRequestFallbackHandler(request.value);
       break;
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);

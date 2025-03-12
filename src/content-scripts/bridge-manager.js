@@ -2,6 +2,7 @@
 
 import { sendXhrRequest } from "./xhr-bridge";
 import { handleStorageRequest } from "./storage-bridge";
+import { isRunContentScript } from "@/content-scripts/utils";
 
 // Flag to prevent multiple initializations
 let isInitialized = false;
@@ -36,6 +37,17 @@ export function bridgeAction(e) {
       console.warn("IITC Button: Unknown bridge request type", task.task_type);
       break;
   }
+}
+
+// Fallback XHR
+if (isRunContentScript) {
+  browser.runtime.onMessage.addListener(async (request) => {
+    switch (request.type) {
+      case "XHRFallbackResponse":
+        bridgeResponse(request.value);
+        break;
+    }
+  });
 }
 
 /**
