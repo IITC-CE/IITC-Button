@@ -3,6 +3,9 @@
 import browser from "webextension-polyfill";
 
 export const IS_CHROME = !!browser.runtime.OnInstalledReason?.CHROME_UPDATE;
+export const IS_SAFARI =
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent) ||
+  (navigator.vendor && navigator.vendor.indexOf("Apple") > -1);
 export const MANIFEST = browser.runtime.getManifest();
 
 export const IS_USERSCRIPTS_API = IS_CHROME && MANIFEST.manifest_version === 3;
