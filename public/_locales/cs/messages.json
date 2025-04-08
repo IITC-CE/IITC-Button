@@ -139,5 +139,29 @@
     },
     "badgeOverride": {
         "message": "přepsat"
+    },
+    "customServerHint": {
+        "message": "Např.:"
+    },
+    "customServerTooltipError": {
+        "message": "Vlastní server není k dispozici nebo neobsahuje $FILE$",
+        "placeholders": {
+            "file": {
+                "content": "$1",
+                "example": "http://localhost:8080/meta.json"
+            }
+        }
+    },
+    "customServerURL": {
+        "message": "Adresa URL vlastního serveru (pro vlastní kanál)"
+    },
+    "custom": {
+        "message": "Vlastní"
+    },
+    "every5seconds": {
+        "message": "Každých 5 sekund"
+    },
+    "customServerTooltipSuccess": {
+        "message": "Úspěšné připojení k serveru"
     }
 }
