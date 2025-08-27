@@ -86,12 +86,6 @@ export default {
     },
   },
   async mounted() {
-    if (IS_USERSCRIPTS_API) {
-      await browser.runtime.sendMessage({
-        type: "checkUserScriptsApiAvailable",
-      });
-    }
-
     const self = this;
     browser.runtime.onMessage.addListener(async function (request) {
       switch (request.type) {
@@ -100,6 +94,12 @@ export default {
           break;
       }
     });
+
+    if (IS_USERSCRIPTS_API) {
+      await browser.runtime.sendMessage({
+        type: "checkUserScriptsApiAvailable",
+      });
+    }
 
     if (!(await this.checkHostPermissions())) {
       this.showHostPermissions = true;
