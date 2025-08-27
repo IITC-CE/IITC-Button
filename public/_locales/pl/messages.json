@@ -197,7 +197,7 @@
     "jsViewDetailsHideDetails": {
         "message": "Ukryj szczegóły"
     },
-    "alertChromeRequiresDevModeButton": {
+    "alertChromeRequiresUserScriptsButton": {
         "message": "Postępuj zgodnie z tym przewodnikiem"
     },
     "alertHostPermissionsRequiredTitle": {
@@ -227,7 +227,7 @@
     "warningAboutLocalStoragePart1": {
         "message": "Należy pamiętać, że localStorage zawiera wszystkie dane dostępne dla przycisku IITC. Przykładowo, załączenie listy Twoich wtyczek i ich kodu źródłowego może obejmować ustawienia niektórych wtyczek (w zależności od ich implementacji)."
     },
-    "alertChromeRequiresDevModeTitle": {
+    "alertChromeRequiresUserScriptsTitle": {
         "message": "Nasze rozszerzenie wymaga włączenia trybu programisty w celu zarządzania skryptami użytkownika ze względu na ograniczenia Manifest&nbsp;V3 w przeglądarce Chrome. Włączenie jest łatwe!"
     },
     "other": {

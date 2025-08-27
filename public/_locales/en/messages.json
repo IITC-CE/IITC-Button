@@ -272,10 +272,10 @@
     "saveToJson": {
         "message": "Save to json"
     },
-    "alertChromeRequiresDevModeTitle": {
-        "message": "Our extension requires Developer&nbsp;Mode to be enabled to manage UserScripts, due to Manifest&nbsp;V3 limitations in Chrome. It's easy to enable!"
+    "alertChromeRequiresUserScriptsTitle": {
+        "message": "Enable User Scripts for this extension due to Manifest&nbsp;V3 limitations in Chrome"
     },
-    "alertChromeRequiresDevModeButton": {
+    "alertChromeRequiresUserScriptsButton": {
         "message": "Please follow this guide"
     },
     "alertHostPermissionsRequiredTitle": {

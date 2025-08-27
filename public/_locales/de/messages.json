@@ -230,7 +230,7 @@
     "saveToJson": {
         "message": "Als json speichern"
     },
-    "alertChromeRequiresDevModeTitle": {
+    "alertChromeRequiresUserScriptsTitle": {
         "message": "Für unsere Erweiterung muss der Entwicklermodus aktiviert sein, um UserScripts zu verwalten, da Manifest&nbsp;V3 Einschränkungen in Chrome hat. Es ist einfach zu aktivieren!"
     },
     "jsViewDetailsNoDomains": {
@@ -245,7 +245,7 @@
             }
         }
     },
-    "alertChromeRequiresDevModeButton": {
+    "alertChromeRequiresUserScriptsButton": {
         "message": "Bitte folge dieser Anleitung"
     },
     "alertHostPermissionsRequiredTitle": {
