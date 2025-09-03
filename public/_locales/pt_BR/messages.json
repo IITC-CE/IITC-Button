@@ -263,7 +263,7 @@
     "every5seconds": {
         "message": "A cada 5 segundos"
     },
-    "alertChromeRequiresDevModeButton": {
+    "alertChromeRequiresUserScriptsButton": {
         "message": "Por favor, siga este guia"
     },
     "alertHostPermissionsRequiredButtonIntel": {
@@ -272,7 +272,7 @@
     "alertHostPermissionsRequiredButtonAllUrls": {
         "message": "Todos os URLs para garantir suporte total"
     },
-    "alertChromeRequiresDevModeTitle": {
+    "alertChromeRequiresUserScriptsTitle": {
         "message": "Nossa extensão requer que o Modo Desenvolvedor esteja habilitado para gerenciar UserScripts, devido às limitações do Manifest V3 no Chrome. É fácil ativar!"
     },
     "alertHostPermissionsRequiredTitle": {

@@ -1,15 +1,15 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <div class="bg" v-if="showChromeRequiresDevMode || showHostPermissions">
+  <div class="bg" v-if="showChromeRequiresUserScripts || showHostPermissions">
     <div
-      class="alert alertChromeRequiresDevMode"
-      v-if="showChromeRequiresDevMode"
+      class="alert alertChromeRequiresUserScripts"
+      v-if="showChromeRequiresUserScripts"
     >
-      <p v-html="_('alertChromeRequiresDevModeTitle')"></p>
+      <p v-html="_('alertChromeRequiresUserScriptsTitle')"></p>
       <div
-        v-on:click="onClickButton('chromeDevMode')"
+        v-on:click="onClickButton('chromeUserScripts')"
         class="button"
-        v-html="_('alertChromeRequiresDevModeButton')"
+        v-html="_('alertChromeRequiresUserScriptsButton')"
       ></div>
     </div>
     <div class="alert alertHostPermissions" v-if="showHostPermissions">
@@ -46,17 +46,15 @@ export default {
   data() {
     return {
       show: false,
-      showChromeRequiresDevMode: false,
+      showChromeRequiresUserScripts: false,
       showHostPermissions: false,
     };
   },
   methods: {
     onClickButton: async function (action) {
       switch (action) {
-        case "chromeDevMode":
-          await this.openLink(
-            "https://developer.chrome.com/docs/extensions/reference/api/userScripts#developer_mode_for_extension_users"
-          );
+        case "chromeUserScripts":
+          await this.openLink("https://www.tampermonkey.net/faq.php#Q209");
           break;
         case "hostPermissionIntel":
           await this.requestPermissions(intelOrigins);
@@ -86,20 +84,20 @@ export default {
     },
   },
   async mounted() {
+    const self = this;
+    browser.runtime.onMessage.addListener(async function (request) {
+      switch (request.type) {
+        case "resolveCheckUserScriptsApiAvailable":
+          self.showChromeRequiresUserScripts = !request.data;
+          break;
+      }
+    });
+
     if (IS_USERSCRIPTS_API) {
       await browser.runtime.sendMessage({
         type: "checkUserScriptsApiAvailable",
       });
     }
-
-    const self = this;
-    browser.runtime.onMessage.addListener(async function (request) {
-      switch (request.type) {
-        case "resolveCheckUserScriptsApiAvailable":
-          self.showChromeRequiresDevMode = !request.data;
-          break;
-      }
-    });
 
     if (!(await this.checkHostPermissions())) {
       this.showHostPermissions = true;
