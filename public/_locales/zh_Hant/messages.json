@@ -262,5 +262,14 @@
     },
     "saveToJson": {
         "message": "儲存到 json"
+    },
+    "importFromJson": {
+        "message": "從 json 匯入"
+    },
+    "pluginListEnabledPlugins": {
+        "message": "啟用插件"
+    },
+    "pluginListDisabledPlugins": {
+        "message": "停用插件"
     }
 }
