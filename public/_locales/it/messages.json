@@ -31,10 +31,10 @@
         "message": "Salva"
     },
     "everyWeek": {
-        "message": "Ogni settimana"
+        "message": "Ogni Settimana"
     },
     "everyDay": {
-        "message": "Ogni giorno"
+        "message": "Ogni Giorno"
     },
     "every12hours": {
         "message": "Ogni 12 ore"
@@ -74,7 +74,7 @@
         "message": "it"
     },
     "errorReadingFile": {
-        "message": "Si è verificato un errore leggendo $PLUGIN_NAME$.",
+        "message": "Si è verificato un errore nella lettura di $PLUGIN_NAME$.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -174,12 +174,63 @@
         "message": "Nascondi dettagli"
     },
     "customServerTooltipError": {
-        "message": "Il server personalizzato non è dispobilibe oppure non contiene $FILE$",
+        "message": "Il server personalizzato non è disponibile oppure non contiene $FILE$",
         "placeholders": {
             "file": {
                 "content": "$1",
                 "example": "http://localhost:8080/meta.json"
             }
         }
+    },
+    "custom": {
+        "message": "Personalizzato"
+    },
+    "importFromJson": {
+        "message": "importa da json"
+    },
+    "export_settings": {
+        "message": "Esporta impostazioni di IITC"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ ora sostituisce la versione di default di IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "other": {
+        "message": "Altro"
+    },
+    "donate": {
+        "message": "Dona"
+    },
+    "backup": {
+        "message": "Backup"
+    },
+    "debug": {
+        "message": "Debug"
+    },
+    "import": {
+        "message": "Importa"
+    },
+    "export": {
+        "message": "Esporta"
+    },
+    "import_data": {
+        "message": "Importa dati plugin"
+    },
+    "import_external": {
+        "message": "Importazione di plugin esterni"
+    },
+    "importFromZip": {
+        "message": "Importa da zip"
+    },
+    "every5seconds": {
+        "message": "Ogni 5 Secondi"
+    },
+    "import_settings": {
+        "message": "Importa impostazioni di IITC"
     }
 }
