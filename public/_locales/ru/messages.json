@@ -182,5 +182,53 @@
     },
     "jsViewDetailsHideDetails": {
         "message": "Скрыть детали"
+    },
+    "addedCustomIITCCore": {
+        "message": "$PLUGIN_NAME$ теперь заменяет встроенную версию IITC",
+        "placeholders": {
+            "plugin_name": {
+                "content": "$1",
+                "example": "Awesome plugin"
+            }
+        }
+    },
+    "importFromJson": {
+        "message": "Импортировать из JSON"
+    },
+    "donate": {
+        "message": "Донаты"
+    },
+    "backup": {
+        "message": "Резервная копия"
+    },
+    "debug": {
+        "message": "Отладка"
+    },
+    "export": {
+        "message": "Экспорт"
+    },
+    "import_settings": {
+        "message": "Импортировать настройки IITC"
+    },
+    "import_data": {
+        "message": "Импортировать плагин"
+    },
+    "importFromZip": {
+        "message": "Импорт из zip архива"
+    },
+    "import_external": {
+        "message": "Импорт внешних плагинов"
+    },
+    "every5seconds": {
+        "message": "Каждые 5 секунд"
+    },
+    "other": {
+        "message": "Другое"
+    },
+    "import": {
+        "message": "Импорт"
+    },
+    "import_message": {
+        "message": "Выберите .zip архив с кнопкой резервной копии IITC , затем выберите что импортировать"
     }
 }
