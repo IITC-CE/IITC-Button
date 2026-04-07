@@ -1,11 +1,12 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
-import { strToBase64 } from "@/strToBase64";
+import browser from "webextension-polyfill";
+import { strToBase64 } from "lib-iitc-manager";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 
 // Execution in the context of an extension, to bypass CORS policy.
-export async function xmlHttpRequestFallbackHandler(data) {
-  async function xmlResponse(tab_id, callback, response) {
+export async function xmlHttpRequestFallbackHandler(data, sender) {
+  async function xmlResponse(response) {
     const detail_stringify = JSON.stringify({
       task_uuid: data.task_uuid,
       task_type: data.task_type,
@@ -14,17 +15,17 @@ export async function xmlHttpRequestFallbackHandler(data) {
 
     const bridge_data = strToBase64(String(detail_stringify));
 
-    let allTabs = [
-      {
-        id: data.tab_id,
-      },
-    ];
+    const tabId = sender?.tab?.id;
     if (IS_USERSCRIPTS_API) {
-      allTabs = await browser.tabs.query({ active: true });
-    }
-
-    for (const tab of allTabs) {
-      await browser.tabs.sendMessage(tab.id, {
+      const allTabs = await browser.tabs.query({ active: true });
+      for (const tab of allTabs) {
+        await browser.tabs.sendMessage(tab.id, {
+          type: "XHRFallbackResponse",
+          value: bridge_data,
+        });
+      }
+    } else if (tabId) {
+      await browser.tabs.sendMessage(tabId, {
         type: "XHRFallbackResponse",
         value: bridge_data,
       });
@@ -51,7 +52,7 @@ export async function xmlHttpRequestFallbackHandler(data) {
       statusText: response.statusText,
     };
 
-    await xmlResponse(data.tab_id, data.onload, responseObject);
+    await xmlResponse(responseObject);
   } catch (error) {
     console.error("Fetch error:", error);
   }

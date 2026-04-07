@@ -1,24 +1,18 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import { gm_api_for_plugin } from "@/userscripts/wrapper";
 import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
 import { is_userscripts_api_available } from "@/userscripts/utils";
 import { IS_LEGACY_API } from "@/userscripts/env";
 
-export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
+export async function inject_plugin_via_content_scripts(plugin) {
   const tabs = await getNiaTabsToInject(plugin);
   for (let tab of Object.values(tabs)) {
-    const pluginTab = { ...plugin };
-    if (use_gm_api) {
-      pluginTab.code = await gm_api_for_plugin(pluginTab, tab.id);
-    }
-
     try {
       if (IS_LEGACY_API) {
         const inject = `
           document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-            detail: ${JSON.stringify({ plugin: pluginTab })}
+            detail: ${JSON.stringify({ plugin })}
           }));
         `;
         await browser.tabs.executeScript(tab.id, {
@@ -35,7 +29,7 @@ export async function inject_plugin_via_content_scripts(plugin, use_gm_api) {
               })
             );
           },
-          args: [{ plugin: pluginTab }],
+          args: [{ plugin }],
           injectImmediately: true,
         });
       }
@@ -52,7 +46,6 @@ export async function manage_userscripts_api(plugins_event) {
 
   const event = plugins_event.event;
   const plugins = plugins_event.plugins;
-  const use_gm_api = plugins_event.use_gm_api !== false;
 
   if (event === "remove") {
     const remove_ids = Object.keys(plugins);
@@ -66,13 +59,9 @@ export async function manage_userscripts_api(plugins_event) {
 
   let plugins_obj = [];
   for (let plugin of Object.values(plugins)) {
-    if (use_gm_api) {
-      plugin.code = await gm_api_for_plugin(plugin, 0);
-    }
     plugins_obj.push({
       id: plugin.uid,
-      matches:
-        plugin.uid === "gm_api" ? ["https://*/*"] : getPluginMatches(plugin),
+      matches: getPluginMatches(plugin),
       js: [{ code: plugin.code }],
       runAt: plugin.uid === "gm_api" ? "document_start" : "document_end",
       world: "MAIN",

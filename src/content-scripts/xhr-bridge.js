@@ -1,7 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import { strToBase64 } from "@/strToBase64";
+import { strToBase64 } from "lib-iitc-manager";
 import { IS_SAFARI } from "@/userscripts/env";
 
 let xhrIframe = null;
