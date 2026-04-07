@@ -2,7 +2,6 @@
 
 import { IITCButtonInitJS, isRunContentScript } from "./utils";
 import { setupBridges } from "@/content-scripts/bridge-manager";
-import { inject_gm_api } from "@/userscripts/wrapper";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { is_iitc_enabled } from "@/userscripts/utils";
 
@@ -12,7 +11,6 @@ function preparePage() {
 
   if (IS_USERSCRIPTS_API) return;
 
-  inject_gm_api();
   document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
 }
 

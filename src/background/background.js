@@ -15,7 +15,6 @@ import {
 } from "./intel";
 import "./requests";
 import {
-  init_userscripts_api,
   is_iitc_enabled,
   is_userscripts_api_available,
 } from "@/userscripts/utils";
@@ -51,12 +50,25 @@ const manager = new Manager({
     const iitc_status = await is_iitc_enabled();
     if (iitc_status === false) return;
 
-    await inject_plugin_via_content_scripts(plugin, true);
+    await inject_plugin_via_content_scripts(plugin);
   },
   plugin_event: async (data) => {
     if (IS_SCRIPTING_API) return;
     await manage_userscripts_api(data);
   },
+  gm_api: {
+    bridge_adapter_code: `
+      window.__iitc_gm_bridge__ = {
+        send(data) {
+          document.dispatchEvent(new CustomEvent('bridgeRequest', { detail: data }));
+        },
+        onResponse(cb) {
+          addEventListener('bridgeResponse', function(e) { cb(e.detail); });
+        }
+      };
+    `,
+  },
+  source_url_prefix: browser.runtime.getURL("/"),
   is_daemon: true,
 });
 
@@ -70,7 +82,7 @@ if (IS_LEGACY_API || IS_SCRIPTING_API) {
   onRemoved.addListener(onRemovedListener);
 }
 
-browser.runtime.onMessage.addListener(async (request) => {
+browser.runtime.onMessage.addListener(async (request, sender) => {
   switch (request.type) {
     case "requestOpenIntel":
       await onRequestOpenIntel();
@@ -85,7 +97,7 @@ browser.runtime.onMessage.addListener(async (request) => {
       await initUserscriptsApi();
       break;
     case "XHRFallbackRequest":
-      await xmlHttpRequestFallbackHandler(request.value);
+      await xmlHttpRequestFallbackHandler(request.value, sender);
       break;
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
@@ -176,7 +188,16 @@ async function initUserscriptsApi() {
   );
   if (is_gm_api_plugin_exist) return;
 
-  init_userscripts_api();
+  if (is_userscripts_api_available()) {
+    try {
+      browser.userScripts.configureWorld({
+        csp: "script-src 'self' 'unsafe-inline'",
+        messaging: true,
+      });
+      // eslint-disable-next-line no-empty
+    } catch {}
+  }
+
   const plugins_event = {
     event: "add",
     plugins: await manager.getEnabledPlugins(),

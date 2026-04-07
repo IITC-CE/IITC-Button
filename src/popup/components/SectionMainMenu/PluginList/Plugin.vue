@@ -67,7 +67,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { mixin } from "@/popup/components/mixins.js";
-import { sanitizeFileName } from "lib-iitc-manager/src/helpers";
+import { sanitizeFileName } from "lib-iitc-manager";
 
 const saveJS = (function () {
   const a = document.createElement("a");
