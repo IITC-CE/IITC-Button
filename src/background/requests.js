@@ -2,7 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
-import { parseMeta, ajaxGet, getUniqId } from "lib-iitc-manager";
+import { parseMeta, fetchResource, getUniqId } from "lib-iitc-manager";
 
 const IS_CHROME = !!global.chrome.app;
 const whitelist = [
@@ -49,9 +49,7 @@ export function onBeforeRequest(req) {
 
     if (!blacklist.some(matches, url) || whitelist.some(matches, url)) {
       maybeInstallUserJs(tabId, url).then();
-      return IS_CHROME
-        ? { redirectUrl: "javascript:void 0" } // eslint-disable-line no-script-url
-        : { cancel: true }; // for sites with strict CSP in FF
+      return { cancel: true };
     }
   }
 }
@@ -178,14 +176,13 @@ async function maybeInstallUserJs(tabId, url) {
     return;
   }
 
-  let code = undefined;
-  try {
-    code = await ajaxGet(url);
-  } catch {
+  const { data: code } = await fetchResource(url);
+
+  if (!code) {
     await bypass(tabId, url);
+    return;
   }
 
-  if (!code) await bypass(tabId, url);
   const meta = parseMeta(code);
 
   if (meta.name) {
