@@ -2,27 +2,40 @@
 <template>
   <div class="list">
     <template v-if="plugins">
-      <Title :text="_('pluginListEnabledPlugins')"></Title>
-      <Plugin :plugin="iitc_core" v-if="search_query === ''"></Plugin>
-      <Plugin
-        v-for="(plugin, index) in enabledPlugins"
-        :key="index"
-        :plugin="plugin"
-        @update-plugin="handlePluginUpdate"
-        @delete-plugin="handlePluginDelete"
-      ></Plugin>
-      <NoData v-if="objIsEmpty(enabledPlugins) && search_query !== ''"></NoData>
-    </template>
-    <template v-if="plugins">
-      <Title v-bind:text="_('pluginListDisabledPlugins')"></Title>
-      <Plugin
-        v-for="(plugin, index) in disabledPlugins"
-        :key="index"
-        :plugin="plugin"
-        @update-plugin="handlePluginUpdate"
-        @delete-plugin="handlePluginDelete"
-      ></Plugin>
-      <NoData v-if="objIsEmpty(disabledPlugins)"></NoData>
+      <template v-if="active_tag === 'All'">
+        <Title :text="_('pluginListEnabledPlugins')"></Title>
+        <Plugin :plugin="iitc_core" v-if="search_query === ''"></Plugin>
+        <Plugin
+          v-for="(plugin, uid) in enabledPlugins"
+          :key="'enabled-' + uid"
+          :plugin="plugin"
+          @update-plugin="handlePluginUpdate"
+          @delete-plugin="handlePluginDelete"
+        ></Plugin>
+        <NoData
+          v-if="objIsEmpty(enabledPlugins) && search_query !== ''"
+        ></NoData>
+
+        <Title :text="_('pluginListAllPlugins')"></Title>
+        <Plugin
+          v-for="(plugin, uid) in allPlugins"
+          :key="'all-' + uid"
+          :plugin="plugin"
+          @update-plugin="handlePluginUpdate"
+          @delete-plugin="handlePluginDelete"
+        ></Plugin>
+        <NoData v-if="objIsEmpty(allPlugins)"></NoData>
+      </template>
+      <template v-else>
+        <Plugin
+          v-for="(plugin, uid) in allPlugins"
+          :key="uid"
+          :plugin="plugin"
+          @update-plugin="handlePluginUpdate"
+          @delete-plugin="handlePluginDelete"
+        ></Plugin>
+        <NoData v-if="objIsEmpty(allPlugins)"></NoData>
+      </template>
     </template>
   </div>
 </template>
@@ -39,6 +52,7 @@ export default {
     plugins: Object,
     iitc_core: Object,
     search_query: String,
+    active_tag: String,
   },
   data() {
     return {};
@@ -61,13 +75,8 @@ export default {
       );
       return this.sortIITCObj(obj);
     },
-    disabledPlugins() {
-      const obj = Object.fromEntries(
-        Object.entries(this.plugins).filter(
-          ([, plugin]) => plugin.status !== "on"
-        )
-      );
-      return this.sortIITCObj(obj);
+    allPlugins() {
+      return this.sortIITCObj(this.plugins);
     },
   },
   components: { NoData, Title, Plugin },

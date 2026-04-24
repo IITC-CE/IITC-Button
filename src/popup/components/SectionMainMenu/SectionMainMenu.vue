@@ -8,6 +8,7 @@
       :plugins="pluginsToDisplay"
       :iitc_core="iitc_core"
       :search_query="search_query"
+      :active_tag="activeTag"
       @update-plugin="updatePlugin"
       @delete-plugin="deletePlugin"
     ></PluginList>
