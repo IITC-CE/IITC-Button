@@ -23,7 +23,7 @@
 
 <script>
 import browser from "webextension-polyfill";
-import { ajaxGet, parseMeta } from "lib-iitc-manager";
+import { fetchResource, parseMeta } from "lib-iitc-manager";
 import { _ } from "@/i18n";
 
 export default {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     _: _,
-    url_input_keyup: async (event) => {
+    url_input_keyup: async function (event) {
       if (event.key === "Enter") {
         await this.loadByUrl();
       }
@@ -44,11 +44,11 @@ export default {
       const url = this.url;
       this.url = "";
 
-      let code;
-      try {
-        code = await ajaxGet(url);
-      } catch {
+      const { data: code } = await fetchResource(url);
+
+      if (!code) {
         alert(_("addressNotAvailable"));
+        return;
       }
 
       if (code) {
