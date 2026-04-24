@@ -290,7 +290,7 @@
     "pluginListEnabledPlugins": {
         "message": "Enabled plugins"
     },
-    "pluginListDisabledPlugins": {
-        "message": "Disabled plugins"
+    "pluginListAllPlugins": {
+        "message": "All plugins"
     }
 }
