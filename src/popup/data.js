@@ -4,26 +4,21 @@ import browser from "webextension-polyfill";
 
 export async function init(self) {
   const appData = self.$data;
-  const data = await browser.storage.local.get([
-    "channel",
-    "release_categories",
-    "beta_categories",
-    "custom_categories",
-    "release_plugins_flat",
-    "beta_plugins_flat",
-    "custom_plugins_flat",
-    "release_iitc_core",
-    "beta_iitc_core",
-    "custom_iitc_core",
-    "release_iitc_core_user",
-    "beta_iitc_core_user",
-    "custom_iitc_core_user",
+  const [data, view] = await Promise.all([
+    browser.storage.local.get([
+      "channel",
+      "release_iitc_core",
+      "beta_iitc_core",
+      "custom_iitc_core",
+      "release_iitc_core_user",
+      "beta_iitc_core_user",
+      "custom_iitc_core_user",
+    ]),
+    browser.runtime.sendMessage({ type: "getPluginsView" }),
   ]);
   const channel = data.channel ? data.channel : "release";
-  // initialize categories
-  appData.categories = data[channel + "_categories"];
-  // initialize all plugins
-  appData.plugins_flat = data[channel + "_plugins_flat"];
+  // initialize plugins and categories from library
+  setPluginsView(appData, view || {});
   // initialize iitc core
   setIitcCore(
     appData,
@@ -32,17 +27,13 @@ export async function init(self) {
   );
 }
 
-function setCategories(appData, categories) {
-  appData.categories = {};
+function setPluginsView(appData, { plugins = {}, categories = {} }) {
   appData.categories = categories;
-}
-
-function setPlugins(appData, plugins_flat) {
-  appData.plugins_flat = plugins_flat;
+  appData.plugins_flat = plugins;
   const category_name = appData.category_name;
   if (category_name !== "") {
-    if (appData.categories[category_name]) {
-      appData.plugins = Object.entries(plugins_flat).reduce(
+    if (categories[category_name]) {
+      appData.plugins = Object.entries(plugins).reduce(
         (category_plugins, plugin_pair) => {
           const [plugin_uid, plugin_obj] = plugin_pair;
           if (plugin_obj.category === category_name) {
@@ -79,26 +70,14 @@ export async function onChangedListener(self) {
 
       if (key === "channel") {
         const storage = await browser.storage.local.get([
-          channel + "_categories",
-          channel + "_plugins_flat",
           channel + "_iitc_core",
           channel + "_iitc_core_user",
         ]);
-        setCategories(appData, storage[channel + "_categories"]);
-        setPlugins(appData, storage[channel + "_plugins_flat"]);
         setIitcCore(
           appData,
           storage[channel + "_iitc_core"],
           storage[channel + "_iitc_core_user"]
         );
-      }
-
-      if (key === channel + "_categories") {
-        setCategories(appData, new_value);
-      }
-
-      if (key === channel + "_plugins_flat") {
-        setPlugins(appData, new_value);
       }
 
       if (key === channel + "_iitc_core_user") {
@@ -112,6 +91,7 @@ export async function onChangedListener(self) {
 }
 
 export async function onMessageListener(self) {
+  const appData = self.$data;
   browser.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
       case "showProgressbar":
@@ -119,6 +99,9 @@ export async function onMessageListener(self) {
         break;
       case "showMessage":
         self.showMessage(request.message);
+        break;
+      case "pluginsViewChanged":
+        setPluginsView(appData, request);
         break;
     }
     return new Promise((resolve) => {

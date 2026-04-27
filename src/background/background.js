@@ -44,6 +44,12 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
+  plugins_view_changed: ({ plugins, categories }) => {
+    browser.runtime
+      .sendMessage({ type: "pluginsViewChanged", plugins, categories })
+      .then()
+      .catch(() => {});
+  },
   inject_plugin: async (plugin) => {
     if (IS_USERSCRIPTS_API) return;
 
@@ -99,6 +105,8 @@ browser.runtime.onMessage.addListener(async (request, sender) => {
     case "XHRFallbackRequest":
       await xmlHttpRequestFallbackHandler(request.value, sender);
       break;
+    case "getPluginsView":
+      return await manager.getPluginsView();
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
       break;
