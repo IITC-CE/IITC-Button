@@ -283,9 +283,6 @@
     "importLocalStorage": {
         "message": "从本地导入"
     },
-    "pluginListDisabledPlugins": {
-        "message": "关闭的插件"
-    },
     "pluginListEnabledPlugins": {
         "message": "启用的插件"
     },
