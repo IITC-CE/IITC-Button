@@ -114,10 +114,10 @@
         "message": "安裝"
     },
     "clickInstallPlugin": {
-        "message": "這是IITC插件，請點擊安裝(install)以開始使用。"
+        "message": "這是IITC擴充功能，請點擊安裝(install)以開始使用。"
     },
     "willBeOverwrittenByNewPlugin": {
-        "message": "擁有相同ID的插件將會以較新者取代。"
+        "message": "擁有相同ID的擴充功能將會以較新者取代。"
     },
     "dropJSHereOrClick": {
         "message": "在此拖放<i>.js</i>檔案或點擊按鈕以上傳。"
@@ -210,13 +210,13 @@
         "message": "此腳本要求訪問所有站點的許可權。請只在你信任作者的前提下安裝。"
     },
     "jsViewDetailsDomainsLabel": {
-        "message": "脚本将会在这些站點上运行："
+        "message": "腳本將會在這些網站運作:"
     },
     "jsViewDetailsShowDetails": {
         "message": "顯示詳情"
     },
     "jsViewDetailsHideDetails": {
-        "message": "藏起詳情"
+        "message": "隱藏詳情"
     },
     "other": {
         "message": "其他"
@@ -228,10 +228,10 @@
         "message": "匯入 IITC 設定"
     },
     "import_data": {
-        "message": "匯入插件資料"
+        "message": "匯入外掛資料"
     },
     "import_external": {
-        "message": "匯入外部插件"
+        "message": "匯入外部擴充功能"
     },
     "importFromZip": {
         "message": "從 zip 匯入"
@@ -240,7 +240,7 @@
         "message": "匯出 IITC 設定"
     },
     "export_data": {
-        "message": "匯出插件資料"
+        "message": "匯出擴充功能資料"
     },
     "export_external": {
         "message": "匯出外部插件"
@@ -268,8 +268,5 @@
     },
     "pluginListEnabledPlugins": {
         "message": "啟用插件"
-    },
-    "pluginListDisabledPlugins": {
-        "message": "停用插件"
     }
 }
