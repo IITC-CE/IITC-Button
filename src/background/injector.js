@@ -54,6 +54,7 @@ export async function manage_userscripts_api(plugins_event) {
       return;
     } catch (e) {
       console.log("an error occurred while unregistering the plugin", e);
+      return;
     }
   }
 
