@@ -10,9 +10,7 @@ export async function init(self) {
       "release_iitc_core",
       "beta_iitc_core",
       "custom_iitc_core",
-      "release_iitc_core_user",
-      "beta_iitc_core_user",
-      "custom_iitc_core_user",
+      "iitc_core_user",
     ]),
     browser.runtime.sendMessage({ type: "getPluginsView" }),
   ]);
@@ -20,11 +18,7 @@ export async function init(self) {
   // initialize plugins and categories from library
   setPluginsView(appData, view || {});
   // initialize iitc core
-  setIitcCore(
-    appData,
-    data[channel + "_iitc_core"],
-    data[channel + "_iitc_core_user"]
-  );
+  setIitcCore(appData, data[channel + "_iitc_core"], data["iitc_core_user"]);
 }
 
 function setPluginsView(appData, { plugins = {}, categories = {} }) {
@@ -71,16 +65,16 @@ export async function onChangedListener(self) {
       if (key === "channel") {
         const storage = await browser.storage.local.get([
           channel + "_iitc_core",
-          channel + "_iitc_core_user",
+          "iitc_core_user",
         ]);
         setIitcCore(
           appData,
           storage[channel + "_iitc_core"],
-          storage[channel + "_iitc_core_user"]
+          storage["iitc_core_user"]
         );
       }
 
-      if (key === channel + "_iitc_core_user") {
+      if (key === "iitc_core_user") {
         const storage = await browser.storage.local.get([
           channel + "_iitc_core",
         ]);
