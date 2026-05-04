@@ -1,7 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
-import { check_matching } from "lib-iitc-manager";
+import { checkMatching } from "lib-iitc-manager";
 
 const is_ingress_tab = (url) => {
   return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
@@ -20,14 +20,14 @@ export async function getNiaTabsToInject(plugin) {
   const tabs = await getTabsToInject();
   return Object.values(tabs).filter(
     (tab) =>
-      (is_ingress_tab(tab.url) && check_matching(plugin, "<all_ingress>")) ||
-      check_matching(plugin, tab.url)
+      (is_ingress_tab(tab.url) && checkMatching(plugin, "<all_ingress>")) ||
+      checkMatching(plugin, tab.url)
   );
 }
 
 export function getPluginMatches(plugin) {
   let matches = [];
-  if (check_matching(plugin, "<all_ingress>")) {
+  if (checkMatching(plugin, "<all_ingress>")) {
     matches.push("https://intel.ingress.com/*");
     matches.push("https://missions.ingress.com/*");
   }

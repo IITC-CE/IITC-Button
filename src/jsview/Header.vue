@@ -62,7 +62,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
-import { getUID, humanize_match } from "lib-iitc-manager";
+import { getUID, humanizeMatch } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
 const iitc_core_uid =
   "IITC: Ingress intel map total conversion+https://github.com/IITC-CE/ingress-intel-total-conversion";
@@ -137,7 +137,7 @@ export default {
   },
   watch: {
     meta: function () {
-      this.domains = humanize_match(this.meta);
+      this.domains = humanizeMatch(this.meta);
     },
     code: async function () {
       this.show_header = true;

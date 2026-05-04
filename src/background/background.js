@@ -35,7 +35,7 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
-  progressbar: (is_show) => {
+  onProgress: (is_show) => {
     browser.runtime
       .sendMessage({
         type: "showProgressbar",
@@ -44,13 +44,13 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
-  plugins_view_changed: ({ plugins, categories }) => {
+  onPluginsViewChanged: ({ plugins, categories }) => {
     browser.runtime
       .sendMessage({ type: "pluginsViewChanged", plugins, categories })
       .then()
       .catch(() => {});
   },
-  inject_plugin: async (plugin) => {
+  injectPlugin: async (plugin) => {
     if (IS_USERSCRIPTS_API) return;
 
     const iitc_status = await is_iitc_enabled();
@@ -58,12 +58,12 @@ const manager = new Manager({
 
     await inject_plugin_via_content_scripts(plugin);
   },
-  plugin_event: async (data) => {
+  onPluginEvent: async (data) => {
     if (IS_SCRIPTING_API) return;
     await manage_userscripts_api(data);
   },
-  gm_api: {
-    bridge_adapter_code: `
+  gmApi: {
+    bridgeAdapterCode: `
       window.__iitc_gm_bridge__ = {
         send(data) {
           document.dispatchEvent(new CustomEvent('bridgeRequest', { detail: data }));
@@ -74,8 +74,8 @@ const manager = new Manager({
       };
     `,
   },
-  source_url_prefix: browser.runtime.getURL("/"),
-  is_daemon: true,
+  sourceUrlPrefix: browser.runtime.getURL("/"),
+  isDaemon: true,
 });
 
 manager.run().then();
@@ -265,3 +265,4 @@ self.addEventListener("activate", () => {
 });
 
 createCheckUpdateAlarm().then();
+

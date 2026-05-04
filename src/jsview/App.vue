@@ -11,7 +11,7 @@ import browser from "webextension-polyfill";
 import Code from "./Code";
 import { _ } from "@/i18n";
 import Header from "./Header";
-import { ajaxGet } from "lib-iitc-manager";
+import { fetchData } from "lib-iitc-manager";
 import { parseMeta } from "lib-iitc-manager";
 
 export default {
@@ -54,9 +54,8 @@ export default {
       tabId = last_userscript_request["tabId"];
       url = last_userscript_request["url"];
 
-      try {
-        code = await ajaxGet(url);
-      } catch {
+      code = await fetchData(url);
+      if (!code) {
         return await this.bypass(tabId, url);
       }
     }
