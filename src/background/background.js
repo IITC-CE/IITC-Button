@@ -44,9 +44,9 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
-  onPluginsViewChanged: ({ plugins, categories }) => {
+  onPluginsViewChanged: ({ plugins, categories, core }) => {
     browser.runtime
-      .sendMessage({ type: "pluginsViewChanged", plugins, categories })
+      .sendMessage({ type: "pluginsViewChanged", plugins, categories, core })
       .then()
       .catch(() => {});
   },

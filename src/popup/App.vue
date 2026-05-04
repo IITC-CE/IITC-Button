@@ -50,7 +50,6 @@ export default {
   },
   async mounted() {
     await data.init(this);
-    await data.onChangedListener(this);
     await data.onMessageListener(this);
     await browser.runtime.sendMessage({ type: "popupWasOpened" });
   },
