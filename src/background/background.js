@@ -1,5 +1,5 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-import { Manager } from "lib-iitc-manager";
+import { Manager, GM_API_UID } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
 import {
   IS_LEGACY_API,
@@ -192,7 +192,7 @@ async function initUserscriptsApi() {
   } catch {}
 
   const is_gm_api_plugin_exist = scripts.some(
-    (script) => script.id === "gm_api"
+    (script) => script.id === GM_API_UID
   );
   if (is_gm_api_plugin_exist) return;
 

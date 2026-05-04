@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
+import { GM_API_UID } from "lib-iitc-manager";
 import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
 import { is_userscripts_api_available } from "@/userscripts/utils";
 import { IS_LEGACY_API } from "@/userscripts/env";
@@ -64,7 +65,7 @@ export async function manage_userscripts_api(plugins_event) {
       id: plugin.uid,
       matches: getPluginMatches(plugin),
       js: [{ code: plugin.code }],
-      runAt: plugin.uid === "gm_api" ? "document_start" : "document_end",
+      runAt: plugin.uid === GM_API_UID ? "document_start" : "document_end",
       world: "MAIN",
     });
   }
