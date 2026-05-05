@@ -52,11 +52,12 @@ export default {
     },
   },
   async mounted() {
-    const key = this.channel + "_update_check_interval";
-    const data = await browser.storage.local.get(key);
-
-    if (data[key]) {
-      this.interval = parseInt(data[key]);
+    const interval = await browser.runtime.sendMessage({
+      type: "getUpdateCheckInterval",
+      channel: this.channel,
+    });
+    if (interval) {
+      this.interval = interval;
     }
   },
 };

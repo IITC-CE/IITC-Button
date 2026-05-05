@@ -170,6 +170,10 @@ browser.runtime.onMessage.addListener(async (request, sender) => {
         .then()
         .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
       break;
+    case "getChannel":
+      return manager.channel;
+    case "getUpdateCheckInterval":
+      return await manager.getUpdateCheckInterval(request.channel);
     case "setCustomChannelUrl":
       await manager.setCustomChannelUrl(request.value);
       break;
@@ -224,17 +228,8 @@ async function createCheckUpdateAlarm(need_to_update = false) {
     }
   }
 
-  const storage_intervals = await browser.storage.local.get([
-    "channel",
-    "release_update_check_interval",
-    "beta_update_check_interval",
-    "custom_update_check_interval",
-    "external_update_check_interval",
-  ]);
-  const channel_interval_key = `${storage_intervals["channel"]}_update_check_interval`;
-  const channel_interval = storage_intervals[channel_interval_key] || 604800;
-  const external_interval =
-    storage_intervals["external_update_check_interval"] || 604800;
+  const channel_interval = await manager.getUpdateCheckInterval();
+  const external_interval = await manager.getUpdateCheckInterval("external");
 
   let interval_seconds = Math.min(channel_interval, external_interval);
   if (interval_seconds < 30) {
@@ -265,4 +260,3 @@ self.addEventListener("activate", () => {
 });
 
 createCheckUpdateAlarm().then();
-

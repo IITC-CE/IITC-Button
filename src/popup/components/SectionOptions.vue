@@ -122,9 +122,9 @@ export default {
     },
   },
   async mounted() {
-    const data = await browser.storage.local.get("channel");
-    if (data.channel) {
-      this.channel = data.channel;
+    const channel = await browser.runtime.sendMessage({ type: "getChannel" });
+    if (channel) {
+      this.channel = channel;
     }
   },
   components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer },
