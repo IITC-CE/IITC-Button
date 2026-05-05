@@ -109,12 +109,11 @@ export default {
     },
   },
   async mounted() {
-    const network_host = await browser.storage.local
-      .get(["network_host"])
-      .then(({ network_host }) => network_host);
-
-    if (network_host && network_host.custom) {
-      this.host = network_host.custom;
+    const networkHost = await browser.runtime.sendMessage({
+      type: "getNetworkHost",
+    });
+    if (networkHost?.custom) {
+      this.host = networkHost.custom;
     }
     await this.setInputStatus(this.host);
   },

@@ -174,6 +174,8 @@ browser.runtime.onMessage.addListener(async (request, sender) => {
       return manager.channel;
     case "getUpdateCheckInterval":
       return await manager.getUpdateCheckInterval(request.channel);
+    case "getNetworkHost":
+      return manager.networkHost;
     case "setCustomChannelUrl":
       await manager.setCustomChannelUrl(request.value);
       break;
