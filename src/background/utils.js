@@ -3,10 +3,6 @@
 import browser from "webextension-polyfill";
 import { checkMatching } from "lib-iitc-manager";
 
-const is_ingress_tab = (url) => {
-  return /https:\/\/(intel|missions).ingress.com\/*/.test(url);
-};
-
 // Fetch all completly loaded tabs
 export async function getTabsToInject() {
   let allTabs = await browser.tabs.query({ status: "complete" });
@@ -18,9 +14,5 @@ export async function getTabsToInject() {
 // Filter all completly loaded Ingress Intel tabs
 export async function getNiaTabsToInject(plugin) {
   const tabs = await getTabsToInject();
-  return Object.values(tabs).filter(
-    (tab) =>
-      (is_ingress_tab(tab.url) && checkMatching(plugin, "<all_ingress>")) ||
-      checkMatching(plugin, tab.url)
-  );
+  return Object.values(tabs).filter((tab) => checkMatching(plugin, tab.url));
 }
