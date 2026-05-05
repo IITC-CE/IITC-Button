@@ -2,7 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { GM_API_UID } from "lib-iitc-manager";
-import { getNiaTabsToInject, getPluginMatches } from "@/background/utils";
+import { getNiaTabsToInject } from "@/background/utils";
 import { is_userscripts_api_available } from "@/userscripts/utils";
 import { IS_LEGACY_API } from "@/userscripts/env";
 
@@ -63,7 +63,8 @@ export async function manage_userscripts_api(plugins_event) {
   for (let plugin of Object.values(plugins)) {
     plugins_obj.push({
       id: plugin.uid,
-      matches: getPluginMatches(plugin),
+      matches: plugin.match ||
+        plugin.include || ["https://intel.ingress.com/*"],
       js: [{ code: plugin.code }],
       runAt: plugin.uid === GM_API_UID ? "document_start" : "document_end",
       world: "MAIN",

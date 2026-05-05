@@ -24,17 +24,3 @@ export async function getNiaTabsToInject(plugin) {
       checkMatching(plugin, tab.url)
   );
 }
-
-export function getPluginMatches(plugin) {
-  let matches = [];
-  if (checkMatching(plugin, "<all_ingress>")) {
-    matches.push("https://intel.ingress.com/*");
-    matches.push("https://missions.ingress.com/*");
-  }
-  if (plugin.match) {
-    matches = matches.concat(plugin.match);
-  } else if (plugin.include) {
-    matches = matches.concat(plugin.include);
-  }
-  return matches;
-}
