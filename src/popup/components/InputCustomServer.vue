@@ -38,24 +38,8 @@
 
 <script>
 import browser from "webextension-polyfill";
+import { validateCustomChannelUrl } from "lib-iitc-manager";
 import { mixin } from "./mixins.js";
-
-const checkStatusCustomServer = (host) =>
-  new Promise((resolve) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `${host}/meta.json?${Date.now()}`, true);
-    xhr.timeout = 1000;
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      }
-    };
-    xhr.send(null);
-  });
 
 export default {
   name: "InputCustomServer",
@@ -72,12 +56,7 @@ export default {
   methods: {
     setInputStatus: async function (host) {
       this.iconName = "error";
-      let status;
-      try {
-        status = await checkStatusCustomServer(host);
-      } catch {
-        status = false;
-      }
+      const status = await validateCustomChannelUrl(host);
       if (status) {
         this.iconName = "check";
       }
@@ -86,14 +65,12 @@ export default {
     changeCustomServer: async function () {
       let connected = await this.setInputStatus(this.host);
 
-      const http_host = "http://" + this.host;
-      if (
-        !connected &&
-        !this.host.startsWith("http") &&
-        (await this.setInputStatus(http_host))
-      ) {
-        connected = await this.setInputStatus(http_host);
-        this.host = http_host;
+      if (!connected && !this.host.startsWith("http")) {
+        const http_host = "http://" + this.host;
+        if (await this.setInputStatus(http_host)) {
+          connected = true;
+          this.host = http_host;
+        }
       }
 
       if (connected) {
