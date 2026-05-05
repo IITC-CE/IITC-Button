@@ -243,6 +243,15 @@ if (!IS_LEGACY_API) {
   });
 }
 
+browser.runtime.onInstalled.addListener((details) => {
+  if (details.reason !== "update") return;
+  console.log("Extension updated, scheduling force update check in 10 seconds");
+  setTimeout(() => {
+    console.log("Running force update after extension update");
+    manager.checkUpdates(true).then();
+  }, 10_000);
+});
+
 self.addEventListener("activate", () => {
   initUserscriptsApi().then();
 });
