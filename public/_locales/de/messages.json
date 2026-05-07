@@ -11,7 +11,7 @@
         "description": "Title for the button at the application panel"
     },
     "updateInProgress": {
-        "message": "Update in Bearbeitung …"
+        "message": "Aktualisierung läuft…"
     },
     "lang": {
         "message": "de"
@@ -38,7 +38,7 @@
         "message": "IITC-CE Updatekanal auswählen"
     },
     "release": {
-        "message": "Veröffentlichung"
+        "message": "Release"
     },
     "updateFrequency": {
         "message": "IITC-CE Updateprüfung"
@@ -95,7 +95,7 @@
         "message": "oder"
     },
     "dropJSHereOrClick": {
-        "message": "<i>.js</i> Dateien hier einfügen oder zum Upload klicken."
+        "message": "<i>.js</i> Dateien hier hin ziehen oder zum Upload klicken."
     },
     "willBeOverwrittenByNewPlugin": {
         "message": "Plugin mit der selben ID wird durch das neue Plugin überschrieben."
@@ -104,7 +104,7 @@
         "message": "Installieren"
     },
     "errorReadingFile": {
-        "message": "Beim Einlesen von $PLUGIN_NAME$ ist ein Fehler aufgetreten.",
+        "message": "Beim Lesen der Datei $PLUGIN_NAME$ ist ein Fehler aufgetreten.",
         "placeholders": {
             "plugin_name": {
                 "content": "$1",
@@ -135,7 +135,7 @@
         }
     },
     "badgeOverride": {
-        "message": "uberschreiben"
+        "message": "überschrieben"
     },
     "beta": {
         "message": "Beta"
@@ -189,7 +189,7 @@
         "message": "Import von externen Plugins"
     },
     "jsViewDetailsAllDomains": {
-        "message": "Dieses Script hat Zugriff auf alle Seiten angefragt. Benutze es, wenn du dem Autor vertraust."
+        "message": "Dieses Script hat Zugriff auf alle Seiten angefordert. Benutze es nur, wenn du dem Autor vertraust."
     },
     "other": {
         "message": "Andere"
@@ -228,7 +228,7 @@
         "message": "Export von externen Plugins"
     },
     "saveToJson": {
-        "message": "Als json speichern"
+        "message": "Als JSON speichern"
     },
     "alertChromeRequiresUserScriptsTitle": {
         "message": "Für unsere Erweiterung muss der Entwicklermodus aktiviert sein, um UserScripts zu verwalten, da Manifest&nbsp;V3 Einschränkungen in Chrome hat. Es ist einfach zu aktivieren!"
@@ -277,5 +277,20 @@
     },
     "warningAboutLocalStoragePart2": {
         "message": "Stelle diese Daten nicht öffentlich zur Verfügung, wenn du Fraktions-Plugins verwendest!"
+    },
+    "importLocalStorage": {
+        "message": "LocalStorage importieren"
+    },
+    "importFromJson": {
+        "message": "Aus JSON importieren"
+    },
+    "warningAboutImportLocalStorage": {
+        "message": "Löscht und ersetzt alle Daten dieser Erweiterung durch die Daten der ausgewählten JSON-Datei."
+    },
+    "pluginListEnabledPlugins": {
+        "message": "Aktivierte Plugins"
+    },
+    "pluginListAllPlugins": {
+        "message": "Alle Plugins"
     }
 }
