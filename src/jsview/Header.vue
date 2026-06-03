@@ -62,10 +62,8 @@
 <script>
 import browser from "webextension-polyfill";
 import { _ } from "@/i18n";
-import { getUID, humanize_match } from "lib-iitc-manager";
+import { getUID, humanizeMatch, IITC_CORE_UID } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
-const iitc_core_uid =
-  "IITC: Ingress intel map total conversion+https://github.com/IITC-CE/ingress-intel-total-conversion";
 
 export default {
   name: "Header",
@@ -94,7 +92,7 @@ export default {
     },
     checkIfInstalled: async function () {
       const uid = getUID(this.meta);
-      if (uid === iitc_core_uid) {
+      if (uid === IITC_CORE_UID) {
         this.button_name = _("reinstall");
       }
       await browser.runtime.sendMessage({
@@ -115,7 +113,7 @@ export default {
             if (request.id !== self.page_uuid) return;
             Object.entries(request.scripts).map(([, script]) => {
               let message = "";
-              if (script["uid"] === iitc_core_uid) {
+              if (script["uid"] === IITC_CORE_UID) {
                 message = _("addedCustomIITCCore", [script["name"]]) + "\n";
               } else {
                 message =
@@ -137,7 +135,7 @@ export default {
   },
   watch: {
     meta: function () {
-      this.domains = humanize_match(this.meta);
+      this.domains = humanizeMatch(this.meta);
     },
     code: async function () {
       this.show_header = true;

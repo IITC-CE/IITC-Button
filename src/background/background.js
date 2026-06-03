@@ -1,5 +1,5 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
-import { Manager } from "lib-iitc-manager";
+import { Manager, GM_API_UID } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
 import {
   IS_LEGACY_API,
@@ -35,7 +35,7 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
-  progressbar: (is_show) => {
+  onProgress: (is_show) => {
     browser.runtime
       .sendMessage({
         type: "showProgressbar",
@@ -44,7 +44,13 @@ const manager = new Manager({
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.
   },
-  inject_plugin: async (plugin) => {
+  onPluginsViewChanged: ({ plugins, categories, core }) => {
+    browser.runtime
+      .sendMessage({ type: "pluginsViewChanged", plugins, categories, core })
+      .then()
+      .catch(() => {});
+  },
+  injectPlugin: async (plugin) => {
     if (IS_USERSCRIPTS_API) return;
 
     const iitc_status = await is_iitc_enabled();
@@ -52,12 +58,12 @@ const manager = new Manager({
 
     await inject_plugin_via_content_scripts(plugin);
   },
-  plugin_event: async (data) => {
+  onPluginEvent: async (data) => {
     if (IS_SCRIPTING_API) return;
     await manage_userscripts_api(data);
   },
-  gm_api: {
-    bridge_adapter_code: `
+  gmApi: {
+    bridgeAdapterCode: `
       window.__iitc_gm_bridge__ = {
         send(data) {
           document.dispatchEvent(new CustomEvent('bridgeRequest', { detail: data }));
@@ -68,8 +74,8 @@ const manager = new Manager({
       };
     `,
   },
-  source_url_prefix: browser.runtime.getURL("/"),
-  is_daemon: true,
+  sourceUrlPrefix: browser.runtime.getURL("/"),
+  isDaemon: true,
 });
 
 manager.run().then();
@@ -99,6 +105,8 @@ browser.runtime.onMessage.addListener(async (request, sender) => {
     case "XHRFallbackRequest":
       await xmlHttpRequestFallbackHandler(request.value, sender);
       break;
+    case "getPluginsView":
+      return await manager.getPluginsView();
     case "managePlugin":
       await manager.managePlugin(request.uid, request.action);
       break;
@@ -162,6 +170,12 @@ browser.runtime.onMessage.addListener(async (request, sender) => {
         .then()
         .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
       break;
+    case "getChannel":
+      return manager.channel;
+    case "getUpdateCheckInterval":
+      return await manager.getUpdateCheckInterval(request.channel);
+    case "getNetworkHost":
+      return manager.networkHost;
     case "setCustomChannelUrl":
       await manager.setCustomChannelUrl(request.value);
       break;
@@ -184,7 +198,7 @@ async function initUserscriptsApi() {
   } catch {}
 
   const is_gm_api_plugin_exist = scripts.some(
-    (script) => script.id === "gm_api"
+    (script) => script.id === GM_API_UID
   );
   if (is_gm_api_plugin_exist) return;
 
@@ -216,17 +230,8 @@ async function createCheckUpdateAlarm(need_to_update = false) {
     }
   }
 
-  const storage_intervals = await browser.storage.local.get([
-    "channel",
-    "release_update_check_interval",
-    "beta_update_check_interval",
-    "custom_update_check_interval",
-    "external_update_check_interval",
-  ]);
-  const channel_interval_key = `${storage_intervals["channel"]}_update_check_interval`;
-  const channel_interval = storage_intervals[channel_interval_key] || 604800;
-  const external_interval =
-    storage_intervals["external_update_check_interval"] || 604800;
+  const channel_interval = await manager.getUpdateCheckInterval();
+  const external_interval = await manager.getUpdateCheckInterval("external");
 
   let interval_seconds = Math.min(channel_interval, external_interval);
   if (interval_seconds < 30) {
