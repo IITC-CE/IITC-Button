@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style src="../../../public/assets/roboto/roboto-font.css"></style>
+<style src="@/fonts/roboto/roboto-font.css"></style>
 
 <style scoped>
 .or {

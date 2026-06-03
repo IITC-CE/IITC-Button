@@ -4,7 +4,7 @@ import browser from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { parseMeta, fetchResource, getUniqueId } from "lib-iitc-manager";
 
-const IS_CHROME = !!global.chrome.app;
+const IS_CHROME = !!globalThis.chrome?.app;
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
   "^https://gist.github.com/.*?/[^/]*?.user.js([?#]|$)",

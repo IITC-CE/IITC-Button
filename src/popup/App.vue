@@ -73,8 +73,8 @@ export default {
 };
 </script>
 
-<style src="../../public/assets/iconfont/material-icons.css"></style>
-<style src="../../public/assets/roboto/roboto-font.css"></style>
+<style src="@/fonts/iconfont/material-icons.css"></style>
+<style src="@/fonts/roboto/roboto-font.css"></style>
 
 <style>
 body {

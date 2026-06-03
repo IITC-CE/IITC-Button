@@ -37,7 +37,7 @@ function createIframe() {
     xhrIframe.sandbox = "allow-scripts allow-same-origin";
     xhrIframe.style.cssText =
       "display:none; position:absolute; width:0; height:0; border:0;";
-    xhrIframe.src = browser.runtime.getURL("xhr-sandbox.html");
+    xhrIframe.src = browser.runtime.getURL("sandbox.html");
 
     // Add to DOM
     document.body.appendChild(xhrIframe);

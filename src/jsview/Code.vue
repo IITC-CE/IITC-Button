@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style src="../../public/assets/noto/noto-font.css"></style>
+<style src="@/fonts/noto/noto-font.css"></style>
 
 <style>
 pre {

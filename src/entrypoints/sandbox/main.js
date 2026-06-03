@@ -15,7 +15,7 @@ window.addEventListener("message", (event) => {
             uuid: data.uuid,
             response: response,
           },
-          "*"
+          "*",
         );
       } catch (error) {
         console.error("IITC Button XHR Sandbox: error sending response", error);
