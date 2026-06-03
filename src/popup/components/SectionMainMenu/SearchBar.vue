@@ -4,16 +4,16 @@
     <i class="icon material-icons icon__search" v-on:click="back">search</i>
     <i
       class="icon material-icons icon__cancel"
-      :class="{ show: value }"
+      :class="{ show: modelValue }"
       v-on:click="cancel"
       >cancel</i
     >
     <input
       class="search_input"
       type="text"
-      v-bind:placeholder="_('searchBoxPlaceholder')"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
+      v-bind:placeholder="t('searchBoxPlaceholder')"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       autofocus
     />
   </div>
@@ -25,14 +25,15 @@ import { mixin } from "../mixins.js";
 export default {
   name: "SearchBar",
   props: {
-    value: {
+    modelValue: {
       type: String,
       required: true,
     },
   },
+  emits: ["update:modelValue"],
   methods: {
     cancel() {
-      this.$emit("input", "");
+      this.$emit("update:modelValue", "");
     },
   },
   mixins: [mixin],

@@ -36,26 +36,26 @@
         __("name", plugin)
       }}</span>
       <span v-if="plugin.override" class="plugin__user">{{
-        _("badgeOverride")
+        t("badgeOverride")
       }}</span>
       <template v-if="plugin.user">
         <i
           v-if="plugin.supportURL"
           class="plugin__action___extra material-icons"
           @click="openLink(plugin.supportURL)"
-          :title="[_('openSupport'), plugin.supportURL].join(' ')"
+          :title="[t('openSupport'), plugin.supportURL].join(' ')"
           >home</i
         >
         <i
           class="plugin__action___extra material-icons"
           @click="savePlugin"
-          :title="_('pluginSave')"
+          :title="t('pluginSave')"
           >save</i
         >
         <i
           class="plugin__action___extra plugin__action___extra-delete material-icons"
           @click="deletePlugin"
-          :title="_('pluginDelete')"
+          :title="t('pluginDelete')"
           >delete</i
         >
       </template>
@@ -90,6 +90,7 @@ export default {
     search_result_id: Number,
     search_results: Object,
   },
+  emits: ["update-plugin", "delete-plugin"],
   data() {
     return {
       hasRecentStatusChange: false,
@@ -161,7 +162,7 @@ export default {
         this.$emit("delete-plugin", this.plugin.uid);
       }
 
-      this.showMessage(this._("needRebootIntel"));
+      this.showMessage(this.t("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: uid,
@@ -204,7 +205,7 @@ export default {
       return timeSinceAdded <= oneHourInSeconds;
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.statusChangeTimer) {
       clearTimeout(this.statusChangeTimer);
     }

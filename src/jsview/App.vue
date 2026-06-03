@@ -9,7 +9,7 @@
 <script>
 import browser from "webextension-polyfill";
 import Code from "./Code";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import Header from "./Header";
 import { fetchData } from "lib-iitc-manager";
 import { parseMeta } from "lib-iitc-manager";
@@ -24,11 +24,11 @@ export default {
     return {
       meta: {},
       code: "",
-      status: _("loading"),
+      status: t("loading"),
     };
   },
   methods: {
-    _: _,
+    t: t,
     bypass: async function (tabId, url) {
       await browser.tabs.create({
         url: `${url}#pass`,
@@ -68,7 +68,7 @@ export default {
       return await this.bypass(tabId, url);
     }
 
-    document.title = `${meta["name"]} — ${_("jsViewTitle")} — IITC Button`;
+    document.title = `${meta["name"]} — ${t("jsViewTitle")} — IITC Button`;
     meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
     this.meta = meta;
     this.code = code;

@@ -5,24 +5,24 @@
       class="alert alertChromeRequiresUserScripts"
       v-if="showChromeRequiresUserScripts"
     >
-      <p v-html="_('alertChromeRequiresUserScriptsTitle')"></p>
+      <p v-html="t('alertChromeRequiresUserScriptsTitle')"></p>
       <div
         v-on:click="onClickButton('chromeUserScripts')"
         class="button"
-        v-html="_('alertChromeRequiresUserScriptsButton')"
+        v-html="t('alertChromeRequiresUserScriptsButton')"
       ></div>
     </div>
     <div class="alert alertHostPermissions" v-if="showHostPermissions">
-      <p v-html="_('alertHostPermissionsRequiredTitle')"></p>
+      <p v-html="t('alertHostPermissionsRequiredTitle')"></p>
       <div
         v-on:click="onClickButton('hostPermissionIntel')"
         class="button"
-        v-html="_('alertHostPermissionsRequiredButtonIntel')"
+        v-html="t('alertHostPermissionsRequiredButtonIntel')"
       ></div>
       <div
         v-on:click="onClickButton('hostPermissionAllUrls')"
         class="button hostPermissionAllUrls"
-        v-html="_('alertHostPermissionsRequiredButtonAllUrls')"
+        v-html="t('alertHostPermissionsRequiredButtonAllUrls')"
       ></div>
     </div>
   </div>

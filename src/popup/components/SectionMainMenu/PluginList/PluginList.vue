@@ -3,7 +3,7 @@
   <div class="list">
     <template v-if="plugins">
       <template v-if="active_tag === 'All'">
-        <Title :text="_('pluginListEnabledPlugins')"></Title>
+        <Title :text="t('pluginListEnabledPlugins')"></Title>
         <Plugin :plugin="iitc_core" v-if="search_query === ''"></Plugin>
         <Plugin
           v-for="(plugin, uid) in enabledPlugins"
@@ -16,7 +16,7 @@
           v-if="objIsEmpty(enabledPlugins) && search_query !== ''"
         ></NoData>
 
-        <Title :text="_('pluginListAllPlugins')"></Title>
+        <Title :text="t('pluginListAllPlugins')"></Title>
         <Plugin
           v-for="(plugin, uid) in allPlugins"
           :key="'all-' + uid"
@@ -54,6 +54,7 @@ export default {
     search_query: String,
     active_tag: String,
   },
+  emits: ["update-plugin", "delete-plugin"],
   data() {
     return {};
   },

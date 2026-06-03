@@ -2,11 +2,11 @@
 <template>
   <div class="page">
     <div class="parent">
-      <h1>{{ _("import") }}</h1>
+      <h1>{{ t("import") }}</h1>
       <div class="card">
-        <p class="message">{{ _("import_message") }}</p>
+        <p class="message">{{ t("import_message") }}</p>
         <form v-on:click="$refs.input.click()" v-if="!is_wait">
-          <div class="btn">{{ _("importFromZip") }}</div>
+          <div class="btn">{{ t("importFromZip") }}</div>
           <input
             type="file"
             ref="input"
@@ -19,37 +19,37 @@
         <div class="hr" v-if="show_restore || is_invalid_backup"></div>
         <label class="setting-check" v-if="show_import_settings">
           <input type="checkbox" v-model="import_settings" />
-          <span>{{ _("import_settings") }}</span>
+          <span>{{ t("import_settings") }}</span>
         </label>
         <label class="setting-check" v-if="show_import_data">
           <input type="checkbox" v-model="import_data" />
-          <span>{{ _("import_data") }}</span>
+          <span>{{ t("import_data") }}</span>
         </label>
         <label class="setting-check" v-if="show_import_external">
           <input type="checkbox" v-model="import_external" />
-          <span>{{ _("import_external") }}</span>
+          <span>{{ t("import_external") }}</span>
         </label>
-        <div class="btn disabled" v-if="is_wait">{{ _("pleaseWait") }}</div>
+        <div class="btn disabled" v-if="is_wait">{{ t("pleaseWait") }}</div>
         <div class="btn" v-if="show_restore" @click="handleRestore">
-          {{ _("restoreBackup") }}
+          {{ t("restoreBackup") }}
         </div>
-        <p class="message" v-if="is_invalid_backup">{{ _("invalidBackup") }}</p>
+        <p class="message" v-if="is_invalid_backup">{{ t("invalidBackup") }}</p>
       </div>
-      <h1>{{ _("export") }}</h1>
+      <h1>{{ t("export") }}</h1>
       <div class="card">
         <label class="setting-check">
           <input type="checkbox" v-model="export_settings" />
-          <span>{{ _("export_settings") }}</span>
+          <span>{{ t("export_settings") }}</span>
         </label>
         <label class="setting-check">
           <input type="checkbox" v-model="export_data" />
-          <span>{{ _("export_data") }}</span>
+          <span>{{ t("export_data") }}</span>
         </label>
         <label class="setting-check">
           <input type="checkbox" v-model="export_external" />
-          <span>{{ _("export_external") }}</span>
+          <span>{{ t("export_external") }}</span>
         </label>
-        <div class="btn" @click="handleExport">{{ _("exportToZip") }}</div>
+        <div class="btn" @click="handleExport">{{ t("exportToZip") }}</div>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@
 
 <script>
 import browser from "webextension-polyfill";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import { getBackupDataFromZip, createBackupZip } from "./utils";
 
 export default {
@@ -80,7 +80,7 @@ export default {
     };
   },
   methods: {
-    _: _,
+    t: t,
     async handleExport() {
       await browser.runtime.sendMessage({
         type: "getBackupData",
@@ -138,7 +138,7 @@ export default {
             createBackupZip(request.data).then();
             break;
           case "resolveSetBackupData":
-            alert(_("backupRestored"));
+            alert(t("backupRestored"));
             this.backup_data = {};
             this.is_wait = false;
         }

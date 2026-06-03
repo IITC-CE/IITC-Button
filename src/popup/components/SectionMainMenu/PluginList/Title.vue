@@ -15,6 +15,7 @@ export default {
     text: String,
     description: String,
   },
+  emits: ["item_onclick"],
   methods: {
     item_onclick() {
       this.$emit("item_onclick");

@@ -2,13 +2,13 @@
 <template>
   <div class="window">
     <Header
-      v-bind:header_text="_('iitcButtonOptions')"
-      v-bind:button_text="_('updateNow')"
+      v-bind:header_text="t('iitcButtonOptions')"
+      v-bind:button_text="t('updateNow')"
       v-on:button_onclick="forceUpdate"
     ></Header>
     <div class="settings">
       <div class="settings__section">
-        <h2>{{ _("choosingUpdateChannel") }}</h2>
+        <h2>{{ t("choosingUpdateChannel") }}</h2>
         <div class="input-field channels">
           <div
             v-for="(item, index) in updateChannels"
@@ -28,7 +28,7 @@
       </div>
       <Hr />
       <div class="settings__section">
-        <h2>{{ _("updateFrequency") }}</h2>
+        <h2>{{ t("updateFrequency") }}</h2>
         <div class="input-field update-check">
           <UpdateCheckIntervalSelector
             v-bind:channel="'release'"
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="settings__section">
-        <h2>{{ _("updateExternalFrequency") }}</h2>
+        <h2>{{ t("updateExternalFrequency") }}</h2>
         <div class="input-field update-check">
           <UpdateCheckIntervalSelector
             v-bind:channel="'external'"
@@ -54,7 +54,7 @@
       </div>
       <Hr />
       <div class="settings__section">
-        <h2>{{ _("customServerURL") }}</h2>
+        <h2>{{ t("customServerURL") }}</h2>
         <div class="input-field">
           <InputCustomServer
             v-bind:channel="channel"
@@ -64,18 +64,18 @@
       </div>
       <Hr />
       <div class="settings__section">
-        <h2>{{ _("other") }}</h2>
+        <h2>{{ t("other") }}</h2>
         <div class="input-field">
           <div class="button" @click="openLink('/settings.html#backup')">
-            {{ _("backup") }}
+            {{ t("backup") }}
           </div>
         </div>
         <div class="input-field external-links">
           <div class="button" @click="openLink('https://iitc.app')">
-            {{ _("iitcHomePage") }}
+            {{ t("iitcHomePage") }}
           </div>
           <div class="button" @click="openLink('https://iitc.app/donate')">
-            {{ _("donate") }}
+            {{ t("donate") }}
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default {
   methods: {
     forceUpdate: async function () {
       await browser.runtime.sendMessage({ type: "forceFullUpdate" });
-      this.showMessage(this._("updateInProgress"));
+      this.showMessage(this.t("updateInProgress"));
     },
   },
   computed: {

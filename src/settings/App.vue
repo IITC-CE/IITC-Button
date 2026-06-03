@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import Header from "./Header";
 import PageAddPlugin from "./add/Main";
 import PageBackup from "./backup/Main";
@@ -29,7 +29,7 @@ export default {
     };
   },
   methods: {
-    _: _,
+    t: t,
     setTab(tab) {
       if (history.pushState) {
         history.pushState(null, null, "#" + tab);

@@ -48,7 +48,7 @@ export default {
         interval: this.interval,
         channel: this.channel,
       });
-      this.showMessage(this._("changesApplied"));
+      this.showMessage(this.t("changesApplied"));
     },
   },
   async mounted() {

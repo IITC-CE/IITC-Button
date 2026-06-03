@@ -14,13 +14,13 @@
 
       <div class="row simple-details">
         <span class="label" v-if="domains === null">{{
-          _("jsViewDetailsNoDomains")
+          t("jsViewDetailsNoDomains")
         }}</span>
         <span class="label" v-if="domains === '<all_domains>'">{{
-          _("jsViewDetailsAllDomains")
+          t("jsViewDetailsAllDomains")
         }}</span>
         <template v-if="typeof domains === 'object'">
-          <span class="label">{{ _("jsViewDetailsDomainsLabel") }}</span>
+          <span class="label">{{ t("jsViewDetailsDomainsLabel") }}</span>
           <span class="value" v-for="(domain, i) in domains" v-bind:key="i">
             {{ domain }}</span
           >
@@ -49,8 +49,8 @@
       <a href="#" class="btn-more" @click.prevent="on_show_details">
         {{
           show_details
-            ? _("jsViewDetailsHideDetails")
-            : _("jsViewDetailsShowDetails")
+            ? t("jsViewDetailsHideDetails")
+            : t("jsViewDetailsShowDetails")
         }}
       </a>
 
@@ -60,8 +60,9 @@
 </template>
 
 <script>
+import { toRaw } from "vue";
 import browser from "webextension-polyfill";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import { getUID, humanizeMatch, IITC_CORE_UID } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
 
@@ -74,16 +75,16 @@ export default {
   data() {
     return {
       show_header: false,
-      button_name: _("install"),
+      button_name: t("install"),
       domains: null,
       show_details: false,
       page_uuid: uuidv4(),
     };
   },
   methods: {
-    _: _,
+    t: t,
     install: async function () {
-      const script = [{ meta: this.meta, code: this.code }];
+      const script = [{ meta: toRaw(this.meta), code: this.code }];
       await browser.runtime.sendMessage({
         type: "addUserScripts",
         id: this.page_uuid,
@@ -93,7 +94,7 @@ export default {
     checkIfInstalled: async function () {
       const uid = getUID(this.meta);
       if (uid === IITC_CORE_UID) {
-        this.button_name = _("reinstall");
+        this.button_name = t("reinstall");
       }
       await browser.runtime.sendMessage({
         type: "getPluginInfo",
@@ -106,7 +107,7 @@ export default {
         switch (request.type) {
           case "resolveGetPluginInfo":
             if (request.info) {
-              self.button_name = _("reinstall");
+              self.button_name = t("reinstall");
             }
             break;
           case "resolveAddUserScripts":
@@ -114,14 +115,14 @@ export default {
             Object.entries(request.scripts).map(([, script]) => {
               let message = "";
               if (script["uid"] === IITC_CORE_UID) {
-                message = _("addedCustomIITCCore", [script["name"]]) + "\n";
+                message = t("addedCustomIITCCore", [script["name"]]) + "\n";
               } else {
                 message =
-                  _("addedUserScriptTo", [script["name"], script["category"]]) +
+                  t("addedUserScriptTo", [script["name"], script["category"]]) +
                   "\n";
               }
               alert(message);
-              self.button_name = _("reinstall");
+              self.button_name = t("reinstall");
             });
         }
       });

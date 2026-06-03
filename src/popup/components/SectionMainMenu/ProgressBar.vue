@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { emitter } from "@/popup/eventBus";
+
 export default {
   name: "ProgressBar",
   data() {
@@ -16,7 +18,7 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on("showProgressbar", (status) => {
+    emitter.on("showProgressbar", (status) => {
       this.$data.showProgressbar = status;
     });
   },

@@ -4,7 +4,7 @@
     <div class="parent">
       <BlockURL></BlockURL>
       <h3 class="or">
-        — <span id="or">{{ _("or") }}</span> —
+        — <span id="or">{{ t("or") }}</span> —
       </h3>
       <BlockDrop></BlockDrop>
     </div>
@@ -14,12 +14,12 @@
 <script>
 import BlockURL from "./BlockURL";
 import BlockDrop from "./BlockDrop";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 
 export default {
   name: "PageAddPlugin",
   methods: {
-    _: _,
+    t: t,
   },
   components: { BlockURL, BlockDrop },
 };

@@ -13,13 +13,13 @@
       :class="[iconName === 'check' ? 'ok' : 'error']"
       v-bind:title="
         iconName === 'check'
-          ? _('customServerTooltipSuccess')
-          : _('customServerTooltipError', this.host + '/meta.json')
+          ? t('customServerTooltipSuccess')
+          : t('customServerTooltipError', this.host + '/meta.json')
       "
       v-html="iconName"
     ></i>
     <p class="example">
-      {{ _("customServerHint") }}
+      {{ t("customServerHint") }}
       <a
         href="#"
         class="example__item"

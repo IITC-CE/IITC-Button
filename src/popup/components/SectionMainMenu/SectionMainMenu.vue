@@ -23,6 +23,7 @@ import { searchPlugins } from "@/popup/search";
 import PluginList from "./PluginList/PluginList.vue";
 import Tags from "./Tags/Tags.vue";
 import browser from "webextension-polyfill";
+import { emitter } from "@/popup/eventBus";
 
 export default {
   name: "SectionMainMenu",
@@ -31,6 +32,7 @@ export default {
     plugins_flat: Object,
     iitc_core: Object,
   },
+  emits: ["update-plugin", "delete-plugin"],
   data() {
     return {
       search_query: "",
@@ -68,7 +70,7 @@ export default {
       );
     },
     async updatePlugin(updatedPlugin) {
-      this.$set(this.plugins_flat, updatedPlugin.uid, updatedPlugin);
+      this.$emit("update-plugin", updatedPlugin);
 
       if (this.search_query) {
         this.search_results = searchPlugins(
@@ -77,7 +79,7 @@ export default {
         );
       }
 
-      this.showMessage(this._("needRebootIntel"));
+      this.showMessage(this.t("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: updatedPlugin.uid,
@@ -85,7 +87,7 @@ export default {
       });
     },
     deletePlugin(pluginUID) {
-      this.$delete(this.plugins_flat, pluginUID);
+      this.$emit("delete-plugin", pluginUID);
 
       if (this.search_query) {
         this.search_results = searchPlugins(
@@ -96,7 +98,7 @@ export default {
     },
   },
   mounted() {
-    this.$root.$on("tag:active", (activeTag) => {
+    emitter.on("tag:active", (activeTag) => {
       this.activeTag = activeTag;
     });
   },

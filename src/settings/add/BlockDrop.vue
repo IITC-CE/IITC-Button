@@ -11,12 +11,12 @@
       <span
         id="dropJSHereOrClick"
         class="drop_zone_label"
-        v-html="_('dropJSHereOrClick')"
+        v-html="t('dropJSHereOrClick')"
       ></span>
       <span
         id="willBeOverwrittenByNewPlugin"
         class="drop_zone_label drop_zone_label_small"
-        v-html="_('willBeOverwrittenByNewPlugin')"
+        v-html="t('willBeOverwrittenByNewPlugin')"
       ></span>
     </div>
     <input
@@ -34,7 +34,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { parseMeta } from "lib-iitc-manager";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import { readUploadedFileAsText } from "@/settings/utils";
 
 /*
@@ -55,15 +55,15 @@ const processingFile = async (fileList) => {
         Object.keys(meta).length === 0 ||
         meta["name"] === undefined
       ) {
-        message += _("notValidUserScript", file["name"]) + "\n";
+        message += t("notValidUserScript", file["name"]) + "\n";
       } else {
         message +=
-          _("addedUserScriptTo", [meta["name"], meta["category"]]) + "\n";
+          t("addedUserScriptTo", [meta["name"], meta["category"]]) + "\n";
         meta["filename"] = file["name"];
         scripts.push({ meta: meta, code: code });
       }
     } catch (e) {
-      message += _("errorReadingFile", file["name"]) + "\n";
+      message += t("errorReadingFile", file["name"]) + "\n";
     }
   }
   alert(message);
@@ -81,7 +81,7 @@ export default {
     };
   },
   methods: {
-    _: _,
+    t: t,
     on_drop: (e) => {
       processingFile(e.dataTransfer.files).then();
     },

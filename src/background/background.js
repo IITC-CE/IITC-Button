@@ -6,7 +6,7 @@ import {
   IS_SCRIPTING_API,
   IS_USERSCRIPTS_API,
 } from "@/userscripts/env";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import {
   onUpdatedListener,
   onRemovedListener,
@@ -30,7 +30,7 @@ const manager = new Manager({
     browser.runtime
       .sendMessage({
         type: "showMessage",
-        message: _(message, args),
+        message: t(message, args),
       })
       .then()
       .catch(() => {}); // If popup is closed, message goes nowhere and an error occurs. Ignore.

@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { emitter } from "@/popup/eventBus";
+
 export default {
   name: "Tag",
   props: {
@@ -23,7 +25,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.$root.$emit("tag:active", this.tag.name);
+      emitter.emit("tag:active", this.tag.name);
     },
     getTagColor(tag) {
       const hash = this.hashString(tag);
