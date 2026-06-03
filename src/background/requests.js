@@ -2,7 +2,7 @@
 
 import browser from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
-import { parseMeta, fetchResource, getUniqId } from "lib-iitc-manager";
+import { parseMeta, fetchResource, getUniqueId } from "lib-iitc-manager";
 
 const IS_CHROME = !!global.chrome.app;
 const whitelist = [
@@ -205,7 +205,7 @@ async function maybeInstallUserJs(tabId, url) {
  */
 async function confirmInstall(url, code) {
   const cache = {};
-  const uniqId = getUniqId("tmp");
+  const uniqId = getUniqueId("tmp");
   cache[uniqId] = { url: url, code: code };
   await browser.storage.local.set(cache);
 
