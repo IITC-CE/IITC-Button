@@ -60,7 +60,7 @@ export default defineBackground(() => {
       await inject_plugin_via_content_scripts(plugin);
     },
     onPluginEvent: async (data) => {
-      if (IS_SCRIPTING_API) return;
+      if (!IS_USERSCRIPTS_API) return;
       await manage_userscripts_api(data);
     },
     gmApi: {
