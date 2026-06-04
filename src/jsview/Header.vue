@@ -159,8 +159,6 @@ export default {
 };
 </script>
 
-<style src="@/fonts/roboto/roboto-font.css"></style>
-
 <style scoped>
 .row {
   display: flex;

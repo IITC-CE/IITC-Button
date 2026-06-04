@@ -25,8 +25,6 @@ export default {
 };
 </script>
 
-<style src="@/fonts/roboto/roboto-font.css"></style>
-
 <style scoped>
 .or {
   text-align: center;

@@ -33,8 +33,6 @@ export default {
 };
 </script>
 
-<style src="@/fonts/noto/noto-font.css"></style>
-
 <style>
 pre {
   margin: 0;

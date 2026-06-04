@@ -73,9 +73,6 @@ export default {
 };
 </script>
 
-<style src="@/fonts/iconfont/material-icons.css"></style>
-<style src="@/fonts/roboto/roboto-font.css"></style>
-
 <style>
 body {
   cursor: default;

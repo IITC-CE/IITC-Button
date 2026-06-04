@@ -151,8 +151,6 @@ export default {
 };
 </script>
 
-<style src="@/fonts/roboto/roboto-font.css"></style>
-
 <style scoped>
 h1 {
   color: #fff;
