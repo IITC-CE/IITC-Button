@@ -13,7 +13,7 @@
     </div>
     <div
       class="title__button"
-      :title="_('addExternalPlugin')"
+      :title="t('addExternalPlugin')"
       v-on:click="openLink('/settings.html#add')"
     >
       <i class="title__icon material-icons">add</i>

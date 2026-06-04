@@ -4,14 +4,14 @@ import browser from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { parseMeta, fetchResource, getUniqueId } from "lib-iitc-manager";
 
-const IS_CHROME = !!global.chrome.app;
+const IS_CHROME = !!globalThis.chrome?.app;
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
   "^https://gist.github.com/.*?/[^/]*?.user.js([?#]|$)",
   "^https://gitlab.com/[^/]*/[^/]*/(|-/)raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
 ].map((re) => new RegExp(re));
 const blacklist = ["//(?:(?:gist.|)github.com|gitlab.com)/"].map(
-  (re) => new RegExp(re)
+  (re) => new RegExp(re),
 );
 
 const cache = {};
@@ -70,7 +70,7 @@ if (browser.webRequest) {
       ],
       types: ["main_frame"],
     },
-    extraInfoSpec
+    extraInfoSpec,
   );
 }
 

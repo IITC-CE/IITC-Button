@@ -1,32 +1,33 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import browser from "webextension-polyfill";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
+import { emitter } from "@/popup/eventBus";
 
 export const mixin = {
   data() {
     return {
       updateChannels: {
-        release: { name: _("release") },
-        beta: { name: _("beta") },
-        custom: { name: _("custom") },
+        release: { name: t("release") },
+        beta: { name: t("beta") },
+        custom: { name: t("custom") },
       },
       updateChannelsIntervals: {
-        release: { name: _("release") },
-        beta: { name: _("beta") },
-        custom: { name: _("custom") },
-        external: { name: _("anyChannel") },
+        release: { name: t("release") },
+        beta: { name: t("beta") },
+        custom: { name: t("custom") },
+        external: { name: t("anyChannel") },
       },
       updateIntervals: [
-        { name: _("every5seconds"), value: "5" },
-        { name: _("every6hours"), value: "21600" },
-        { name: _("every12hours"), value: "43200" },
-        { name: _("everyDay"), value: "86400" },
-        { name: _("everyWeek"), value: "604800" },
+        { name: t("every5seconds"), value: "5" },
+        { name: t("every6hours"), value: "21600" },
+        { name: t("every12hours"), value: "43200" },
+        { name: t("everyDay"), value: "86400" },
+        { name: t("everyWeek"), value: "604800" },
       ],
     };
   },
   methods: {
-    _: _,
+    t: t,
     __: function (key, item) {
       if (item === undefined || !(key in item)) return "";
       const lang = browser.i18n.getUILanguage();
@@ -57,7 +58,7 @@ export const mixin = {
       return Object.fromEntries(arr);
     },
     showMessage: function (msg) {
-      this.$root.$emit("message", msg);
+      emitter.emit("message", msg);
     },
   },
 };

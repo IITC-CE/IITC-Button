@@ -35,9 +35,19 @@ Theoretically, you violates ToS, but as you totally relies on intel.ingress.com 
 
 ---
 
+The extension is built with [WXT](https://wxt.dev) (Vite under the hood) and Vue 3.
+
 ## Project setup
 ```
 npm install
+```
+
+### Run in development with hot reload
+Launches a browser with the extension loaded and live-reloads on changes:
+```
+npm run dev:firefox
+# or
+npm run dev:chrome
 ```
 
 ### Compiles and minifies for production with Manifest V2
@@ -53,21 +63,24 @@ npm run build_mv3_chrome
 # or
 npm run build_mv3_safari
 ```
+Production artifacts are written to `.output/` and zipped into `artifacts/`.
 
-### Lints and fixes files
+### Lints files
 ```
 npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Build, manifest and zip options live in [`wxt.config.ts`](./wxt.config.ts). See the [WXT documentation](https://wxt.dev).
 
 ---
 
 ## Build for Safari (MacOS and iOS)
 
-1. Follow the [general build instructions](#project-setup).
-To build for iOS, set the _BROWSER="safari-ios"_ environment variable (example: `BROWSER="safari-ios" npm run build`). Tested only on Manifest V2.
+1. Build the Safari extension - this generates `.output/safari-mv3/`, which the Xcode project bundles for both the macOS and iOS targets:
+```
+npm run build_mv3_safari
+```
 
 2. Open the Xcode project in the `safari` folder
 
@@ -84,4 +97,3 @@ To develop without a certificate, tell Safari to load unsigned extensions using 
    * Choose Safari > Preferences.
    * Select the Extensions tab. This tab shows the localized description, display name, and version number for the selected Safari App Extension. It also provides more information about the permissions claimed by the extension.
    * Find your new extension in the list on the left, and enable it by selecting the checkbox.
-

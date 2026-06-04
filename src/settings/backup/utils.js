@@ -80,7 +80,7 @@ export const createBackupZip = async (backup) => {
     for (const external_plugin_name in backup.external_plugins[channel]) {
       zip.file(
         `${channel}/${external_plugin_name}`,
-        backup.external_plugins[channel][external_plugin_name]
+        backup.external_plugins[channel][external_plugin_name],
       );
     }
   }

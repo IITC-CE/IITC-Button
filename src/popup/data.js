@@ -1,6 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
+import { emitter } from "@/popup/eventBus";
 
 export async function init(self) {
   const appData = self.$data;
@@ -10,7 +11,7 @@ export async function init(self) {
 
 function setPluginsView(
   appData,
-  { plugins = {}, categories = {}, core = null }
+  { plugins = {}, categories = {}, core = null },
 ) {
   appData.categories = categories;
   appData.plugins_flat = plugins;
@@ -26,7 +27,7 @@ function setPluginsView(
           }
           return category_plugins;
         },
-        {}
+        {},
       );
     } else {
       appData.plugins = {};
@@ -39,7 +40,7 @@ export async function onMessageListener(self) {
   browser.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
       case "showProgressbar":
-        self.$root.$emit("showProgressbar", request.value);
+        emitter.emit("showProgressbar", request.value);
         break;
       case "showMessage":
         self.showMessage(request.message);

@@ -6,6 +6,8 @@
         v-bind:categories="categories"
         v-bind:plugins_flat="plugins_flat"
         v-bind:iitc_core="iitc_core"
+        @update-plugin="updatePlugin"
+        @delete-plugin="deletePlugin"
       >
       </SectionMainMenu>
     </section>
@@ -54,6 +56,12 @@ export default {
     await browser.runtime.sendMessage({ type: "popupWasOpened" });
   },
   methods: {
+    updatePlugin(updatedPlugin) {
+      this.plugins_flat[updatedPlugin.uid] = updatedPlugin;
+    },
+    deletePlugin(pluginUID) {
+      delete this.plugins_flat[pluginUID];
+    },
     detect_safari: function () {
       let userAgentString = navigator.userAgent;
       let chromeAgent = userAgentString.indexOf("Chrome") > -1;
@@ -64,9 +72,6 @@ export default {
   },
 };
 </script>
-
-<style src="../../public/assets/iconfont/material-icons.css"></style>
-<style src="../../public/assets/roboto/roboto-font.css"></style>
 
 <style>
 body {

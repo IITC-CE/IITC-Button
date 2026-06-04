@@ -2,27 +2,27 @@
 <template>
   <div class="page">
     <div class="parent">
-      <h1>{{ _("debug") }}</h1>
+      <h1>{{ t("debug") }}</h1>
       <div class="card">
-        <p class="message">{{ _("warningAboutLocalStoragePart1") }}</p>
+        <p class="message">{{ t("warningAboutLocalStoragePart1") }}</p>
         <p class="message">
-          <strong>{{ _("warningAboutLocalStoragePart2") }}</strong>
+          <strong>{{ t("warningAboutLocalStoragePart2") }}</strong>
         </p>
         <textarea
           v-model="local_storage_data"
           placeholder="loading"
           disabled
         ></textarea>
-        <div class="btn" @click="handleExport">{{ _("saveToJson") }}</div>
+        <div class="btn" @click="handleExport">{{ t("saveToJson") }}</div>
       </div>
 
-      <h1>{{ _("importLocalStorage") }}</h1>
+      <h1>{{ t("importLocalStorage") }}</h1>
       <div class="card">
         <p class="message">
-          <strong>{{ _("warningAboutImportLocalStorage") }}</strong>
+          <strong>{{ t("warningAboutImportLocalStorage") }}</strong>
         </p>
         <form v-on:click="$refs.input.click()">
-          <div class="btn">{{ _("importFromJson") }}</div>
+          <div class="btn">{{ t("importFromJson") }}</div>
           <input
             type="file"
             ref="input"
@@ -38,7 +38,7 @@
 
 <script>
 import browser from "webextension-polyfill";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 import { readUploadedFileAsText } from "@/settings/utils";
 
 export default {
@@ -49,7 +49,7 @@ export default {
     };
   },
   methods: {
-    _: _,
+    t: t,
     async handleExport() {
       const saveJson = (function () {
         const a = document.createElement("a");
@@ -76,7 +76,7 @@ export default {
       const data = JSON.parse(json_data);
       await browser.storage.local.clear();
       await browser.storage.local.set(data);
-      alert(_("backupRestored"));
+      alert(t("backupRestored"));
     },
   },
   async mounted() {
@@ -84,8 +84,6 @@ export default {
   },
 };
 </script>
-
-<style src="../../../public/assets/roboto/roboto-font.css"></style>
 
 <style scoped>
 h1 {

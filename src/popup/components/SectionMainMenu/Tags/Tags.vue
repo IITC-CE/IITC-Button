@@ -13,6 +13,7 @@
 
 <script>
 import Tag from "./Tag.vue";
+import { emitter } from "@/popup/eventBus";
 
 export default {
   name: "Tags",
@@ -26,7 +27,7 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on("tag:active", (activeTag) => {
+    emitter.on("tag:active", (activeTag) => {
       this.activeTag = activeTag;
     });
   },
@@ -91,7 +92,7 @@ export default {
       handler(newTags) {
         if (!newTags[this.activeTag] && this.activeTag !== "All") {
           this.activeTag = "All";
-          this.$root.$emit("tag:active", this.activeTag);
+          emitter.emit("tag:active", this.activeTag);
         }
       },
       deep: true,

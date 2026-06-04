@@ -58,6 +58,6 @@ export function bridgeResponse(data) {
   dispatchEvent(
     new CustomEvent("bridgeResponse", {
       detail: data,
-    })
+    }),
   );
 }

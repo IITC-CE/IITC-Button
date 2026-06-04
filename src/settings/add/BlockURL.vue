@@ -24,7 +24,7 @@
 <script>
 import browser from "webextension-polyfill";
 import { fetchResource, parseMeta } from "lib-iitc-manager";
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 
 export default {
   name: "BlockURL",
@@ -34,7 +34,7 @@ export default {
     };
   },
   methods: {
-    _: _,
+    t: t,
     url_input_keyup: async function (event) {
       if (event.key === "Enter") {
         await this.loadByUrl();
@@ -47,7 +47,7 @@ export default {
       const { data: code } = await fetchResource(url);
 
       if (!code) {
-        alert(_("addressNotAvailable"));
+        alert(t("addressNotAvailable"));
         return;
       }
 
@@ -62,10 +62,10 @@ export default {
           Object.keys(meta).length === 0 ||
           meta["name"] === undefined
         ) {
-          message += _("notValidUserScript", filename) + "\n";
+          message += t("notValidUserScript", filename) + "\n";
         } else {
           message +=
-            _("addedUserScriptTo", [filename, meta["category"]]) + "\n";
+            t("addedUserScriptTo", [filename, meta["category"]]) + "\n";
           meta["filename"] = filename;
           scripts.push({ meta: meta, code: code });
         }

@@ -91,7 +91,7 @@ async function setTabActive(tabId) {
 
   try {
     await browser.windows.update(tab.windowId, { focused: true });
-  } catch (error) {
+  } catch {
     lastIITCTab = null;
     await onRequestOpenIntel();
   }

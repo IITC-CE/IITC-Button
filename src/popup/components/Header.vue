@@ -20,6 +20,7 @@ export default {
     header_text: String,
     button_text: String,
   },
+  emits: ["button_onclick"],
   methods: {
     button_onclick() {
       this.$emit("button_onclick");

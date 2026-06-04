@@ -9,7 +9,7 @@
           :class="{ active: tab === 'add' }"
           @click="$emit('setTab', 'add')"
         >
-          {{ _("addExternalPlugin") }}
+          {{ t("addExternalPlugin") }}
         </div>
         <div
           id="backup"
@@ -17,7 +17,7 @@
           :class="{ active: tab === 'backup' }"
           @click="$emit('setTab', 'backup')"
         >
-          {{ _("backup") }}
+          {{ t("backup") }}
         </div>
         <div
           id="debug"
@@ -25,7 +25,7 @@
           :class="{ active: tab === 'debug' }"
           @click="$emit('setTab', 'debug')"
         >
-          {{ _("debug") }}
+          {{ t("debug") }}
         </div>
       </div>
     </div>
@@ -33,20 +33,19 @@
 </template>
 
 <script>
-import { _ } from "@/i18n";
+import { t } from "@/i18n";
 
 export default {
   name: "Header",
   props: {
     tab: String,
   },
+  emits: ["setTab"],
   methods: {
-    _: _,
+    t: t,
   },
 };
 </script>
-
-<style src="../../public/assets/roboto/roboto-font.css"></style>
 
 <style scoped>
 .tabs {

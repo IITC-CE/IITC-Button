@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { emitter } from "@/popup/eventBus";
+
 let message_timeout_id = null;
 
 export default {
@@ -16,7 +18,7 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on("message", (msg) => {
+    emitter.on("message", (msg) => {
       const self = this;
       self.$data.message.text = msg;
       self.$data.message.opened = true;
@@ -43,7 +45,9 @@ export default {
   color: var(--color-white);
   font-weight: 400;
   white-space: nowrap;
-  transition: bottom 0.3s ease-in-out, height 0.3s ease-in-out;
+  transition:
+    bottom 0.3s ease-in-out,
+    height 0.3s ease-in-out;
   z-index: 10;
 }
 #message::after {

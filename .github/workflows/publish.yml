@@ -30,9 +30,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Zip sources
-        run: |
-          zip -r sources.zip . -x ".git/*" ".github/*"
 
       - name: Get artifact ID and name from API
         id: get-artifact-id
@@ -123,6 +120,10 @@ jobs:
         if: ${{ contains(fromJSON('["release", "beta"]'), env.BUILD_TYPE) }}
         run: npm ci
 
+      - name: Zip sources for Firefox AMO
+        if: ${{ contains(fromJSON('["release", "beta"]'), env.BUILD_TYPE) }}
+        run: npm run zip_sources
+
       - name: Upload & release
         if: ${{ contains(fromJSON('["release", "beta"]'), env.BUILD_TYPE) }}
         env:
@@ -131,6 +132,6 @@ jobs:
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
-          FIREFOX_SOURCES_ZIP: "sources.zip"
+          FIREFOX_SOURCES_ZIP: "./artifacts/sources.zip"
         run: |
           npx publish-extension

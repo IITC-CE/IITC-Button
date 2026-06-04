@@ -1,6 +1,11 @@
 <!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
 <template>
-  <highlightjs language="javascript" v-if="code" :code="code" />
+  <highlightjs
+    language="javascript"
+    :autodetect="false"
+    v-if="code"
+    :code="code"
+  />
   <div class="message" v-else>{{ status }}</div>
 </template>
 
@@ -9,7 +14,7 @@ import hljsVuePlugin from "@highlightjs/vue-plugin";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import { plugin } from "@/jsview/highlightjs-lineToDiv";
-import "highlight.js/styles/darcula.css";
+import "highlight.js/styles/atom-one-dark.css";
 
 hljs.registerLanguage("javascript", javascript);
 hljs.addPlugin({
@@ -27,8 +32,6 @@ export default {
   },
 };
 </script>
-
-<style src="../../public/assets/noto/noto-font.css"></style>
 
 <style>
 pre {

@@ -14,7 +14,7 @@ const setPluginScore = (p, q) => {
     score(q, p["name:" + lang]),
     score(q, p.description),
     score(q, p["description:" + lang]),
-    score(q, p.category)
+    score(q, p.category),
   );
   return p;
 };
