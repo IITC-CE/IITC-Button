@@ -69,7 +69,7 @@ function handleXhrResponseData(data) {
     window.dispatchEvent(
       new CustomEvent("bridgeResponse", {
         detail: bridge_data,
-      })
+      }),
     );
   } catch (error) {
     console.error("IITC Button XHR Bridge: error handling response", error);
@@ -129,7 +129,7 @@ export function sendXhrRequest(data) {
         timeout: data.timeout,
         withCredentials: data.withCredentials,
       },
-      "*"
+      "*",
     );
   } catch (error) {
     console.error("IITC Button XHR Bridge: error sending request", error);

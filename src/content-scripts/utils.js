@@ -10,7 +10,7 @@ export function inject(code) {
   const script = document.createElement("script");
   script.appendChild(document.createTextNode(code));
   (document.body || document.head || document.documentElement).appendChild(
-    script
+    script,
   );
   script.parentElement.removeChild(script);
 }

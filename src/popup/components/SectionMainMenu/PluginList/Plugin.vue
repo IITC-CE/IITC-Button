@@ -172,7 +172,7 @@ export default {
     savePlugin: async function () {
       saveJS(
         this.plugin.code,
-        this.plugin.filename || `${sanitizeFileName(this.plugin.name)}.user.js`
+        this.plugin.filename || `${sanitizeFileName(this.plugin.name)}.user.js`,
       );
     },
   },

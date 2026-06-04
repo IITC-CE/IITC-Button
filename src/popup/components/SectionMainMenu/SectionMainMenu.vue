@@ -65,8 +65,8 @@ export default {
       }
       return Object.fromEntries(
         Object.entries(plugins).filter(
-          ([, plugin]) => plugin.category === this.activeTag
-        )
+          ([, plugin]) => plugin.category === this.activeTag,
+        ),
       );
     },
     async updatePlugin(updatedPlugin) {
@@ -75,7 +75,7 @@ export default {
       if (this.search_query) {
         this.search_results = searchPlugins(
           this.search_query,
-          this.plugins_flat
+          this.plugins_flat,
         );
       }
 
@@ -92,7 +92,7 @@ export default {
       if (this.search_query) {
         this.search_results = searchPlugins(
           this.search_query,
-          this.plugins_flat
+          this.plugins_flat,
         );
       }
     },

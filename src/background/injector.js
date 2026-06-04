@@ -27,7 +27,7 @@ export async function inject_plugin_via_content_scripts(plugin) {
             document.dispatchEvent(
               new CustomEvent("IITCButtonInitJS", {
                 detail: pluginDetail,
-              })
+              }),
             );
           },
           args: [{ plugin }],
@@ -36,7 +36,7 @@ export async function inject_plugin_via_content_scripts(plugin) {
       }
     } catch (error) {
       console.error(
-        `An error occurred while injecting script: ${error.message}`
+        `An error occurred while injecting script: ${error.message}`,
       );
     }
   }
@@ -76,10 +76,10 @@ export async function manage_userscripts_api(plugins_event) {
     const registeredIds = registeredScripts.map((script) => script.id);
 
     const pluginsToAdd = plugins_obj.filter(
-      (plugin) => !registeredIds.includes(plugin.id)
+      (plugin) => !registeredIds.includes(plugin.id),
     );
     const pluginsToUpdate = plugins_obj.filter((plugin) =>
-      registeredIds.includes(plugin.id)
+      registeredIds.includes(plugin.id),
     );
 
     try {

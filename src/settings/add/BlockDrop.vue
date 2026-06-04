@@ -62,7 +62,7 @@ const processingFile = async (fileList) => {
         meta["filename"] = file["name"];
         scripts.push({ meta: meta, code: code });
       }
-    } catch (e) {
+    } catch {
       message += t("errorReadingFile", file["name"]) + "\n";
     }
   }
@@ -107,9 +107,9 @@ export default {
             e.preventDefault();
             e.stopPropagation();
           }.bind(this),
-          false
+          false,
         );
-      }.bind(this)
+      }.bind(this),
     );
     this.$refs.fileform.addEventListener(
       "drop",
@@ -117,7 +117,7 @@ export default {
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
           this.files.push(e.dataTransfer.files[i]);
         }
-      }.bind(this)
+      }.bind(this),
     );
   },
 };

@@ -11,7 +11,7 @@ const whitelist = [
   "^https://gitlab.com/[^/]*/[^/]*/(|-/)raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
 ].map((re) => new RegExp(re));
 const blacklist = ["//(?:(?:gist.|)github.com|gitlab.com)/"].map(
-  (re) => new RegExp(re)
+  (re) => new RegExp(re),
 );
 
 const cache = {};
@@ -70,7 +70,7 @@ if (browser.webRequest) {
       ],
       types: ["main_frame"],
     },
-    extraInfoSpec
+    extraInfoSpec,
   );
 }
 

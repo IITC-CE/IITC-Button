@@ -65,12 +65,10 @@ export default {
       }
     },
     checkHostPermissions: async function () {
-      const testIntelPermissionResult = await browser.permissions.contains(
-        intelOrigins
-      );
-      const testAllUrlsPermissionResult = await browser.permissions.contains(
-        allUrlsOrigins
-      );
+      const testIntelPermissionResult =
+        await browser.permissions.contains(intelOrigins);
+      const testAllUrlsPermissionResult =
+        await browser.permissions.contains(allUrlsOrigins);
       return testIntelPermissionResult || testAllUrlsPermissionResult;
     },
     requestPermissions: async function requestPermissions(permissions) {

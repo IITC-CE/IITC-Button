@@ -11,7 +11,7 @@ export async function init(self) {
 
 function setPluginsView(
   appData,
-  { plugins = {}, categories = {}, core = null }
+  { plugins = {}, categories = {}, core = null },
 ) {
   appData.categories = categories;
   appData.plugins_flat = plugins;
@@ -27,7 +27,7 @@ function setPluginsView(
           }
           return category_plugins;
         },
-        {}
+        {},
       );
     } else {
       appData.plugins = {};

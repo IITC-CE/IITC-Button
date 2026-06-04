@@ -210,7 +210,10 @@ h2:first-letter {
   margin: 0;
   line-height: 12px;
   text-align: center;
-  transition: color 0.1s ease, background 0.1s ease, border 0.1s ease;
+  transition:
+    color 0.1s ease,
+    background 0.1s ease,
+    border 0.1s ease;
 }
 .channels__item:first-child label {
   border-radius: 4px 0 0 4px;

@@ -71,8 +71,8 @@ export default {
     enabledPlugins() {
       const obj = Object.fromEntries(
         Object.entries(this.plugins).filter(
-          ([, plugin]) => plugin.status === "on"
-        )
+          ([, plugin]) => plugin.status === "on",
+        ),
       );
       return this.sortIITCObj(obj);
     },
