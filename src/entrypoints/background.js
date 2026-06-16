@@ -1,11 +1,7 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import { Manager, GM_API_UID } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
-import {
-  IS_LEGACY_API,
-  IS_SCRIPTING_API,
-  IS_USERSCRIPTS_API,
-} from "@/userscripts/env";
+import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { t } from "@/i18n";
 import {
   onUpdatedListener,
@@ -81,7 +77,7 @@ export default defineBackground(() => {
 
   manager.run().then();
 
-  if (IS_LEGACY_API || IS_SCRIPTING_API) {
+  if (IS_SCRIPTING_API) {
     const { onUpdated, onRemoved } = browser.tabs;
     onUpdated.addListener((tabId, status, tab) =>
       onUpdatedListener(tabId, status, tab, manager),
@@ -182,9 +178,7 @@ export default defineBackground(() => {
         break;
       case "setUpdateCheckInterval":
         await manager.setUpdateCheckInterval(request.interval, request.channel);
-        if (!IS_LEGACY_API) {
-          await createCheckUpdateAlarm(true);
-        }
+        await createCheckUpdateAlarm(true);
         break;
     }
   });
@@ -221,8 +215,6 @@ export default defineBackground(() => {
   }
 
   async function createCheckUpdateAlarm(need_to_update = false) {
-    if (IS_LEGACY_API) return;
-
     const alarm_name = "check-update-alarm";
     if (!need_to_update) {
       const alarm = await browser.alarms.get(alarm_name);
@@ -243,11 +235,9 @@ export default defineBackground(() => {
     });
   }
 
-  if (!IS_LEGACY_API) {
-    browser.alarms.onAlarm.addListener(async () => {
-      await manager.checkUpdates(false);
-    });
-  }
+  browser.alarms.onAlarm.addListener(async () => {
+    await manager.checkUpdates(false);
+  });
 
   browser.runtime.onInstalled.addListener((details) => {
     if (details.reason !== "update") return;

@@ -4,7 +4,7 @@ import { resolve, join } from "path";
 
 // Read manifest.json for base fields
 const baseManifest = JSON.parse(
-  readFileSync(resolve(__dirname, "src/manifest.json"), "utf-8")
+  readFileSync(resolve(__dirname, "src/manifest.json"), "utf-8"),
 );
 
 export default defineConfig({
@@ -47,106 +47,69 @@ export default defineConfig({
 
     const perms = result.permissions as string[];
 
-    if (manifestVersion === 2) {
-      // MV2 permissions
-      perms.push("<all_urls>", "webRequest", "webRequestBlocking");
-      // Gecko settings
+    perms.push("webRequest", "alarms");
+
+    result.host_permissions = [
+      "https://intel.ingress.com/*",
+      "http://*/*",
+      "https://*/*",
+    ];
+
+    result.action = {
+      default_title: "__MSG_titleDefault__",
+      default_icon: {
+        "48": isBeta
+          ? "assets/icons/48/icon-beta.png"
+          : "assets/icons/48/icon.png",
+        "96": isBeta
+          ? "assets/icons/96/icon-beta.png"
+          : "assets/icons/96/icon.png",
+      },
+    };
+
+    const isProd = mode === "production";
+
+    if (browser === "chrome") {
+      result.minimum_chrome_version = "120";
+      perms.push("userScripts", "declarativeNetRequest");
+      if (isProd) {
+        result.content_security_policy = {
+          extension_pages:
+            "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
+        };
+      }
+      // web_accessible_resources for jsview and sandbox
+      result.web_accessible_resources = [
+        {
+          resources: ["sandbox.html", "jsview.html"],
+          matches: ["<all_urls>"],
+        },
+      ];
+    } else if (browser === "firefox" || browser === "safari") {
       result.browser_specific_settings = {
         gecko: {
           id: isBeta ? "iitc-beta@modos189.ru" : "iitc@modos189.ru",
-          strict_min_version: "57.0",
+          strict_min_version: "109.0",
         },
         gecko_android: {
           strict_min_version: "113.0",
         },
       };
-      // browser_action icon/title (WXT adds default_popup automatically)
-      result.browser_action = {
-        default_title: "__MSG_titleDefault__",
-        default_icon: {
-          "48": isBeta
-            ? "assets/icons/48/icon-beta.png"
-            : "assets/icons/48/icon.png",
-          "96": isBeta
-            ? "assets/icons/96/icon-beta.png"
-            : "assets/icons/96/icon.png",
-        },
-      };
+      perms.push("webRequestBlocking", "scripting");
 
-      // web_accessible_resources for sandbox in MV2
-      result.web_accessible_resources = ["sandbox.html"];
-
-      if (browser === "safari-ios") {
-        // persistent:false for safari-ios - WXT will handle background but we note it
-        result.background = { persistent: false };
-      }
-    } else {
-      // MV3 permissions
-      perms.push("webRequest", "alarms");
-
-      result.host_permissions = [
-        "https://intel.ingress.com/*",
-        "http://*/*",
-        "https://*/*",
-      ];
-
-      // Default action (WXT derives popup from entrypoint; we set title and icon)
-      result.action = {
-        default_title: "__MSG_titleDefault__",
-        default_icon: {
-          "48": isBeta
-            ? "assets/icons/48/icon-beta.png"
-            : "assets/icons/48/icon.png",
-          "96": isBeta
-            ? "assets/icons/96/icon-beta.png"
-            : "assets/icons/96/icon.png",
-        },
-      };
-
-      const isProd = mode === "production";
-
-      if (browser === "chrome") {
-        result.minimum_chrome_version = "120";
-        perms.push("userScripts", "declarativeNetRequest");
-        if (isProd) {
-          result.content_security_policy = {
-            extension_pages:
-              "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
-          };
-        }
-        // web_accessible_resources for jsview and sandbox
-        result.web_accessible_resources = [
-          {
-            resources: ["sandbox.html", "jsview.html"],
-            matches: ["<all_urls>"],
-          },
-        ];
-      } else if (browser === "firefox" || browser === "safari") {
-        result.browser_specific_settings = {
-          gecko: {
-            id: isBeta ? "iitc-beta@modos189.ru" : "iitc@modos189.ru",
-            strict_min_version: "109.0",
-          },
-          gecko_android: {
-            strict_min_version: "113.0",
-          },
+      if (browser === "firefox" && isProd) {
+        result.content_security_policy = {
+          extension_pages:
+            "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
         };
-        perms.push("webRequestBlocking", "scripting");
-
-        if (browser === "firefox" && isProd) {
-          result.content_security_policy = {
-            extension_pages:
-              "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
-          };
-        }
-        // Safari: no CSP
-        result.web_accessible_resources = [
-          {
-            resources: ["sandbox.html"],
-            matches: ["<all_urls>"],
-          },
-        ];
       }
+      // Safari: no CSP
+      result.web_accessible_resources = [
+        {
+          resources: ["sandbox.html"],
+          matches: ["<all_urls>"],
+        },
+      ];
     }
 
     return result;
@@ -158,7 +121,8 @@ export default defineConfig({
     // The Firefox AMO sources zip is generated on demand by `npm run zip_sources` (wxt zip --sources).
     zipSources: false,
     // Built into .output first, then copied to artifacts/ via the zip hooks below.
-    artifactTemplate: "{{name}}-v{{version}}-{{browser}}-{{manifestVersion}}.zip",
+    artifactTemplate:
+      "{{name}}-v{{version}}-{{browser}}-{{manifestVersion}}.zip",
     sourcesTemplate: "iitc-button-v{{version}}-sources.zip",
     exclude: ["**/.DS_Store"],
     excludeSources: ["**/artifacts/**", "**/safari/**", "**/*.zip"],
@@ -172,12 +136,10 @@ export default defineConfig({
       const artifactsDir = resolve(wxt.config.root, "artifacts");
       mkdirSync(artifactsDir, { recursive: true });
 
-      // Determine the browser label: MV2 uses "all", MV3 uses actual browser
-      const browserLabel =
-        wxt.config.manifestVersion === 2 ? "all" : wxt.config.browser;
+      const browserLabel = wxt.config.browser;
       const mv = `MV${wxt.config.manifestVersion}`;
       const version = JSON.parse(
-        readFileSync(resolve(wxt.config.root, "package.json"), "utf-8")
+        readFileSync(resolve(wxt.config.root, "package.json"), "utf-8"),
       ).version;
       const name = "iitc-button";
 
