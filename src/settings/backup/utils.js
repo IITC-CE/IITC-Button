@@ -54,7 +54,7 @@ export const getBackupDataFromZip = async (file) => {
         backup.data = JSON.parse(await zip.file(filename).async("string"));
       } else if (
         filename_split.length > 1 &&
-        ["release", "beta", "custom"].includes(filename_split[0])
+        ["shared", "release", "beta", "custom"].includes(filename_split[0])
       ) {
         // import external plugins
         const channel = filename_split[0];
