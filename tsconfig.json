@@ -1,0 +1,9 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "include": [
+    "src/**/*",
+    "wxt.config.ts",
+    ".wxt/wxt.d.ts",
+    ".wxt/types/**/*"
+  ]
+}
