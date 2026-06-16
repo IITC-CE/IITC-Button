@@ -4,36 +4,22 @@ import browser from "webextension-polyfill";
 import { GM_API_UID } from "lib-iitc-manager";
 import { getNiaTabsToInject } from "@/background/utils";
 import { is_userscripts_api_available } from "@/userscripts/utils";
-import { IS_LEGACY_API } from "@/userscripts/env";
-
 export async function inject_plugin_via_content_scripts(plugin) {
   const tabs = await getNiaTabsToInject(plugin);
   for (let tab of Object.values(tabs)) {
     try {
-      if (IS_LEGACY_API) {
-        const inject = `
-          document.dispatchEvent(new CustomEvent('IITCButtonInitJS', {
-            detail: ${JSON.stringify({ plugin })}
-          }));
-        `;
-        await browser.tabs.executeScript(tab.id, {
-          code: inject,
-          runAt: "document_end",
-        });
-      } else {
-        await browser.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: (pluginDetail) => {
-            document.dispatchEvent(
-              new CustomEvent("IITCButtonInitJS", {
-                detail: pluginDetail,
-              }),
-            );
-          },
-          args: [{ plugin }],
-          injectImmediately: true,
-        });
-      }
+      await browser.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: (pluginDetail) => {
+          document.dispatchEvent(
+            new CustomEvent("IITCButtonInitJS", {
+              detail: pluginDetail,
+            }),
+          );
+        },
+        args: [{ plugin }],
+        injectImmediately: true,
+      });
     } catch (error) {
       console.error(
         `An error occurred while injecting script: ${error.message}`,

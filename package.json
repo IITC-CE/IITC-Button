@@ -7,7 +7,6 @@
   "scripts": {
     "dev:firefox": "wxt -b firefox",
     "dev:chrome": "wxt -b chrome",
-    "build_mv2": "wxt build -b firefox --mv2 && wxt zip -b firefox --mv2",
     "build_mv3_firefox": "wxt build -b firefox --mv3 && wxt zip -b firefox --mv3",
     "build_mv3_chrome": "wxt build -b chrome --mv3 && wxt zip -b chrome --mv3",
     "build_mv3_safari": "wxt build -b safari --mv3 && wxt zip -b safari --mv3",

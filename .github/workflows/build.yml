@@ -35,7 +35,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - build_script: build_mv2
           - build_script: build_mv3_firefox
           - build_script: build_mv3_chrome
           - build_script: build_mv3_safari
