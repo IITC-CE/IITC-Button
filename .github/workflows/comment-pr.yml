@@ -63,13 +63,12 @@ jobs:
           number: ${{ env.PR_NUMBER }}
           message: |
             Build completed successfully. Below are the download links for the build artifacts:
-            
+
             | Artifact Name | Download Link |
             | ------------- | ------------- |
             | ${{ env.displayArtifact1 }} | [Download](${{ env.url1 }}) |
             | ${{ env.displayArtifact2 }} | [Download](${{ env.url2 }}) |
             | ${{ env.displayArtifact3 }} | [Download](${{ env.url3 }}) |
             | ${{ env.displayArtifact4 }} | [Download](${{ env.url4 }}) |
-            | ${{ env.displayArtifact5 }} | [Download](${{ env.url5 }}) |
-            
+
             Artifacts will only be retained for 90 days.
