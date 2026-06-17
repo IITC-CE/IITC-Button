@@ -11,12 +11,16 @@
 </template>
 
 <script lang="ts">
+import { type PropType } from "vue";
 import { emitter } from "@/popup/eventBus";
 
 export default defineComponent({
   name: "Tag",
   props: {
-    tag: Object,
+    tag: {
+      type: Object as PropType<{ name: string; isNew?: boolean }>,
+      required: true as const,
+    },
     isActive: Boolean,
     isNew: {
       type: Boolean,
@@ -27,7 +31,7 @@ export default defineComponent({
     handleClick() {
       emitter.emit("tag:active", this.tag.name);
     },
-    getTagColor(tag) {
+    getTagColor(tag: string) {
       const hash = this.hashString(tag);
       const hue = hash % 360;
       const lightness = 1;
@@ -35,7 +39,7 @@ export default defineComponent({
 
       return `oklch(${lightness} ${chroma} ${hue}deg)`;
     },
-    hashString(str) {
+    hashString(str: string) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);

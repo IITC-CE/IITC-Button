@@ -14,7 +14,7 @@
       v-bind:title="
         iconName === 'check'
           ? t('customServerTooltipSuccess')
-          : t('customServerTooltipError', this.host + '/meta.json')
+          : t('customServerTooltipError', host + '/meta.json')
       "
       v-html="iconName"
     ></i>
@@ -54,7 +54,7 @@ export default defineComponent({
   },
   mixins: [mixin],
   methods: {
-    setInputStatus: async function (host) {
+    setInputStatus: async function (host: string) {
       this.iconName = "error";
       const status = await validateCustomChannelUrl(host);
       if (status) {
@@ -80,15 +80,15 @@ export default defineComponent({
         });
       }
     },
-    setExample: function (host) {
+    setExample: function (host: string) {
       this.host = host;
       this.changeCustomServer();
     },
   },
   async mounted() {
-    const networkHost = await browser.runtime.sendMessage({
+    const networkHost = (await browser.runtime.sendMessage({
       type: "getNetworkHost",
-    });
+    })) as { custom?: string } | undefined;
     if (networkHost?.custom) {
       this.host = networkHost.custom;
     }

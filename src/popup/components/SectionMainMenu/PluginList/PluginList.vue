@@ -4,7 +4,10 @@
     <template v-if="plugins">
       <template v-if="active_tag === 'All'">
         <Title :text="t('pluginListEnabledPlugins')"></Title>
-        <Plugin :plugin="iitc_core" v-if="search_query === ''"></Plugin>
+        <Plugin
+          :plugin="iitc_core"
+          v-if="iitc_core && search_query === ''"
+        ></Plugin>
         <Plugin
           v-for="(plugin, uid) in enabledPlugins"
           :key="'enabled-' + uid"
@@ -41,16 +44,21 @@
 </template>
 
 <script lang="ts">
+import { type PropType } from "vue";
 import Title from "./Title.vue";
 import Plugin from "./Plugin.vue";
 import { mixin } from "@/popup/components/mixins";
 import NoData from "@/popup/components/SectionMainMenu/PluginList/NoData.vue";
+import type { Plugin as PluginType, PluginDict } from "lib-iitc-manager";
 
 export default defineComponent({
   name: "ListPlugins",
   props: {
-    plugins: Object,
-    iitc_core: Object,
+    plugins: {
+      type: Object as PropType<PluginDict>,
+      required: true as const,
+    },
+    iitc_core: Object as PropType<PluginType>,
     search_query: String,
     active_tag: String,
   },
@@ -60,10 +68,10 @@ export default defineComponent({
   },
   mixins: [mixin],
   methods: {
-    handlePluginUpdate(updatedPlugin) {
+    handlePluginUpdate(updatedPlugin: PluginType) {
       this.$emit("update-plugin", updatedPlugin);
     },
-    handlePluginDelete(pluginUID) {
+    handlePluginDelete(pluginUID: string) {
       this.$emit("delete-plugin", pluginUID);
     },
   },

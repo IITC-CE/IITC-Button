@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import browser from "webextension-polyfill";
-import Code from "./Code";
+import Code from "./Code.vue";
 import { t } from "@/i18n";
-import Header from "./Header";
+import Header from "./Header.vue";
 import { fetchData } from "lib-iitc-manager";
 import { parseMeta } from "lib-iitc-manager";
 
@@ -29,11 +29,11 @@ export default defineComponent({
   },
   methods: {
     t: t,
-    bypass: async function (tabId, url) {
+    bypass: async function (tabId: number | undefined, url: string) {
       await browser.tabs.create({
         url: `${url}#pass`,
       });
-      await browser.tabs.remove(tabId);
+      if (tabId !== undefined) await browser.tabs.remove(tabId);
     },
   },
   async mounted() {
@@ -44,13 +44,17 @@ export default defineComponent({
     const uniqId = new URL(window.location.href).searchParams.get("uniqId");
     if (uniqId) {
       const data = await browser.storage.local.get(uniqId);
-      url = data[uniqId]["url"];
-      code = data[uniqId]["code"];
+      const entry = data[uniqId] as { url: string; code: string };
+      url = entry["url"];
+      code = entry["code"];
       await browser.storage.local.remove(uniqId);
     } else {
-      const last_userscript_request = await browser.storage.local
+      const last_userscript_request = (await browser.storage.local
         .get("last_userscript_request")
-        .then((d) => d.last_userscript_request);
+        .then((d) => d.last_userscript_request)) as {
+        tabId: number;
+        url: string;
+      };
       tabId = last_userscript_request["tabId"];
       url = last_userscript_request["url"];
 
@@ -60,7 +64,7 @@ export default defineComponent({
       }
     }
 
-    const meta = parseMeta(code);
+    const meta = parseMeta(code as string);
     if (
       !uniqId &&
       (meta === null || !("name" in meta) || meta.name === undefined)
@@ -68,10 +72,12 @@ export default defineComponent({
       return await this.bypass(tabId, url);
     }
 
+    if (!meta) return;
+
     document.title = `${meta["name"]} — ${t("jsViewTitle")} — IITC Button`;
     meta["filename"] = url.substr(url.lastIndexOf("/") + 1);
-    this.meta = meta;
-    this.code = code;
+    this.meta = meta as Record<string, unknown>;
+    this.code = code as string;
   },
 });
 </script>

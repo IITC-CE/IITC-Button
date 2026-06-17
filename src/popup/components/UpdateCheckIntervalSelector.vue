@@ -2,9 +2,7 @@
 <template>
   <div class="uc__setting">
     <div class="uc__label-wrapper">
-      <span class="uc__label"
-        >{{ updateChannelsIntervals[channel]["name"] }}:</span
-      >
+      <span class="uc__label">{{ channelLabel }}:</span>
     </div>
     <select
       class="uc__input"
@@ -33,7 +31,10 @@ export default defineComponent({
   name: "UpdateCheckIntervalSelector",
   props: {
     title: String,
-    channel: String,
+    channel: {
+      type: String,
+      required: true as const,
+    },
   },
   data() {
     return {
@@ -51,13 +52,22 @@ export default defineComponent({
       this.showMessage(this.t("changesApplied"));
     },
   },
+  computed: {
+    channelLabel(): string {
+      const intervals = this.updateChannelsIntervals as Record<
+        string,
+        { name: string }
+      >;
+      return intervals[this.channel]?.name ?? "";
+    },
+  },
   async mounted() {
     const interval = await browser.runtime.sendMessage({
       type: "getUpdateCheckInterval",
       channel: this.channel,
     });
     if (interval) {
-      this.interval = interval;
+      this.interval = interval as number;
     }
   },
 });

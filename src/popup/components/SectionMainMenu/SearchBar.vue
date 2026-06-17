@@ -13,7 +13,7 @@
       type="text"
       v-bind:placeholder="t('searchBoxPlaceholder')"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="onInput"
       autofocus
     />
   </div>
@@ -34,6 +34,9 @@ export default defineComponent({
   methods: {
     cancel() {
       this.$emit("update:modelValue", "");
+    },
+    onInput(e: Event) {
+      this.$emit("update:modelValue", (e.target as HTMLInputElement).value);
     },
   },
   mixins: [mixin],

@@ -51,7 +51,7 @@ export default defineComponent({
     };
   },
   methods: {
-    onClickButton: async function (action) {
+    onClickButton: async function (action: string) {
       switch (action) {
         case "chromeUserScripts":
           await this.openLink("https://www.tampermonkey.net/faq.php#Q209");
@@ -71,8 +71,10 @@ export default defineComponent({
         await browser.permissions.contains(allUrlsOrigins);
       return testIntelPermissionResult || testAllUrlsPermissionResult;
     },
-    requestPermissions: async function requestPermissions(permissions) {
-      function onResponse(response) {
+    requestPermissions: async function requestPermissions(
+      permissions: browser.Permissions.Permissions,
+    ) {
+      function onResponse(response: boolean) {
         if (response) {
           window.close();
         }
@@ -82,10 +84,11 @@ export default defineComponent({
     },
   },
   async mounted() {
-    browser.runtime.onMessage.addListener(async (request) => {
-      switch (request.type) {
+    browser.runtime.onMessage.addListener(async (request: unknown) => {
+      const msg = request as { type: string; data?: boolean };
+      switch (msg.type) {
         case "resolveCheckUserScriptsApiAvailable":
-          this.showChromeRequiresUserScripts = !request.data;
+          this.showChromeRequiresUserScripts = !msg.data;
           break;
       }
     });

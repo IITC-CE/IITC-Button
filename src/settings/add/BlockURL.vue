@@ -35,7 +35,7 @@ export default defineComponent({
   },
   methods: {
     t: t,
-    url_input_keyup: async function (event) {
+    url_input_keyup: async function (event: KeyboardEvent) {
       if (event.key === "Enter") {
         await this.loadByUrl();
       }
@@ -44,7 +44,9 @@ export default defineComponent({
       const url = this.url;
       this.url = "";
 
-      const { data: code } = await fetchResource(url);
+      const { data: code } = (await fetchResource(url)) as {
+        data: string | null;
+      };
 
       if (!code) {
         alert(t("addressNotAvailable"));
@@ -65,7 +67,7 @@ export default defineComponent({
           message += t("notValidUserScript", filename) + "\n";
         } else {
           message +=
-            t("addedUserScriptTo", [filename, meta["category"]]) + "\n";
+            t("addedUserScriptTo", [filename, meta["category"] ?? ""]) + "\n";
           meta["filename"] = filename;
           scripts.push({ meta: meta, code: code });
         }

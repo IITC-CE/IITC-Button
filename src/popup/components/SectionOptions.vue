@@ -86,9 +86,9 @@
 <script lang="ts">
 import browser from "webextension-polyfill";
 import Hr from "./Hr.vue";
-import Header from "./Header";
-import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector";
-import InputCustomServer from "./InputCustomServer";
+import Header from "./Header.vue";
+import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector.vue";
+import InputCustomServer from "./InputCustomServer.vue";
 
 import { mixin } from "./mixins";
 
@@ -111,9 +111,11 @@ export default defineComponent({
       get: function () {
         return this.channel;
       },
-      set: async function (channel) {
+      set: async function (channel: string) {
         this.channel = channel;
-        this.$root.channel = channel;
+        if (this.$root) {
+          (this.$root as unknown as Record<string, unknown>).channel = channel;
+        }
         await browser.runtime.sendMessage({
           type: "setChannel",
           value: channel,
@@ -124,7 +126,7 @@ export default defineComponent({
   async mounted() {
     const channel = await browser.runtime.sendMessage({ type: "getChannel" });
     if (channel) {
-      this.channel = channel;
+      this.channel = channel as string;
     }
   },
   components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer },

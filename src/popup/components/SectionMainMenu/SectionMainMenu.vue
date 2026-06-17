@@ -18,19 +18,24 @@
 <script lang="ts">
 import Title from "./Title.vue";
 import SearchBar from "./SearchBar.vue";
+import { type PropType } from "vue";
 import { mixin } from "../mixins";
 import { searchPlugins } from "@/popup/search";
 import PluginList from "./PluginList/PluginList.vue";
 import Tags from "./Tags/Tags.vue";
 import browser from "webextension-polyfill";
 import { emitter } from "@/popup/eventBus";
+import type { Plugin, PluginDict } from "lib-iitc-manager";
 
 export default defineComponent({
   name: "SectionMainMenu",
   props: {
     categories: Object,
-    plugins_flat: Object,
-    iitc_core: Object,
+    plugins_flat: {
+      type: Object as PropType<PluginDict>,
+      required: true as const,
+    },
+    iitc_core: Object as PropType<Plugin>,
   },
   emits: ["update-plugin", "delete-plugin"],
   data() {
@@ -56,7 +61,7 @@ export default defineComponent({
     },
   },
   methods: {
-    filteredPlugins(plugins) {
+    filteredPlugins(plugins: PluginDict) {
       if (this.activeTag === "All") {
         return plugins;
       }
@@ -65,11 +70,11 @@ export default defineComponent({
       }
       return Object.fromEntries(
         Object.entries(plugins).filter(
-          ([, plugin]) => plugin.category === this.activeTag,
+          ([, plugin]) => (plugin as Plugin).category === this.activeTag,
         ),
       );
     },
-    async updatePlugin(updatedPlugin) {
+    async updatePlugin(updatedPlugin: Plugin) {
       this.$emit("update-plugin", updatedPlugin);
 
       if (this.search_query) {
@@ -86,7 +91,7 @@ export default defineComponent({
         action: updatedPlugin.status,
       });
     },
-    deletePlugin(pluginUID) {
+    deletePlugin(pluginUID: string) {
       this.$emit("delete-plugin", pluginUID);
 
       if (this.search_query) {

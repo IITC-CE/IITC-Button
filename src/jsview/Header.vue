@@ -60,23 +60,27 @@
 </template>
 
 <script lang="ts">
-import { toRaw } from "vue";
+import { toRaw, type PropType } from "vue";
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { getUID, humanizeMatch, IITC_CORE_UID } from "lib-iitc-manager";
+import type { PluginMeta } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
 
 export default defineComponent({
   name: "Header",
   props: {
-    meta: Object,
+    meta: {
+      type: Object as PropType<PluginMeta>,
+      required: true as const,
+    },
     code: String,
   },
   data() {
     return {
       show_header: false,
       button_name: t("install"),
-      domains: null,
+      domains: null as string | string[] | null,
       show_details: false,
       page_uuid: uuidv4(),
     };
@@ -123,11 +127,14 @@ export default defineComponent({
             Object.entries(msg.scripts ?? {}).map(([, script]) => {
               let message = "";
               if (script["uid"] === IITC_CORE_UID) {
-                message = t("addedCustomIITCCore", [script["name"]]) + "\n";
+                message =
+                  t("addedCustomIITCCore", [script["name"] ?? ""]) + "\n";
               } else {
                 message =
-                  t("addedUserScriptTo", [script["name"], script["category"]]) +
-                  "\n";
+                  t("addedUserScriptTo", [
+                    script["name"] ?? "",
+                    script["category"] ?? "",
+                  ]) + "\n";
               }
               alert(message);
               this.button_name = t("reinstall");
@@ -153,8 +160,12 @@ export default defineComponent({
     },
   },
   computed: {
-    getIcon: function () {
-      return this.meta["icon64"] || this.meta["icon"] || null;
+    getIcon: function (): string | null {
+      const icon64 = this.meta["icon64"];
+      const icon = this.meta["icon"];
+      if (typeof icon64 === "string" && icon64) return icon64;
+      if (typeof icon === "string" && icon) return icon;
+      return null;
     },
   },
   async mounted() {

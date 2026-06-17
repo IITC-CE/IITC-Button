@@ -21,7 +21,7 @@
         <p class="message">
           <strong>{{ t("warningAboutImportLocalStorage") }}</strong>
         </p>
-        <form v-on:click="$refs.input.click()">
+        <form v-on:click="clickInput">
           <div class="btn">{{ t("importFromJson") }}</div>
           <input
             type="file"
@@ -50,12 +50,15 @@ export default defineComponent({
   },
   methods: {
     t: t,
+    clickInput() {
+      (this.$refs.input as HTMLInputElement).click();
+    },
     async handleExport() {
       const saveJson = (function () {
         const a = document.createElement("a");
         document.body.appendChild(a);
         a.style = "display: none";
-        return function (data, fileName) {
+        return function (data: string, fileName: string) {
           const blob = new Blob([data], { type: "application/x-javascript" }),
             url = window.URL.createObjectURL(blob);
           a.href = url;
@@ -67,12 +70,11 @@ export default defineComponent({
 
       saveJson(this.local_storage_data, "iitc-localstorage.json");
     },
-    async handleImport(e) {
-      const target = e.target;
-      const files = target.files;
-      if (files.length === 0) return;
+    async handleImport(e: Event) {
+      const files = (e.target as HTMLInputElement).files;
+      if (!files || files.length === 0) return;
 
-      const json_data = await readUploadedFileAsText(files[0]);
+      const json_data = (await readUploadedFileAsText(files[0])) as string;
       const data = JSON.parse(json_data);
       await browser.storage.local.clear();
       await browser.storage.local.set(data);

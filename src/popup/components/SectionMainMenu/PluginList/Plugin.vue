@@ -42,7 +42,7 @@
         <i
           v-if="plugin.supportURL"
           class="plugin__action___extra material-icons"
-          @click="openLink(plugin.supportURL)"
+          @click="openLink(String(plugin.supportURL))"
           :title="[t('openSupport'), plugin.supportURL].join(' ')"
           >home</i
         >
@@ -65,15 +65,17 @@
 </template>
 
 <script lang="ts">
+import { type PropType } from "vue";
 import browser from "webextension-polyfill";
 import { mixin } from "@/popup/components/mixins";
 import { sanitizeFileName } from "lib-iitc-manager";
+import type { Plugin } from "lib-iitc-manager";
 
 const saveJS = (function () {
   const a = document.createElement("a");
   document.body.appendChild(a);
   a.style = "display: none";
-  return function (data, fileName) {
+  return function (data: string, fileName: string) {
     const blob = new Blob([data], { type: "application/x-javascript" }),
       url = window.URL.createObjectURL(blob);
     a.href = url;
@@ -86,7 +88,10 @@ const saveJS = (function () {
 export default defineComponent({
   name: "ElementPlugin",
   props: {
-    plugin: Object,
+    plugin: {
+      type: Object as PropType<Plugin>,
+      required: true as const,
+    },
     search_result_id: Number,
     search_results: Object,
   },
@@ -94,7 +99,7 @@ export default defineComponent({
   data() {
     return {
       hasRecentStatusChange: false,
-      statusChangeTimer: null,
+      statusChangeTimer: null as ReturnType<typeof setTimeout> | null,
     };
   },
   mixins: [mixin],
@@ -114,7 +119,8 @@ export default defineComponent({
 
           // Set timer to remove highlight after one minute
           const timeLeft =
-            60000 - (Date.now() / 1000 - this.plugin.statusChangedAt) * 1000;
+            60000 -
+            (Date.now() / 1000 - (this.plugin.statusChangedAt ?? 0)) * 1000;
           const timeout = Math.max(0, Math.min(timeLeft, 60000));
 
           this.statusChangeTimer = setTimeout(() => {
@@ -139,7 +145,7 @@ export default defineComponent({
     },
     managePlugin: async function () {
       if (this.plugin.status === undefined) {
-        this.showMessage(this.plugin.version);
+        this.showMessage(this.plugin.version ?? "");
         return;
       }
 
@@ -171,16 +177,19 @@ export default defineComponent({
     },
     savePlugin: async function () {
       saveJS(
-        this.plugin.code,
-        this.plugin.filename || `${sanitizeFileName(this.plugin.name)}.user.js`,
+        this.plugin.code ?? "",
+        this.plugin.filename ||
+          `${sanitizeFileName(this.plugin.name ?? "")}.user.js`,
       );
     },
   },
   computed: {
-    getIcon: function () {
+    getIcon: function (): string {
+      const icon = this.plugin["icon"];
+      const icon64 = this.plugin["icon64"];
       return (
-        this.plugin["icon"] ||
-        this.plugin["icon64"] ||
+        (typeof icon === "string" && icon) ||
+        (typeof icon64 === "string" && icon64) ||
         "/assets/icons/24/userscript-no-icon.png"
       );
     },

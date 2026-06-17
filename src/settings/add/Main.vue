@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import BlockURL from "./BlockURL";
-import BlockDrop from "./BlockDrop";
+import BlockURL from "./BlockURL.vue";
+import BlockDrop from "./BlockDrop.vue";
 import { t } from "@/i18n";
 
 export default defineComponent({

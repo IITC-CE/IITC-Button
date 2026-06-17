@@ -10,10 +10,10 @@
 
 <script lang="ts">
 import { t } from "@/i18n";
-import Header from "./Header";
-import PageAddPlugin from "./add/Main";
-import PageBackup from "./backup/Main";
-import PageDebug from "./debug/Main";
+import Header from "./Header.vue";
+import PageAddPlugin from "./add/Main.vue";
+import PageBackup from "./backup/Main.vue";
+import PageDebug from "./debug/Main.vue";
 
 export default defineComponent({
   name: "App",
@@ -30,9 +30,9 @@ export default defineComponent({
   },
   methods: {
     t: t,
-    setTab(tab) {
+    setTab(tab: string) {
       if (history.pushState) {
-        history.pushState(null, null, "#" + tab);
+        history.pushState(null, "", "#" + tab);
       } else {
         location.hash = "#" + tab;
       }
@@ -40,9 +40,9 @@ export default defineComponent({
     },
   },
   async mounted() {
-    const tab = new URL(window.location.href).hash;
-    if (tab.length > 0) {
-      this.tab = tab.substring(1);
+    const hash = new URL(window.location.href).hash;
+    if (hash.length > 0) {
+      this.tab = hash.substring(1);
     }
   },
 });

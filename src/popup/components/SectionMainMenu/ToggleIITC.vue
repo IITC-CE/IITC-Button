@@ -30,7 +30,7 @@ export default defineComponent({
       get: function () {
         return this.iitc_is_enabled;
       },
-      set: async function (newValue) {
+      set: async function (newValue: boolean) {
         await browser.runtime.sendMessage({
           type: "toggleIITC",
           value: newValue,

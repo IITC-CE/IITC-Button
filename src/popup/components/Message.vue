@@ -8,7 +8,7 @@
 <script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-let message_timeout_id: ReturnType<typeof setTimeout> | null = null;
+let message_timeout_id: number | undefined;
 
 export default defineComponent({
   name: "Message",
@@ -22,8 +22,8 @@ export default defineComponent({
       this.$data.message.text = msg;
       this.$data.message.opened = true;
 
-      clearTimeout(message_timeout_id);
-      message_timeout_id = setTimeout(() => {
+      window.clearTimeout(message_timeout_id);
+      message_timeout_id = window.setTimeout(() => {
         this.$data.message.opened = false;
       }, 3000);
     });

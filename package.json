@@ -13,7 +13,7 @@
     "zip_sources": "wxt zip -b firefox --mv3 --sources",
     "postinstall": "wxt prepare",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",

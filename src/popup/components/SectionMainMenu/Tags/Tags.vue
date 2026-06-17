@@ -14,6 +14,7 @@
 <script lang="ts">
 import Tag from "./Tag.vue";
 import { emitter } from "@/popup/eventBus";
+import type { Plugin } from "lib-iitc-manager";
 
 export default defineComponent({
   name: "Tags",
@@ -32,31 +33,20 @@ export default defineComponent({
     });
   },
   methods: {
-    /**
-     * Checks if a plugin was added within the last hour
-     * @param {Object} plugin - Plugin object to check
-     * @param {Number} currentTime - Current timestamp in seconds
-     * @returns {Boolean} - True if plugin was added within the last hour
-     */
-    isRecentlyAdded(plugin, currentTime) {
+    isRecentlyAdded(plugin: Plugin, currentTime: number) {
       const oneHourInSeconds = 60 * 60;
       return plugin.addedAt && currentTime - plugin.addedAt <= oneHourInSeconds;
     },
   },
   computed: {
-    /**
-     * Processes plugin data and generates tags with their states
-     * @returns {Object} - Object containing all tags with their properties
-     */
     tags() {
-      // Return empty object if no plugins data available
       if (!this.all_plugins || !this.categories) return {};
 
       const currentTime = Date.now() / 1000;
       const categoriesWithPlugins = new Set();
       const categoriesWithNewPlugins = new Set();
 
-      Object.values(this.all_plugins).forEach((plugin) => {
+      Object.values(this.all_plugins ?? {}).forEach((plugin) => {
         const category = plugin.category;
         if (!category) return;
 
@@ -67,10 +57,8 @@ export default defineComponent({
       });
 
       // Create result object starting with "All" tag
-      const result = {
-        All: {
-          name: "All",
-        },
+      const result: Record<string, { name: string; isNew?: boolean }> = {
+        All: { name: "All" },
       };
 
       // Process categories that have plugins, add them to result
@@ -90,7 +78,10 @@ export default defineComponent({
   watch: {
     categories: {
       handler(newTags) {
-        if (!newTags[this.activeTag] && this.activeTag !== "All") {
+        if (
+          !(newTags as Record<string, unknown>)[this.activeTag] &&
+          this.activeTag !== "All"
+        ) {
           this.activeTag = "All";
           emitter.emit("tag:active", this.activeTag);
         }
