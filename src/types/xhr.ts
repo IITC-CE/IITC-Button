@@ -1,3 +1,4 @@
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 // XHR request routed through the extension (content script -> background/sandbox)
 export interface XhrRequestData {
   task_uuid: string;

@@ -1,3 +1,4 @@
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="addUserScript-wrapper">
     <div id="addUserScript" class="col" v-bind:class="{ hide: !show_header }">

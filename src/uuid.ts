@@ -1,4 +1,4 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
 export function uuidv4(): string {
   return "10000000-1000-4000-8000-100000000000".replace(
