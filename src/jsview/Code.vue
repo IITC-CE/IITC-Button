@@ -9,7 +9,7 @@
   <div class="message" v-else>{{ status }}</div>
 </template>
 
-<script>
+<script lang="ts">
 import hljsVuePlugin from "@highlightjs/vue-plugin";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -21,7 +21,7 @@ hljs.addPlugin({
   "after:highlight": plugin,
 });
 
-export default {
+export default defineComponent({
   name: "Code",
   components: {
     highlightjs: hljsVuePlugin.component,
@@ -30,7 +30,7 @@ export default {
     code: String,
     status: String,
   },
-};
+});
 </script>
 
 <style>

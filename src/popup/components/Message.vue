@@ -5,12 +5,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-let message_timeout_id = null;
+let message_timeout_id: ReturnType<typeof setTimeout> | null = null;
 
-export default {
+export default defineComponent({
   name: "Message",
   data() {
     return {
@@ -19,17 +19,16 @@ export default {
   },
   mounted() {
     emitter.on("message", (msg) => {
-      const self = this;
-      self.$data.message.text = msg;
-      self.$data.message.opened = true;
+      this.$data.message.text = msg;
+      this.$data.message.opened = true;
 
       clearTimeout(message_timeout_id);
-      message_timeout_id = setTimeout(function () {
-        self.$data.message.opened = false;
+      message_timeout_id = setTimeout(() => {
+        this.$data.message.opened = false;
       }, 3000);
     });
   },
-};
+});
 </script>
 
 <style scoped>

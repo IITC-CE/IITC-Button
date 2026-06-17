@@ -83,16 +83,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import Hr from "./Hr.vue";
 import Header from "./Header";
 import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector";
 import InputCustomServer from "./InputCustomServer";
 
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "settings__sectionOptions",
   data() {
     return {
@@ -128,7 +128,7 @@ export default {
     }
   },
   components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer },
-};
+});
 </script>
 
 <style scoped>

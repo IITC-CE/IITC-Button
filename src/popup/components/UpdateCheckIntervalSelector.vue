@@ -25,11 +25,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "UpdateCheckIntervalSelector",
   props: {
     title: String,
@@ -60,7 +60,7 @@ export default {
       this.interval = interval;
     }
   },
-};
+});
 </script>
 
 <style scoped>

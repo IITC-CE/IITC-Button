@@ -3,4 +3,6 @@ export interface PopupEvents {
   message: string;
   showProgressbar: boolean;
   "tag:active": string;
+  [key: string]: unknown;
+  [key: symbol]: unknown;
 }

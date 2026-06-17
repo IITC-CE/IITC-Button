@@ -1,15 +1,20 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 
 import browser from "webextension-polyfill";
+import type WebExt from "webextension-polyfill";
 import { GM_API_UID } from "lib-iitc-manager";
 import { getNiaTabsToInject } from "@/background/utils";
 import { is_userscripts_api_available } from "@/userscripts/utils";
-export async function inject_plugin_via_content_scripts(plugin) {
+import type { Plugin, PluginEventData } from "lib-iitc-manager";
+
+export async function inject_plugin_via_content_scripts(
+  plugin: Plugin,
+): Promise<void> {
   const tabs = await getNiaTabsToInject(plugin);
-  for (let tab of Object.values(tabs)) {
+  for (const tab of Object.values(tabs)) {
     try {
       await browser.scripting.executeScript({
-        target: { tabId: tab.id },
+        target: { tabId: tab.id! },
         func: (pluginDetail) => {
           document.dispatchEvent(
             new CustomEvent("IITCButtonInitJS", {
@@ -22,13 +27,15 @@ export async function inject_plugin_via_content_scripts(plugin) {
       });
     } catch (error) {
       console.error(
-        `An error occurred while injecting script: ${error.message}`,
+        `An error occurred while injecting script: ${(error as Error).message}`,
       );
     }
   }
 }
 
-export async function manage_userscripts_api(plugins_event) {
+export async function manage_userscripts_api(
+  plugins_event: PluginEventData,
+): Promise<void> {
   if (!is_userscripts_api_available()) return;
 
   const event = plugins_event.event;
@@ -45,14 +52,14 @@ export async function manage_userscripts_api(plugins_event) {
     }
   }
 
-  let plugins_obj = [];
-  for (let plugin of Object.values(plugins)) {
+  const plugins_obj: WebExt.UserScripts.RegisteredUserScript[] = [];
+  for (const plugin of Object.values(plugins)) {
+    const p = plugin as Plugin;
     plugins_obj.push({
-      id: plugin.uid,
-      matches: plugin.match ||
-        plugin.include || ["https://intel.ingress.com/*"],
-      js: [{ code: plugin.code }],
-      runAt: plugin.uid === GM_API_UID ? "document_start" : "document_end",
+      id: p.uid,
+      matches: p.match ?? p.include ?? ["https://intel.ingress.com/*"],
+      js: [{ code: p.code ?? "" }],
+      runAt: p.uid === GM_API_UID ? "document_start" : "document_end",
       world: "MAIN",
     });
   }

@@ -28,8 +28,8 @@
   </div>
 </template>
 
-<script>
-import { mixin } from "./mixins.js";
+<script lang="ts">
+import { mixin } from "./mixins";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import browser from "webextension-polyfill";
 
@@ -40,7 +40,7 @@ const allUrlsOrigins = {
   origins: ["http://*/*", "https://*/*"],
 };
 
-export default {
+export default defineComponent({
   name: "Message",
   mixins: [mixin],
   data() {
@@ -82,11 +82,10 @@ export default {
     },
   },
   async mounted() {
-    const self = this;
-    browser.runtime.onMessage.addListener(async function (request) {
+    browser.runtime.onMessage.addListener(async (request) => {
       switch (request.type) {
         case "resolveCheckUserScriptsApiAvailable":
-          self.showChromeRequiresUserScripts = !request.data;
+          this.showChromeRequiresUserScripts = !request.data;
           break;
       }
     });
@@ -101,7 +100,7 @@ export default {
       this.showHostPermissions = true;
     }
   },
-};
+});
 </script>
 
 <style scoped>

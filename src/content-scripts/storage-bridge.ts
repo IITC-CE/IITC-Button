@@ -3,11 +3,16 @@
 import browser from "webextension-polyfill";
 import { strToBase64 } from "lib-iitc-manager";
 import { bridgeResponse } from "./bridge-manager";
+import type { BridgeTask } from "@/types/messages";
 
-/**
- * Handle storage-related requests
- */
-export async function handleStorageRequest(task) {
+type StorageBridgeTask = Extract<
+  BridgeTask,
+  { task_type: "getStorage" | "setValue" | "delValue" }
+>;
+
+export async function handleStorageRequest(
+  task: StorageBridgeTask,
+): Promise<void> {
   switch (task.task_type) {
     case "getStorage":
       await getStorageBridge(task);
@@ -21,13 +26,11 @@ export async function handleStorageRequest(task) {
   }
 }
 
-/**
- * Get all plugin storage data and send it to page context
- */
-async function getStorageBridge(req) {
+// Get all plugin storage data and send it to page context
+async function getStorageBridge(req: { task_type: string }): Promise<void> {
   try {
     const all_storage = await browser.storage.local.get(null);
-    const plugins_storage = {};
+    const plugins_storage: Record<string, unknown> = {};
 
     // Filter for plugin-related storage keys
     for (const key in all_storage) {
@@ -48,12 +51,13 @@ async function getStorageBridge(req) {
   }
 }
 
-/**
- * Save value to extension storage
- */
-export async function setValueBridge(req) {
+// Save value to extension storage
+export async function setValueBridge(req: {
+  key: string;
+  value: unknown;
+}): Promise<void> {
   try {
-    const set_data = {};
+    const set_data: Record<string, unknown> = {};
     set_data[req.key] = req.value;
     await browser.storage.local.set(set_data);
   } catch (error) {
@@ -61,10 +65,8 @@ export async function setValueBridge(req) {
   }
 }
 
-/**
- * Delete value from extension storage
- */
-export async function deleteValueBridge(req) {
+// Delete value from extension storage
+export async function deleteValueBridge(req: { key: string }): Promise<void> {
   try {
     await browser.storage.local.remove(req.key);
   } catch (error) {

@@ -15,10 +15,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 
-export default {
+export default defineComponent({
   name: "ToggleIITC",
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
       this.iitc_is_enabled = false;
     }
   },
-};
+});
 </script>
 
 <style scoped>

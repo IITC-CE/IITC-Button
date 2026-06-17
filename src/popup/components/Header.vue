@@ -11,10 +11,10 @@
   </header>
 </template>
 
-<script>
-import { mixin } from "./mixins.js";
+<script lang="ts">
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "Header",
   props: {
     header_text: String,
@@ -27,7 +27,7 @@ export default {
     },
   },
   mixins: [mixin],
-};
+});
 </script>
 
 <style scoped>

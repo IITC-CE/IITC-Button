@@ -59,14 +59,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { toRaw } from "vue";
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { getUID, humanizeMatch, IITC_CORE_UID } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
 
-export default {
+export default defineComponent({
   name: "Header",
   props: {
     meta: Object,
@@ -102,17 +102,25 @@ export default {
       });
     },
     setListeners: function () {
-      const self = this;
-      browser.runtime.onMessage.addListener(function (request) {
-        switch (request.type) {
+      browser.runtime.onMessage.addListener((request: unknown) => {
+        const msg = request as {
+          type: string;
+          info?: unknown;
+          id?: string;
+          scripts?: Record<
+            string,
+            { uid?: string; name?: string; category?: string }
+          >;
+        };
+        switch (msg.type) {
           case "resolveGetPluginInfo":
-            if (request.info) {
-              self.button_name = t("reinstall");
+            if (msg.info) {
+              this.button_name = t("reinstall");
             }
             break;
           case "resolveAddUserScripts":
-            if (request.id !== self.page_uuid) return;
-            Object.entries(request.scripts).map(([, script]) => {
+            if (msg.id !== this.page_uuid) return;
+            Object.entries(msg.scripts ?? {}).map(([, script]) => {
               let message = "";
               if (script["uid"] === IITC_CORE_UID) {
                 message = t("addedCustomIITCCore", [script["name"]]) + "\n";
@@ -122,7 +130,7 @@ export default {
                   "\n";
               }
               alert(message);
-              self.button_name = t("reinstall");
+              this.button_name = t("reinstall");
             });
         }
       });
@@ -156,7 +164,7 @@ export default {
       }
     });
   },
-};
+});
 </script>
 
 <style scoped>

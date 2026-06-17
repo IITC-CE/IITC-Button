@@ -5,13 +5,13 @@
   </div>
 </template>
 
-<script>
-import { mixin } from "@/popup/components/mixins.js";
+<script lang="ts">
+import { mixin } from "@/popup/components/mixins";
 
-export default {
+export default defineComponent({
   name: "NoData",
   mixins: [mixin],
-};
+});
 </script>
 
 <style scoped>

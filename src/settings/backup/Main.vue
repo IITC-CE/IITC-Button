@@ -55,12 +55,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { getBackupDataFromZip, createBackupZip } from "./utils";
 
-export default {
+export default defineComponent({
   name: "PageBackup",
   data() {
     return {
@@ -132,10 +132,13 @@ export default {
       });
     },
     setListeners: function () {
-      browser.runtime.onMessage.addListener(function (request) {
-        switch (request.type) {
+      browser.runtime.onMessage.addListener(function (request: unknown) {
+        const msg = request as { type: string; data?: unknown };
+        switch (msg.type) {
           case "resolveGetBackupData":
-            createBackupZip(request.data).then();
+            createBackupZip(
+              msg.data as Parameters<typeof createBackupZip>[0],
+            ).then();
             break;
           case "resolveSetBackupData":
             alert(t("backupRestored"));
@@ -148,7 +151,7 @@ export default {
   async mounted() {
     this.setListeners();
   },
-};
+});
 </script>
 
 <style scoped>

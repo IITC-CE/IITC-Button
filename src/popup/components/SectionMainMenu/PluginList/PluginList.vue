@@ -40,13 +40,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Title from "./Title.vue";
 import Plugin from "./Plugin.vue";
-import { mixin } from "@/popup/components/mixins.js";
+import { mixin } from "@/popup/components/mixins";
 import NoData from "@/popup/components/SectionMainMenu/PluginList/NoData.vue";
 
-export default {
+export default defineComponent({
   name: "ListPlugins",
   props: {
     plugins: Object,
@@ -81,7 +81,7 @@ export default {
     },
   },
   components: { NoData, Title, Plugin },
-};
+});
 </script>
 
 <style scoped>

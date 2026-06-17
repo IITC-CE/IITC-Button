@@ -11,11 +11,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Tag from "./Tag.vue";
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "Tags",
   props: {
     categories: Object,
@@ -99,7 +99,7 @@ export default {
     },
   },
   components: { Tag },
-};
+});
 </script>
 
 <style scoped>

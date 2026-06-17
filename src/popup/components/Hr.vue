@@ -3,8 +3,8 @@
   <div class="hr"></div>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+export default defineComponent({});
 </script>
 
 <style scoped>

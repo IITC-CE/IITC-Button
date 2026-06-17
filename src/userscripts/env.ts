@@ -2,7 +2,12 @@
 
 import browser from "webextension-polyfill";
 
-export const IS_CHROME = !!browser.runtime.OnInstalledReason?.CHROME_UPDATE;
+// OnInstalledReason.CHROME_UPDATE exists only in Chrome's runtime implementation
+export const IS_CHROME = !!(
+  browser.runtime as unknown as {
+    OnInstalledReason?: { CHROME_UPDATE?: string };
+  }
+).OnInstalledReason?.CHROME_UPDATE;
 export const IS_SAFARI =
   /^((?!chrome|android).)*safari/i.test(navigator.userAgent) ||
   (navigator.vendor && navigator.vendor.indexOf("Apple") > -1);

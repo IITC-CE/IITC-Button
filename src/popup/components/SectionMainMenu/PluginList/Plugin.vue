@@ -64,9 +64,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
-import { mixin } from "@/popup/components/mixins.js";
+import { mixin } from "@/popup/components/mixins";
 import { sanitizeFileName } from "lib-iitc-manager";
 
 const saveJS = (function () {
@@ -83,7 +83,7 @@ const saveJS = (function () {
   };
 })();
 
-export default {
+export default defineComponent({
   name: "ElementPlugin",
   props: {
     plugin: Object,
@@ -210,7 +210,7 @@ export default {
       clearTimeout(this.statusChangeTimer);
     }
   },
-};
+});
 </script>
 
 <style scoped>

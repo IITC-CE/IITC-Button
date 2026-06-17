@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import Code from "./Code";
 import { t } from "@/i18n";
@@ -14,7 +14,7 @@ import Header from "./Header";
 import { fetchData } from "lib-iitc-manager";
 import { parseMeta } from "lib-iitc-manager";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     Header,
@@ -73,7 +73,7 @@ export default {
     this.meta = meta;
     this.code = code;
   },
-};
+});
 </script>
 
 <style>

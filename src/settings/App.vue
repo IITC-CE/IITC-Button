@@ -8,14 +8,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { t } from "@/i18n";
 import Header from "./Header";
 import PageAddPlugin from "./add/Main";
 import PageBackup from "./backup/Main";
 import PageDebug from "./debug/Main";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     Header,
@@ -45,7 +45,7 @@ export default {
       this.tab = tab.substring(1);
     }
   },
-};
+});
 </script>
 
 <style>

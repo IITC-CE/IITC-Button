@@ -15,7 +15,10 @@ export default defineContentScript({
 
       if (IS_USERSCRIPTS_API) return;
 
-      document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
+      document.addEventListener(
+        "IITCButtonInitJS",
+        IITCButtonInitJS as unknown as EventListener,
+      );
     }
 
     if (isRunContentScript) {

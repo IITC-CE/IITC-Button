@@ -7,10 +7,10 @@
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "ProgressBar",
   data() {
     return {
@@ -22,7 +22,7 @@ export default {
       this.$data.showProgressbar = status;
     });
   },
-};
+});
 </script>
 
 <style scoped>

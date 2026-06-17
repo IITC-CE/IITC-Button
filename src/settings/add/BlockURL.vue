@@ -21,12 +21,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { fetchResource, parseMeta } from "lib-iitc-manager";
 import { t } from "@/i18n";
 
-export default {
+export default defineComponent({
   name: "BlockURL",
   data() {
     return {
@@ -78,7 +78,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

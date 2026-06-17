@@ -36,12 +36,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { readUploadedFileAsText } from "@/settings/utils";
 
-export default {
+export default defineComponent({
   name: "PageDebug",
   data() {
     return {
@@ -82,7 +82,7 @@ export default {
   async mounted() {
     this.local_storage_data = JSON.stringify(await browser.storage.local.get());
   },
-};
+});
 </script>
 
 <style scoped>

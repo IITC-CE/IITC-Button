@@ -32,10 +32,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { t } from "@/i18n";
 
-export default {
+export default defineComponent({
   name: "Header",
   props: {
     tab: String,
@@ -44,7 +44,7 @@ export default {
   methods: {
     t: t,
   },
-};
+});
 </script>
 
 <style scoped>

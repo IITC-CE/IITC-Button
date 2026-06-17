@@ -11,18 +11,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BlockURL from "./BlockURL";
 import BlockDrop from "./BlockDrop";
 import { t } from "@/i18n";
 
-export default {
+export default defineComponent({
   name: "PageAddPlugin",
   methods: {
     t: t,
   },
   components: { BlockURL, BlockDrop },
-};
+});
 </script>
 
 <style scoped>

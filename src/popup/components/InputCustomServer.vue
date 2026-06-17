@@ -36,12 +36,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { validateCustomChannelUrl } from "lib-iitc-manager";
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "InputCustomServer",
   props: {
     channel: String,
@@ -94,7 +94,7 @@ export default {
     }
     await this.setInputStatus(this.host);
   },
-};
+});
 </script>
 
 <style scoped>

@@ -1,9 +1,10 @@
 //@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
 import JSZip from "jszip";
+import type { BackupData } from "lib-iitc-manager";
 
 export const backup_json_name = "iitc.json";
 
-export function formatDate(date) {
+export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = padZero(date.getMonth() + 1);
   const day = padZero(date.getDate());
@@ -16,14 +17,14 @@ export function formatDate(date) {
   );
 }
 
-function padZero(number) {
+function padZero(number: number): string {
   if (number < 10) {
     return "0" + number;
   }
-  return number;
+  return String(number);
 }
 
-export const saveAs = (blob, fileName) => {
+export const saveAs = (blob: Blob, fileName: string): void => {
   const link = document.createElement("a");
   // create a blobURI pointing to our Blob
   link.href = URL.createObjectURL(blob);
@@ -36,10 +37,12 @@ export const saveAs = (blob, fileName) => {
   setTimeout(() => URL.revokeObjectURL(link.href), 7000);
 };
 
-export const getBackupDataFromZip = async (file) => {
-  const backup = {
+export const getBackupDataFromZip = async (
+  file: File | ArrayBuffer,
+): Promise<BackupData> => {
+  const backup: BackupData = {
     external_plugins: {},
-    data: {},
+    data: { iitc_settings: {}, plugins_data: {}, app: "" },
   };
   const zip = await JSZip.loadAsync(file);
 
@@ -51,7 +54,10 @@ export const getBackupDataFromZip = async (file) => {
 
       if (filename === backup_json_name) {
         // import iitc.json
-        backup.data = JSON.parse(await zip.file(filename).async("string"));
+        const content = await zip.file(filename)?.async("string");
+        if (content) {
+          backup.data = JSON.parse(content);
+        }
       } else if (
         filename_split.length > 1 &&
         ["shared", "release", "beta", "custom"].includes(filename_split[0])
@@ -62,16 +68,17 @@ export const getBackupDataFromZip = async (file) => {
         if (!Object.hasOwn(backup.external_plugins, channel)) {
           backup.external_plugins[channel] = {};
         }
-        backup.external_plugins[channel][plugin_filename] = await zip
-          .file(filename)
-          .async("string");
+        const pluginContent = await zip.file(filename)?.async("string");
+        if (pluginContent !== undefined) {
+          backup.external_plugins[channel][plugin_filename] = pluginContent;
+        }
       }
     }
   }
   return backup;
 };
 
-export const createBackupZip = async (backup) => {
+export const createBackupZip = async (backup: BackupData): Promise<void> => {
   const zip = new JSZip();
 
   zip.file(backup_json_name, JSON.stringify(backup.data));

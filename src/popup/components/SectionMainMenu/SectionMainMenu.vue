@@ -15,17 +15,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Title from "./Title.vue";
 import SearchBar from "./SearchBar.vue";
-import { mixin } from "../mixins.js";
+import { mixin } from "../mixins";
 import { searchPlugins } from "@/popup/search";
 import PluginList from "./PluginList/PluginList.vue";
 import Tags from "./Tags/Tags.vue";
 import browser from "webextension-polyfill";
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "SectionMainMenu",
   props: {
     categories: Object,
@@ -103,7 +103,7 @@ export default {
     });
   },
   components: { Tags, PluginList, Title, SearchBar },
-};
+});
 </script>
 
 <style scoped>

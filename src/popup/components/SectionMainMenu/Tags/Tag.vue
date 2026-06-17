@@ -10,10 +10,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "Tag",
   props: {
     tag: Object,
@@ -43,7 +43,7 @@ export default {
       return Math.abs(hash);
     },
   },
-};
+});
 </script>
 
 <style scoped>

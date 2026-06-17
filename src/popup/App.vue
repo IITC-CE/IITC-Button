@@ -19,17 +19,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import SectionMainMenu from "./components/SectionMainMenu/SectionMainMenu.vue";
 import SectionOptions from "./components/SectionOptions.vue";
 
 import Message from "./components/Message";
 import Alert from "./components/Alert";
 
-import * as data from "./data.js";
+import * as data from "./data";
 import browser from "webextension-polyfill";
 
-export default {
+export default defineComponent({
   name: "App",
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
       return safariAgent && !chromeAgent;
     },
   },
-};
+});
 </script>
 
 <style>

@@ -8,8 +8,8 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+export default defineComponent({
   name: "Title",
   props: {
     text: String,
@@ -21,7 +21,7 @@ export default {
       this.$emit("item_onclick");
     },
   },
-};
+});
 </script>
 
 <style scoped>

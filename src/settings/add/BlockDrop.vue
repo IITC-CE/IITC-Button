@@ -31,7 +31,7 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { parseMeta } from "lib-iitc-manager";
 import { t } from "@/i18n";
@@ -73,7 +73,7 @@ const processingFile = async (fileList) => {
   });
 };
 
-export default {
+export default defineComponent({
   name: "BlockDrop",
   data() {
     return {
@@ -114,13 +114,13 @@ export default {
     this.$refs.fileform.addEventListener(
       "drop",
       function (e) {
-        for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          this.files.push(e.dataTransfer.files[i]);
+        for (let i = 0; i < (e as DragEvent).dataTransfer!.files.length; i++) {
+          this.files.push((e as DragEvent).dataTransfer!.files[i]);
         }
       }.bind(this),
     );
   },
-};
+});
 </script>
 
 <style scoped>

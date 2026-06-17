@@ -25,13 +25,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
-import { mixin } from "../mixins.js";
+import { mixin } from "../mixins";
 import ProgressBar from "./ProgressBar.vue";
 import ToggleIITC from "./ToggleIITC.vue";
 
-export default {
+export default defineComponent({
   name: "Title",
   mixins: [mixin],
   methods: {
@@ -44,7 +44,7 @@ export default {
     },
   },
   components: { ProgressBar, ToggleIITC },
-};
+});
 </script>
 
 <style scoped>
