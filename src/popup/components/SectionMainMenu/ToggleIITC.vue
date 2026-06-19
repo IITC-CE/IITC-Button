@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div>
     <input
@@ -15,10 +15,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 
-export default {
+export default defineComponent({
   name: "ToggleIITC",
   data() {
     return {
@@ -30,7 +30,7 @@ export default {
       get: function () {
         return this.iitc_is_enabled;
       },
-      set: async function (newValue) {
+      set: async function (newValue: boolean) {
         await browser.runtime.sendMessage({
           type: "toggleIITC",
           value: newValue,
@@ -44,7 +44,7 @@ export default {
       this.iitc_is_enabled = false;
     }
   },
-};
+});
 </script>
 
 <style scoped>

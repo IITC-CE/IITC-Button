@@ -4,14 +4,15 @@
  *
  * https://github.com/deleterium/highlightjs-lineToDiv
  */
-export const plugin = (result) => {
-  let className, idName;
+import type { HighlightResult } from "highlight.js";
+
+export const plugin = (result: HighlightResult): void => {
   /* Configuration */
-  className = "line";
-  idName = "code%line%";
+  const className = "line";
+  const idName = "code%line%";
   /* end of configuration */
   const htmlLines = result.value.split("\n");
-  let spanStack = [];
+  let spanStack: string[] = [];
   result.value = htmlLines
     .map((content, index) => {
       let startSpanIndex, endSpanIndex;
@@ -48,7 +49,8 @@ export const plugin = (result) => {
       let retString = "<div ";
       retString += 'data-line-number="' + (index + 1) + '" ';
       if (idName !== undefined) {
-        retString += 'id="' + idName.replace("%line%", index + 1) + '" ';
+        retString +=
+          'id="' + idName.replace("%line%", String(index + 1)) + '" ';
       }
       if (className !== undefined) {
         retString += `class="${className}"`;

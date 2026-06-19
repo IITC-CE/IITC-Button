@@ -1,13 +1,14 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
-// XHR Handler for sandbox iframe
-window.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "xhr_request") {
-    const data = event.data;
+import type { XhrIframeRequest, XhrResponseData } from "@/types/xhr";
+
+// XHR handler for sandbox iframe
+window.addEventListener("message", (event: MessageEvent) => {
+  if (event.data && (event.data as XhrIframeRequest).type === "xhr_request") {
+    const data = event.data as XhrIframeRequest;
     const req = new XMLHttpRequest();
 
-    // Function to send response
-    const sendResponse = (response) => {
+    const sendResponse = (response: XhrResponseData): void => {
       try {
         window.parent.postMessage(
           {
@@ -22,7 +23,6 @@ window.addEventListener("message", (event) => {
       }
     };
 
-    // Event handlers
     req.onload = function () {
       sendResponse({
         readyState: this.readyState,
@@ -54,28 +54,24 @@ window.addEventListener("message", (event) => {
     };
 
     try {
-      // Open connection
       req.open(data.method, data.url, true, data.user, data.password);
 
-      // Set headers
       if (data.headers) {
         for (const [name, value] of Object.entries(data.headers)) {
           req.setRequestHeader(name, value);
         }
       }
 
-      // Additional settings
       if (data.overrideMimeType) req.overrideMimeType(data.overrideMimeType);
       if (data.timeout) req.timeout = data.timeout;
       if (data.withCredentials) req.withCredentials = true;
 
-      // Send request
       req.send(data.data);
     } catch (error) {
       sendResponse({
         readyState: 0,
         status: 0,
-        statusText: "Error: " + error.message,
+        statusText: "Error: " + (error as Error).message,
         responseText: "",
         responseHeaders: "",
       });

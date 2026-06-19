@@ -1,11 +1,11 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="page">
     <div class="parent">
       <h1>{{ t("import") }}</h1>
       <div class="card">
         <p class="message">{{ t("import_message") }}</p>
-        <form v-on:click="$refs.input.click()" v-if="!is_wait">
+        <form v-on:click="clickInput" v-if="!is_wait">
           <div class="btn">{{ t("importFromZip") }}</div>
           <input
             type="file"
@@ -55,18 +55,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { getBackupDataFromZip, createBackupZip } from "./utils";
+import type { BackupData } from "lib-iitc-manager";
 
-export default {
+export default defineComponent({
   name: "PageBackup",
   data() {
     return {
       is_wait: false,
       is_invalid_backup: false,
-      backup_data: {},
+      backup_data: null as BackupData | null,
       show_import_settings: false,
       show_import_data: false,
       show_import_external: false,
@@ -81,6 +82,9 @@ export default {
   },
   methods: {
     t: t,
+    clickInput() {
+      (this.$refs.input as HTMLInputElement).click();
+    },
     async handleExport() {
       await browser.runtime.sendMessage({
         type: "getBackupData",
@@ -91,10 +95,9 @@ export default {
         },
       });
     },
-    async handleImport(e) {
-      const target = e.target;
-      const files = target.files;
-      if (files.length === 0) return;
+    async handleImport(e: Event) {
+      const files = (e.target as HTMLInputElement).files;
+      if (!files || files.length === 0) return;
 
       this.backup_data = await getBackupDataFromZip(files[0]);
 
@@ -132,14 +135,17 @@ export default {
       });
     },
     setListeners: function () {
-      browser.runtime.onMessage.addListener(function (request) {
-        switch (request.type) {
+      browser.runtime.onMessage.addListener((request: unknown) => {
+        const msg = request as { type: string; data?: unknown };
+        switch (msg.type) {
           case "resolveGetBackupData":
-            createBackupZip(request.data).then();
+            createBackupZip(
+              msg.data as Parameters<typeof createBackupZip>[0],
+            ).then();
             break;
           case "resolveSetBackupData":
             alert(t("backupRestored"));
-            this.backup_data = {};
+            this.backup_data = null;
             this.is_wait = false;
         }
       });
@@ -148,7 +154,7 @@ export default {
   async mounted() {
     this.setListeners();
   },
-};
+});
 </script>
 
 <style scoped>

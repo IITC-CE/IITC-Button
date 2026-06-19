@@ -1,4 +1,4 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
 import { IITCButtonInitJS, isRunContentScript } from "@/content-scripts/utils";
 import { setupBridges } from "@/content-scripts/bridge-manager";
@@ -15,7 +15,10 @@ export default defineContentScript({
 
       if (IS_USERSCRIPTS_API) return;
 
-      document.addEventListener("IITCButtonInitJS", IITCButtonInitJS);
+      document.addEventListener(
+        "IITCButtonInitJS",
+        IITCButtonInitJS as unknown as EventListener,
+      );
     }
 
     if (isRunContentScript) {

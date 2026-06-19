@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="bg" v-if="showChromeRequiresUserScripts || showHostPermissions">
     <div
@@ -28,8 +28,8 @@
   </div>
 </template>
 
-<script>
-import { mixin } from "./mixins.js";
+<script lang="ts">
+import { mixin } from "./mixins";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import browser from "webextension-polyfill";
 
@@ -40,7 +40,7 @@ const allUrlsOrigins = {
   origins: ["http://*/*", "https://*/*"],
 };
 
-export default {
+export default defineComponent({
   name: "Message",
   mixins: [mixin],
   data() {
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    onClickButton: async function (action) {
+    onClickButton: async function (action: string) {
       switch (action) {
         case "chromeUserScripts":
           await this.openLink("https://www.tampermonkey.net/faq.php#Q209");
@@ -71,8 +71,10 @@ export default {
         await browser.permissions.contains(allUrlsOrigins);
       return testIntelPermissionResult || testAllUrlsPermissionResult;
     },
-    requestPermissions: async function requestPermissions(permissions) {
-      function onResponse(response) {
+    requestPermissions: async function requestPermissions(
+      permissions: browser.Permissions.Permissions,
+    ) {
+      function onResponse(response: boolean) {
         if (response) {
           window.close();
         }
@@ -82,11 +84,11 @@ export default {
     },
   },
   async mounted() {
-    const self = this;
-    browser.runtime.onMessage.addListener(async function (request) {
-      switch (request.type) {
+    browser.runtime.onMessage.addListener(async (request: unknown) => {
+      const msg = request as { type: string; data?: boolean };
+      switch (msg.type) {
         case "resolveCheckUserScriptsApiAvailable":
-          self.showChromeRequiresUserScripts = !request.data;
+          this.showChromeRequiresUserScripts = !msg.data;
           break;
       }
     });
@@ -101,7 +103,7 @@ export default {
       this.showHostPermissions = true;
     }
   },
-};
+});
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="server">
     <input
@@ -14,7 +14,7 @@
       v-bind:title="
         iconName === 'check'
           ? t('customServerTooltipSuccess')
-          : t('customServerTooltipError', this.host + '/meta.json')
+          : t('customServerTooltipError', host + '/meta.json')
       "
       v-html="iconName"
     ></i>
@@ -36,12 +36,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { validateCustomChannelUrl } from "lib-iitc-manager";
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "InputCustomServer",
   props: {
     channel: String,
@@ -54,7 +54,7 @@ export default {
   },
   mixins: [mixin],
   methods: {
-    setInputStatus: async function (host) {
+    setInputStatus: async function (host: string) {
       this.iconName = "error";
       const status = await validateCustomChannelUrl(host);
       if (status) {
@@ -80,21 +80,21 @@ export default {
         });
       }
     },
-    setExample: function (host) {
+    setExample: function (host: string) {
       this.host = host;
       this.changeCustomServer();
     },
   },
   async mounted() {
-    const networkHost = await browser.runtime.sendMessage({
+    const networkHost = (await browser.runtime.sendMessage({
       type: "getNetworkHost",
-    });
+    })) as { custom?: string } | undefined;
     if (networkHost?.custom) {
       this.host = networkHost.custom;
     }
     await this.setInputStatus(this.host);
   },
-};
+});
 </script>
 
 <style scoped>

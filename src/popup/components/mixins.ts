@@ -1,7 +1,8 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { emitter } from "@/popup/eventBus";
+import type { Plugin, PluginMeta } from "lib-iitc-manager";
 
 export const mixin = {
   data() {
@@ -28,22 +29,29 @@ export const mixin = {
   },
   methods: {
     t: t,
-    __: function (key, item) {
-      if (item === undefined || !(key in item)) return "";
+    __: function (key: string, item: PluginMeta): string {
+      if (!(key in item)) return "";
       const lang = browser.i18n.getUILanguage();
-      return `${key}:${lang}` in item ? item[`${key}:${lang}`] : item[key];
+      const val = `${key}:${lang}` in item ? item[`${key}:${lang}`] : item[key];
+      return typeof val === "string" ? val : "";
     },
-    objIsEmpty: function (obj) {
-      return typeof obj !== "object" || Object.keys(obj).length === 0;
+    objIsEmpty: function (obj: unknown): boolean {
+      return (
+        typeof obj !== "object" ||
+        obj === null ||
+        Object.keys(obj as object).length === 0
+      );
     },
-    openLink: async function (url) {
+    openLink: async function (url: string): Promise<void> {
       await browser.tabs.create({ url: url });
       window.close();
     },
-    back: function () {
+    back: function (): void {
       document.body.id = "main-menu";
     },
-    sortIITCObj: function (obj) {
+    sortIITCObj: function (
+      obj: Record<string, Plugin> | undefined,
+    ): Record<string, Plugin> {
       if (obj === undefined) {
         return {};
       }
@@ -57,7 +65,7 @@ export const mixin = {
 
       return Object.fromEntries(arr);
     },
-    showMessage: function (msg) {
+    showMessage: function (msg: string): void {
       emitter.emit("message", msg);
     },
   },

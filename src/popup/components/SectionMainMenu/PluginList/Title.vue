@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="element">
     <div class="title" v-bind:title="description" v-on:click="item_onclick">
@@ -8,8 +8,8 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+export default defineComponent({
   name: "Title",
   props: {
     text: String,
@@ -21,7 +21,7 @@ export default {
       this.$emit("item_onclick");
     },
   },
-};
+});
 </script>
 
 <style scoped>

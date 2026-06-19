@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="list">
     <Title></Title>
@@ -15,22 +15,27 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Title from "./Title.vue";
 import SearchBar from "./SearchBar.vue";
-import { mixin } from "../mixins.js";
+import { type PropType } from "vue";
+import { mixin } from "../mixins";
 import { searchPlugins } from "@/popup/search";
 import PluginList from "./PluginList/PluginList.vue";
 import Tags from "./Tags/Tags.vue";
 import browser from "webextension-polyfill";
 import { emitter } from "@/popup/eventBus";
+import type { Plugin, PluginDict } from "lib-iitc-manager";
 
-export default {
+export default defineComponent({
   name: "SectionMainMenu",
   props: {
     categories: Object,
-    plugins_flat: Object,
-    iitc_core: Object,
+    plugins_flat: {
+      type: Object as PropType<PluginDict>,
+      required: true as const,
+    },
+    iitc_core: Object as PropType<Plugin>,
   },
   emits: ["update-plugin", "delete-plugin"],
   data() {
@@ -56,7 +61,7 @@ export default {
     },
   },
   methods: {
-    filteredPlugins(plugins) {
+    filteredPlugins(plugins: PluginDict) {
       if (this.activeTag === "All") {
         return plugins;
       }
@@ -65,11 +70,11 @@ export default {
       }
       return Object.fromEntries(
         Object.entries(plugins).filter(
-          ([, plugin]) => plugin.category === this.activeTag,
+          ([, plugin]) => (plugin as Plugin).category === this.activeTag,
         ),
       );
     },
-    async updatePlugin(updatedPlugin) {
+    async updatePlugin(updatedPlugin: Plugin) {
       this.$emit("update-plugin", updatedPlugin);
 
       if (this.search_query) {
@@ -86,7 +91,7 @@ export default {
         action: updatedPlugin.status,
       });
     },
-    deletePlugin(pluginUID) {
+    deletePlugin(pluginUID: string) {
       this.$emit("delete-plugin", pluginUID);
 
       if (this.search_query) {
@@ -103,7 +108,7 @@ export default {
     });
   },
   components: { Tags, PluginList, Title, SearchBar },
-};
+});
 </script>
 
 <style scoped>

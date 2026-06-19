@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div
     class="tag"
@@ -10,13 +10,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { type PropType } from "vue";
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "Tag",
   props: {
-    tag: Object,
+    tag: {
+      type: Object as PropType<{ name: string; isNew?: boolean }>,
+      required: true as const,
+    },
     isActive: Boolean,
     isNew: {
       type: Boolean,
@@ -27,7 +31,7 @@ export default {
     handleClick() {
       emitter.emit("tag:active", this.tag.name);
     },
-    getTagColor(tag) {
+    getTagColor(tag: string) {
       const hash = this.hashString(tag);
       const hue = hash % 360;
       const lightness = 1;
@@ -35,7 +39,7 @@ export default {
 
       return `oklch(${lightness} ${chroma} ${hue}deg)`;
     },
-    hashString(str) {
+    hashString(str: string) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -43,7 +47,7 @@ export default {
       return Math.abs(hash);
     },
   },
-};
+});
 </script>
 
 <style scoped>

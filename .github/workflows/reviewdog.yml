@@ -1,0 +1,42 @@
+name: reviewdog
+
+on:
+  pull_request:
+    paths-ignore:
+      - ".github/**"
+
+jobs:
+  eslint:
+    name: runner / eslint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          level: error
+          fail_level: error
+
+  typecheck:
+    name: runner / vue-tsc
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npx vue-tsc --noEmit

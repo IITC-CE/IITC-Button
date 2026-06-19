@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="search_bar">
     <i class="icon material-icons icon__search" v-on:click="back">search</i>
@@ -13,16 +13,16 @@
       type="text"
       v-bind:placeholder="t('searchBoxPlaceholder')"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="onInput"
       autofocus
     />
   </div>
 </template>
 
-<script>
-import { mixin } from "../mixins.js";
+<script lang="ts">
+import { mixin } from "../mixins";
 
-export default {
+export default defineComponent({
   name: "SearchBar",
   props: {
     modelValue: {
@@ -35,9 +35,12 @@ export default {
     cancel() {
       this.$emit("update:modelValue", "");
     },
+    onInput(e: Event) {
+      this.$emit("update:modelValue", (e.target as HTMLInputElement).value);
+    },
   },
   mixins: [mixin],
-};
+});
 </script>
 
 <style scoped>

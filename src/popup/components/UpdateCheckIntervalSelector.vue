@@ -1,10 +1,8 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="uc__setting">
     <div class="uc__label-wrapper">
-      <span class="uc__label"
-        >{{ updateChannelsIntervals[channel]["name"] }}:</span
-      >
+      <span class="uc__label">{{ channelLabel }}:</span>
     </div>
     <select
       class="uc__input"
@@ -25,15 +23,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "UpdateCheckIntervalSelector",
   props: {
     title: String,
-    channel: String,
+    channel: {
+      type: String,
+      required: true as const,
+    },
   },
   data() {
     return {
@@ -51,16 +52,25 @@ export default {
       this.showMessage(this.t("changesApplied"));
     },
   },
+  computed: {
+    channelLabel(): string {
+      const intervals = this.updateChannelsIntervals as Record<
+        string,
+        { name: string }
+      >;
+      return intervals[this.channel]?.name ?? "";
+    },
+  },
   async mounted() {
     const interval = await browser.runtime.sendMessage({
       type: "getUpdateCheckInterval",
       channel: this.channel,
     });
     if (interval) {
-      this.interval = interval;
+      this.interval = interval as number;
     }
   },
-};
+});
 </script>
 
 <style scoped>

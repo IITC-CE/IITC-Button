@@ -1,19 +1,20 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
 import browser from "webextension-polyfill";
 import { strToBase64 } from "lib-iitc-manager";
 import { IS_SAFARI } from "@/userscripts/env";
+import type { XhrRequestData, XhrIframeResponse } from "@/types/xhr";
 
-let xhrIframe = null;
-let pendingRequests = [];
-let messageListener = null;
+let xhrIframe: HTMLIFrameElement | null = null;
+let pendingRequests: XhrRequestData[] = [];
+let messageListener: ((event: MessageEvent) => void) | null = null;
 
 // Retry tracking
 let retryCount = 0;
 const MAX_RETRIES = 3;
 
 // Create sandbox iframe
-function createIframe() {
+function createIframe(): void {
   try {
     // Don't create if already exists
     if (xhrIframe) return;
@@ -23,10 +24,13 @@ function createIframe() {
       window.removeEventListener("message", messageListener);
     }
 
-    messageListener = function (event) {
+    messageListener = function (event: MessageEvent) {
       // Process response messages from iframe
-      if (event.data && event.data.type === "xhr_response") {
-        handleXhrResponseData(event.data);
+      if (
+        event.data &&
+        (event.data as XhrIframeResponse).type === "xhr_response"
+      ) {
+        handleXhrResponseData(event.data as XhrIframeResponse);
       }
     };
 
@@ -34,7 +38,7 @@ function createIframe() {
 
     // Create hidden iframe with sandbox for XHR
     xhrIframe = document.createElement("iframe");
-    xhrIframe.sandbox = "allow-scripts allow-same-origin";
+    xhrIframe.sandbox.value = "allow-scripts allow-same-origin";
     xhrIframe.style.cssText =
       "display:none; position:absolute; width:0; height:0; border:0;";
     xhrIframe.src = browser.runtime.getURL("sandbox.html");
@@ -55,7 +59,7 @@ function createIframe() {
 }
 
 // Process response data from iframe
-function handleXhrResponseData(data) {
+function handleXhrResponseData(data: XhrIframeResponse): void {
   try {
     const detail_stringify = JSON.stringify({
       task_uuid: data.uuid,
@@ -77,7 +81,7 @@ function handleXhrResponseData(data) {
 }
 
 // Send XHR request
-export function sendXhrRequest(data) {
+export function sendXhrRequest(data: XhrRequestData): void {
   // For Safari, use fetch fallback
   if (IS_SAFARI) {
     browser.runtime

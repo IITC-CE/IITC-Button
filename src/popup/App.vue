@@ -1,11 +1,11 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div id="app" :class="{ is_safari: is_safari }">
     <section class="section main-menu">
       <SectionMainMenu
         v-bind:categories="categories"
         v-bind:plugins_flat="plugins_flat"
-        v-bind:iitc_core="iitc_core"
+        v-bind:iitc_core="iitc_core ?? undefined"
         @update-plugin="updatePlugin"
         @delete-plugin="deletePlugin"
       >
@@ -19,25 +19,28 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import type { Plugin, PluginDict } from "lib-iitc-manager";
+import type { PluginsView } from "lib-iitc-manager";
 import SectionMainMenu from "./components/SectionMainMenu/SectionMainMenu.vue";
 import SectionOptions from "./components/SectionOptions.vue";
 
-import Message from "./components/Message";
-import Alert from "./components/Alert";
+import Message from "./components/Message.vue";
+import Alert from "./components/Alert.vue";
 
-import * as data from "./data.js";
+import * as data from "./data";
 import browser from "webextension-polyfill";
+import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "App",
   data() {
     return {
-      categories: {},
-      plugins: {},
-      plugins_flat: {},
+      categories: {} as PluginsView["categories"],
+      plugins: {} as PluginDict,
+      plugins_flat: {} as PluginDict,
       category_name: "",
-      iitc_core: {},
+      iitc_core: null as Plugin | null,
       is_safari: this.detect_safari(),
     };
   },
@@ -56,10 +59,13 @@ export default {
     await browser.runtime.sendMessage({ type: "popupWasOpened" });
   },
   methods: {
-    updatePlugin(updatedPlugin) {
+    showMessage(msg: string) {
+      emitter.emit("message", msg);
+    },
+    updatePlugin(updatedPlugin: Plugin) {
       this.plugins_flat[updatedPlugin.uid] = updatedPlugin;
     },
-    deletePlugin(pluginUID) {
+    deletePlugin(pluginUID: string) {
       delete this.plugins_flat[pluginUID];
     },
     detect_safari: function () {
@@ -70,7 +76,7 @@ export default {
       return safariAgent && !chromeAgent;
     },
   },
-};
+});
 </script>
 
 <style>

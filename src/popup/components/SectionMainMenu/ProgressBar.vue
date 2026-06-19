@@ -1,4 +1,5 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
+
 <template>
   <div
     id="progressbar"
@@ -7,10 +8,10 @@
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-export default {
+export default defineComponent({
   name: "ProgressBar",
   data() {
     return {
@@ -22,7 +23,7 @@ export default {
       this.$data.showProgressbar = status;
     });
   },
-};
+});
 </script>
 
 <style scoped>

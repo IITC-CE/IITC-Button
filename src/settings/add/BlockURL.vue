@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="zone url_zone">
     <div class="url_wrapper">
@@ -21,12 +21,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { fetchResource, parseMeta } from "lib-iitc-manager";
 import { t } from "@/i18n";
 
-export default {
+export default defineComponent({
   name: "BlockURL",
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     t: t,
-    url_input_keyup: async function (event) {
+    url_input_keyup: async function (event: KeyboardEvent) {
       if (event.key === "Enter") {
         await this.loadByUrl();
       }
@@ -44,7 +44,9 @@ export default {
       const url = this.url;
       this.url = "";
 
-      const { data: code } = await fetchResource(url);
+      const { data: code } = (await fetchResource(url)) as {
+        data: string | null;
+      };
 
       if (!code) {
         alert(t("addressNotAvailable"));
@@ -65,7 +67,7 @@ export default {
           message += t("notValidUserScript", filename) + "\n";
         } else {
           message +=
-            t("addedUserScriptTo", [filename, meta["category"]]) + "\n";
+            t("addedUserScriptTo", [filename, meta["category"] ?? ""]) + "\n";
           meta["filename"] = filename;
           scripts.push({ meta: meta, code: code });
         }
@@ -78,7 +80,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

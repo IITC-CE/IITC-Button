@@ -1,29 +1,35 @@
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
+
 import browser from "webextension-polyfill";
 
 import { fuzzysearch } from "scored-fuzzysearch";
+import type { Plugin, PluginDict } from "lib-iitc-manager";
 
-const score = (query, text) => {
+export type ScoredPlugin = Plugin & { _search_score: number };
+
+const score = (query: string, text: string | undefined): number => {
   if (text === undefined) return 0;
   return fuzzysearch(query, text);
 };
 
-const setPluginScore = (p, q) => {
+const setPluginScore = (p: Plugin, q: string): ScoredPlugin => {
   const lang = browser.i18n.getUILanguage();
-  p._search_score = Math.max(
+  const scored = p as ScoredPlugin;
+  scored._search_score = Math.max(
     score(q, p.name),
-    score(q, p["name:" + lang]),
+    score(q, p["name:" + lang] as string | undefined),
     score(q, p.description),
-    score(q, p["description:" + lang]),
+    score(q, p["description:" + lang] as string | undefined),
     score(q, p.category),
   );
-  return p;
+  return scored;
 };
 
-const sortScoredPlugins = (arr) => {
+const sortScoredPlugins = (arr: ScoredPlugin[]): ScoredPlugin[] => {
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[i]._search_score < arr[j]._search_score) {
-        let swap = arr[i];
+        const swap = arr[i];
         arr[i] = arr[j];
         arr[j] = swap;
       }
@@ -32,7 +38,10 @@ const sortScoredPlugins = (arr) => {
   return arr;
 };
 
-export function searchPlugins(query, plugins_obj) {
+export function searchPlugins(
+  query: string,
+  plugins_obj: PluginDict,
+): ScoredPlugin[] {
   const plugins = Object.keys(plugins_obj).map((key) => plugins_obj[key]);
   const scored_plugins = plugins.map((plugin) => setPluginScore(plugin, query));
   const sorted_plugins = sortScoredPlugins(scored_plugins);

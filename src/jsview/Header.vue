@@ -1,3 +1,4 @@
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="addUserScript-wrapper">
     <div id="addUserScript" class="col" v-bind:class="{ hide: !show_header }">
@@ -59,24 +60,28 @@
   </div>
 </template>
 
-<script>
-import { toRaw } from "vue";
+<script lang="ts">
+import { toRaw, type PropType } from "vue";
 import browser from "webextension-polyfill";
 import { t } from "@/i18n";
 import { getUID, humanizeMatch, IITC_CORE_UID } from "lib-iitc-manager";
+import type { PluginMeta } from "lib-iitc-manager";
 import { uuidv4 } from "@/uuid";
 
-export default {
+export default defineComponent({
   name: "Header",
   props: {
-    meta: Object,
+    meta: {
+      type: Object as PropType<PluginMeta>,
+      required: true as const,
+    },
     code: String,
   },
   data() {
     return {
       show_header: false,
       button_name: t("install"),
-      domains: null,
+      domains: null as string | string[] | null,
       show_details: false,
       page_uuid: uuidv4(),
     };
@@ -102,27 +107,38 @@ export default {
       });
     },
     setListeners: function () {
-      const self = this;
-      browser.runtime.onMessage.addListener(function (request) {
-        switch (request.type) {
+      browser.runtime.onMessage.addListener((request: unknown) => {
+        const msg = request as {
+          type: string;
+          info?: unknown;
+          id?: string;
+          scripts?: Record<
+            string,
+            { uid?: string; name?: string; category?: string }
+          >;
+        };
+        switch (msg.type) {
           case "resolveGetPluginInfo":
-            if (request.info) {
-              self.button_name = t("reinstall");
+            if (msg.info) {
+              this.button_name = t("reinstall");
             }
             break;
           case "resolveAddUserScripts":
-            if (request.id !== self.page_uuid) return;
-            Object.entries(request.scripts).map(([, script]) => {
+            if (msg.id !== this.page_uuid) return;
+            Object.entries(msg.scripts ?? {}).map(([, script]) => {
               let message = "";
               if (script["uid"] === IITC_CORE_UID) {
-                message = t("addedCustomIITCCore", [script["name"]]) + "\n";
+                message =
+                  t("addedCustomIITCCore", [script["name"] ?? ""]) + "\n";
               } else {
                 message =
-                  t("addedUserScriptTo", [script["name"], script["category"]]) +
-                  "\n";
+                  t("addedUserScriptTo", [
+                    script["name"] ?? "",
+                    script["category"] ?? "",
+                  ]) + "\n";
               }
               alert(message);
-              self.button_name = t("reinstall");
+              this.button_name = t("reinstall");
             });
         }
       });
@@ -145,8 +161,12 @@ export default {
     },
   },
   computed: {
-    getIcon: function () {
-      return this.meta["icon64"] || this.meta["icon"] || null;
+    getIcon: function (): string | null {
+      const icon64 = this.meta["icon64"];
+      const icon = this.meta["icon"];
+      if (typeof icon64 === "string" && icon64) return icon64;
+      if (typeof icon === "string" && icon) return icon;
+      return null;
     },
   },
   async mounted() {
@@ -156,7 +176,7 @@ export default {
       }
     });
   },
-};
+});
 </script>
 
 <style scoped>

@@ -1,6 +1,8 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 import { Manager, GM_API_UID } from "lib-iitc-manager";
+import type { StorageAPI } from "lib-iitc-manager";
 import browser from "webextension-polyfill";
+import type WebExt from "webextension-polyfill";
 import { IS_SCRIPTING_API, IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { t } from "@/i18n";
 import {
@@ -19,10 +21,11 @@ import {
   manage_userscripts_api,
 } from "@/background/injector";
 import { xmlHttpRequestFallbackHandler } from "@/background/xhr-fallback";
+import type { BackgroundMessage } from "@/types/messages";
 
 export default defineBackground(() => {
   const manager = new Manager({
-    storage: browser.storage.local,
+    storage: browser.storage.local as unknown as StorageAPI,
     message: (message, args) => {
       browser.runtime
         .sendMessage({
@@ -85,108 +88,108 @@ export default defineBackground(() => {
     onRemoved.addListener(onRemovedListener);
   }
 
-  browser.runtime.onMessage.addListener(async (request, sender) => {
-    switch (request.type) {
-      case "requestOpenIntel":
-        await onRequestOpenIntel();
-        break;
-      case "toggleIITC":
-        await onToggleIITC(request.value);
-        if (request.value === true) {
+  browser.runtime.onMessage.addListener(
+    async (request: unknown, sender: WebExt.Runtime.MessageSender) => {
+      const msg = request as BackgroundMessage;
+      switch (msg.type) {
+        case "requestOpenIntel":
+          await onRequestOpenIntel();
+          break;
+        case "toggleIITC":
+          await onToggleIITC(msg.value);
+          if (msg.value === true) {
+            await initUserscriptsApi();
+          }
+          break;
+        case "popupWasOpened":
           await initUserscriptsApi();
-        }
-        break;
-      case "popupWasOpened":
-        await initUserscriptsApi();
-        break;
-      case "XHRFallbackRequest":
-        await xmlHttpRequestFallbackHandler(request.value, sender);
-        break;
-      case "getPluginsView":
-        return await manager.getPluginsView();
-      case "managePlugin":
-        await manager.managePlugin(request.uid, request.action);
-        break;
-      case "setChannel":
-        await manager.setChannel(request.value);
-        break;
-      case "safeUpdate":
-        await manager.checkUpdates(false);
-        break;
-      case "forceFullUpdate":
-        await manager.checkUpdates(true);
-        break;
-      case "addUserScripts":
-        // TODO: The onMessage method should be able to return a value, but does not do so because of a bug.
-        //  More info: https://github.com/mozilla/webextension-polyfill/issues/172
-        browser.runtime
-          .sendMessage({
-            type: "resolveAddUserScripts",
-            id: request.id,
-            scripts: await manager.addUserScripts(request.scripts),
-          })
-          .then()
-          .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
-        break;
-      case "getPluginInfo":
-        browser.runtime
-          .sendMessage({
-            type: "resolveGetPluginInfo",
-            info: await manager.getPluginInfo(request.uid),
-          })
-          .then()
-          .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
-        break;
-      case "getBackupData":
-        browser.runtime
-          .sendMessage({
-            type: "resolveGetBackupData",
-            data: await manager.getBackupData(request.params),
-          })
-          .then()
-          .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
-        break;
-      case "setBackupData":
-        browser.runtime
-          .sendMessage({
-            type: "resolveSetBackupData",
-            data: await manager.setBackupData(
-              request.params,
-              request.backup_data,
-            ),
-          })
-          .then()
-          .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
-        break;
-      case "checkUserScriptsApiAvailable":
-        browser.runtime
-          .sendMessage({
-            type: "resolveCheckUserScriptsApiAvailable",
-            data: is_userscripts_api_available(),
-          })
-          .then()
-          .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
-        break;
-      case "getChannel":
-        return manager.channel;
-      case "getUpdateCheckInterval":
-        return await manager.getUpdateCheckInterval(request.channel);
-      case "getNetworkHost":
-        return manager.networkHost;
-      case "setCustomChannelUrl":
-        await manager.setCustomChannelUrl(request.value);
-        break;
-      case "setUpdateCheckInterval":
-        await manager.setUpdateCheckInterval(request.interval, request.channel);
-        await createCheckUpdateAlarm(true);
-        break;
-    }
-  });
+          break;
+        case "XHRFallbackRequest":
+          await xmlHttpRequestFallbackHandler(msg.value, sender);
+          break;
+        case "getPluginsView":
+          return await manager.getPluginsView();
+        case "managePlugin":
+          await manager.managePlugin(msg.uid, msg.action);
+          break;
+        case "setChannel":
+          await manager.setChannel(msg.value);
+          break;
+        case "safeUpdate":
+          await manager.checkUpdates(false);
+          break;
+        case "forceFullUpdate":
+          await manager.checkUpdates(true);
+          break;
+        case "addUserScripts":
+          // TODO: The onMessage method should be able to return a value, but does not do so because of a bug.
+          //  More info: https://github.com/mozilla/webextension-polyfill/issues/172
+          browser.runtime
+            .sendMessage({
+              type: "resolveAddUserScripts",
+              id: msg.id,
+              scripts: await manager.addUserScripts(msg.scripts),
+            })
+            .then()
+            .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
+          break;
+        case "getPluginInfo":
+          browser.runtime
+            .sendMessage({
+              type: "resolveGetPluginInfo",
+              info: await manager.getPluginInfo(msg.uid),
+            })
+            .then()
+            .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
+          break;
+        case "getBackupData":
+          browser.runtime
+            .sendMessage({
+              type: "resolveGetBackupData",
+              data: await manager.getBackupData(msg.params),
+            })
+            .then()
+            .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
+          break;
+        case "setBackupData":
+          browser.runtime
+            .sendMessage({
+              type: "resolveSetBackupData",
+              data: await manager.setBackupData(msg.params, msg.backup_data),
+            })
+            .then()
+            .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
+          break;
+        case "checkUserScriptsApiAvailable":
+          browser.runtime
+            .sendMessage({
+              type: "resolveCheckUserScriptsApiAvailable",
+              data: is_userscripts_api_available(),
+            })
+            .then()
+            .catch(() => {}); // If tab is closed, message goes nowhere and an error occurs. Ignore.
+          break;
+        case "getChannel":
+          return manager.channel;
+        case "getUpdateCheckInterval":
+          return await manager.getUpdateCheckInterval(msg.channel);
+        case "getNetworkHost":
+          return manager.networkHost;
+        case "setCustomChannelUrl":
+          await manager.setCustomChannelUrl(msg.value);
+          break;
+        case "setUpdateCheckInterval":
+          await manager.setUpdateCheckInterval(msg.interval, msg.channel);
+          await createCheckUpdateAlarm(true);
+          break;
+      }
+    },
+  );
 
   async function initUserscriptsApi() {
     if (!IS_USERSCRIPTS_API) return;
 
-    let scripts = [];
+    let scripts: WebExt.UserScripts.RegisteredUserScript[] = [];
     try {
       scripts = await browser.userScripts.getScripts();
       // eslint-disable-next-line no-empty
@@ -208,7 +211,7 @@ export default defineBackground(() => {
     }
 
     const plugins_event = {
-      event: "add",
+      event: "add" as const,
       plugins: await manager.getEnabledPlugins(),
     };
     await manage_userscripts_api(plugins_event);

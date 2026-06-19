@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <highlightjs
     language="javascript"
@@ -9,7 +9,7 @@
   <div class="message" v-else>{{ status }}</div>
 </template>
 
-<script>
+<script lang="ts">
 import hljsVuePlugin from "@highlightjs/vue-plugin";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -21,7 +21,7 @@ hljs.addPlugin({
   "after:highlight": plugin,
 });
 
-export default {
+export default defineComponent({
   name: "Code",
   components: {
     highlightjs: hljsVuePlugin.component,
@@ -30,7 +30,7 @@ export default {
     code: String,
     status: String,
   },
-};
+});
 </script>
 
 <style>

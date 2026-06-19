@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="title">
     <div
@@ -25,13 +25,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
-import { mixin } from "../mixins.js";
+import { mixin } from "../mixins";
 import ProgressBar from "./ProgressBar.vue";
 import ToggleIITC from "./ToggleIITC.vue";
 
-export default {
+export default defineComponent({
   name: "Title",
   mixins: [mixin],
   methods: {
@@ -44,7 +44,7 @@ export default {
     },
   },
   components: { ProgressBar, ToggleIITC },
-};
+});
 </script>
 
 <style scoped>

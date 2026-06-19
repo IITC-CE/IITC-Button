@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="page">
     <div class="parent">
@@ -11,18 +11,18 @@
   </div>
 </template>
 
-<script>
-import BlockURL from "./BlockURL";
-import BlockDrop from "./BlockDrop";
+<script lang="ts">
+import BlockURL from "./BlockURL.vue";
+import BlockDrop from "./BlockDrop.vue";
 import { t } from "@/i18n";
 
-export default {
+export default defineComponent({
   name: "PageAddPlugin",
   methods: {
     t: t,
   },
   components: { BlockURL, BlockDrop },
-};
+});
 </script>
 
 <style scoped>

@@ -18,7 +18,7 @@ export default defineConfig({
     "@": resolve(__dirname, "src"),
   },
 
-  manifest: ({ browser, manifestVersion, mode }) => {
+  manifest: ({ browser, mode }) => {
     const isBeta = !!process.env.BETA;
     const version = baseManifest.version ?? "3.2.5";
 

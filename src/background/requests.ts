@@ -1,10 +1,11 @@
-//@license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3
+// Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
 import browser from "webextension-polyfill";
+import type WebExt from "webextension-polyfill";
 import { IS_USERSCRIPTS_API } from "@/userscripts/env";
 import { parseMeta, fetchResource, getUniqueId } from "lib-iitc-manager";
 
-const IS_CHROME = !!globalThis.chrome?.app;
+const IS_CHROME = !!(globalThis as Record<string, unknown>)["chrome"];
 const whitelist = [
   "^https://github.com/[^/]*/[^/]*/raw/[^/]*/[^/]*?\\.user\\.js([?#]|$)",
   "^https://gist.github.com/.*?/[^/]*?.user.js([?#]|$)",
@@ -14,20 +15,12 @@ const blacklist = ["//(?:(?:gist.|)github.com|gitlab.com)/"].map(
   (re) => new RegExp(re),
 );
 
-const cache = {};
+const cache: Record<number, string> = {};
 
-/**
- * webRequest:
- * If the URL looks like an IITC plugin, saving the URL to the cache
- *
- * webRequestBlocking:
- * If the URL looks like an IITC plugin and the bypass flag is not set,
- * it stops the download and triggers an in-depth check of the plugin.
- *
- * @param {Object} req - webRequest.onBeforeRequest object.
- * @return {Object|void} - Returns an object if webRequestBlocking mode
- */
-export function onBeforeRequest(req) {
+// webRequest mode: saves URL to cache; webRequestBlocking mode: cancels navigation and triggers plugin check
+export function onBeforeRequest(
+  req: WebExt.WebRequest.OnBeforeRequestDetailsType,
+): WebExt.WebRequest.BlockingResponse | void {
   const { method, tabId, url } = req;
 
   if (IS_USERSCRIPTS_API) {
@@ -55,7 +48,8 @@ export function onBeforeRequest(req) {
 }
 
 if (browser.webRequest) {
-  const extraInfoSpec = !IS_USERSCRIPTS_API ? ["blocking"] : [];
+  const extraInfoSpec: WebExt.WebRequest.OnBeforeRequestOptions[] =
+    !IS_USERSCRIPTS_API ? ["blocking"] : [];
   browser.webRequest.onBeforeRequest.addListener(
     onBeforeRequest,
     {
@@ -144,14 +138,8 @@ if (browser.declarativeNetRequest) {
   });
 }
 
-/**
- * Writes the tab ID into the cache so that it does not interact with the tab later on and restarts the request.
- *
- * @param {Number} tabId - Tab ID.
- * @param {String} url - Requested URL.
- * @return {Promise<void>}
- */
-async function bypass(tabId, url) {
+// Writes the tab ID into the cache so that it does not interact with the tab later on and restarts the request
+async function bypass(tabId: number, url: string): Promise<void> {
   if (tabId < 0) return;
   cache[tabId] = "bypass";
   await browser.tabs.update(tabId, { url });
@@ -162,12 +150,8 @@ async function bypass(tabId, url) {
  * Closes the tab if the URL was opened in a new tab.
  * If the URL is not an IITC plugin, causes the URL to reopen without further extension intervention.
  *
- * @async
- * @param {Number} tabId - Tab ID.
- * @param {String} url - Requested URL.
- * @return {Promise<void>}
  */
-async function maybeInstallUserJs(tabId, url) {
+async function maybeInstallUserJs(tabId: number, url: string): Promise<void> {
   const IITC_is_enabled = await browser.storage.local
     .get(["IITC_is_enabled"])
     .then((data) => data.IITC_is_enabled);
@@ -178,14 +162,14 @@ async function maybeInstallUserJs(tabId, url) {
 
   const { data: code } = await fetchResource(url);
 
-  if (!code) {
+  if (!code || typeof code !== "string") {
     await bypass(tabId, url);
     return;
   }
 
   const meta = parseMeta(code);
 
-  if (meta.name) {
+  if (meta && meta.name) {
     if (tabId in cache && cache[tabId] === "autoclose") {
       browser.tabs.remove(tabId).then();
     }
@@ -195,47 +179,38 @@ async function maybeInstallUserJs(tabId, url) {
   }
 }
 
-/**
- * Creating a tab with plugin installation.
- *
- * @async
- * @param {String} url - URL of the plugin.
- * @param {String} code - Plugin code.
- * @return {Promise<void>}
- */
-async function confirmInstall(url, code) {
-  const cache = {};
+// Creating a tab with plugin installation
+async function confirmInstall(url: string, code: string): Promise<void> {
+  const tmpCache: Record<string, { url: string; code: string }> = {};
   const uniqId = getUniqueId("tmp");
-  cache[uniqId] = { url: url, code: code };
-  await browser.storage.local.set(cache);
+  tmpCache[uniqId] = { url: url, code: code };
+  await browser.storage.local.set(tmpCache);
 
   await browser.tabs.create({
     url: await browser.runtime.getURL(`/jsview.html?uniqId=${uniqId}`),
   });
 }
 
-/** @this {string} */
-function matches(re) {
+// Used with Array.prototype.some() where `this` is the URL string being tested
+function matches(this: string, re: RegExp): boolean {
   return re.test(this);
 }
 
-/**
- * Set autoclose if userscript was opened in a new tab
- */
+// Set autoclose if userscript was opened in a new tab
 browser.tabs.onCreated.addListener((tab) => {
   const url =
     tab.url === "about:blank" ? tab.title : tab.url || tab.pendingUrl || "";
   if (
-    (/\.user\.js([?#]|$)/.test(url) || (url === "" && IS_CHROME)) &&
+    (/\.user\.js([?#]|$)/.test(url ?? "") || (url === "" && IS_CHROME)) &&
     (!blacklist.some(matches, url) || whitelist.some(matches, url))
   ) {
-    cache[tab.id] = "autoclose";
+    if (tab.id !== undefined) {
+      cache[tab.id] = "autoclose";
+    }
   }
 });
 
-/**
- * Deleting status when closing a tab
- */
+// Deleting status when closing a tab
 browser.tabs.onRemoved.addListener((tabId) => {
   delete cache[tabId];
 });

@@ -1,16 +1,16 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div id="message" class="message" v-bind:class="{ opened: message.opened }">
     {{ message.text }}
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { emitter } from "@/popup/eventBus";
 
-let message_timeout_id = null;
+let message_timeout_id: number | undefined;
 
-export default {
+export default defineComponent({
   name: "Message",
   data() {
     return {
@@ -19,17 +19,16 @@ export default {
   },
   mounted() {
     emitter.on("message", (msg) => {
-      const self = this;
-      self.$data.message.text = msg;
-      self.$data.message.opened = true;
+      this.$data.message.text = msg;
+      this.$data.message.opened = true;
 
-      clearTimeout(message_timeout_id);
-      message_timeout_id = setTimeout(function () {
-        self.$data.message.opened = false;
+      window.clearTimeout(message_timeout_id);
+      message_timeout_id = window.setTimeout(() => {
+        this.$data.message.opened = false;
       }, 3000);
     });
   },
-};
+});
 </script>
 
 <style scoped>

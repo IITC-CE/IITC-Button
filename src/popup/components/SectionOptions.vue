@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="window">
     <Header
@@ -83,16 +83,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import Hr from "./Hr.vue";
-import Header from "./Header";
-import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector";
-import InputCustomServer from "./InputCustomServer";
+import Header from "./Header.vue";
+import UpdateCheckIntervalSelector from "./UpdateCheckIntervalSelector.vue";
+import InputCustomServer from "./InputCustomServer.vue";
 
-import { mixin } from "./mixins.js";
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "settings__sectionOptions",
   data() {
     return {
@@ -111,9 +111,11 @@ export default {
       get: function () {
         return this.channel;
       },
-      set: async function (channel) {
+      set: async function (channel: string) {
         this.channel = channel;
-        this.$root.channel = channel;
+        if (this.$root) {
+          (this.$root as unknown as Record<string, unknown>).channel = channel;
+        }
         await browser.runtime.sendMessage({
           type: "setChannel",
           value: channel,
@@ -124,11 +126,11 @@ export default {
   async mounted() {
     const channel = await browser.runtime.sendMessage({ type: "getChannel" });
     if (channel) {
-      this.channel = channel;
+      this.channel = channel as string;
     }
   },
   components: { Hr, Header, UpdateCheckIntervalSelector, InputCustomServer },
-};
+});
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="app">
     <Header :tab="tab" @setTab="setTab"></Header>
@@ -8,14 +8,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { t } from "@/i18n";
-import Header from "./Header";
-import PageAddPlugin from "./add/Main";
-import PageBackup from "./backup/Main";
-import PageDebug from "./debug/Main";
+import Header from "./Header.vue";
+import PageAddPlugin from "./add/Main.vue";
+import PageBackup from "./backup/Main.vue";
+import PageDebug from "./debug/Main.vue";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     Header,
@@ -30,9 +30,9 @@ export default {
   },
   methods: {
     t: t,
-    setTab(tab) {
+    setTab(tab: string) {
       if (history.pushState) {
-        history.pushState(null, null, "#" + tab);
+        history.pushState(null, "", "#" + tab);
       } else {
         location.hash = "#" + tab;
       }
@@ -40,12 +40,12 @@ export default {
     },
   },
   async mounted() {
-    const tab = new URL(window.location.href).hash;
-    if (tab.length > 0) {
-      this.tab = tab.substring(1);
+    const hash = new URL(window.location.href).hash;
+    if (hash.length > 0) {
+      this.tab = hash.substring(1);
     }
   },
-};
+});
 </script>
 
 <style>

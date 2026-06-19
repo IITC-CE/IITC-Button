@@ -1,4 +1,4 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <header class="header">
     <i class="header__icon material-icons" v-on:click="back"
@@ -11,10 +11,10 @@
   </header>
 </template>
 
-<script>
-import { mixin } from "./mixins.js";
+<script lang="ts">
+import { mixin } from "./mixins";
 
-export default {
+export default defineComponent({
   name: "Header",
   props: {
     header_text: String,
@@ -27,7 +27,7 @@ export default {
     },
   },
   mixins: [mixin],
-};
+});
 </script>
 
 <style scoped>

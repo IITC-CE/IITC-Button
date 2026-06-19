@@ -1,11 +1,11 @@
-<!-- @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3 -->
+<!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <form
     class="zone"
     id="drop_zone"
     ref="fileform"
     v-on:drop="on_drop"
-    v-on:click="$refs.input.click()"
+    v-on:click="clickInput"
   >
     <div>
       <span
@@ -31,7 +31,7 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import browser from "webextension-polyfill";
 import { parseMeta } from "lib-iitc-manager";
 import { t } from "@/i18n";
@@ -40,14 +40,14 @@ import { readUploadedFileAsText } from "@/settings/utils";
 /*
  * Validation UserScript and adding to IITC Button
  */
-const processingFile = async (fileList) => {
+const processingFile = async (fileList: FileList) => {
   const scripts = [];
   let message = "";
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i];
 
     try {
-      const code = await readUploadedFileAsText(file);
+      const code = (await readUploadedFileAsText(file)) as string;
       const meta = parseMeta(code);
 
       if (
@@ -58,7 +58,8 @@ const processingFile = async (fileList) => {
         message += t("notValidUserScript", file["name"]) + "\n";
       } else {
         message +=
-          t("addedUserScriptTo", [meta["name"], meta["category"]]) + "\n";
+          t("addedUserScriptTo", [meta["name"] ?? "", meta["category"] ?? ""]) +
+          "\n";
         meta["filename"] = file["name"];
         scripts.push({ meta: meta, code: code });
       }
@@ -73,24 +74,27 @@ const processingFile = async (fileList) => {
   });
 };
 
-export default {
+export default defineComponent({
   name: "BlockDrop",
   data() {
     return {
-      files: [],
+      files: [] as File[],
     };
   },
   methods: {
     t: t,
-    on_drop: (e) => {
-      processingFile(e.dataTransfer.files).then();
+    clickInput() {
+      (this.$refs.input as HTMLInputElement).click();
     },
-    handlePicked: (e) => {
-      const target = e.target;
-      processingFile(target.files).then();
+    on_drop: (e: DragEvent) => {
+      processingFile(e.dataTransfer!.files).then();
+    },
+    handlePicked: (e: Event) => {
+      processingFile((e.target as HTMLInputElement).files!).then();
     },
   },
   mounted() {
+    const form = this.$refs.fileform as HTMLFormElement;
     [
       "drag",
       "dragstart",
@@ -99,28 +103,24 @@ export default {
       "dragenter",
       "dragleave",
       "drop",
-    ].forEach(
-      function (evt) {
-        this.$refs.fileform.addEventListener(
-          evt,
-          function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          }.bind(this),
-          false,
-        );
-      }.bind(this),
-    );
-    this.$refs.fileform.addEventListener(
-      "drop",
-      function (e) {
-        for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          this.files.push(e.dataTransfer.files[i]);
-        }
-      }.bind(this),
-    );
+    ].forEach((evt) => {
+      form.addEventListener(
+        evt,
+        (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        },
+        false,
+      );
+    });
+    form.addEventListener("drop", (e) => {
+      const files = (e as DragEvent).dataTransfer!.files;
+      for (let i = 0; i < files.length; i++) {
+        this.files.push(files[i]);
+      }
+    });
   },
-};
+});
 </script>
 
 <style scoped>
