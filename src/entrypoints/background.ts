@@ -91,6 +91,9 @@ export default defineBackground(() => {
   browser.runtime.onMessage.addListener(
     async (request: unknown, sender: WebExt.Runtime.MessageSender) => {
       const msg = request as BackgroundMessage;
+      // A cold-started background can receive a message before the Manager has
+      // loaded channel/networkHost from storage - wait so handlers never read defaults.
+      await manager.ready;
       switch (msg.type) {
         case "requestOpenIntel":
           await onRequestOpenIntel();
