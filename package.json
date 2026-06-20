@@ -5,8 +5,10 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "dev:firefox": "wxt -b firefox",
-    "dev:chrome": "wxt -b chrome",
+    "dev:firefox": "wxt -b firefox --mv3",
+    "dev:chrome": "wxt -b chrome --mv3",
+    "dev:firefox:link": "LINK_LIB=1 wxt -b firefox --mv3",
+    "dev:chrome:link": "LINK_LIB=1 wxt -b chrome --mv3",
     "build_mv3_firefox": "wxt build -b firefox --mv3 && wxt zip -b firefox --mv3",
     "build_mv3_chrome": "wxt build -b chrome --mv3 && wxt zip -b chrome --mv3",
     "build_mv3_safari": "wxt build -b safari --mv3 && wxt zip -b safari --mv3",
