@@ -169,6 +169,11 @@ export default defineConfig({
     },
     resolve: {
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
+      // Local-only: a linked (file:) dependency resolves to its real path outside
+      // node_modules, which leaks WXT auto-imports into it and breaks the build.
+      // Keeping symlinks unresolved keeps it under node_modules so WXT skips it.
+      // Enable via the dev:*:link scripts (LINK_LIB=1); off for normal/CI builds.
+      preserveSymlinks: !!process.env.LINK_LIB,
     },
   }),
 });
