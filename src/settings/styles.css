@@ -1,0 +1,208 @@
+/* Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE */
+
+/* Settings-specific layout and component classes.
+   Project-wide design tokens live in @/styles/theme.css. */
+:root {
+  --content-max: 840px;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--surface);
+}
+
+.page-header {
+  border-bottom: 1px solid var(--outline);
+  background: var(--surface-container);
+}
+
+.page-header-inner {
+  max-width: var(--content-max);
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 22px 36px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page-crumbs {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin: 4px 0 0;
+}
+
+.page-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.page-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.page-inner {
+  max-width: var(--content-max);
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 24px 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.block-head {
+  margin-bottom: 12px;
+}
+
+.block-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+.block-sub {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  margin-top: 2px;
+}
+
+.card {
+  background: var(--surface-container);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 54px;
+}
+
+.row + .row {
+  border-top: 1px solid var(--outline);
+}
+
+.btn-primary {
+  padding: 10px 18px;
+  background: var(--accent);
+  /* White in both themes - it sits on the teal accent fill. */
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  font-family: inherit;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.95);
+}
+
+.btn-ghost {
+  padding: 10px 14px;
+  background: var(--surface-container);
+  color: var(--on-surface);
+  font-weight: 600;
+  font-size: 13.5px;
+  font-family: inherit;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-ghost:hover {
+  background: var(--state-hover);
+}
+
+.btn-ghost-sm {
+  padding: 7px 12px;
+  background: var(--surface-container);
+  color: var(--on-surface);
+  font-weight: 600;
+  font-size: 12.5px;
+  font-family: inherit;
+  border: 1px solid var(--outline-strong);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-ghost-sm:hover {
+  background: var(--state-hover);
+}
+
+.btn-ghost-sm.danger {
+  color: var(--state-error);
+  border-color: var(--state-error);
+}
+
+.btn-primary.disabled,
+.btn-ghost.disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Custom-rendered so the check stays white; native accent-color lets the UA
+   flip the check color by theme. */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  border: 1.5px solid var(--outline-strong);
+  border-radius: 5px;
+  background: var(--surface-container);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  transition:
+    background 0.1s ease,
+    border-color 0.1s ease;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  transform: scale(0);
+  transition: transform 0.1s ease;
+  background: #ffffff;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0, 43% 62%);
+}
+
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}

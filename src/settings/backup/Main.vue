@@ -1,55 +1,86 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="page">
-    <div class="parent">
-      <h1>{{ t("import") }}</h1>
-      <div class="card">
-        <p class="message">{{ t("import_message") }}</p>
-        <form v-on:click="clickInput" v-if="!is_wait">
-          <div class="btn">{{ t("importFromZip") }}</div>
-          <input
-            type="file"
-            ref="input"
-            accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-            id="input"
-            style="display: none"
-            v-on:change="handleImport"
-          />
-        </form>
-        <div class="hr" v-if="show_restore || is_invalid_backup"></div>
-        <label class="setting-check" v-if="show_import_settings">
-          <input type="checkbox" v-model="import_settings" />
-          <span>{{ t("import_settings") }}</span>
-        </label>
-        <label class="setting-check" v-if="show_import_data">
-          <input type="checkbox" v-model="import_data" />
-          <span>{{ t("import_data") }}</span>
-        </label>
-        <label class="setting-check" v-if="show_import_external">
-          <input type="checkbox" v-model="import_external" />
-          <span>{{ t("import_external") }}</span>
-        </label>
-        <div class="btn disabled" v-if="is_wait">{{ t("pleaseWait") }}</div>
-        <div class="btn" v-if="show_restore" @click="handleRestore">
-          {{ t("restoreBackup") }}
+    <header class="page-header">
+      <div class="page-header-inner">
+        <div>
+          <div class="page-crumbs">{{ t("sidebarExtension") }}</div>
+          <h1 class="page-title">{{ t("backup") }}</h1>
         </div>
-        <p class="message" v-if="is_invalid_backup">{{ t("invalidBackup") }}</p>
       </div>
-      <h1>{{ t("export") }}</h1>
-      <div class="card">
-        <label class="setting-check">
-          <input type="checkbox" v-model="export_settings" />
-          <span>{{ t("export_settings") }}</span>
-        </label>
-        <label class="setting-check">
-          <input type="checkbox" v-model="export_data" />
-          <span>{{ t("export_data") }}</span>
-        </label>
-        <label class="setting-check">
-          <input type="checkbox" v-model="export_external" />
-          <span>{{ t("export_external") }}</span>
-        </label>
-        <div class="btn" @click="handleExport">{{ t("exportToZip") }}</div>
+    </header>
+    <div class="page-scroll">
+      <div class="page-inner">
+        <section>
+          <div class="block-head">
+            <div class="block-title">{{ t("import") }}</div>
+            <div class="block-sub">{{ t("import_message") }}</div>
+          </div>
+          <div class="panel">
+            <form v-on:click="clickInput" v-if="!is_wait">
+              <button type="button" class="btn-ghost">
+                {{ t("importFromZip") }}
+              </button>
+              <input
+                type="file"
+                ref="input"
+                accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+                id="input"
+                style="display: none"
+                v-on:change="handleImport"
+              />
+            </form>
+            <div class="hr" v-if="show_restore || is_invalid_backup"></div>
+            <label class="setting-check" v-if="show_import_settings">
+              <input type="checkbox" v-model="import_settings" />
+              <span>{{ t("import_settings") }}</span>
+            </label>
+            <label class="setting-check" v-if="show_import_data">
+              <input type="checkbox" v-model="import_data" />
+              <span>{{ t("import_data") }}</span>
+            </label>
+            <label class="setting-check" v-if="show_import_external">
+              <input type="checkbox" v-model="import_external" />
+              <span>{{ t("import_external") }}</span>
+            </label>
+            <button class="btn-primary disabled" v-if="is_wait">
+              {{ t("pleaseWait") }}
+            </button>
+            <button
+              class="btn-primary"
+              v-if="show_restore"
+              @click="handleRestore"
+            >
+              {{ t("restoreBackup") }}
+            </button>
+            <p class="message" v-if="is_invalid_backup">
+              {{ t("invalidBackup") }}
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <div class="block-head">
+            <div class="block-title">{{ t("export") }}</div>
+          </div>
+          <div class="panel">
+            <label class="setting-check">
+              <input type="checkbox" v-model="export_settings" />
+              <span>{{ t("export_settings") }}</span>
+            </label>
+            <label class="setting-check">
+              <input type="checkbox" v-model="export_data" />
+              <span>{{ t("export_data") }}</span>
+            </label>
+            <label class="setting-check">
+              <input type="checkbox" v-model="export_external" />
+              <span>{{ t("export_external") }}</span>
+            </label>
+            <button class="btn-primary" @click="handleExport">
+              {{ t("exportToZip") }}
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -158,54 +189,38 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h1 {
-  color: #fff;
-}
-
-.card {
+.panel {
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-  padding: 30px;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface-container);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.setting-check span {
-  padding-left: 5px;
-  vertical-align: middle;
-}
-
-.btn {
+.setting-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--on-surface);
   cursor: pointer;
-  padding: 10px 22px;
-  background: #0e3d4e;
-  color: #fdfdfd;
-  border-radius: 3px;
-  display: inline-block;
-  margin: 20px auto 0 0;
-  box-sizing: border-box;
-  height: 42px;
-}
-
-.btn:hover {
-  background: #094559;
-}
-
-.btn.disabled {
-  background: #484848;
 }
 
 .message {
-  margin: 5px 0;
+  margin: 0;
+  font-size: 13px;
+  color: var(--on-surface-variant);
 }
 
 .hr {
-  background: #eee;
-  height: 3px;
-  margin: 20px 0;
+  background: var(--outline);
+  height: 1px;
+  width: 100%;
+  margin: 4px 0;
 }
 </style>

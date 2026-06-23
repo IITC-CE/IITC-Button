@@ -1,15 +1,8 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="zone url_zone">
-    <div class="url_wrapper">
-      <div
-        id="url_button"
-        class="url_button"
-        v-bind:class="{ active: url }"
-        v-on:click="loadByUrl"
-      >
-        »
-      </div>
+  <div class="url_zone">
+    <div class="url_field">
+      <i class="material-icons url_field__icon">link</i>
       <input
         id="url_input"
         type="url"
@@ -18,6 +11,14 @@
         v-model="url"
       />
     </div>
+    <button
+      id="url_button"
+      class="btn-primary"
+      :class="{ disabled: !url }"
+      v-on:click="loadByUrl"
+    >
+      {{ t("install") }}
+    </button>
   </div>
 </template>
 
@@ -85,50 +86,43 @@ export default defineComponent({
 
 <style scoped>
 .url_zone {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 10px;
+}
+
+.url_field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-container);
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.url_field:focus-within {
+  border-color: var(--accent-border);
+}
+
+.url_field__icon {
+  color: var(--on-surface-variant);
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
 #url_input {
-  width: 100%;
-  height: 45px;
-  box-sizing: border-box;
-  padding: 15px;
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--on-surface);
 }
 
-.url_wrapper {
-  position: relative;
-}
-
-.url_button {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  line-height: 26px;
-  padding: 7px 20px;
-  border: 1px solid #717171;
-  border-left: 0;
-  border-radius: 0 2px 2px 0;
-  font-size: 1.2em;
-  color: #ffffff;
-  cursor: pointer;
-  background: #000000b3;
-  transition: background 0.1s linear;
-}
-
-.url_button.active {
-  color: #fff;
-  background: #000000b3;
-}
-
-.url_button.active:hover {
-  background: #000c;
-}
-
-@media (max-width: 900px) {
-  .url_zone {
-    width: 90%;
-  }
+#url_input::placeholder {
+  color: var(--on-surface-variant);
 }
 </style>

@@ -1,0 +1,74 @@
+/* Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE */
+
+/*
+ * Shared design tokens (colors + typography) for the extension's UI pages.
+ * Light is the default; the dark palette is applied from the system
+ * color-scheme. Colors are OKLCH (hex kept in comments).
+ *
+ * --sidebar-* is the persistent dark chrome (always dark); the dark theme
+ * re-points the shared semantic tokens at it.
+ */
+:root {
+  color-scheme: light dark;
+
+  --surface: oklch(96.84% 0.0025 165.1); /* #f3f5f4 */
+  --surface-container: oklch(100% 0 0); /* #ffffff */
+  --surface-container-high: oklch(94.17% 0.006 170.4); /* #e8edeb */
+
+  --on-surface: oklch(26.17% 0.0182 207.9); /* #1a2729 */
+  --on-surface-variant: oklch(62.52% 0.0235 207.6); /* #788c8f */
+
+  --accent: oklch(71.81% 0.1136 193.5); /* #2dbab8 */
+  --accent-text: oklch(58.83% 0.0935 193); /* #1f8e8c */
+  --accent-container: oklch(from var(--accent) l c h / 0.16);
+  --accent-border: oklch(from var(--accent) l c h / 0.45);
+
+  --outline: oklch(92.05% 0.006 170.4); /* #e1e6e4 */
+  --outline-strong: oklch(88.29% 0.0077 164.9); /* #d4dad7 */
+
+  --state-hover: oklch(0% 0 0 / 0.04);
+  --state-pressed: oklch(0% 0 0 / 0.08);
+  --state-success: oklch(62.91% 0.1543 144.2); /* #43a047 */
+  --state-warning: oklch(77.03% 0.1741 64.1); /* #ff9800 */
+  --state-error: oklch(60.17% 0.1798 27.8); /* #d7493f */
+  --state-disabled: oklch(76.6% 0.0159 207.1); /* #a8b6b8 */
+
+  --font-ui:
+    "Roboto", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* Sidebar - always dark, in both themes */
+  --sidebar-surface: oklch(23.97% 0.0325 216); /* #0a2329 */
+  --sidebar-surface-container: oklch(31.79% 0.0438 214.3); /* #133840 */
+  --sidebar-accent: oklch(65.63% 0.1071 185.3); /* #26a69a */
+  --sidebar-on-surface: oklch(100% 0 0); /* #ffffff */
+  --sidebar-on-surface-variant: oklch(67.43% 0.0511 206); /* #71a0a6 */
+  --sidebar-hover: oklch(
+    from var(--sidebar-surface-container) calc(l - 0.04) c h
+  );
+  --sidebar-outline: oklch(
+    from var(--sidebar-surface-container) calc(l + 0.05) c h
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Re-point the shared tokens at the always-dark sidebar palette */
+    --surface: var(--sidebar-surface);
+    --surface-container: var(--sidebar-surface-container);
+    --on-surface: var(--sidebar-on-surface);
+    --on-surface-variant: var(--sidebar-on-surface-variant);
+    --accent: var(--sidebar-accent);
+    --accent-text: var(--sidebar-accent);
+
+    --surface-container-high: oklch(37.64% 0.0507 217.1); /* #1d4853 */
+    --accent-container: oklch(from var(--accent) l c h / 0.14);
+    --accent-border: oklch(from var(--accent) l c h / 0.42);
+    --outline: oklch(100% 0 0 / 0.08);
+    --outline-strong: oklch(100% 0 0 / 0.14);
+    --state-hover: oklch(100% 0 0 / 0.08);
+    --state-pressed: oklch(100% 0 0 / 0.16);
+    --state-error: oklch(60.83% 0.209 27); /* #e53935 */
+    --state-disabled: oklch(62.68% 0 0); /* #888888 */
+  }
+}

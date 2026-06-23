@@ -1,36 +1,58 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="page">
-    <div class="parent">
-      <h1>{{ t("debug") }}</h1>
-      <div class="card">
-        <p class="message">{{ t("warningAboutLocalStoragePart1") }}</p>
-        <p class="message">
-          <strong>{{ t("warningAboutLocalStoragePart2") }}</strong>
-        </p>
-        <textarea
-          v-model="local_storage_data"
-          placeholder="loading"
-          disabled
-        ></textarea>
-        <div class="btn" @click="handleExport">{{ t("saveToJson") }}</div>
+    <header class="page-header">
+      <div class="page-header-inner">
+        <div>
+          <div class="page-crumbs">{{ t("sidebarExtension") }}</div>
+          <h1 class="page-title">{{ t("debug") }}</h1>
+        </div>
       </div>
+    </header>
+    <div class="page-scroll">
+      <div class="page-inner">
+        <section>
+          <div class="block-head">
+            <div class="block-title">{{ t("debug") }}</div>
+            <div class="block-sub">
+              {{ t("warningAboutLocalStoragePart1") }}
+            </div>
+          </div>
+          <div class="panel">
+            <p class="message warn">{{ t("warningAboutLocalStoragePart2") }}</p>
+            <textarea
+              v-model="local_storage_data"
+              placeholder="loading"
+              disabled
+            ></textarea>
+            <button class="btn-primary" @click="handleExport">
+              {{ t("saveToJson") }}
+            </button>
+          </div>
+        </section>
 
-      <h1>{{ t("importLocalStorage") }}</h1>
-      <div class="card">
-        <p class="message">
-          <strong>{{ t("warningAboutImportLocalStorage") }}</strong>
-        </p>
-        <form v-on:click="clickInput">
-          <div class="btn">{{ t("importFromJson") }}</div>
-          <input
-            type="file"
-            ref="input"
-            id="input"
-            style="display: none"
-            v-on:change="handleImport"
-          />
-        </form>
+        <section>
+          <div class="block-head">
+            <div class="block-title">{{ t("importLocalStorage") }}</div>
+            <div class="block-sub">
+              {{ t("warningAboutImportLocalStorage") }}
+            </div>
+          </div>
+          <div class="panel">
+            <form v-on:click="clickInput">
+              <button type="button" class="btn-ghost">
+                {{ t("importFromJson") }}
+              </button>
+              <input
+                type="file"
+                ref="input"
+                id="input"
+                style="display: none"
+                v-on:change="handleImport"
+              />
+            </form>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -88,44 +110,42 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h1 {
-  color: #fff;
-}
-
-.card {
+.panel {
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-  padding: 30px;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface-container);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.btn {
-  cursor: pointer;
-  padding: 10px 22px;
-  background: #0e3d4e;
-  color: #fdfdfd;
-  border-radius: 3px;
-  display: inline-block;
-  margin: 20px auto 0 0;
-  box-sizing: border-box;
-  height: 42px;
-}
-
-.btn:hover {
-  background: #094559;
-}
-
 .message {
-  margin: 5px 0;
+  margin: 0;
+  font-size: 13px;
+  color: var(--on-surface-variant);
+}
+
+.message.warn {
+  color: var(--state-error);
+  font-weight: 600;
 }
 
 textarea {
+  width: 100%;
+  box-sizing: border-box;
   height: 14em;
-  margin: 5px 0;
+  resize: vertical;
+  border: 1px solid var(--outline-strong);
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--surface);
+  color: var(--on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.5;
 }
 </style>
