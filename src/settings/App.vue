@@ -2,6 +2,7 @@
 <template>
   <div class="app">
     <Sidebar :tab="tab" @setTab="setTab"></Sidebar>
+    <PageOptions v-if="tab === 'options'"></PageOptions>
     <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
     <PageBackup v-if="tab === 'backup'"></PageBackup>
     <PageDebug v-if="tab === 'debug'"></PageDebug>
@@ -11,6 +12,7 @@
 <script lang="ts">
 import { t } from "@/i18n";
 import Sidebar from "./Sidebar.vue";
+import PageOptions from "./options/Main.vue";
 import PageAddPlugin from "./add/Main.vue";
 import PageBackup from "./backup/Main.vue";
 import PageDebug from "./debug/Main.vue";
@@ -19,6 +21,7 @@ export default defineComponent({
   name: "App",
   components: {
     Sidebar,
+    PageOptions,
     PageAddPlugin,
     PageBackup,
     PageDebug,

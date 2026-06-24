@@ -75,6 +75,7 @@ export default defineComponent({
         {
           label: t("sidebarExtension"),
           items: [
+            { id: "options", label: t("settings"), icon: "settings" },
             { id: "backup", label: t("backup"), icon: "save" },
             { id: "debug", label: t("debug"), icon: "bug_report" },
           ],

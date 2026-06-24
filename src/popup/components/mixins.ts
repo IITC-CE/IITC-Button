@@ -46,9 +46,6 @@ export const mixin = {
       await browser.tabs.create({ url: url });
       window.close();
     },
-    back: function (): void {
-      document.body.id = "main-menu";
-    },
     sortIITCObj: function (
       obj: Record<string, Plugin> | undefined,
     ): Record<string, Plugin> {

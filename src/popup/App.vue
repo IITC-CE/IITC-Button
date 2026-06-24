@@ -11,9 +11,6 @@
       >
       </SectionMainMenu>
     </section>
-    <section class="section options">
-      <SectionOptions> </SectionOptions>
-    </section>
     <Message></Message>
     <Alert></Alert>
   </div>
@@ -23,7 +20,6 @@
 import type { Plugin, PluginDict } from "lib-iitc-manager";
 import type { PluginsView } from "lib-iitc-manager";
 import SectionMainMenu from "./components/SectionMainMenu/SectionMainMenu.vue";
-import SectionOptions from "./components/SectionOptions.vue";
 
 import Message from "./components/Message.vue";
 import Alert from "./components/Alert.vue";
@@ -46,7 +42,6 @@ export default defineComponent({
   },
   components: {
     SectionMainMenu,
-    SectionOptions,
     Message,
     Alert,
   },
@@ -111,39 +106,8 @@ object {
 .section {
   display: block;
   background: #fff;
-  position: absolute;
-  top: 0;
-  margin-left: 100vw;
-  transition: margin-left 0.15s ease-in-out;
   width: 100vw;
   height: 100vh;
-}
-.section.main-menu {
-  margin-left: -100vw;
-}
-body#main-menu .section.main-menu {
-  margin-left: 0;
-  z-index: 1;
-}
-body#options .section.options {
-  margin-left: 0;
-}
-
-#app.is_safari .section {
-  display: none;
-  width: 100vw;
-}
-
-#app.is_safari .section.main-menu {
-  display: none;
-}
-
-body#main-menu #app.is_safari .section.main-menu {
-  display: block;
-}
-
-body#options #app.is_safari .section.options {
-  display: block;
 }
 
 /*

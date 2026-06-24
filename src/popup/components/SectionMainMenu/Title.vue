@@ -18,7 +18,11 @@
     >
       <i class="title__icon material-icons">add</i>
     </div>
-    <div class="title__button" v-on:click="openOptions">
+    <div
+      class="title__button"
+      :title="t('settings')"
+      v-on:click="openLink('/settings.html#options')"
+    >
       <i class="title__icon material-icons">settings</i>
     </div>
     <ToggleIITC></ToggleIITC>
@@ -38,9 +42,6 @@ export default defineComponent({
     openIITC: async function () {
       await browser.runtime.sendMessage({ type: "requestOpenIntel" });
       window.close();
-    },
-    openOptions: function () {
-      document.body.id = "options";
     },
   },
   components: { ProgressBar, ToggleIITC },

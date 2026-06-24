@@ -31,6 +31,9 @@
   "sidebarExtension": {
     "message": "Extension"
   },
+  "settings": {
+    "message": "Settings"
+  },
   "installFromUrlTitle": {
     "message": "Install from URL"
   },
@@ -40,17 +43,14 @@
   "browseFiles": {
     "message": "Browse files"
   },
-  "iitcHomePage": {
-    "message": "Home page"
-  },
-  "iitcButtonOptions": {
-    "message": "IITC-CE Button options"
-  },
   "updateNow": {
     "message": "update now"
   },
-  "choosingUpdateChannel": {
-    "message": "Choosing a IITC-CE update channel"
+  "updateChannelTitle": {
+    "message": "Update channel"
+  },
+  "updateChannelHint": {
+    "message": "Determines which build of IITC-CE the extension fetches"
   },
   "release": {
     "message": "Release"
@@ -60,6 +60,15 @@
   },
   "custom": {
     "message": "Custom"
+  },
+  "channelReleaseHint": {
+    "message": "Stable IITC-CE release"
+  },
+  "channelBetaHint": {
+    "message": "Early features, may be unstable"
+  },
+  "channelCustomHint": {
+    "message": "Connect to a development server"
   },
   "customServerHint": {
     "message": "For example:"
@@ -75,6 +84,12 @@
         "example": "http://localhost:8080/meta.json"
       }
     }
+  },
+  "updateFrequencyTitle": {
+    "message": "Update frequency"
+  },
+  "updateFrequencyHint": {
+    "message": "How often the extension checks for updates"
   },
   "updateFrequency": {
     "message": "IITC-CE checks for updates"
@@ -208,9 +223,6 @@
   },
   "jsViewDetailsHideDetails": {
     "message": "Hide details"
-  },
-  "other": {
-    "message": "Other"
   },
   "donate": {
     "message": "Donate"
