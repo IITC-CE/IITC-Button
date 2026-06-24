@@ -34,7 +34,7 @@
   --state-disabled: oklch(76.6% 0.0159 207.1); /* #a8b6b8 */
 
   --font-ui:
-    "Roboto", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
 
   /* Sidebar - always dark, in both themes */

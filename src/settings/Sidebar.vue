@@ -151,7 +151,7 @@ export default defineComponent({
 
 .nav__group-label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--sidebar-on-surface-variant);
   padding: 0 14px 8px;
 }

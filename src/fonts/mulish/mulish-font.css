@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Mulish'),
+       local('Mulish-Regular'),
+       url(Mulish-Regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Mulish Medium'),
+       local('Mulish-Medium'),
+       url(Mulish-Medium.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Mulish SemiBold'),
+       local('Mulish-SemiBold'),
+       url(Mulish-SemiBold.woff2) format('woff2');
+}

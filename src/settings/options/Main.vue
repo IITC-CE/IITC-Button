@@ -175,7 +175,7 @@ export default defineComponent({
 
 .channel-card__name {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--on-surface);
 }
 

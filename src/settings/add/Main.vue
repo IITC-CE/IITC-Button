@@ -54,7 +54,7 @@ export default defineComponent({
   gap: 12px;
   color: var(--on-surface-variant);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   padding: 4px 0;
 }

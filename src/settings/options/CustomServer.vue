@@ -101,7 +101,7 @@ export default defineComponent({
 
 .custom-server__label {
   font-size: 12.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--on-surface);
   margin-bottom: 8px;
 }
