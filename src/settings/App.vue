@@ -2,16 +2,20 @@
 <template>
   <div class="app">
     <Sidebar :tab="tab" @setTab="setTab"></Sidebar>
-    <PageOptions v-if="tab === 'options'"></PageOptions>
-    <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
-    <PageBackup v-if="tab === 'backup'"></PageBackup>
-    <PageDebug v-if="tab === 'debug'"></PageDebug>
+    <main class="content">
+      <ProgressBar></ProgressBar>
+      <PageOptions v-if="tab === 'options'"></PageOptions>
+      <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
+      <PageBackup v-if="tab === 'backup'"></PageBackup>
+      <PageDebug v-if="tab === 'debug'"></PageDebug>
+    </main>
   </div>
 </template>
 
 <script lang="ts">
 import { t } from "@/i18n";
 import Sidebar from "./Sidebar.vue";
+import ProgressBar from "./ProgressBar.vue";
 import PageOptions from "./options/Main.vue";
 import PageAddPlugin from "./add/Main.vue";
 import PageBackup from "./backup/Main.vue";
@@ -21,6 +25,7 @@ export default defineComponent({
   name: "App",
   components: {
     Sidebar,
+    ProgressBar,
     PageOptions,
     PageAddPlugin,
     PageBackup,
@@ -64,6 +69,14 @@ body {
   flex-direction: row;
   height: 100vh;
   overflow: hidden;
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 @media (max-width: 900px) {
