@@ -152,15 +152,6 @@
       }
     }
   },
-  "addedCustomIITCCore": {
-    "message": "$PLUGIN_NAME$ now replaces the built-in version of IITC",
-    "placeholders": {
-      "plugin_name": {
-        "content": "$1",
-        "example": "Awesome plugin"
-      }
-    }
-  },
   "addressNotAvailable": {
     "message": "Address is not available"
   },
@@ -223,6 +214,27 @@
   },
   "jsViewDetailsHideDetails": {
     "message": "Hide details"
+  },
+  "version": {
+    "message": "Version"
+  },
+  "author": {
+    "message": "Author"
+  },
+  "defaultCategory": {
+    "message": "Misc"
+  },
+  "overwriteBuiltinPlugin": {
+    "message": "This will overwrite the built-in plugin of the same name"
+  },
+  "overwriteInstalledPlugin": {
+    "message": "This will overwrite an already installed plugin of the same name"
+  },
+  "installed": {
+    "message": "Installed"
+  },
+  "installFailed": {
+    "message": "Installation failed"
   },
   "donate": {
     "message": "Donate"
