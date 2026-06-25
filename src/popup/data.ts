@@ -1,7 +1,6 @@
 // Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE
 
 import browser from "webextension-polyfill";
-import { emitter } from "@/popup/eventBus";
 import type { PluginsView, PluginDict, Plugin } from "lib-iitc-manager";
 import type { FrontendMessage } from "@/types/messages";
 
@@ -55,9 +54,6 @@ export async function onMessageListener(self: PopupAppInstance): Promise<void> {
   browser.runtime.onMessage.addListener(function (request: unknown) {
     const msg = request as FrontendMessage;
     switch (msg.type) {
-      case "showProgressbar":
-        emitter.emit("showProgressbar", msg.value);
-        break;
       case "showMessage":
         self.showMessage(msg.message);
         break;

@@ -33,6 +33,8 @@
   --state-error: oklch(60.17% 0.1798 27.8); /* #d7493f */
   --state-disabled: oklch(76.6% 0.0159 207.1); /* #a8b6b8 */
 
+  --badge-user: oklch(54.69% 0.0727 122.3); /* #6b7c3a */
+
   --font-ui:
     "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;

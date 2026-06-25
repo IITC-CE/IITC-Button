@@ -15,7 +15,7 @@
 <script lang="ts">
 import { t } from "@/i18n";
 import Sidebar from "./Sidebar.vue";
-import ProgressBar from "./ProgressBar.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 import PageOptions from "./options/Main.vue";
 import PageAddPlugin from "./add/Main.vue";
 import PageBackup from "./backup/Main.vue";

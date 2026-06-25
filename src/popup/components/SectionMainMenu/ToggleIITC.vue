@@ -1,41 +1,37 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div>
-    <input
-      id="toggleIITC"
-      type="checkbox"
-      class="toggle"
-      v-model="iitc_is_enabled_toggle"
-    />
-    <div class="toggle_button">
-      <div class="toggle">
-        <label for="toggleIITC" class="toggle"></label>
-      </div>
-    </div>
-  </div>
+  <button
+    class="master"
+    :class="{ on: iitc_is_enabled }"
+    :title="t('titleDefault')"
+    v-on:click="toggle"
+  >
+    <Switch :checked="iitc_is_enabled"></Switch>
+    <span class="master__label">{{ iitc_is_enabled ? "ON" : "OFF" }}</span>
+  </button>
 </template>
 
 <script lang="ts">
 import browser from "webextension-polyfill";
+import { t } from "@/i18n";
+import Switch from "@/popup/components/Switch.vue";
 
 export default defineComponent({
   name: "ToggleIITC",
+  components: { Switch },
   data() {
     return {
       iitc_is_enabled: true,
     };
   },
-  computed: {
-    iitc_is_enabled_toggle: {
-      get: function () {
-        return this.iitc_is_enabled;
-      },
-      set: async function (newValue: boolean) {
-        await browser.runtime.sendMessage({
-          type: "toggleIITC",
-          value: newValue,
-        });
-      },
+  methods: {
+    t: t,
+    toggle: async function () {
+      this.iitc_is_enabled = !this.iitc_is_enabled;
+      await browser.runtime.sendMessage({
+        type: "toggleIITC",
+        value: this.iitc_is_enabled,
+      });
     },
   },
   async mounted() {
@@ -48,42 +44,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.toggle_button {
-  color: var(--color-white);
-  border-left: 1px solid #333;
+.master {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  --switch-off: rgba(255, 255, 255, 0.28);
+  --switch-on: var(--sidebar-accent);
 }
-.toggle_button:hover {
-  background: #333;
+.master.on {
+  background: oklch(from var(--sidebar-accent) l c h / 0.14);
+  border-color: oklch(from var(--sidebar-accent) l c h / 0.4);
 }
-.toggle {
-  height: 50px;
-  width: 48px;
-  font-size: 36px;
-  padding: 6px 3px;
-  line-height: 38px;
-  box-sizing: border-box;
+.master__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
 }
-
-input[type="checkbox"].toggle {
-  display: none;
-}
-label.toggle {
-  cursor: inherit;
-}
-input[type="checkbox"].toggle + div label.toggle:before {
-  font-family: "Material Icons";
-  display: inline-block;
-  content: "\e9f5";
-} /* unchecked icon */
-input[type="checkbox"].toggle + .toggle_button {
-  background: var(--state-off);
-  transition: background 0.1s ease-in-out;
-}
-
-input[type="checkbox"].toggle:checked + div label.toggle:before {
-  content: "\e9f6";
-} /* checked icon */
-input[type="checkbox"].toggle:checked + .toggle_button {
-  background: var(--state-on);
+.master.on .master__label {
+  color: var(--sidebar-accent);
 }
 </style>

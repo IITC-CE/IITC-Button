@@ -109,10 +109,22 @@ export default defineComponent({
       this.channel = channel;
       await browser.runtime.sendMessage({ type: "setChannel", value: channel });
     },
+    onChannelStorageChanged(
+      changes: Record<string, browser.Storage.StorageChange>,
+      areaName: string,
+    ) {
+      if (areaName !== "local" || !changes.channel) return;
+      const newChannel = changes.channel.newValue;
+      if (typeof newChannel === "string") this.channel = newChannel;
+    },
   },
   async mounted() {
+    browser.storage.onChanged.addListener(this.onChannelStorageChanged);
     const channel = await browser.runtime.sendMessage({ type: "getChannel" });
     if (channel) this.channel = channel as string;
+  },
+  beforeUnmount() {
+    browser.storage.onChanged.removeListener(this.onChannelStorageChanged);
   },
 });
 </script>

@@ -1,101 +1,51 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="element">
-    <div
-      class="plugin item-wrapper"
-      :class="[
-        plugin.status,
-        {
-          'recently-changed': hasRecentStatusChange && !isRecentlyAdded,
-          'recently-added': isRecentlyAdded,
-        },
-      ]"
-      :title="pluginDescription()"
-      :data-uid="plugin.uid"
-      v-if="plugin.uid"
-    >
-      <i
-        class="plugin__action material-icons"
-        @click="managePlugin"
-        v-if="plugin.status"
-        >{{ toggleIcon() }}
-      </i>
-      <i
-        class="plugin__action disabled material-icons"
-        @click="managePlugin"
-        v-if="!plugin.status"
-        >toggle_on
-      </i>
-      <img
-        class="plugin__icon"
-        :src="getIcon"
-        @click="managePlugin"
-        v-if="getIcon"
-      />
-      <span class="plugin__text" @click="managePlugin">{{
-        __("name", plugin)
-      }}</span>
-      <span v-if="plugin.override" class="plugin__user">{{
-        t("badgeOverride")
-      }}</span>
-      <template v-if="plugin.user">
-        <i
-          v-if="plugin.supportURL"
-          class="plugin__action___extra material-icons"
-          @click="openLink(String(plugin.supportURL))"
-          :title="[t('openSupport'), plugin.supportURL].join(' ')"
-          >home</i
-        >
-        <i
-          class="plugin__action___extra material-icons"
-          @click="savePlugin"
-          :title="t('pluginSave')"
-          >save</i
-        >
-        <i
-          class="plugin__action___extra plugin__action___extra-delete material-icons"
-          @click="deletePlugin"
-          :title="t('pluginDelete')"
-          >delete</i
-        >
-      </template>
+  <div
+    class="row"
+    :class="[
+      plugin.status,
+      {
+        'recently-changed': hasRecentStatusChange && !isRecentlyAdded,
+        'recently-added': isRecentlyAdded,
+      },
+    ]"
+    :title="pluginDescription()"
+    :data-uid="plugin.uid"
+    v-if="plugin.uid"
+  >
+    <div class="row__icon-wrap">
+      <img class="row__icon" :src="getIcon" alt="" />
+      <span
+        v-if="plugin.override"
+        class="row__badge row__badge--override"
+      ></span>
+      <span v-else-if="plugin.user" class="row__badge row__badge--user"></span>
     </div>
-    <div class="border"></div>
+    <div class="row__info">
+      <div class="row__name">{{ __("name", plugin) }}</div>
+    </div>
+    <span class="row__switch" @click.stop="managePlugin">
+      <Switch :checked="isOn" :disabled="isCore"></Switch>
+    </span>
   </div>
 </template>
 
 <script lang="ts">
 import { type PropType } from "vue";
-import browser from "webextension-polyfill";
 import { mixin } from "@/popup/components/mixins";
-import { sanitizeFileName } from "lib-iitc-manager";
+import Switch from "@/popup/components/Switch.vue";
 import type { Plugin } from "lib-iitc-manager";
-
-const saveJS = (function () {
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  return function (data: string, fileName: string) {
-    const blob = new Blob([data], { type: "application/x-javascript" }),
-      url = window.URL.createObjectURL(blob);
-    a.href = url;
-    a.download = fileName;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
-})();
 
 export default defineComponent({
   name: "ElementPlugin",
+  components: { Switch },
   props: {
     plugin: {
       type: Object as PropType<Plugin>,
       required: true as const,
     },
-    search_result_id: Number,
-    search_results: Object,
   },
-  emits: ["update-plugin", "delete-plugin"],
+  emits: ["update-plugin"],
   data() {
     return {
       hasRecentStatusChange: false,
@@ -140,9 +90,6 @@ export default defineComponent({
         this.__("description", this.plugin)
       );
     },
-    toggleIcon: function () {
-      return `toggle_${this.plugin["status"]}`;
-    },
     managePlugin: async function () {
       if (this.plugin.status === undefined) {
         this.showMessage(this.plugin.version ?? "");
@@ -153,35 +100,6 @@ export default defineComponent({
       const updatedPlugin = { ...this.plugin, status: action };
       this.$emit("update-plugin", updatedPlugin);
     },
-    deletePlugin: async function () {
-      const uid = this.plugin.uid;
-
-      if (this.plugin["override"] === true) {
-        const updatedPlugin = {
-          ...this.plugin,
-          override: false,
-          user: false,
-          status: "off",
-        };
-        this.$emit("update-plugin", updatedPlugin);
-      } else {
-        this.$emit("delete-plugin", this.plugin.uid);
-      }
-
-      this.showMessage(this.t("needRebootIntel"));
-      await browser.runtime.sendMessage({
-        type: "managePlugin",
-        uid: uid,
-        action: "delete",
-      });
-    },
-    savePlugin: async function () {
-      saveJS(
-        this.plugin.code ?? "",
-        this.plugin.filename ||
-          `${sanitizeFileName(this.plugin.name ?? "")}.user.js`,
-      );
-    },
   },
   computed: {
     getIcon: function (): string {
@@ -190,8 +108,15 @@ export default defineComponent({
       return (
         (typeof icon === "string" && icon) ||
         (typeof icon64 === "string" && icon64) ||
-        "/assets/icons/24/userscript-no-icon.png"
+        "/assets/icons/userscript-no-icon.svg"
       );
+    },
+    // Core has no status and cannot be toggled off from the list
+    isCore: function (): boolean {
+      return !this.plugin.status;
+    },
+    isOn: function (): boolean {
+      return this.isCore || this.plugin.status === "on";
     },
     // Check if the plugin status was changed within the last minute
     wasStatusChangedWithinLastMinute: function () {
@@ -223,94 +148,93 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.border {
-  border-bottom: 1px solid var(--color-silver);
-  width: calc(100% - 75px);
-  margin-left: 75px;
-}
-.element:hover .border {
-  border-bottom: 1px solid transparent;
-}
-.plugin {
+.row {
   display: flex;
-  cursor: pointer;
-  padding: 5px 10px 4px 10px;
-  margin-top: -1px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background: transparent;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
   position: relative;
+  overflow: hidden;
+  background: var(--surface-container);
 }
-.plugin:hover,
-.plugin:active,
-.plugin:focus {
-  background: var(--color-silver);
+.row:hover {
+  background: oklch(from var(--surface-container) calc(l - 0.015) c h);
 }
-/* Base pseudo-element for all plugins */
-.plugin::before {
+@media (prefers-color-scheme: dark) {
+  .row:hover {
+    background: var(--surface-container-high);
+  }
+}
+/* Recent-change / recent-add accent stripe on the left edge */
+.row::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 3px;
   opacity: 0;
-  background-color: var(--color-gray);
+  background-color: var(--accent);
   transition: opacity 0.3s ease;
 }
-/* Active state for the status change indicator */
-.plugin.recently-changed::before {
+.row.recently-changed::before {
   opacity: 1;
+  background-color: color-mix(
+    in oklab,
+    var(--accent) 50%,
+    var(--surface-container)
+  );
 }
-/* Active state for the newly added indicator (green) */
-.plugin.recently-added::before {
+.row.recently-added::before {
   opacity: 1;
-  background-color: var(--color-yellow);
+  background-color: color-mix(
+    in oklab,
+    var(--state-warning) 50%,
+    var(--surface-container)
+  );
 }
-.plugin__icon {
+.row__icon-wrap {
+  position: relative;
   width: 24px;
   height: 24px;
-  margin-right: 8px;
+  flex-shrink: 0;
 }
-.plugin__text {
-  flex: auto;
-  line-height: 24px;
+.row__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.row__badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.row__badge--user {
+  background: var(--badge-user);
+}
+.row__badge--override {
+  background: var(--state-warning);
+}
+.row__info {
+  flex: 1;
+  min-width: 0;
+}
+.row__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.plugin__user {
-  background: var(--color-olive);
-  color: var(--color-white);
-  padding: 2px 8px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-.plugin__action {
-  padding: 2px;
-  margin-right: 8px;
-}
-.plugin__action___extra {
-  background: #fff;
-  border-radius: 3px;
-  padding: 3px;
-  margin-left: 8px;
-  font-size: 18px;
-}
-.plugin.on .plugin__action {
-  color: var(--state-on);
-}
-.plugin.off .plugin__action {
-  color: var(--state-off2);
-}
-.plugin.user .plugin__action,
-.plugin__action___extra {
-  color: var(--color-black);
-}
-.plugin__action___extra:hover {
-  color: #444;
-}
-.plugin.user:hover .plugin__action,
-.plugin__action___extra-delete:hover {
-  color: var(--state-off);
+.row__switch {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  padding: 4px 2px 4px 8px;
+  cursor: pointer;
 }
 </style>

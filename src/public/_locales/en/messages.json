@@ -61,6 +61,15 @@
   "custom": {
     "message": "Custom"
   },
+  "popupSelectedChannel": {
+    "message": "Selected update channel: $CHANNEL$",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "Release"
+      }
+    }
+  },
   "channelReleaseHint": {
     "message": "Stable IITC-CE release"
   },
@@ -324,7 +333,7 @@
     "message": "All URLs to ensure full support"
   },
   "pluginListEnabledPlugins": {
-    "message": "Enabled plugins"
+    "message": "Enabled"
   },
   "pluginListAllPlugins": {
     "message": "All plugins"

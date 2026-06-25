@@ -13,13 +13,19 @@ export default defineComponent({
       active: false,
     };
   },
-  mounted() {
-    browser.runtime.onMessage.addListener((request: unknown) => {
+  methods: {
+    onMessage(request: unknown) {
       const msg = request as { type: string; value?: boolean };
       if (msg.type === "showProgressbar") {
         this.active = Boolean(msg.value);
       }
-    });
+    },
+  },
+  mounted() {
+    browser.runtime.onMessage.addListener(this.onMessage);
+  },
+  beforeUnmount() {
+    browser.runtime.onMessage.removeListener(this.onMessage);
   },
 });
 </script>
@@ -38,16 +44,14 @@ export default defineComponent({
   z-index: 10;
   background: var(--accent);
 }
-
 .progressbar.active {
   opacity: 1;
 }
-
 .progressbar::before {
   content: "";
   position: absolute;
   top: 0;
-  height: 100%;
+  bottom: 0;
   background: oklch(from var(--accent) calc(l + 0.15) c h);
   animation: progressbar-sweep 1.4s linear infinite;
 }

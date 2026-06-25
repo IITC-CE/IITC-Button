@@ -3,7 +3,7 @@
   <div
     class="tag"
     :class="{ active: isActive, 'has-new-plugins': isNew }"
-    :style="{ '--tag-color': getTagColor(tag.name) }"
+    :style="{ '--tag-hue': getTagHue(tag.name) }"
     @click="handleClick"
   >
     {{ tag.name }}
@@ -31,13 +31,9 @@ export default defineComponent({
     handleClick() {
       emitter.emit("tag:active", this.tag.name);
     },
-    getTagColor(tag: string) {
-      const hash = this.hashString(tag);
-      const hue = hash % 360;
-      const lightness = 1;
-      const chroma = 0.03;
-
-      return `oklch(${lightness} ${chroma} ${hue}deg)`;
+    // Only the hue is per-category; theme-aware vars supply lightness/chroma
+    getTagHue(tag: string) {
+      return `${this.hashString(tag) % 360}deg`;
     },
     hashString(str: string) {
       let hash = 0;
@@ -52,17 +48,30 @@ export default defineComponent({
 
 <style scoped>
 .tag {
-  --tag-color: #eee;
+  /* Per-category hue tint over a theme base: near-white in light, dark in dark */
+  --tag-hue: 0deg;
+  --tag-l: 96.5%;
+  --tag-c: 0.012;
+  --tag-border-l: 88%;
+  --tag-border-c: 0.02;
+  --tag-active-l: 92%;
+  --tag-active-c: 0.11;
+  --tag-active-border-l: 76%;
+  --tag-active-border-c: 0.14;
+
   position: relative;
   display: flex;
   cursor: pointer;
-  padding: 4px 10px;
-  margin: 2px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface);
   text-overflow: ellipsis;
   white-space: nowrap;
-  border-radius: 4px;
-  border: 1px solid oklch(from var(--tag-color) calc(l - 0.1) calc(c - 0.01) h);
-  background-color: var(--tag-color);
+  border-radius: 6px;
+  border: 1px solid
+    oklch(var(--tag-border-l) var(--tag-border-c) var(--tag-hue));
+  background-color: oklch(var(--tag-l) var(--tag-c) var(--tag-hue));
   box-shadow: none;
   transition:
     border 0.1s ease,
@@ -72,10 +81,27 @@ export default defineComponent({
 
 .tag.active,
 .tag:hover {
-  border-color: oklch(from var(--tag-color) calc(l - 0.2) calc(c + 0.05) h);
-  background-color: oklch(from var(--tag-color) l calc(c + 0.2) h);
+  border-color: oklch(
+    var(--tag-active-border-l) var(--tag-active-border-c) var(--tag-hue)
+  );
+  background-color: oklch(
+    var(--tag-active-l) var(--tag-active-c) var(--tag-hue)
+  );
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tag {
+    --tag-l: 31%;
+    --tag-c: 0.035;
+    --tag-border-l: 35%;
+    --tag-border-c: 0.05;
+    --tag-active-l: 40%;
+    --tag-active-c: 0.08;
+    --tag-active-border-l: 55%;
+    --tag-active-border-c: 0.1;
+  }
 }
 
 .tag.has-new-plugins::after {
@@ -86,7 +112,7 @@ export default defineComponent({
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--color-yellow);
+  background-color: var(--state-warning);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
