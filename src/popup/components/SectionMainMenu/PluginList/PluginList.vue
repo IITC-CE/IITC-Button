@@ -1,6 +1,10 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="plugin-list">
+  <OverlayScrollbarsComponent
+    ref="osRef"
+    class="plugin-list"
+    :options="osOptions"
+  >
     <template v-if="plugins">
       <template v-if="active_tag === 'All'">
         <template v-if="showEnabledSection">
@@ -42,11 +46,16 @@
         </div>
       </template>
     </template>
-  </div>
+  </OverlayScrollbarsComponent>
 </template>
 
 <script lang="ts">
 import { type PropType } from "vue";
+import {
+  OverlayScrollbarsComponent,
+  type OverlayScrollbarsComponentRef,
+} from "overlayscrollbars-vue";
+import type { PartialOptions } from "overlayscrollbars";
 import Title from "./Title.vue";
 import Plugin from "./Plugin.vue";
 import { mixin } from "@/popup/components/mixins";
@@ -65,13 +74,33 @@ export default defineComponent({
     active_tag: String,
   },
   emits: ["update-plugin"],
-  data() {
-    return {};
+  data(): { osOptions: PartialOptions } {
+    return {
+      osOptions: {
+        scrollbars: {
+          theme: "iitc-scrollbar",
+          autoHide: "never",
+          dragScroll: true,
+        },
+      },
+    };
   },
   mixins: [mixin],
+  watch: {
+    // OverlayScrollbars recalculates via debounced observers, which visibly
+    // lags when the whole list is swapped (e.g. category switch). 'post' flush
+    // runs after Vue has applied the DOM update, so we force a recalc against
+    // the already-rendered list.
+    plugins: { handler: "refreshScrollbar", flush: "post" },
+    active_tag: { handler: "refreshScrollbar", flush: "post" },
+  },
   methods: {
     handlePluginUpdate(updatedPlugin: PluginType) {
       this.$emit("update-plugin", updatedPlugin);
+    },
+    refreshScrollbar() {
+      const ref = this.$refs.osRef as OverlayScrollbarsComponentRef | undefined;
+      ref?.osInstance()?.update(true);
     },
   },
   computed: {
@@ -92,7 +121,7 @@ export default defineComponent({
       return this.sortIITCObj(this.plugins);
     },
   },
-  components: { NoData, Title, Plugin },
+  components: { NoData, Title, Plugin, OverlayScrollbarsComponent },
 });
 </script>
 
@@ -100,7 +129,7 @@ export default defineComponent({
 .plugin-list {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 0 12px 12px;
 }
 .plugin-list :deep(.section-label:first-child) {

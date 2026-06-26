@@ -3,6 +3,8 @@ import { createApp } from "vue";
 import "@/fonts/mulish/mulish-font.css";
 import "@/fonts/iconfont/material-icons.css";
 import "@/styles/theme.css";
+import "overlayscrollbars/overlayscrollbars.css";
+import "@/styles/scrollbar.css";
 import App from "@/popup/App.vue";
 
 createApp(App).mount("#app");

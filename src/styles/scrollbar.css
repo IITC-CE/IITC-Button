@@ -1,0 +1,13 @@
+/* Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE */
+
+/* OverlayScrollbars theme */
+.iitc-scrollbar {
+  --os-size: 8px;
+  --os-padding-perpendicular: 2px;
+  --os-padding-axis: 0;
+  --os-handle-border-radius: 6px;
+  --os-handle-bg: oklch(from var(--on-surface-variant) l c h / 0.4);
+  --os-handle-bg-hover: oklch(from var(--on-surface-variant) l c h / 0.6);
+  --os-handle-bg-active: oklch(from var(--on-surface-variant) l c h / 0.75);
+  padding-bottom: 12px;
+}
