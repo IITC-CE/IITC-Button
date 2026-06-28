@@ -12,6 +12,7 @@
     :title="pluginDescription()"
     :data-uid="plugin.uid"
     v-if="plugin.uid"
+    @click="openInfo"
   >
     <div class="row__icon-wrap">
       <img class="row__icon" :src="getIcon" alt="" />
@@ -33,6 +34,7 @@
 <script lang="ts">
 import { type PropType } from "vue";
 import { mixin } from "@/popup/components/mixins";
+import { emitter } from "@/popup/eventBus";
 import Switch from "@/popup/components/Switch.vue";
 import type { Plugin } from "lib-iitc-manager";
 
@@ -57,17 +59,14 @@ export default defineComponent({
     "plugin.statusChangedAt": {
       immediate: true,
       handler() {
-        // Clear any existing timer
         if (this.statusChangeTimer) {
           clearTimeout(this.statusChangeTimer);
           this.statusChangeTimer = null;
         }
 
         if (this.wasStatusChangedWithinLastMinute) {
-          // Apply highlight
           this.hasRecentStatusChange = true;
 
-          // Set timer to remove highlight after one minute
           const timeLeft =
             60000 -
             (Date.now() / 1000 - (this.plugin.statusChangedAt ?? 0)) * 1000;
@@ -100,6 +99,9 @@ export default defineComponent({
       const updatedPlugin = { ...this.plugin, status: action };
       this.$emit("update-plugin", updatedPlugin);
     },
+    openInfo() {
+      emitter.emit("plugin:info", this.plugin);
+    },
   },
   computed: {
     getIcon: function (): string {
@@ -111,14 +113,12 @@ export default defineComponent({
         "/assets/icons/userscript-no-icon.svg"
       );
     },
-    // Core has no status and cannot be toggled off from the list
     isCore: function (): boolean {
       return !this.plugin.status;
     },
     isOn: function (): boolean {
       return this.isCore || this.plugin.status === "on";
     },
-    // Check if the plugin status was changed within the last minute
     wasStatusChangedWithinLastMinute: function () {
       if (!this.plugin.statusChangedAt) return false;
 
@@ -128,7 +128,6 @@ export default defineComponent({
 
       return timeSinceChange <= oneMinuteInSeconds;
     },
-    // Check if the plugin was added within the last hour
     isRecentlyAdded: function () {
       if (!this.plugin.addedAt) return false;
 
@@ -156,6 +155,7 @@ export default defineComponent({
   position: relative;
   overflow: hidden;
   background: var(--surface-container);
+  cursor: pointer;
 }
 .row:hover {
   background: oklch(from var(--surface-container) calc(l - 0.015) c h);
@@ -165,7 +165,6 @@ export default defineComponent({
     background: var(--surface-container-high);
   }
 }
-/* Recent-change / recent-add accent stripe on the left edge */
 .row::before {
   content: "";
   position: absolute;

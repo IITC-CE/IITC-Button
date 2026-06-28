@@ -15,12 +15,18 @@
       @update-plugin="updatePlugin"
       @delete-plugin="deletePlugin"
     ></PluginList>
+    <PluginSheet
+      :plugin="infoPlugin"
+      @close="infoPlugin = null"
+      @remove="removePlugin"
+    ></PluginSheet>
   </div>
 </template>
 
 <script lang="ts">
 import Title from "./Title.vue";
 import ChannelStrip from "./ChannelStrip.vue";
+import PluginSheet from "./PluginSheet.vue";
 import SearchBar from "./SearchBar.vue";
 import { type PropType } from "vue";
 import { mixin } from "../mixins";
@@ -47,6 +53,7 @@ export default defineComponent({
       search_query: "",
       search_results: {},
       activeTag: "All",
+      infoPlugin: null as Plugin | null,
     };
   },
   mixins: [mixin],
@@ -104,13 +111,41 @@ export default defineComponent({
         );
       }
     },
+    async removePlugin(plugin: Plugin) {
+      const uid = plugin.uid;
+      if (plugin.override === true) {
+        this.$emit("update-plugin", {
+          ...plugin,
+          override: false,
+          user: false,
+          status: "off",
+        });
+      } else {
+        this.$emit("delete-plugin", uid);
+      }
+      if (this.search_query) {
+        this.search_results = searchPlugins(
+          this.search_query,
+          this.plugins_flat,
+        );
+      }
+      this.infoPlugin = null;
+      await browser.runtime.sendMessage({
+        type: "managePlugin",
+        uid,
+        action: "delete",
+      });
+    },
   },
   mounted() {
     emitter.on("tag:active", (activeTag) => {
       this.activeTag = activeTag;
     });
+    emitter.on("plugin:info", (plugin) => {
+      this.infoPlugin = plugin;
+    });
   },
-  components: { Tags, PluginList, Title, ChannelStrip, SearchBar },
+  components: { Tags, PluginList, Title, ChannelStrip, PluginSheet, SearchBar },
 });
 </script>
 

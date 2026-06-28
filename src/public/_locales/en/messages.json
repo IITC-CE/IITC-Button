@@ -139,6 +139,27 @@
   "pluginDelete": {
     "message": "Delete"
   },
+  "pluginRemoveOverride": {
+    "message": "Remove override"
+  },
+  "pluginUserNotice": {
+    "message": "This plugin was installed by the user"
+  },
+  "pluginOverrideNotice": {
+    "message": "This user plugin overrides an official plugin"
+  },
+  "pluginOpenHomepage": {
+    "message": "Open homepage"
+  },
+  "pluginOpenIssues": {
+    "message": "Open issue tracker"
+  },
+  "pluginOpenSupport": {
+    "message": "Open support page"
+  },
+  "close": {
+    "message": "Close"
+  },
   "notValidUserScript": {
     "message": "$PLUGIN_NAME$ is not a valid UserScript.",
     "placeholders": {
