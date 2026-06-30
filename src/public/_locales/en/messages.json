@@ -157,6 +157,15 @@
   "pluginOpenSupport": {
     "message": "Open support page"
   },
+  "pluginDownloadStarted": {
+    "message": "Download started"
+  },
+  "pluginDownloadCloseTab": {
+    "message": "You can close this tab"
+  },
+  "pluginDownloadError": {
+    "message": "Something went wrong, please try again"
+  },
   "close": {
     "message": "Close"
   },

@@ -1,0 +1,37 @@
+/* Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE */
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-ui);
+}
+
+.dl-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px;
+  text-align: center;
+}
+
+.dl-card__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dl-card__title--error {
+  color: var(--state-error);
+}
+
+.dl-card__subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--on-surface-variant);
+}

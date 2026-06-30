@@ -39,6 +39,8 @@
 		841A89BD270C6EFA0064B01F /* chunks in Resources */ = {isa = PBXBuildFile; fileRef = 841A89C1270C6EFA0064B01F /* chunks */; };
 		841A89BE270C6EFA0064B01F /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = 841A89C2270C6EFA0064B01F /* content-scripts */; };
 		841A89BF270C6EFA0064B01F /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = 841A89C2270C6EFA0064B01F /* content-scripts */; };
+		EA98B73754061944C170B1A0 /* plugin-download.html in Resources */ = {isa = PBXBuildFile; fileRef = 001227D62A4C7572315F5E30 /* plugin-download.html */; };
+		229868100693888991EAF51F /* plugin-download.html in Resources */ = {isa = PBXBuildFile; fileRef = 001227D62A4C7572315F5E30 /* plugin-download.html */; };
 		841A89C3270C6EFA0064B01F /* sandbox.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89C4270C6EFA0064B01F /* sandbox.html */; };
 		841A89C5270C6EFA0064B01F /* sandbox.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A89C4270C6EFA0064B01F /* sandbox.html */; };
 		84DAA698270D549A0086E511 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA697270D549A0086E511 /* ContentView.swift */; };
@@ -138,6 +140,7 @@
 		841A89C1270C6EFA0064B01F /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = ../../../.output/safari-mv3/chunks; sourceTree = "<group>"; };
 		841A89C2270C6EFA0064B01F /* content-scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = content-scripts; path = ../../../.output/safari-mv3/content-scripts; sourceTree = "<group>"; };
 		841A89C4270C6EFA0064B01F /* sandbox.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = sandbox.html; path = ../../../.output/safari-mv3/sandbox.html; sourceTree = "<group>"; };
+		001227D62A4C7572315F5E30 /* plugin-download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "plugin-download.html"; path = "../../../.output/safari-mv3/plugin-download.html"; sourceTree = "<group>"; };
 		84DAA697270D549A0086E511 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84DAA69A270D61620086E511 /* pre-build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "pre-build.sh"; sourceTree = "<group>"; };
 		84DAA6AF270D714B0086E511 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 				841A89C2270C6EFA0064B01F /* content-scripts */,
 				841A899E270C6EFA0064B01F /* jsview.html */,
 				841A899F270C6EFA0064B01F /* manifest.json */,
+				001227D62A4C7572315F5E30 /* plugin-download.html */,
 				841A899A270C6EFA0064B01F /* popup.html */,
 				841A89C4270C6EFA0064B01F /* sandbox.html */,
 				841A89A1270C6EFA0064B01F /* settings.html */,
@@ -480,6 +484,7 @@
 				841A89BC270C6EFA0064B01F /* chunks in Resources */,
 				841A89BE270C6EFA0064B01F /* content-scripts in Resources */,
 				841A89C3270C6EFA0064B01F /* sandbox.html in Resources */,
+				EA98B73754061944C170B1A0 /* plugin-download.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +503,7 @@
 				841A89BD270C6EFA0064B01F /* chunks in Resources */,
 				841A89BF270C6EFA0064B01F /* content-scripts in Resources */,
 				841A89C5270C6EFA0064B01F /* sandbox.html in Resources */,
+				229868100693888991EAF51F /* plugin-download.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

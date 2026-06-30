@@ -62,12 +62,14 @@
 
 <script lang="ts">
 import { type PropType } from "vue";
+import browser from "webextension-polyfill";
 import { mixin } from "@/popup/components/mixins";
 import { sanitizeFileName } from "lib-iitc-manager";
 import type { Plugin } from "lib-iitc-manager";
 import PluginInfo from "@/components/PluginInfo.vue";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-vue";
 import type { PartialOptions } from "overlayscrollbars";
+import { uuidv4 } from "@/uuid";
 
 const saveJS = (function () {
   const a = document.createElement("a");
@@ -124,13 +126,25 @@ export default defineComponent({
     },
   },
   methods: {
-    save() {
+    async save() {
       if (!this.plugin) return;
-      saveJS(
-        this.plugin.code ?? "",
+      const code = this.plugin.code ?? "";
+      const filename =
         this.plugin.filename ||
-          `${sanitizeFileName(this.plugin.name ?? "")}.user.js`,
-      );
+        `${sanitizeFileName(this.plugin.name ?? "")}.user.js`;
+
+      // Safari navigates to blob: URLs from the popup instead of saving them,
+      // so hand the payload off to a full extension page that can save it
+      if (import.meta.env.BROWSER === "safari") {
+        const key = `pluginDownload_${uuidv4()}`;
+        await browser.storage.local.set({ [key]: { code, filename } });
+        await browser.tabs.create({
+          url: browser.runtime.getURL(`/plugin-download.html?key=${key}`),
+        });
+        return;
+      }
+
+      saveJS(code, filename);
     },
   },
 });
