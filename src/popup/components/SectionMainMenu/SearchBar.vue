@@ -1,21 +1,23 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="search_bar">
-    <i class="icon material-icons icon__search" v-on:click="back">search</i>
-    <i
-      class="icon material-icons icon__cancel"
-      :class="{ show: modelValue }"
-      v-on:click="cancel"
-      >cancel</i
-    >
-    <input
-      class="search_input"
-      type="text"
-      v-bind:placeholder="t('searchBoxPlaceholder')"
-      :value="modelValue"
-      @input="onInput"
-      autofocus
-    />
+  <div class="search">
+    <div class="search__box">
+      <i class="material-icons search__icon">search</i>
+      <input
+        class="search__input"
+        type="text"
+        v-bind:placeholder="t('searchBoxPlaceholder')"
+        :value="modelValue"
+        @input="onInput"
+        autofocus
+      />
+      <i
+        class="material-icons search__cancel"
+        :class="{ show: modelValue }"
+        v-on:click="cancel"
+        >cancel</i
+      >
+    </div>
   </div>
 </template>
 
@@ -44,39 +46,45 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.search_bar {
-  display: block;
-  padding: 0;
+.search {
+  flex: 1;
+  min-width: 0;
 }
-.search_bar .icon__search {
+.search__box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  background: var(--surface-container);
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+}
+.search__icon {
   font-size: 18px;
-  padding: 7px;
-  float: left;
-  position: absolute;
+  color: var(--on-surface-variant);
 }
-.search_bar .icon__cancel {
-  font-size: 16px;
-  padding: 8px;
-  float: right;
-  position: absolute;
-  right: 0;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-.search_bar .icon__cancel.show {
-  opacity: 0.5;
-}
-.search_bar .icon__cancel.show:hover {
-  opacity: 0.8;
-}
-.search_bar .search_input {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0 4px 0 32px;
-  height: 32px;
+.search__input {
+  flex: 1;
+  min-width: 0;
   border: 0;
-  border-bottom: 1px solid #e3e3e3;
-  outline: none !important;
-  background: #f4f4f4;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--on-surface);
+}
+.search__cancel {
+  font-size: 16px;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.search__cancel.show {
+  opacity: 0.6;
+}
+.search__cancel.show:hover {
+  opacity: 1;
 }
 </style>

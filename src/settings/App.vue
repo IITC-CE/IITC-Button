@@ -1,16 +1,22 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
   <div class="app">
-    <Header :tab="tab" @setTab="setTab"></Header>
-    <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
-    <PageBackup v-if="tab === 'backup'"></PageBackup>
-    <PageDebug v-if="tab === 'debug'"></PageDebug>
+    <Sidebar :tab="tab" @setTab="setTab"></Sidebar>
+    <main class="content">
+      <ProgressBar></ProgressBar>
+      <PageOptions v-if="tab === 'options'"></PageOptions>
+      <PageAddPlugin v-if="tab === 'add'"></PageAddPlugin>
+      <PageBackup v-if="tab === 'backup'"></PageBackup>
+      <PageDebug v-if="tab === 'debug'"></PageDebug>
+    </main>
   </div>
 </template>
 
 <script lang="ts">
 import { t } from "@/i18n";
-import Header from "./Header.vue";
+import Sidebar from "./Sidebar.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
+import PageOptions from "./options/Main.vue";
 import PageAddPlugin from "./add/Main.vue";
 import PageBackup from "./backup/Main.vue";
 import PageDebug from "./debug/Main.vue";
@@ -18,7 +24,9 @@ import PageDebug from "./debug/Main.vue";
 export default defineComponent({
   name: "App",
   components: {
-    Header,
+    Sidebar,
+    ProgressBar,
+    PageOptions,
     PageAddPlugin,
     PageBackup,
     PageDebug,
@@ -50,39 +58,33 @@ export default defineComponent({
 
 <style>
 body {
-  background: #f0f0f0;
+  background: var(--surface);
   margin: 0;
+  font-family: var(--font-ui);
+  color: var(--on-surface);
 }
-</style>
 
-<style>
 .app {
   display: flex;
   flex-direction: row;
   height: 100vh;
+  overflow: hidden;
 }
 
-.page {
+.content {
+  position: relative;
+  flex: 1;
   display: flex;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  background: #2b2b2b;
-  color: #222;
-  font-size: 18px;
-  overflow-y: auto;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.parent {
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-  padding: 50px 0;
-}
-
-@media (max-width: 1600px) {
+@media (max-width: 900px) {
   .app {
     flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
 }
 </style>

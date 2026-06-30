@@ -34,6 +34,12 @@ export default defineComponent({
 </script>
 
 <style>
+.message {
+  padding: 40px;
+  font-size: 14px;
+  color: var(--on-surface-variant);
+}
+
 pre {
   margin: 0;
   white-space: pre-wrap;
@@ -64,6 +70,8 @@ pre {
 
 .hljs .line div {
   width: calc(100% - 2.5rem - 25px);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1600px) {

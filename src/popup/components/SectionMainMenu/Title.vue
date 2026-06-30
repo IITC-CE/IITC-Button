@@ -1,34 +1,40 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="title">
+  <div class="header">
+    <ProgressBar></ProgressBar>
     <div
-      class="title__logo-wrapper title__button"
+      class="header__brand"
+      :title="t('titleDefault')"
       v-on:click.prevent="openIITC"
     >
       <img
-        class="title__logo"
-        src="/assets/images/IITC-black-horizontally.webp"
+        class="header__logo"
+        src="/assets/images/IITC-black-horizontally.svg"
+        alt="IITC"
       />
-      <ProgressBar></ProgressBar>
     </div>
-    <div
-      class="title__button"
+    <ToggleIITC></ToggleIITC>
+    <button
+      class="header__btn"
       :title="t('addExternalPlugin')"
       v-on:click="openLink('/settings.html#add')"
     >
-      <i class="title__icon material-icons">add</i>
-    </div>
-    <div class="title__button" v-on:click="openOptions">
-      <i class="title__icon material-icons">settings</i>
-    </div>
-    <ToggleIITC></ToggleIITC>
+      <i class="material-icons">add</i>
+    </button>
+    <button
+      class="header__btn"
+      :title="t('settings')"
+      v-on:click="openLink('/settings.html#options')"
+    >
+      <i class="material-icons">settings</i>
+    </button>
   </div>
 </template>
 
 <script lang="ts">
 import browser from "webextension-polyfill";
 import { mixin } from "../mixins";
-import ProgressBar from "./ProgressBar.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 import ToggleIITC from "./ToggleIITC.vue";
 
 export default defineComponent({
@@ -39,43 +45,50 @@ export default defineComponent({
       await browser.runtime.sendMessage({ type: "requestOpenIntel" });
       window.close();
     },
-    openOptions: function () {
-      document.body.id = "options";
-    },
   },
   components: { ProgressBar, ToggleIITC },
 });
 </script>
 
 <style scoped>
-.title {
+.header {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  gap: 4px;
   height: 50px;
-  background: #222;
-  padding-top: 0;
-  padding-bottom: 0;
+  flex-shrink: 0;
+  padding: 0 6px 0 12px;
+  background: #0e0e0e;
+}
+.header__brand {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
   cursor: pointer;
 }
-.title__logo-wrapper {
-  flex: auto;
-}
-.title__logo {
+.header__logo {
   height: 50px;
-  width: 106px;
-  z-index: 3;
-  position: relative;
-  left: calc(50% - 106px / 2);
+  width: auto;
 }
-.title__button {
-  color: var(--color-white);
-  border-left: 1px solid #333;
+.header__btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sidebar-on-surface);
+  cursor: pointer;
+  transition: background 0.1s linear;
 }
-.title__button:hover {
-  background: #333;
+.header__btn:hover {
+  background: #222;
 }
-.title__icon {
-  font-size: 24px;
-  padding: 12px;
+.header__btn .material-icons {
+  font-size: 20px;
 }
 </style>

@@ -7,18 +7,24 @@
     v-on:drop="on_drop"
     v-on:click="clickInput"
   >
-    <div>
-      <span
-        id="dropJSHereOrClick"
-        class="drop_zone_label"
-        v-html="t('dropJSHereOrClick')"
-      ></span>
-      <span
-        id="willBeOverwrittenByNewPlugin"
-        class="drop_zone_label drop_zone_label_small"
-        v-html="t('willBeOverwrittenByNewPlugin')"
-      ></span>
+    <div class="drop_zone__icon">
+      <i class="material-icons">upload_file</i>
     </div>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <span
+      id="dropJSHereOrClick"
+      class="drop_zone_label"
+      v-html="t('dropJSHereOrClick')"
+    ></span>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <span
+      id="willBeOverwrittenByNewPlugin"
+      class="drop_zone_label drop_zone_label_small"
+      v-html="t('willBeOverwrittenByNewPlugin')"
+    ></span>
+    <button type="button" class="btn-ghost drop_zone__btn">
+      {{ t("browseFiles") }}
+    </button>
     <input
       type="file"
       ref="input"
@@ -125,36 +131,63 @@ export default defineComponent({
 
 <style scoped>
 .zone {
-  border: 2px dashed #0087f7;
-  border-radius: 5px;
-  padding: 40px;
+  border: 1.5px dashed var(--outline-strong);
+  border-radius: 14px;
+  padding: 40px 24px;
   width: 100%;
   box-sizing: border-box;
-}
-
-#drop_zone {
-  cursor: pointer;
-  background: #fff;
+  background: var(--surface-container);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-  transition: background 0.2s linear;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.15s linear,
+    background 0.15s linear;
 }
 
 #drop_zone:hover {
-  background: #ddd;
+  border-color: var(--accent-border);
+  background: var(--accent-container);
+}
+
+.drop_zone__icon {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  background: var(--accent-container);
+  color: var(--accent-text);
+  display: grid;
+  place-items: center;
+}
+
+.drop_zone__icon i {
+  font-size: 26px;
 }
 
 .drop_zone_label {
-  font-weight: 400;
-  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
   display: block;
 }
 
+.drop_zone_label :deep(i) {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-style: normal;
+}
+
 .drop_zone_label_small {
-  font-size: 14px;
-  font-weight: 300;
-  margin-top: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--on-surface-variant);
+  margin-top: 6px;
+}
+
+.drop_zone__btn {
+  margin-top: 14px;
 }
 </style>

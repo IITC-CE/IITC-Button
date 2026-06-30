@@ -1,296 +1,371 @@
 {
-    "extDescription": {
-        "message": "Launch IITC for Ingress Intel with ease.",
-        "description": "Description of the extension"
-    },
-    "lang": {
-        "message": "en"
-    },
-    "titleDefault": {
-        "message": "Open Intel",
-        "description": "Title for the button at the application panel"
-    },
-    "needRebootIntel": {
-        "message": "Changes will be applied after rebooting Intel"
-    },
-    "updateInProgress": {
-        "message": "Update in progress…"
-    },
-    "changesApplied": {
-        "message": "Changes were applied"
-    },
-    "noData": {
-        "message": "No data"
-    },
-    "addExternalPlugin": {
-        "message": "Add external plugin"
-    },
-    "iitcHomePage": {
-        "message": "Home page"
-    },
-    "iitcButtonOptions": {
-        "message": "IITC-CE Button options"
-    },
-    "updateNow": {
-        "message": "update now"
-    },
-    "choosingUpdateChannel": {
-        "message": "Choosing a IITC-CE update channel"
-    },
-    "release": {
-        "message": "Release"
-    },
-    "beta": {
-        "message": "Beta"
-    },
-    "custom": {
-        "message": "Custom"
-    },
-    "customServerHint": {
-        "message": "For example:"
-    },
-    "customServerTooltipSuccess": {
-        "message": "Successful connection to the server"
-    },
-    "customServerTooltipError": {
-        "message": "Custom server is unavailable or does not contain $FILE$",
-        "placeholders": {
-            "file": {
-                "content": "$1",
-                "example": "http://localhost:8080/meta.json"
-            }
-        }
-    },
-    "updateFrequency": {
-        "message": "IITC-CE checks for updates"
-    },
-    "updateExternalFrequency": {
-        "message": "External plugins checks for updates"
-    },
-    "every5seconds": {
-        "message": "Every 5 Seconds"
-    },
-    "every6hours": {
-        "message": "Every 6 Hours"
-    },
-    "every12hours": {
-        "message": "Every 12 Hours"
-    },
-    "everyDay": {
-        "message": "Every Day"
-    },
-    "everyWeek": {
-        "message": "Every Week"
-    },
-    "anyChannel": {
-        "message": "Any channel"
-    },
-    "badgeOverride": {
-        "message": "override"
-    },
-    "customServerURL": {
-        "message": "Custom server URL (for custom channel)"
-    },
-    "openSupport": {
-        "message": "Open support page:"
-    },
-    "pluginSave": {
-        "message": "Save"
-    },
-    "pluginDelete": {
-        "message": "Delete"
-    },
-    "notValidUserScript": {
-        "message": "$PLUGIN_NAME$ is not a valid UserScript.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "Awesome plugin"
-            }
-        }
-    },
-    "addedUserScriptTo": {
-        "message": "$PLUGIN_NAME$ has been added to the \"$PLUGIN_CATEGORY$\" category.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "Awesome plugin"
-            },
-            "plugin_category": {
-                "content": "$2",
-                "example": "Draw"
-            }
-        }
-    },
-    "addedCustomIITCCore": {
-        "message": "$PLUGIN_NAME$ now replaces the built-in version of IITC",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "Awesome plugin"
-            }
-        }
-    },
-    "addressNotAvailable": {
-        "message": "Address is not available"
-    },
-    "errorReadingFile": {
-        "message": "An error occurred while reading $PLUGIN_NAME$ file.",
-        "placeholders": {
-            "plugin_name": {
-                "content": "$1",
-                "example": "Awesome plugin"
-            }
-        }
-    },
-    "or": {
-        "message": "or"
-    },
-    "dropJSHereOrClick": {
-        "message": "Drop <i>.js</i> files here or click to upload."
-    },
-    "willBeOverwrittenByNewPlugin": {
-        "message": "Plugin with the same ID will be overwritten by the new plugin."
-    },
-    "clickInstallPlugin": {
-        "message": "This is a IITC plugin. Click install to start using it."
-    },
-    "install": {
-        "message": "Install"
-    },
-    "reinstall": {
-        "message": "Reinstall"
-    },
-    "loading": {
-        "message": "Loading…"
-    },
-    "serverNotAvailableRetry": {
-        "message": "The server is not available. Retry after $NUM$ second",
-        "placeholders": {
-            "num": {
-                "content": "$1",
-                "example": "5"
-            }
-        }
-    },
-    "external": {
-        "message": "External"
-    },
-    "searchBoxPlaceholder": {
-        "message": "Search…"
-    },
-    "jsViewTitle": {
-        "message": "Installing script"
-    },
-    "jsViewDetailsNoDomains": {
-        "message": "This script did not ask for access rights to the sites. It seems to be an invalid plugin."
-    },
-    "jsViewDetailsAllDomains": {
-        "message": "This script requested access to all sites. Use it if you trust the author."
-    },
-    "jsViewDetailsDomainsLabel": {
-        "message": "The script will run on these sites:"
-    },
-    "jsViewDetailsShowDetails": {
-        "message": "Show details"
-    },
-    "jsViewDetailsHideDetails": {
-        "message": "Hide details"
-    },
-    "other": {
-        "message": "Other"
-    },
-    "donate": {
-        "message": "Donate"
-    },
-    "backup": {
-        "message": "Backup"
-    },
-    "debug": {
-        "message": "Debug"
-    },
-    "import": {
-        "message": "Import"
-    },
-    "export": {
-        "message": "Export"
-    },
-    "import_message": {
-        "message": "Select the .zip file with the IITC Button backup and then select what to import"
-    },
-    "import_settings": {
-        "message": "Import IITC settings"
-    },
-    "import_data": {
-        "message": "Import plugins data"
-    },
-    "import_external": {
-        "message": "Import of external plugins"
-    },
-    "importFromZip": {
-        "message": "Import from zip"
-    },
-    "importFromJson": {
-        "message": "Import from json"
-    },
-    "export_settings": {
-        "message": "Export IITC settings"
-    },
-    "export_data": {
-        "message": "Export plugins data"
-    },
-    "export_external": {
-        "message": "Export of external plugins"
-    },
-    "exportToZip": {
-        "message": "Export to zip"
-    },
-    "pleaseWait": {
-        "message": "Please wait"
-    },
-    "restoreBackup": {
-        "message": "Restore backup"
-    },
-    "backupRestored": {
-        "message": "Backup restored"
-    },
-    "importLocalStorage": {
-        "message": "Import LocalStorage"
-    },
-    "warningAboutImportLocalStorage": {
-        "message": "Clears and replaces all data of this extension with data from the selected json."
-    },
-    "invalidBackup": {
-        "message": "The file is corrupted or is not a backup of IITC Button"
-    },
-    "warningAboutLocalStoragePart1": {
-        "message": "Note that localStorage contains all the data available to the IITC Button. For example, including a list of your plugins and their source code, may include settings of some plugins (depends on their implementation)."
-    },
-    "warningAboutLocalStoragePart2": {
-        "message": "Do not expose this data publicly if you use faction plugins!"
-    },
-    "saveToJson": {
-        "message": "Save to json"
-    },
-    "alertChromeRequiresUserScriptsTitle": {
-        "message": "Enable User Scripts for this extension due to Manifest&nbsp;V3 limitations in Chrome"
-    },
-    "alertChromeRequiresUserScriptsButton": {
-        "message": "Please follow this guide"
-    },
-    "alertHostPermissionsRequiredTitle": {
-        "message": "Provide access to URLs for userscripts to work. You will be able to change your choice in your browser settings."
-    },
-    "alertHostPermissionsRequiredButtonIntel": {
-        "message": "Ingress Intel only"
-    },
-    "alertHostPermissionsRequiredButtonAllUrls": {
-        "message": "All URLs to ensure full support"
-    },
-    "pluginListEnabledPlugins": {
-        "message": "Enabled plugins"
-    },
-    "pluginListAllPlugins": {
-        "message": "All plugins"
+  "extDescription": {
+    "message": "Launch IITC for Ingress Intel with ease.",
+    "description": "Description of the extension"
+  },
+  "lang": {
+    "message": "en"
+  },
+  "titleDefault": {
+    "message": "Open Intel",
+    "description": "Title for the button at the application panel"
+  },
+  "needRebootIntel": {
+    "message": "Changes will be applied after rebooting Intel"
+  },
+  "updateInProgress": {
+    "message": "Update in progress…"
+  },
+  "changesApplied": {
+    "message": "Changes were applied"
+  },
+  "noData": {
+    "message": "No data"
+  },
+  "addExternalPlugin": {
+    "message": "Add external plugin"
+  },
+  "sidebarPlugins": {
+    "message": "Plugins"
+  },
+  "sidebarExtension": {
+    "message": "Extension"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "installFromUrlTitle": {
+    "message": "Install from URL"
+  },
+  "installFromUrlHint": {
+    "message": "Paste a direct link to a .user.js file"
+  },
+  "browseFiles": {
+    "message": "Browse files"
+  },
+  "updateNow": {
+    "message": "update now"
+  },
+  "updateChannelTitle": {
+    "message": "Update channel"
+  },
+  "updateChannelHint": {
+    "message": "Determines which build of IITC-CE the extension fetches"
+  },
+  "release": {
+    "message": "Release"
+  },
+  "beta": {
+    "message": "Beta"
+  },
+  "custom": {
+    "message": "Custom"
+  },
+  "popupSelectedChannel": {
+    "message": "Selected update channel: $CHANNEL$",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "Release"
+      }
     }
+  },
+  "channelReleaseHint": {
+    "message": "Stable IITC-CE release"
+  },
+  "channelBetaHint": {
+    "message": "Early features, may be unstable"
+  },
+  "channelCustomHint": {
+    "message": "Connect to a development server"
+  },
+  "customServerHint": {
+    "message": "For example:"
+  },
+  "customServerTooltipSuccess": {
+    "message": "Successful connection to the server"
+  },
+  "customServerTooltipError": {
+    "message": "Custom server is unavailable or does not contain $FILE$",
+    "placeholders": {
+      "file": {
+        "content": "$1",
+        "example": "http://localhost:8080/meta.json"
+      }
+    }
+  },
+  "updateFrequencyTitle": {
+    "message": "Update frequency"
+  },
+  "updateFrequencyHint": {
+    "message": "How often the extension checks for updates"
+  },
+  "updateFrequency": {
+    "message": "IITC-CE checks for updates"
+  },
+  "updateExternalFrequency": {
+    "message": "External plugins checks for updates"
+  },
+  "every5seconds": {
+    "message": "Every 5 Seconds"
+  },
+  "every6hours": {
+    "message": "Every 6 Hours"
+  },
+  "every12hours": {
+    "message": "Every 12 Hours"
+  },
+  "everyDay": {
+    "message": "Every Day"
+  },
+  "everyWeek": {
+    "message": "Every Week"
+  },
+  "anyChannel": {
+    "message": "Any channel"
+  },
+  "badgeOverride": {
+    "message": "override"
+  },
+  "customServerURL": {
+    "message": "Custom server URL (for custom channel)"
+  },
+  "openSupport": {
+    "message": "Open support page:"
+  },
+  "pluginSave": {
+    "message": "Save"
+  },
+  "pluginDelete": {
+    "message": "Delete"
+  },
+  "pluginRemoveOverride": {
+    "message": "Remove override"
+  },
+  "pluginUserNotice": {
+    "message": "This plugin was installed by the user"
+  },
+  "pluginOverrideNotice": {
+    "message": "This user plugin overrides an official plugin"
+  },
+  "pluginOpenHomepage": {
+    "message": "Open homepage"
+  },
+  "pluginOpenIssues": {
+    "message": "Open issue tracker"
+  },
+  "pluginOpenSupport": {
+    "message": "Open support page"
+  },
+  "pluginDownloadStarted": {
+    "message": "Download started"
+  },
+  "pluginDownloadCloseTab": {
+    "message": "You can close this tab"
+  },
+  "pluginDownloadError": {
+    "message": "Something went wrong, please try again"
+  },
+  "close": {
+    "message": "Close"
+  },
+  "notValidUserScript": {
+    "message": "$PLUGIN_NAME$ is not a valid UserScript.",
+    "placeholders": {
+      "plugin_name": {
+        "content": "$1",
+        "example": "Awesome plugin"
+      }
+    }
+  },
+  "addedUserScriptTo": {
+    "message": "$PLUGIN_NAME$ has been added to the \"$PLUGIN_CATEGORY$\" category.",
+    "placeholders": {
+      "plugin_name": {
+        "content": "$1",
+        "example": "Awesome plugin"
+      },
+      "plugin_category": {
+        "content": "$2",
+        "example": "Draw"
+      }
+    }
+  },
+  "addressNotAvailable": {
+    "message": "Address is not available"
+  },
+  "errorReadingFile": {
+    "message": "An error occurred while reading $PLUGIN_NAME$ file.",
+    "placeholders": {
+      "plugin_name": {
+        "content": "$1",
+        "example": "Awesome plugin"
+      }
+    }
+  },
+  "or": {
+    "message": "or"
+  },
+  "dropJSHereOrClick": {
+    "message": "Drop <i>.js</i> files here or click to upload."
+  },
+  "willBeOverwrittenByNewPlugin": {
+    "message": "Plugin with the same ID will be overwritten by the new plugin."
+  },
+  "install": {
+    "message": "Install"
+  },
+  "reinstall": {
+    "message": "Reinstall"
+  },
+  "loading": {
+    "message": "Loading…"
+  },
+  "serverNotAvailableRetry": {
+    "message": "The server is not available. Retry after $NUM$ second",
+    "placeholders": {
+      "num": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "external": {
+    "message": "External"
+  },
+  "searchBoxPlaceholder": {
+    "message": "Search…"
+  },
+  "jsViewTitle": {
+    "message": "Installing script"
+  },
+  "jsViewDetailsNoDomains": {
+    "message": "This script did not ask for access rights to the sites. It seems to be an invalid plugin."
+  },
+  "jsViewDetailsAllDomains": {
+    "message": "This script requested access to all sites. Use it if you trust the author."
+  },
+  "jsViewDetailsDomainsLabel": {
+    "message": "The script will run on these sites:"
+  },
+  "jsViewDetailsShowDetails": {
+    "message": "Show details"
+  },
+  "jsViewDetailsHideDetails": {
+    "message": "Hide details"
+  },
+  "version": {
+    "message": "Version"
+  },
+  "author": {
+    "message": "Author"
+  },
+  "defaultCategory": {
+    "message": "Misc"
+  },
+  "overwriteBuiltinPlugin": {
+    "message": "This will overwrite the built-in plugin of the same name"
+  },
+  "overwriteInstalledPlugin": {
+    "message": "This will overwrite an already installed plugin of the same name"
+  },
+  "installed": {
+    "message": "Installed"
+  },
+  "installFailed": {
+    "message": "Installation failed"
+  },
+  "donate": {
+    "message": "Donate"
+  },
+  "backup": {
+    "message": "Backup"
+  },
+  "debug": {
+    "message": "Debug"
+  },
+  "import": {
+    "message": "Import"
+  },
+  "export": {
+    "message": "Export"
+  },
+  "import_message": {
+    "message": "Select the .zip file with the IITC Button backup and then select what to import"
+  },
+  "import_settings": {
+    "message": "Import IITC settings"
+  },
+  "import_data": {
+    "message": "Import plugins data"
+  },
+  "import_external": {
+    "message": "Import of external plugins"
+  },
+  "importFromZip": {
+    "message": "Import from zip"
+  },
+  "importFromJson": {
+    "message": "Import from json"
+  },
+  "export_settings": {
+    "message": "Export IITC settings"
+  },
+  "export_data": {
+    "message": "Export plugins data"
+  },
+  "export_external": {
+    "message": "Export of external plugins"
+  },
+  "exportToZip": {
+    "message": "Export to zip"
+  },
+  "pleaseWait": {
+    "message": "Please wait"
+  },
+  "restoreBackup": {
+    "message": "Restore backup"
+  },
+  "backupRestored": {
+    "message": "Backup restored"
+  },
+  "importLocalStorage": {
+    "message": "Import LocalStorage"
+  },
+  "warningAboutImportLocalStorage": {
+    "message": "Clears and replaces all data of this extension with data from the selected json."
+  },
+  "invalidBackup": {
+    "message": "The file is corrupted or is not a backup of IITC Button"
+  },
+  "warningAboutLocalStoragePart1": {
+    "message": "Note that localStorage contains all the data available to the IITC Button. For example, including a list of your plugins and their source code, may include settings of some plugins (depends on their implementation)."
+  },
+  "warningAboutLocalStoragePart2": {
+    "message": "Do not expose this data publicly if you use faction plugins!"
+  },
+  "saveToJson": {
+    "message": "Save to json"
+  },
+  "alertChromeRequiresUserScriptsTitle": {
+    "message": "Enable User Scripts for this extension due to Manifest&nbsp;V3 limitations in Chrome"
+  },
+  "alertChromeRequiresUserScriptsButton": {
+    "message": "Please follow this guide"
+  },
+  "alertHostPermissionsRequiredTitle": {
+    "message": "Provide access to URLs for userscripts to work. You will be able to change your choice in your browser settings."
+  },
+  "alertHostPermissionsRequiredButtonIntel": {
+    "message": "Ingress Intel only"
+  },
+  "alertHostPermissionsRequiredButtonAllUrls": {
+    "message": "All URLs to ensure full support"
+  },
+  "pluginListEnabledPlugins": {
+    "message": "Enabled"
+  },
+  "pluginListAllPlugins": {
+    "message": "All plugins"
+  }
 }

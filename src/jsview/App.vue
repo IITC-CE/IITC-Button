@@ -84,8 +84,10 @@ export default defineComponent({
 
 <style>
 body {
-  background: #f0f0f0;
   margin: 0;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-ui);
 }
 </style>
 
@@ -93,6 +95,7 @@ body {
 .page {
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
 }
 
 @media (max-width: 1600px) {

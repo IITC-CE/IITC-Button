@@ -1,8 +1,11 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="list">
+  <div class="menu">
     <Title></Title>
-    <SearchBar v-model="search_query"></SearchBar>
+    <div class="toolbar">
+      <ChannelStrip></ChannelStrip>
+      <SearchBar v-model="search_query"></SearchBar>
+    </div>
     <Tags :categories="categories" :all_plugins="plugins_flat"></Tags>
     <PluginList
       :plugins="pluginsToDisplay"
@@ -12,11 +15,18 @@
       @update-plugin="updatePlugin"
       @delete-plugin="deletePlugin"
     ></PluginList>
+    <PluginSheet
+      :plugin="infoPlugin"
+      @close="infoPlugin = null"
+      @remove="removePlugin"
+    ></PluginSheet>
   </div>
 </template>
 
 <script lang="ts">
 import Title from "./Title.vue";
+import ChannelStrip from "./ChannelStrip.vue";
+import PluginSheet from "./PluginSheet.vue";
 import SearchBar from "./SearchBar.vue";
 import { type PropType } from "vue";
 import { mixin } from "../mixins";
@@ -43,6 +53,7 @@ export default defineComponent({
       search_query: "",
       search_results: {},
       activeTag: "All",
+      infoPlugin: null as Plugin | null,
     };
   },
   mixins: [mixin],
@@ -84,7 +95,6 @@ export default defineComponent({
         );
       }
 
-      this.showMessage(this.t("needRebootIntel"));
       await browser.runtime.sendMessage({
         type: "managePlugin",
         uid: updatedPlugin.uid,
@@ -101,20 +111,56 @@ export default defineComponent({
         );
       }
     },
+    async removePlugin(plugin: Plugin) {
+      const uid = plugin.uid;
+      if (plugin.override === true) {
+        this.$emit("update-plugin", {
+          ...plugin,
+          override: false,
+          user: false,
+          status: "off",
+        });
+      } else {
+        this.$emit("delete-plugin", uid);
+      }
+      if (this.search_query) {
+        this.search_results = searchPlugins(
+          this.search_query,
+          this.plugins_flat,
+        );
+      }
+      this.infoPlugin = null;
+      await browser.runtime.sendMessage({
+        type: "managePlugin",
+        uid,
+        action: "delete",
+      });
+    },
   },
   mounted() {
     emitter.on("tag:active", (activeTag) => {
       this.activeTag = activeTag;
     });
+    emitter.on("plugin:info", (plugin) => {
+      this.infoPlugin = plugin;
+    });
   },
-  components: { Tags, PluginList, Title, SearchBar },
+  components: { Tags, PluginList, Title, ChannelStrip, PluginSheet, SearchBar },
 });
 </script>
 
 <style scoped>
-.list {
-  height: 100%;
+.menu {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 10px 12px 4px;
 }
 </style>

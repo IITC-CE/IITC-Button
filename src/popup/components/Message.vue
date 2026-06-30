@@ -34,14 +34,14 @@ export default defineComponent({
 <style scoped>
 .message {
   box-sizing: border-box;
-  background: #333;
+  background: var(--sidebar-surface-container);
   position: absolute;
   bottom: -35px;
   width: 100%;
   height: 0;
   line-height: 35px;
   padding: 0 10px 0 10px;
-  color: var(--color-white);
+  color: var(--sidebar-on-surface);
   font-weight: 400;
   white-space: nowrap;
   transition:
@@ -56,7 +56,11 @@ export default defineComponent({
   top: 0;
   width: 40px;
   height: 100%;
-  background: linear-gradient(to right, #3333, #333 100%);
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--sidebar-surface-container) 100%
+  );
 }
 .message.opened {
   bottom: 0;

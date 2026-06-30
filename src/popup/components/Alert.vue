@@ -122,14 +122,14 @@ export default defineComponent({
 }
 
 .alert {
-  background: var(--color-silver);
+  background: var(--surface-container);
   border-radius: 10px;
   width: 80%;
   height: fit-content;
   box-sizing: border-box;
   padding: 20px;
   line-height: 150%;
-  color: var(--color-black);
+  color: var(--on-surface);
   font-weight: 400;
   font-size: 16px;
   margin: 10px;
@@ -142,19 +142,19 @@ p {
 }
 
 .button {
-  background: #455a64;
-  color: #fff;
-  border: #37474f;
-  padding: 5px;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 8px;
   text-align: center;
   margin-top: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .button:hover,
 .button:active,
 .button:focus {
-  background: #546e7a;
+  filter: brightness(1.08);
 }
 
 #app.is_safari .hostPermissionAllUrls {

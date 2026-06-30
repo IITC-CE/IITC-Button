@@ -1,8 +1,6 @@
 <!-- @license Copyright (C) IITC-CE - GPL-3.0 with Store Exception - see LICENSE and COPYING.STORE -->
 <template>
-  <div class="element item-wrapper list__item">
-    <span class="element__text">{{ t("noData") }}</span>
-  </div>
+  <div class="nodata">{{ t("noData") }}</div>
 </template>
 
 <script lang="ts">
@@ -15,19 +13,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.element {
-  display: flex;
-  cursor: pointer;
-  padding: 4px 4px 4px 40px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background: var(--color-white);
-}
-
-.element__text {
-  flex: auto;
-  line-height: 24px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.nodata {
+  padding: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--on-surface-variant);
 }
 </style>

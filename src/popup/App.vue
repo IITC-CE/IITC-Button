@@ -11,9 +11,6 @@
       >
       </SectionMainMenu>
     </section>
-    <section class="section options">
-      <SectionOptions> </SectionOptions>
-    </section>
     <Message></Message>
     <Alert></Alert>
   </div>
@@ -23,7 +20,6 @@
 import type { Plugin, PluginDict } from "lib-iitc-manager";
 import type { PluginsView } from "lib-iitc-manager";
 import SectionMainMenu from "./components/SectionMainMenu/SectionMainMenu.vue";
-import SectionOptions from "./components/SectionOptions.vue";
 
 import Message from "./components/Message.vue";
 import Alert from "./components/Alert.vue";
@@ -46,7 +42,6 @@ export default defineComponent({
   },
   components: {
     SectionMainMenu,
-    SectionOptions,
     Message,
     Alert,
   },
@@ -82,12 +77,16 @@ export default defineComponent({
 <style>
 body {
   cursor: default;
+  width: 100vw;
+  height: 100vh;
   min-width: 350px;
   min-height: 520px;
   overflow: hidden;
   margin: 0;
-  color: #222;
+  color: var(--on-surface);
+  font-family: var(--font-ui);
   font-size: 12px;
+  background: var(--surface);
 }
 
 .material-icons {
@@ -95,89 +94,23 @@ body {
 }
 
 #app {
-  width: 350px;
-  height: 520px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  /*transform: translateZ(0); * hack of popup size in safari *!*/
 }
 
 object {
   pointer-events: none;
 }
 
-/*
- * section
- */
 .section {
-  display: block;
-  background: #fff;
-  position: absolute;
-  top: 0;
-  margin-left: 100vw;
-  transition: margin-left 0.15s ease-in-out;
-  width: 100vw;
-  height: 100vh;
-}
-.section.main-menu {
-  margin-left: -100vw;
-}
-body#main-menu .section.main-menu {
-  margin-left: 0;
-  z-index: 1;
-}
-body#options .section.options {
-  margin-left: 0;
-}
-
-#app.is_safari .section {
-  display: none;
-  width: 100vw;
-}
-
-#app.is_safari .section.main-menu {
-  display: none;
-}
-
-body#main-menu #app.is_safari .section.main-menu {
-  display: block;
-}
-
-body#options #app.is_safari .section.options {
-  display: block;
-}
-
-/*
- * button
- */
-.button {
-  cursor: pointer;
-  line-height: 28px;
-  padding: 0 10px;
-  background: #eee;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-  transition: background 0.1s linear;
-}
-.button:hover,
-.button:active,
-.button:focus {
-  background: #f2f2f2;
-}
-
-:root {
-  --color-white: #fff;
-  --color-blue: #0074d9;
-  --color-olive: #48a77c;
-  --color-green: #2ecc40;
-  --color-lime: #01ff70;
-  --color-yellow: #ffdc00;
-  --color-orange: #ff851b;
-  --color-red: #ff4136;
-  --color-black: #111;
-  --color-gray: #aaa;
-  --color-silver: #f4f4f4;
-  --state-on: #43a047;
-  --state-off: #e53935;
-  --state-off2: #6c3939;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: var(--surface);
+  overflow: hidden;
 }
 </style>

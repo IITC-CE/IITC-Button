@@ -96,7 +96,9 @@ export default defineComponent({
 <style scoped>
 .element {
   display: flex;
-  padding: 4px 6px;
   flex-wrap: wrap;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 6px 12px 8px;
 }
 </style>
