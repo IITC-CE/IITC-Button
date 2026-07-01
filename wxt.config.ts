@@ -75,7 +75,7 @@ export default defineConfig({
       if (isProd) {
         result.content_security_policy = {
           extension_pages:
-            "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
+            "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
         };
       }
       // web_accessible_resources for jsview and sandbox
@@ -100,7 +100,7 @@ export default defineConfig({
       if (browser === "firefox" && isProd) {
         result.content_security_policy = {
           extension_pages:
-            "default-src 'self'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
+            "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:8000 https://*; img-src 'self' https://* data:",
         };
       }
       // Safari: no CSP
