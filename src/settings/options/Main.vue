@@ -8,8 +8,17 @@
           <h1 class="page-title">{{ t("settings") }}</h1>
         </div>
         <div class="page-actions">
-          <button class="btn-ghost" @click="forceUpdate">
-            <i class="material-icons">schedule</i>
+          <button
+            class="btn-ghost"
+            :class="{
+              'is-updating': updateState === 'updating',
+              'is-done': updateState === 'done',
+            }"
+            @click="forceUpdate"
+          >
+            <i class="material-icons">{{
+              updateState === "done" ? "done" : "schedule"
+            }}</i>
             {{ t("updateNow") }}
           </button>
         </div>
@@ -89,6 +98,8 @@ export default defineComponent({
   data() {
     return {
       channel: "release",
+      updateState: "idle" as "idle" | "updating" | "done",
+      doneTimer: null as ReturnType<typeof setTimeout> | null,
     };
   },
   computed: {
@@ -103,7 +114,18 @@ export default defineComponent({
   methods: {
     t: t,
     async forceUpdate() {
+      // Button stays clickable during an update - a re-click restarts the cycle
+      if (this.doneTimer) {
+        clearTimeout(this.doneTimer);
+        this.doneTimer = null;
+      }
+      this.updateState = "updating";
       await browser.runtime.sendMessage({ type: "forceFullUpdate" });
+      this.updateState = "done";
+      this.doneTimer = setTimeout(() => {
+        this.updateState = "idle";
+        this.doneTimer = null;
+      }, 1000);
     },
     async selectChannel(channel: string) {
       this.channel = channel;
@@ -125,11 +147,27 @@ export default defineComponent({
   },
   beforeUnmount() {
     browser.storage.onChanged.removeListener(this.onChannelStorageChanged);
+    if (this.doneTimer) clearTimeout(this.doneTimer);
   },
 });
 </script>
 
 <style scoped>
+.btn-ghost {
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn-ghost.is-updating {
+  opacity: 0.5;
+}
+
+.btn-ghost.is-done {
+  opacity: 1;
+  color: var(--accent);
+}
+
 .channel-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
