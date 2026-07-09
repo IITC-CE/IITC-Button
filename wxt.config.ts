@@ -2,9 +2,8 @@ import { defineConfig } from "wxt";
 import { readFileSync } from "fs";
 import { resolve, join } from "path";
 
-// Read manifest.json for base fields
-const baseManifest = JSON.parse(
-  readFileSync(resolve(__dirname, "src/manifest.json"), "utf-8"),
+const pkg = JSON.parse(
+  readFileSync(resolve(__dirname, "package.json"), "utf-8"),
 );
 
 export default defineConfig({
@@ -20,7 +19,7 @@ export default defineConfig({
 
   manifest: ({ browser, mode }) => {
     const isBeta = !!process.env.BETA;
-    const version = baseManifest.version ?? "3.2.5";
+    const version = pkg.version;
 
     // Build base manifest fields we control (WXT handles action/background/content_scripts)
     const result: Record<string, unknown> = {

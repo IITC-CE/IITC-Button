@@ -16,11 +16,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -39,13 +39,13 @@ jobs:
           - build_script: build_mv3_chrome
           - build_script: build_mv3_safari
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -59,13 +59,6 @@ jobs:
 
       - name: Build
         run: npm run ${{ matrix.build_script }}
-
-      - name: Get version from package.json
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: polyseam/get-version-key-from-json@v1.0.0
-        id: get-version-key-from-json
-        with:
-          path-to-json: './package.json'
 
       - name: Save metadata
         run: |
@@ -107,7 +100,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.FILE_NAME }}
           include-hidden-files: true
@@ -119,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: collected_artifacts
 
@@ -139,7 +132,7 @@ jobs:
         run: echo "GITHUB_SHA_SHORT=$(cat ./final_artifacts/.metadata/commit | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Upload general artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: iitc-button-${{ env.GITHUB_SHA_SHORT }}-artifacts
           include-hidden-files: true

@@ -29,11 +29,11 @@ jobs:
     if: needs.check-secret.outputs.secrets == 'true'
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Get artifact ID and name from API
         id: get-artifact-id
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -61,7 +61,7 @@ jobs:
             }
 
       - name: Download Chrome artifact
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -75,7 +75,7 @@ jobs:
             fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/build-chrome.zip`, Buffer.from(download.data));
 
       - name: Download Firefox artifact
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -110,10 +110,10 @@ jobs:
           echo "CHROME_ZIP=./build-chrome/${{ env.chromeArtifactName }}.zip" >> $GITHUB_ENV
           echo "FIREFOX_ZIP=./build-firefox/${{ env.firefoxArtifactName }}.zip" >> $GITHUB_ENV
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         if: ${{ contains(fromJSON('["release", "beta"]'), env.BUILD_TYPE) }}
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
